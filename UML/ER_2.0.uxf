@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>260</x>
+      <y>430</y>
+      <w>230</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>_Recruiter_
+--
+int id; (maybe email instead of id?)
+
+_Can't think of any other attributes_
+style=autoresize
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>110</x>
+      <y>70</y>
+      <w>170</w>
+      <h>270</h>
+    </coordinates>
+    <panel_attributes>_Interviewer_
+--
+int id;
+
+Map/List&lt;&gt; skillSet;
+
+_*???*_
+
+_this feels wrong_
+_but added just in case_
+
+List&lt;Timeslot&gt; availability
+
+*_???_*
+style=autoresize
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>680</x>
+      <y>500</y>
+      <w>220</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>_Interview_
+--
+Timeslot time
+
+List&lt;Interviewer&gt; interviewPanel
+
+
+
+
+style=autoresize</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>600</x>
+      <y>70</y>
+      <w>340</w>
+      <h>220</h>
+    </coordinates>
+    <panel_attributes>_Timeslot_
+--
+style=autoresize
+
+Map&lt;Interviewer.id, available&gt; availableInterviewers
+
+List&lt;Interview&gt; interviews
+
+getSkillset()
+
+bookInterview()
+_this could lie here or with recruiter class_
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>370</x>
+      <y>50</y>
+      <w>140</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>type=decision
+Declare
+Availability</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>500</x>
+      <y>90</y>
+      <w>120</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=0..*</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>270</x>
+      <y>90</y>
+      <w>120</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m2=0..*</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>370</x>
+      <y>230</y>
+      <w>140</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>type=decision
+Check Skills
+Book Interview</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>430</x>
+      <y>320</y>
+      <w>30</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>500</x>
+      <y>270</y>
+      <w>120</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>700</x>
+      <y>340</y>
+      <w>140</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>type=decision
+Creates
+Interview</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>760</x>
+      <y>430</y>
+      <w>50</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=0..*</panel_attributes>
+    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>760</x>
+      <y>280</y>
+      <w>40</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m2=1</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
