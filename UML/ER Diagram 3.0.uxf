@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>270</x>
+      <y>440</y>
+      <w>220</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>_Recruiter_
+--
+*_Key_*
+String emailAddress
+
+*_Attributes_*
+_Can't think of any other attributes_
+style=autoresize
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>120</x>
+      <y>80</y>
+      <w>170</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>_Interviewer_
+--
+*_Key_*
+String emailAddress
+
+*_Attributes_*
+Map&lt;Skill, level&gt; skillSet
+style=autoresize
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>690</x>
+      <y>480</y>
+      <w>300</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>_Interview_
+--
+_*Key*_
+int id
+
+_*Attributes*_
+_Maybe needs tweaking r.e. Emer's suggestion_
+DateTime startTime
+List&lt;Interviewer&gt; interviewPanel
+Duration/endTime
+style=autoresize</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>610</x>
+      <y>80</y>
+      <w>340</w>
+      <h>230</h>
+    </coordinates>
+    <panel_attributes>_Timeslot_
+--
+style=autoresize
+_*Composite Key*_
+DateTime startTime
+Interviewer emailAddress
+
+_*Attributes*_
+DateTime endTime
+(is duration better? is end time inferred/required?)
+
+
+_*Needs updating r.e. Emer's suggestion*_
+Map&lt;Interviewer.id, available&gt; availableInterviewers
+List&lt;Interview&gt; interviews</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>380</x>
+      <y>60</y>
+      <w>140</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>type=decision
+Declare
+Availability</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>510</x>
+      <y>100</y>
+      <w>120</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=0..*</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>280</x>
+      <y>100</y>
+      <w>120</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m2=0..*</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>380</x>
+      <y>210</y>
+      <w>140</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>type=decision
+Check Skills
+Book Interview</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>440</x>
+      <y>300</y>
+      <w>30</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>510</x>
+      <y>250</y>
+      <w>120</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>710</x>
+      <y>350</y>
+      <w>140</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>type=decision
+Creates
+Interview</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>770</x>
+      <y>440</y>
+      <w>50</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=0..*</panel_attributes>
+    <additional_attributes>10.0;40.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>770</x>
+      <y>300</y>
+      <w>30</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m2=1</panel_attributes>
+    <additional_attributes>10.0;50.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>770</x>
+      <y>300</y>
+      <w>50</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=0..*</panel_attributes>
+    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>960</x>
+      <y>360</y>
+      <w>160</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>
+Is this timeslots
+responsibility still?
+
+style=autoresize</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>840</x>
+      <y>390</y>
+      <w>140</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;120.0;12.0</additional_attributes>
+  </element>
+</diagram>
