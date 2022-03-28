@@ -1,2 +1,2 @@
-# interview-organiser-ui
-Angular UI to enter and track interview slots
+# interview-organiser-server
+APIs for tracking interview slots
