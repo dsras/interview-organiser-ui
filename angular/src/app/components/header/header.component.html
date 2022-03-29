@@ -3,14 +3,14 @@
         <div class="row">
             <div class="col-md-9 logo-wrapper">
                 <img src="../../../assets/images/logo-sm.svg" (click)="navigateHome()" />
-                <span class="app-title" (click)="navigateHome()">RAFT</span>
+                <span class="app-title" (click)="navigateHome()">Solid-Octo-Disco</span>
                 <p class="thumbnail" (click)="navigateHome()">Requirements and Fullfilment Tracker</p>
             </div>
             <div class="col-md-1" *ngIf="isHeader">
-                <span class="menu" (click)="onMenuChange('positions')" [ngClass]="getSelectedClass('positions')">Positions</span>
+                <span class="menu" (click)="onMenuChange('dashboard')" [ngClass]="getSelectedClass('dashboard')">Dashboard</span>
             </div>
             <div class="col-md-1" *ngIf="isHeader">
-                <span class="menu" (click)="onMenuChange('candidates')" [ngClass]="getSelectedClass('candidates')">Candidates</span>
+                <span class="menu" (click)="onMenuChange('calendar')" [ngClass]="getSelectedClass('calendar')">Calendar</span>
             </div>
             <div class="btn-group col-md-1" dropdown placement="bottom left" *ngIf="isHeader">
                 <button id="button-animated" dropdownToggle type="button" class="btn btn-secondary dropdown-toggle float-end"
