@@ -1,0 +1,9 @@
+@use "sass:map";
+@import '../../../common/styles/common.scss';
+
+.position-details {
+    .active {
+        background-color: map.get($theme-colors, "selectedColor");
+        color: #fff;
+    }
+}

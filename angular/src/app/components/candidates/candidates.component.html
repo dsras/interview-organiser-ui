@@ -1,0 +1,37 @@
+<div class="candidates-main">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <span class="total-text">TOTAL CANDIDATES </span>
+                <span class="total-value"> ({{total}})</span>
+            </div>
+            <div class="col-md-9">
+                <button class="btn primary-btn float-end" (click)="openModal()">
+                    <i class="fa fa-plus"></i> 
+                    Add Candidate
+                </button>
+                <button class="btn btn-success float-end export-btn" (click)="export()">
+                    <i class="fa fa-file-excel-o"></i> 
+                    Export
+                </button>
+                <form [formGroup]='filters'>
+                    <select class="form-select form-select-sm float-end" aria-label=".form-select-sm" (change)="onTypeSelect()" formControlName='type'>
+                        <option value="{{item}}" *ngFor="let item of types">{{item}}</option>
+                    </select>
+                    <select class="form-select form-select-sm float-end" aria-label=".form-select-sm" (change)="onLocationSelect()" formControlName='location'>
+                        <option value="{{item.key}}" *ngFor="let item of locations">{{item.value}}</option>
+                    </select>
+                    <input type="text" placeholder="Search Anything..." class="form-control quick-filter float-end" (input)="applyQuickFilter()" formControlName='quickFilter'>
+                    <i class="fa fa-times remove-search" *ngIf="filters.value.quickFilter.length > 0" (click)="removeQuickFilter()"></i>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="grid-container">
+                    <app-grid [colDef]="columnDefs" [rowData]="rowData" [config]="gridConfig"></app-grid>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

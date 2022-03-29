@@ -1,0 +1,288 @@
+<div class="create-position-wrapper">
+    <div class="modal-header">
+        <h6 class="modal-title pull-left">Add Position</h6>
+        <button type="button" class="btn pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+            <i class="fa fa-times" aria-hidden="true"></i>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="container candidate-form">
+            <form [formGroup]='createPositionForm' *ngIf="formData">
+                <div class="row">
+                    <div class="col-md-2">
+                        <span class="pull-right form-header">Title <span class="text-danger">*</span></span>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-wrapper">
+                            <input type="text" class="input-email" placeholder="Enter title" style="width: 100%" formControlName='title'
+                                [ngClass]="{'border border-danger' : title.invalid && (title.dirty || title.touched)}">
+                            <i class="fa fa-question-circle" aria-hidden="true" tooltip="Your writing skills are on the show. Enter text to describe position" containerClass="raft-tooltip"></i>
+                        </div>
+                        <div *ngIf="title.invalid && (title.dirty || title.touched)" class="invalid-text pull-right text-danger">
+                            <div *ngIf="title.errors?.['required']">
+                                Title is required.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <span class="pull-right form-header">Account <span class="text-danger">*</span></span>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-wrapper">
+                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" formControlName='account'
+                                [ngClass]="{'border border-danger' : account.invalid && (account.dirty || account.touched)}">
+                                <option value="{{account.key}}" *ngFor="let account of formData.accounts">{{account.value}}</option>      
+                            </select>
+                            <i class="fa fa-question-circle" aria-hidden="true" tooltip="Account of position" containerClass="raft-tooltip"></i>
+                        </div>
+                        <div *ngIf="account.invalid && (account.dirty || account.touched)" class="invalid-text pull-right text-danger">
+                            <div *ngIf="account.errors?.['required']">
+                                Account is required.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <span class="pull-right form-header">Resource Manager<span class="text-danger">*</span></span>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-wrapper">
+                            <input class="input-email" type="text" placeholder="Enter Resource Manager" style="width: 100%;" 
+                                formControlName='resourceManager' [ngClass]="{'border border-danger' : !isResourceManagerSelected && (resourceManager.dirty || resourceManager.touched)}"
+                                [typeahead]="resourceManagerDataSource" [typeaheadAsync]="true"
+                                typeaheadOptionField="name" (typeaheadLoading)="changeTypeaheadLoading($event)" (typeaheadOnSelect)="onResourceManagerSelected($event)"
+                                [adaptivePosition]="true" [typeaheadIsFirstItemActive]="false">
+                            <i class="fa fa-question-circle" aria-hidden="true" tooltip="Oh…yeah, very key person tracking all resources and end to end fulfilment" containerClass="raft-tooltip"></i>
+                        </div>
+                        <div *ngIf="!isResourceManagerSelected && (resourceManager.dirty || resourceManager.touched)" class="invalid-text pull-right text-danger">
+                            Resource Manager is required.
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <span class="pull-right form-header">Location <span class="text-danger">*</span></span>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-wrapper">
+                            <ng-multiselect-dropdown
+                                [placeholder]="'Locations'"
+                                [settings]="dropdownSettings"
+                                [data]="formData.locations"
+                                formControlName="location"
+                                (onSelect)="onMultiSelectDropdownSelect($event, 'location')"
+                                (onSelectAll)="onMultiSelectDropdownSelectAll($event, 'location')">
+                            </ng-multiselect-dropdown>
+                            <i class="fa fa-question-circle" aria-hidden="true" tooltip="Which location position is for" containerClass="raft-tooltip"></i>
+                        </div>
+                        <div *ngIf="location.invalid && (location.dirty || location.touched)" class="invalid-text pull-right text-danger">
+                            <div *ngIf="location.errors?.['required']">
+                                Location is required.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <span class="pull-right form-header">Business Unit <span class="text-danger">*</span></span>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-wrapper">
+                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" formControlName='buCode'
+                                [ngClass]="{'border border-danger' : buCode.invalid && (buCode.dirty || buCode.touched)}">
+                                <option value="{{bu.key}}" *ngFor="let bu of formData.bus">{{bu.value}}</option>
+                            </select>
+                            <i class="fa fa-question-circle" aria-hidden="true" tooltip="Business Unit of Account" containerClass="raft-tooltip"></i>
+                        </div>
+                        <div *ngIf="buCode.invalid && (buCode.dirty || buCode.touched)" class="invalid-text pull-right text-danger">
+                            <div *ngIf="buCode.errors?.['required']">
+                                Business Unit is required.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <span class="pull-right form-header">Tech Head <span class="text-danger">*</span></span>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-wrapper">
+                            <input class="input-email" type="text" placeholder="Enter Tech Head" style="width: 100%;" formControlName='techHead'
+                            [ngClass]="{'border border-danger' : !isTechHeadSelected && (techHead.dirty || techHead.touched)}"
+                            [typeahead]="techHeadDataSource" [typeaheadAsync]="true"
+                            typeaheadOptionField="name" (typeaheadLoading)="changeTypeaheadLoading($event)" (typeaheadOnSelect)="onTechHeadSelected($event)"
+                            [adaptivePosition]="true" [typeaheadIsFirstItemActive]="false">
+                            <i class="fa fa-question-circle" aria-hidden="true" tooltip="Owner of position from Tech Team" containerClass="raft-tooltip"></i>
+                        </div>
+                        <div *ngIf="!isTechHeadSelected && (techHead.dirty || techHead.touched)" class="invalid-text pull-right text-danger">
+                            Tech Head is required.
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <span class="pull-right form-header">Client Manager <span class="text-danger">*</span></span>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-wrapper">
+                            <input type="text" class="input-email" placeholder="Enter Client Hiring Manager" style="width: 100%;"
+                                formControlName='clientHiringManager' [ngClass]="{'border border-danger' : clientHiringManager.invalid && (clientHiringManager.dirty || clientHiringManager.touched)}">
+                            <i class="fa fa-question-circle" aria-hidden="true" tooltip="Position sponsor. Name of the person approving bill" containerClass="raft-tooltip"></i>
+                        </div>
+                        <div *ngIf="clientHiringManager.invalid && (clientHiringManager.dirty || clientHiringManager.touched)" class="invalid-text pull-right text-danger">
+                            <div *ngIf="clientHiringManager.errors?.['required']">
+                                Client Manager is required.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <span class="pull-right form-header">Priority <span class="text-danger">*</span></span>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-wrapper">
+                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" formControlName='priority'
+                                [ngClass]="{'border border-danger' : priority.invalid && (priority.dirty || priority.touched)}">
+                                <option value="{{priority.key}}" *ngFor="let priority of formData.priorities">{{priority.value}}</option>
+                            </select>
+                            <i class="fa fa-question-circle" aria-hidden="true" tooltip="Make it critical if its reallyyyyyyyyyyyyyyy urgent, else use it wisely" containerClass="raft-tooltip"></i>
+                        </div>
+                        <div *ngIf="priority.invalid && (priority.dirty || priority.touched)" class="invalid-text pull-right text-danger">
+                            <div *ngIf="priority.errors?.['required']">
+                                Priority is required.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <span class="pull-right form-header">Department <span class="text-danger">*</span></span>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-wrapper">
+                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" formControlName='department'
+                                [ngClass]="{'border border-danger' : department.invalid && (department.dirty || department.touched)}">
+                                <option value="{{department.key}}" *ngFor="let department of formData.departments">{{department.value}}</option>
+                            </select>
+                            <i class="fa fa-question-circle" aria-hidden="true" tooltip="Client’s department under Account for position" containerClass="raft-tooltip"></i>
+                        </div>
+                        <div *ngIf="department.invalid && (department.dirty || department.touched)" class="invalid-text pull-right text-danger">
+                            <div *ngIf="department.errors?.['required']">
+                                Department is required.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <span class="pull-right form-header">Experience <span class="text-danger">*</span></span>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-wrapper">
+                            <ng-multiselect-dropdown
+                                [placeholder]="'Experience Levels'"
+                                [settings]="dropdownSettings"
+                                [data]="formData.experienceLevels"
+                                formControlName = "experienceLevel"
+                                (onSelect)="onMultiSelectDropdownSelect($event, 'experience')"
+                                (onSelectAll)="onMultiSelectDropdownSelectAll($event, 'experience')">
+                            </ng-multiselect-dropdown>
+                            <i class="fa fa-question-circle" aria-hidden="true" tooltip="How experience candidates should be" containerClass="raft-tooltip"></i>
+                        </div>
+                        <div *ngIf="experienceLevel.invalid && (experienceLevel.dirty || experienceLevel.touched)" class="invalid-text pull-right text-danger">
+                            <div *ngIf="experienceLevel.errors?.['required']">
+                                Experience is required.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <span class="pull-right form-header">Expiry Date</span>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-wrapper">
+                            <input type="text" class="input-email" #dp="bsDatepicker" style="width: 100%;" placeholder="Enter Expiry date" bsDatepicker [bsConfig]="datePickerConfig" formControlName='closeBy'>
+                            <i class="fa fa-question-circle" aria-hidden="true" tooltip="Date by which position should be fulfilled" containerClass="raft-tooltip"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <span class="pull-right form-header">FG Id</span>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-wrapper">
+                            <input type="text" class="input-email" placeholder="Enter FieldGlass Id" style="width: 100%;" formControlName='fgId'>
+                            <i class="fa fa-question-circle" aria-hidden="true" tooltip="Position’s field glass id on client’s portal" containerClass="raft-tooltip"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <span class="pull-right form-header">No of Positions <span class="text-danger">*</span></span>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-wrapper">
+                            <input type="number" class="input-email" placeholder="Enter No of Positions" min="1" style="width: 100%;" formControlName='vacancy'
+                                [ngClass]="{'border border-danger' : vacancy.invalid && (vacancy.dirty || vacancy.touched)}">
+                            <i class="fa fa-question-circle" aria-hidden="true" tooltip="How many candidates to hire?" containerClass="raft-tooltip"></i>
+                        </div>
+                        <div *ngIf="vacancy.invalid && (vacancy.dirty || vacancy.touched)" class="invalid-text pull-right text-danger">
+                            <div *ngIf="title.errors?.['required']">
+                                No of positions required
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <span class="pull-right form-header">Recruiter <span class="text-danger">*</span></span>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-wrapper">
+                            <input type="text" class="input-email" placeholder="Enter Recruiter" style="width: 100%;" formControlName='recruiter'
+                                [ngClass]="{'border border-danger' : !isRecruiterSelected && (recruiter.dirty || recruiter.touched)}"
+                                [typeahead]="recruiterDataSource" [typeaheadAsync]="true"
+                                typeaheadOptionField="name" (typeaheadLoading)="changeTypeaheadLoading($event)" (typeaheadOnSelect)="onRecruiterSelected($event)"
+                                [adaptivePosition]="true" [typeaheadIsFirstItemActive]="false">
+                            <i class="fa fa-question-circle" aria-hidden="true" tooltip="Recruiter owning the position fulfilment" containerClass="raft-tooltip"></i>
+                        </div>
+                        <div *ngIf="!isRecruiterSelected && (recruiter.dirty || recruiter.touched)" class="invalid-text pull-right text-danger">
+                            Recruiter is required.
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 7px;">
+                    <div class="col-md-2">
+                        <span class="pull-right form-header">Skills <span class="text-danger">*</span></span>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-wrapper">
+                            <input type="text" class="input-email" placeholder="Enter Skills" formControlName='skills' style="width: 100%;"
+                                [typeahead]="allSkills" [typeaheadIsFirstItemActive]="false" (typeaheadOnSelect)="onSkillTypeAheadSelect($event)"
+                                [ngClass]="{'border border-danger' : selectedSkills.length === 0 && (skills.dirty || skills.touched)}">
+                            <i class="fa fa-question-circle" aria-hidden="true" tooltip="What are the skills required?" containerClass="raft-tooltip"></i>
+                        </div>
+                        <div *ngIf="selectedSkills.length === 0 && (skills.dirty || skills.touched)" class="invalid-text pull-right text-danger">
+                            Skills are required.
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="pills" *ngFor="let skill of selectedSkills" style="margin-bottom: 5px;">
+                            {{skill}}
+                            <i class="fa fa-times" style="padding-left: 2px; cursor: pointer;" (click)='removeSkill(skill)'></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <span class="pull-right form-header">Description</span>
+                    </div>
+                    <div class="col-md-10">
+                        <textarea class="form-control" placeholder="Enter Description" formControlName='description'></textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <button class="btn primary-btn float-end" popover="Please fill up all the mandatory fields." placement="left" triggers="" [isOpen]="showSubmitTooltip" (click)='createPosition()'><strong>Submit</strong></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

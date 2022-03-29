@@ -1,0 +1,14 @@
+<div class="position-details" *ngIf="selectedRow">
+    <app-position-details-header [selectedRow]='selectedRow'></app-position-details-header>
+    <app-position-details-info [selectedRow]="selectedRow"></app-position-details-info>
+    <form [formGroup]='tabs'>
+        <div class="btn-group" style="margin-bottom: 15px;">
+            <label class="btn primary-btn" btnCheckbox role="button" formControlName="candidates" [class.active]="tabs.value.candidates" (click)='updateTab("candidates")'>Mapped Candidates</label>
+            <label class="btn primary-btn" btnCheckbox role="button" formControlName="auditTrail" [class.active]="tabs.value.auditTrail" (click)='updateTab("auditTrail")'>Audit Trail</label>
+            <label class="btn primary-btn" btnCheckbox role="button" formControlName="description" [class.active]="tabs.value.description" (click)='updateTab("description")'>Description</label>
+        </div>
+    </form>
+    <app-mapped-candidates *ngIf="tabs.value.candidates" [position]="selectedRow"></app-mapped-candidates>
+    <app-job-description *ngIf="tabs.value.description" [description]="selectedRow.description"></app-job-description>
+    <app-audit-trail [position]="selectedRow" *ngIf="tabs.value.auditTrail"></app-audit-trail>
+</div>

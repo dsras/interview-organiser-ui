@@ -1,0 +1,49 @@
+@use "sass:map";
+@import './common.scss';
+
+.modal-wrapper {
+    font-family: 'Poppins', sans-serif;
+    .modal-content {
+        width: 400px;
+    }
+    .modal-body {
+        padding: 30px;
+        .fa-times-rectangle {
+            font-size: 20px;
+            color: red;
+            padding-right: 10px;
+        }
+        .fa-check-square {
+            font-size: 20px;
+            color: green;
+            padding-right: 10px;   
+        }
+    }
+    .modal-footer {
+        .btn {
+            font-size: 10px;
+            height: 25px;
+            padding-top: 5px;
+        }
+    }
+    .modal-footer {
+        justify-content: center;
+        padding: 5px;
+    }
+}
+.modal-header {
+    background-color: map.get($theme-colors, "main");
+    padding: 10px 10px 10px 20px !important;
+    color: #fff;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    .modal-title {
+        font-size: 12px;
+    }
+    button {
+        padding: 0;
+        :hover {
+            color: map.get($theme-colors, "selectedColor");
+        }
+    }
+}

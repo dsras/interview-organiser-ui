@@ -9,8 +9,8 @@ import {
 
 declare const require: {
   context(path: string, deep?: boolean, filter?: RegExp): {
-    <T>(id: string): T;
     keys(): string[];
+    <T>(id: string): T;
   };
 };
 
@@ -18,6 +18,7 @@ declare const require: {
 getTestBed().initTestEnvironment(
   BrowserDynamicTestingModule,
   platformBrowserDynamicTesting(),
+  { teardown: { destroyAfterEach: true }},
 );
 
 // Then we find all the tests.

@@ -1,0 +1,16 @@
+<div>
+    <div class="modal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <i class="fa fa-times-rectangle" *ngIf="type === 'error'"></i>
+                    <i class="fa fa-check-square" *ngIf="type === 'success'"></i>
+                    <span class="text-center" [ngClass]="{'text-success': type === 'success', 'text-danger': type === 'error'}">{{message}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" (click)="closeModal()" [ngClass]="{'btn-success': type === 'success', 'btn-danger': type === 'error'}">OK</button>
+    </div>
+</div>

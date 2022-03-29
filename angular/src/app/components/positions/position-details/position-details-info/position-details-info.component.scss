@@ -1,0 +1,55 @@
+@use "sass:map";
+@import '../../../../common/styles/common.scss';
+
+.job-details {
+    padding: 10px;
+    background: map.get($theme-colors, "selectedColorWithAlpha");
+    // border: 1px solid #e0e0e0;
+    margin-bottom: 20px;
+
+    ul {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+
+        li {
+            line-height: 16px;
+            display: flex;
+            padding: 10px 15px;
+            margin: 0;
+            flex: 0 0 25%;
+            div {
+                margin-left: 15px;
+                position: relative;
+                strong {
+                    font-size: 11px;
+                    font-weight: 700;
+                    color: #333;
+                    width: 113px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    display: inline-block;
+                }
+                span {
+                    font-size: 11px;
+                    display: block;
+                }
+            }
+            i {
+                font-size: 16px;
+                color: #505050;
+                background: #fff;
+                border-radius: 3px;
+                height: 40px;
+                width: 40px;
+                text-align: center;
+                line-height: 35px;
+                /* position: absolute; */
+                flex: 0 0 40px;
+            }
+        }
+    }
+}

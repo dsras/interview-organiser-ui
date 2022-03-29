@@ -1,0 +1,104 @@
+<ng-template #customItemTemplate let-model="item" let-index="index">
+    <span style="font-size: 10px;">{{model.candidateName}} ({{model.candidateDetails.experience|experience}} - 
+        <span *ngFor="let sk of model.skill">
+            <app-pill [value]="sk"></app-pill>
+        </span>)
+    </span>
+</ng-template>
+
+<div class="candidate-mapping-wrapper">
+    <div class="modal-header">
+        <h6 class="modal-title pull-left">Map Candidate</h6>
+        <button type="button" class="btn pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+            <i class="fa fa-times" aria-hidden="true"></i>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="container">
+            <form [formGroup]='candidateMappingForm'>
+                <div class="row">
+                    <div class="col-md-3">
+                        <span class="float-start" style="padding-top: 5px;">Candidate <span class="text-danger">*</span></span>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="input-wrapper">
+                            <input type="text" class="form-control" placeholder="Search Candidate"
+                                formControlName='candidate' [typeahead]="candidateDataSource" [typeaheadAsync]="true"
+                                (typeaheadLoading)="changeTypeaheadLoading($event)"
+                                [adaptivePosition]="true" (typeaheadOnSelect)="onSelect($event)"
+                                [typeaheadItemTemplate]="customItemTemplate"
+                                [typeaheadIsFirstItemActive]="false" [attr.disabled] = '!isEdit ? true : null'>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <span class="float-start" style="padding-top: 5px;">Client Interaction <span class="text-danger">*</span></span>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="input-wrapper">
+                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" formControlName='clientInteractionStatus'>
+                                <option value="{{interaction.value}}" *ngFor="let interaction of clientInteractionStatus">{{interaction.key}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <span class="float-start" style="padding-top: 5px;">Client Onboarding <span class="text-danger">*</span></span>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="input-wrapper">
+                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" formControlName='clientOnboardingStatus'>
+                                <option value="{{boarding.value}}" *ngFor="let boarding of clientOnboardingStatus">{{boarding.key}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <span class="float-start" style="padding-top: 5px;">Interview Date</span>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="input-wrapper date-wrapper">
+                            <input type="text" class="form-control input-email" placeholder="Interview Date"
+                                #dp="bsDatepicker" bsDatepicker [bsConfig]="datePickerConfig" placement="top"
+                                formControlName='interviewDate'>
+                        </div>
+                        <i class="fa fa-calendar" (click)='openCalendar(dp)'></i>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <span class="float-start" style="padding-top: 5px;">Comment <span class="text-danger">*</span></span>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="input-wrapper">
+                            <textarea class="form-control" placeholder="Enter comment"
+                                formControlName='comment' [ngClass]="{'border border-danger' : comment.invalid && (comment.dirty || comment.touched)}"></textarea>
+                        </div>
+                        <div *ngIf="comment.invalid && (comment.dirty || comment.touched)" class="invalid-text pull-right text-danger">
+                            <div *ngIf="comment.errors?.['required']">
+                                Comment is required.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="alert alert-danger" role="alert" *ngIf="errorMsg">
+                        {{errorMsg}}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn primary-btn float-end" [disabled]="!candidateMappingForm.valid" (click)='mapCandidate()'><strong>Map Candidate</strong></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

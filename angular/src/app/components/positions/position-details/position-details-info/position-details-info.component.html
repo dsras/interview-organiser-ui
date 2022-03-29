@@ -1,0 +1,88 @@
+<div class="job-details">
+    <ul>
+        <li>
+            <i class="fa fa-usd"></i>
+            <div>
+                <span>Account</span>
+                <strong>{{selectedRow$.account}}</strong>
+            </div>
+        </li>
+        <li>
+            <i class="fa fa-briefcase"></i>
+            <div>
+                <span>BU</span>
+                <strong>{{selectedRow$.buCode}}</strong>
+            </div>
+        </li>
+        <li>
+            <i class="fa fa-user"></i>
+            <div>
+                <span>Client Manager</span>
+                <strong>{{selectedRow$.clientHiringManager}}</strong>
+            </div>
+        </li>
+        <li>
+            <i class="fa fa-building"></i>
+            <div>
+                <span>Department</span>
+                <strong>{{selectedRow$.department}}</strong>
+            </div>
+        </li>
+        <li>
+            <i class="fa fa-building"></i>
+            <div>
+                <span>FG Id</span>
+                <strong>{{selectedRow$.fgId}}</strong>
+            </div>
+        </li>
+        <li>
+            <i class="fa fa-map-marker"></i>
+            <div>
+                <span>Location</span>
+                <strong class="location" tooltip="{{selectedRow$.location}}" containerClass="raft-tooltip">{{selectedRow$.location}}</strong>
+            </div>
+        </li>
+        <li>
+            <i class="fa fa-etsy"></i>
+            <div>
+                <span>Experience Level</span>
+                <strong>{{selectedRow$.experienceLevel}} Years</strong>
+            </div>
+        </li>
+        <li>
+            <i class="fa fa-user"></i>
+            <div>
+                <span>Recruiter</span>
+                <strong>{{selectedRow$.recruiter.name}}</strong>
+            </div>
+        </li>
+        <li>
+            <i class="fa fa-user"></i>
+            <div>
+                <span>Resource Manager</span>
+                <strong>{{selectedRow$.resourceManager.name}}</strong>
+            </div>
+        </li>
+        <li>
+            <i class="fa fa-user"></i>
+            <div>
+                <span>Tech Head</span>
+                <strong>{{selectedRow$.techHead.name}}</strong>
+            </div>
+        </li>
+        <li>
+            <i class="fa fa-calendar"></i>
+            <div>
+                <span>Expiry Date</span>
+                <strong>{{selectedRow$.closeBy}}</strong>
+            </div>
+        </li>
+        <li>
+            <i class="fa fa-user"></i>
+            <div>
+                <span>No of Positions</span>
+                <strong>{{selectedRow$.vacancy}}</strong>
+            </div>
+        </li>
+    </ul>
+</div>

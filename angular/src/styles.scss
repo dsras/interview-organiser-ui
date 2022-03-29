@@ -1,1 +1,115 @@
+@use "sass:map";
+@import './app/common/styles/common.scss';
+@import './app/common/styles/ag-grid.scss';
+@import './app/common/styles/modal.scss';
+
 /* You can add global styles to this file, and also import other style files */
+html, body {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    overflow: hidden;
+    background-color: #f2f2f2;;
+    .primary-btn {
+        height: auto;
+        background-color: map.get($theme-colors, "selectedColorWithAlpha");
+        border: none;
+        font-size: 10px;
+        color: map.get($theme-colors, "main");
+        i {
+            font-size: 12px;
+            margin-right: 3px;
+        }
+    }
+    .primary-btn:focus {
+        outline: none;
+        box-shadow: none;
+    }
+    .primary-btn:hover {
+        background-color: map.get($theme-colors, "selectedColor");
+        color: #fff;
+    }
+
+    .ag-theme-alpine {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    //[ inputs]
+    .input-wrapper {
+        display: flex;
+        place-items: center;
+        margin-bottom: 15px;
+
+        input {
+            height: 35px;
+            border: 1px solid lightgray;
+            border-radius: 5px;
+            padding-left: 10px;
+            font-size: 12px;
+        }
+        input:focus-visible {
+            border: 1px solid;
+            border-color: map.get($theme-colors, "selectedColor");
+            outline: none;
+        }
+
+        .btn {
+            margin-top: 20px;
+        }
+    }
+    .raft-tooltip {
+        font-size: 10px;
+        .tooltip-inner {
+            background-color: lightgray;
+            color: black;
+        }
+        .tooltip-arrow {
+            border-top-color: lightgray !important;
+        }
+    }
+}
+
+/* NGX Bootstrap Datepicker changes; theme-default unique class */
+.bs-datepicker.theme-default {
+    font-family: 'Poppins', sans-serif;
+    font-size: smaller;
+    .bs-datepicker-body {
+        min-height: 0px;
+        min-width: 0px;
+        table {
+            font-family: 'Poppins', sans-serif;
+            font-size: smaller;
+            .week, th:first-child {
+                display: none;
+            }
+            &.days span {
+                width: 20px;
+                height: 20px;
+                line-height: 20px;
+            }
+        }
+    }
+    .bs-datepicker-head {
+        background-color: map.get($theme-colors, "selectedColor") !important;
+    }
+}
+
+/* NGX Bootstrap Typeahead changes */
+typeahead-container {
+    button {
+        font-family: 'Poppins', sans-serif;
+        font-size: smaller;
+        &:hover{
+            background-color: map.get($theme-colors, "selectedColor") !important;
+        }
+    }
+}
+
+/* Importing Datepicker SCSS file. */
+@import "~ngx-bootstrap/datepicker/bs-datepicker";
+
+
+.popover-content {
+    background-color: #f2969742;
+    color: red !important;
+}

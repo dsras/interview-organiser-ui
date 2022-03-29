@@ -1,0 +1,88 @@
+@use "sass:map";
+@import '../../common/styles/common.scss';
+
+.header-main {
+    background-color: map.get($theme-colors , "main");
+    width: 100%;
+    height: 50px;
+
+    .app-title {
+        line-height: 50px;
+        font-family: 'Poppins', sans-serif;
+        font-size: 16px;
+        color: map.get($theme-colors, "logoColor");
+    }
+
+    .menu {
+        line-height: 50px;
+        font-family: 'Poppins', sans-serif;
+        font-size: 12px;
+        color: map.get($theme-colors, "menuColor");
+        cursor: pointer;
+    }
+    .menu:hover {
+        color: map.get($theme-colors, "menuHoverColor");
+    }
+    .selected {
+        color: map.get($theme-colors, "selectedColor");
+    }
+    #button-animated {
+        margin-top: 8px;
+        font-size: 11px;
+        display: block;
+        height: 35px;
+        width: 35px;
+        border-radius: 50%;
+        flex: unset;
+    }
+    .dropdown-menu {
+        font-size: 11px;
+    }
+    .dropdown-toggle::after {
+        display: none;
+    }
+    img {
+        height: 24px;
+    }
+    .logo-wrapper {
+        span {
+            font-size: 14px;
+            margin-left: 5px;
+        }
+        cursor: pointer;
+        .thumbnail {
+            font-size: 9px;
+            margin-top: -17px;
+            color: lightgrey;
+            margin-left: 29px;
+            width: 180px;
+        }
+    }
+    #dropdown-animated {
+        transform: translate(-52px, -11px) !important;
+        border: 1px solid;
+        border-color: map.get($theme-colors, "selectedColorWithAlpha");
+        .dropdown-item:hover {
+            color: #1e2125 !important;
+            background-color: #fff !important;
+        }
+        .dropdown-item:focus {
+            color: #1e2125 !important;
+            background-color: #fff !important; 
+        }
+    }
+    #button-animated {
+        right: -60px;
+        i {
+            font-size: 30px;
+            margin-left: -10px;
+            margin-top: -5px;
+        }
+        .rounded-circle {
+            position: relative;
+            height: 29px;
+            left: -10px;
+            top: -4px;
+        }
+    }
+}
