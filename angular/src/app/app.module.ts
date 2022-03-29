@@ -43,13 +43,13 @@ import { GoogleLoginProvider } from 'angularx-social-login';
 // import { PositionDetailsInfoComponent } from './components/positions/position-details/position-details-info/position-details-info.component';
 // import { CandidateStatusFormatterComponent } from './components/candidates/cell-renderers/candidate-status-formatter/candidate-status-formatter.component';
 // import { DatePipe } from './pipes/date.pipe';
-// import { NgxSpinnerModule } from 'ngx-spinner';
- import { APPCONSTANTS, prodEnv } from './constants/app.constant';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { APPCONSTANTS, prodEnv } from './constants/app.constant';
 // import { GridComponent } from './components/grid/grid.component';
 // import { MappedCandidateEditComponent } from './components/candidates/cell-renderers/mapped-candidate-edit/mapped-candidate-edit.component';
 // import { ExperiencePipe } from './pipes/experience.pipe';
 // import { SkillRendererComponent } from './components/candidates/cell-renderers/skill-renderer/skill-renderer.component';
-// import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 // import { AgingRendererComponent } from './components/candidates/cell-renderers/aging-renderer/aging-renderer.component';
 
 const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_DEV;
@@ -98,9 +98,9 @@ const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCON
         SocialLoginModule,
         BsDropdownModule.forRoot(),
         PopoverModule.forRoot(),
-        //NgxSpinnerModule,
+        NgxSpinnerModule,
         TooltipModule.forRoot(),
-        //NgMultiSelectDropDownModule.forRoot()
+        NgMultiSelectDropDownModule.forRoot()
     ],
     providers: [
         DataSourceService,
