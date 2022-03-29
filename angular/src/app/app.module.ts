@@ -51,6 +51,8 @@ import { ExperiencePipe } from './pipes/experience.pipe';
 import { SkillRendererComponent } from './components/candidates/cell-renderers/skill-renderer/skill-renderer.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { AgingRendererComponent } from './components/candidates/cell-renderers/aging-renderer/aging-renderer.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { CalendarComponent } from './components/calendar/calendar.component';
 
 const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_DEV;
 @NgModule({
@@ -81,7 +83,9 @@ const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCON
         MappedCandidateEditComponent,
         ExperiencePipe,
         SkillRendererComponent,
-        AgingRendererComponent
+        AgingRendererComponent,
+        DashboardComponent,
+        CalendarComponent
     ],
     imports: [
         BrowserModule,
