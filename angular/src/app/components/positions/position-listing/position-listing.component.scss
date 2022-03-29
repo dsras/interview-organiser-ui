@@ -1,0 +1,43 @@
+@use "sass:map";
+@import '../../../common/styles/common.scss';
+
+.position-listing-main {
+    font-family: 'Poppins', sans-serif;
+    height: 100%;
+    font-size: 10px;
+    .total-text {
+        font-size: 12px;
+        color: grey;
+    }
+    .total-value {
+        font-size: 14px;
+        color: map.get($theme-colors, "selectedColor");
+    }
+    .quick-filter {
+        height: 27px;
+        font-size: 10px;
+        outline: none;
+        box-shadow: none;
+        display: inline-block !important;
+    }
+    .quick-filter:focus, .form-select-sm:focus {
+        outline: none;
+        box-shadow: none;
+        border-color: map.get($theme-colors, "main");
+    }
+    .remove-search {
+        position: relative;
+        font-size: 14px;
+        top: -21px;
+        right: -142px;
+        color: gray;
+        cursor: pointer;
+    }
+    .remove-search:hover {
+        color: map.get($theme-colors, "selectedColor");
+    }
+    select {
+        height: 27px;
+        font-size: 10px;
+    }
+}

@@ -65,9 +65,9 @@ class SSOCONSTANTS {
     //61469011957-3mb05n2d9sgk20l4tqeu8crao3klq781.apps.googleusercontent.com
 
     //CLIENT_ID_PROD: string = '575804833966-mvu3im6bd5t0etevag351l4ep5accc6n.apps.googleusercontent.com';
-    CLIENT_ID_PROD: string = '61469011957-3mb05n2d9sgk20l4tqeu8crao3klq781.apps.googleusercontent.com';
+    CLIENT_ID_PROD: string = '61469011957-hah5f0jktnj1l7nim4i2v8i363qua2rs.apps.googleusercontent.com';
     //CLIENT_ID_DEV: string = "879459911972-115u5kpqekutrm3vp8sjp8ebdb8idhu2.apps.googleusercontent.com"
-    CLIENT_ID_DEV: string = "61469011957-3mb05n2d9sgk20l4tqeu8crao3klq781.apps.googleusercontent.com"
+    CLIENT_ID_DEV: string = "61469011957-hah5f0jktnj1l7nim4i2v8i363qua2rs.apps.googleusercontent.com"
 
 }
 export class APPCONSTANTS {

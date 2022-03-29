@@ -62,7 +62,6 @@ export class LoginComponent implements OnInit, ILoginComponent {
         });
     }
     sso(): void {
-        console.log("sso Activated");
         localStorage.setItem('userType', 'social');
         this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
     }

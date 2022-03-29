@@ -1,0 +1,38 @@
+<div class="header-main">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-9 logo-wrapper">
+                <img src="../../../assets/images/logo-sm.svg" (click)="navigateHome()" />
+                <span class="app-title" (click)="navigateHome()">RAFT</span>
+                <p class="thumbnail" (click)="navigateHome()">Requirements and Fullfilment Tracker</p>
+            </div>
+            <div class="col-md-1" *ngIf="isHeader">
+                <span class="menu" (click)="onMenuChange('positions')" [ngClass]="getSelectedClass('positions')">Positions</span>
+            </div>
+            <div class="col-md-1" *ngIf="isHeader">
+                <span class="menu" (click)="onMenuChange('candidates')" [ngClass]="getSelectedClass('candidates')">Candidates</span>
+            </div>
+            <div class="btn-group col-md-1" dropdown placement="bottom left" *ngIf="isHeader">
+                <button id="button-animated" dropdownToggle type="button" class="btn btn-secondary dropdown-toggle float-end"
+                    aria-controls="dropdown-animated">
+                    <img [src]="user.photoUrl" class="rounded-circle" *ngIf="user">
+                    <i class="fa fa-user-circle" aria-hidden="true" *ngIf="!user"></i>
+                </button>
+                <ul id="dropdown-animated" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-animated">
+                    <li role="menuitem" style="cursor: pointer;">
+                        <span class="dropdown-item" *ngIf="user" style="padding-left: 70px;">
+                            <img [src]="user.photoUrl" class="rounded-circle" style="height: 30px;">
+                            <p style="margin-left: -35px;">{{user.name}}</p>
+                        </span>
+                        <span class="dropdown-item" style="display: grid;">
+                            <button class="btn primary-btn" (click)="logout()">
+                                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                Logout
+                            </button>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

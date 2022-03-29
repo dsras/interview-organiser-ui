@@ -1,0 +1,8 @@
+<div class="grid-container" [style.height.px]="gridConfig.height" *ngIf="gridOptions && gridConfig">
+    <ag-grid-angular
+        class="ag-theme-alpine raft-grid {{gridName}}"
+        [gridOptions]="gridOptions"
+        (gridReady)="onGridReady($event)"
+        (selectionChanged)="onSelectionChanged($event)">
+    </ag-grid-angular>
+</div>

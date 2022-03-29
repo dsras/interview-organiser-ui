@@ -1,0 +1,68 @@
+@use "sass:map";
+@import '../../common/styles/common.scss';
+
+.candidates-main {
+    font-family: 'Poppins', sans-serif;
+    padding-top: 10px;
+    .grid-container {
+        padding-top: 10px;
+    }
+    .total-text {
+        font-size: 12px;
+        color: grey;
+    }
+    .total-value {
+        font-size: 14px;
+        color: map.get($theme-colors, "selectedColor");
+    }
+    .form-select {
+        font-size: 10px;
+        margin-right: 15px;
+        max-width: 153px;
+    }
+    .form-select:focus, .quick-filter:focus {
+        outline: none;
+        box-shadow: none;
+        border-color: map.get($theme-colors, "main");
+    }
+    .filter-text {
+        font-size: 7px;
+    }
+    .quick-filter {
+        width: 250px;
+        font-size: 10px;
+        display: inline;
+        height: 25px;
+        margin-right: 15px;
+    }
+    .remove-search {
+        position: relative;
+        font-size: 14px;
+        top: 1px;
+        right: -572px;
+        color: gray;
+        cursor: pointer;
+    }
+    .remove-search:hover {
+        color: map.get($theme-colors, "selectedColor");
+    }
+    .pill {
+        margin-bottom: 7px;
+        display: inline-block;
+    }
+    .export-btn {
+        height: auto;
+        border: none;
+        font-size: 10px;
+        color: #FFF;
+        margin-right: 10px;
+        i {
+            font-size: 12px;
+            margin-right: 3px;
+        }
+    }
+    .export-btn:focus {
+        outline: none;
+        box-shadow: none;
+    }
+}

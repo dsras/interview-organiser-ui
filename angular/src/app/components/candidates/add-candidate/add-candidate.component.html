@@ -1,0 +1,189 @@
+<div class="create-candidate-wrapper">
+    <div class="modal-header">
+        <h6 class="modal-title pull-left">{{(isEditCandidate) ? 'Edit' : 'Add'}} Candidate</h6>
+        <button type="button" class="btn pull-right" aria-label="Close" (click)="modalRef?.hide()">
+            <i class="fa fa-times" aria-hidden="true"></i>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="container candidate-form">
+            <form [formGroup]='candidateForm'>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span class="pull-right form-header">Name <span class="text-danger">*</span></span>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="input-wrapper">
+                            <input class="form-control form-value input-email" type="text" placeholder="Name" formControlName='candidateName'
+                                [ngClass]="{'border border-danger' : candidateName.invalid && (candidateName.dirty || candidateName.touched)}">
+                        </div>
+                        <div *ngIf="candidateName.invalid && (candidateName.dirty || candidateName.touched)" class="invalid-text pull-right text-danger">
+                            <div *ngIf="candidateName.errors?.['required']">
+                                Name is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span class="pull-right form-header">Email <span class="text-danger">*</span></span>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="input-wrapper">
+                            <input class="form-control form-value input-email" type="text" placeholder="Email" formControlName='candidateEmail'
+                                [ngClass]="{'border border-danger' : candidateEmail.invalid && (candidateEmail.dirty || candidateEmail.touched)}">
+                        </div>
+                        <div *ngIf="candidateEmail.invalid && (candidateEmail.dirty || candidateEmail.touched)" class="invalid-text pull-right text-danger">
+                            <div *ngIf="!candidateEmail.errors?.['email'] && candidateEmail.errors?.['required']">
+                                Email is required
+                            </div>
+                            <div *ngIf="candidateEmail.errors?.['email']">
+                                Email format is not correct
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span class="pull-right form-header">Mobile</span>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="input-wrapper">
+                            <input class="form-control form-value input-email" type="number" placeholder="Mobile" formControlName='mobile'>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span class="pull-right form-header">Prior Experience <span class="text-danger">*</span></span>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-wrapper">
+                            <input class="form-control form-value input-email" type="number" min="0" placeholder="Year" formControlName='experienceYears'
+                                [ngClass]="{'border border-danger' : experienceYears.invalid && (experienceYears.dirty || experienceYears.touched)}">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-wrapper">
+                            <input class="form-control form-value input-email" type="number" min="0" placeholder="Month" formControlName='experienceMonths'
+                                [ngClass]="{'border border-danger' : experienceMonths.invalid && (experienceMonths.dirty || experienceMonths.touched)}">
+                        </div>
+                    </div>
+                    <div *ngIf="experienceYears.invalid && (experienceYears.dirty || experienceYears.touched) || experienceMonths.invalid && (experienceMonths.dirty || experienceMonths.touched)" class="col-12 invalid-text text-danger" style="text-align:end;">
+                        <div *ngIf="!experienceYears.errors?.['min'] && !experienceMonths.errors?.['min'] && (experienceYears.errors?.['required'] || experienceMonths.errors?.['required'])">
+                            Prior Experience is required
+                        </div>
+                        <div *ngIf="experienceYears.errors?.['min'] || experienceMonths.errors?.['min']">
+                            Prior Experience can not be in negative
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span class="pull-right form-header" style="text-align: right;">Accolite Onboarding Status <span class="text-danger">*</span></span>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="input-wrapper">
+                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" formControlName='accoliteOnboardingStatus' *ngIf="metadata" [ngClass]="{'border border-danger' : accoliteOnboardingStatus.invalid && (accoliteOnboardingStatus.dirty || accoliteOnboardingStatus.touched)}">
+                                <option value="{{item.key}}" *ngFor="let item of onBoardingStatus">{{item.value}}</option>
+                            </select>
+                        </div>
+                        <div *ngIf="accoliteOnboardingStatus.invalid && (accoliteOnboardingStatus.dirty || accoliteOnboardingStatus.touched)" class="invalid-text pull-right text-danger">
+                            <div *ngIf="accoliteOnboardingStatus.errors?.['required']">
+                                Accolite Onboarding Status is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span class="pull-right form-header">Expected/Joined Date</span>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            <div class="input-wrapper" style="width:90%;">
+                                <input type="text" class="input-email input-grp-cal" style="width:100%;" #dp2="bsDatepicker" placeholder="Expected/Joined Date" bsDatepicker [bsConfig]="datePickerConfig"
+                                    formControlName='joinDate'>
+                            </div>
+                            <span class="input-group-text cal-icon" (click)="dp2.toggle()" type="button"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span class="pull-right form-header">Link</span>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="input-wrapper">
+                            <input class="form-control form-value input-email" type="text" placeholder="Link" formControlName='link'>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span class="pull-right form-header">Location <span class="text-danger">*</span></span>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="input-wrapper">
+                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" formControlName='location' *ngIf="metadata" [ngClass]="{'border border-danger' : location.invalid && (location.dirty || location.touched)}">
+                                <option value="{{item.key}}" *ngFor="let item of locations">{{item.value}}</option>
+                            </select>
+                        </div>
+                        <div *ngIf="location.invalid && (location.dirty || location.touched)" class="invalid-text pull-right text-danger">
+                            <div *ngIf="location.errors?.['required']">
+                                Location is required.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span class="pull-right form-header">Offer Date</span>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            <div class="input-wrapper" style="width:90%;">
+                                <input type="text" class="input-email input-grp-cal" style="width:100%;" #dp1="bsDatepicker" placeholder="Offer Date" bsDatepicker [bsConfig]="datePickerConfig" formControlName='offerDate'>
+                            </div>
+                            <span class="input-group-text cal-icon" (click)="dp1.toggle()" type="button"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span class="pull-right form-header">Skills <span class="text-danger">*</span></span>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="input-wrapper">
+                            <input [typeahead]="candidateSkills" [adaptivePosition]="true" [typeaheadIsFirstItemActive]="false" (typeaheadOnSelect)="onSkillTypeAheadSelect($event)" class="form-control input-email" formControlName='skill' [ngClass]="{'border border-danger' : (selectedCandidateSkills.length === 0) && (skill.dirty || skill.touched)}">
+                        </div>
+                        <div *ngIf="(selectedCandidateSkills.length === 0) && (skill.dirty || skill.touched)" class="invalid-text pull-right text-danger">
+                                Skills is required.
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="selectedCandidateSkills.length > 0">
+                    <div class="offset-md-4 col-md-8" style="margin-bottom: 15px;">
+                        <span *ngFor="let skill of selectedCandidateSkills">
+                            <app-pill [value]="skill" [isRemove]="true" [cb]="removeSkill" [wrapper]="'inline-block'"></app-pill>
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span class="pull-right form-header">Comments</span>
+                    </div>
+                    <div class="col-md-8">
+                        <textarea class="form-control" placeholder="Enter Comments" formControlName='comments' style="font-size: 10px; height: 70px;"></textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn primary-btn" popover="Please fill up all the mandatory fields." placement="left" triggers=""
+            [isOpen]="showSubmitTooltip" (click)="createCandidate()" style="margin-right: 15px;">
+            <strong>Submit</strong>
+        </button>
+    </div>
+</div>

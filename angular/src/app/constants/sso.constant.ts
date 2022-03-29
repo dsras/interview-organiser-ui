@@ -15,5 +15,5 @@
     }
   } */
 export class SSOCONSTANT {
-    static readonly CLIENT_ID: '61469011957-etn1feijdcp2ap3af8sh6ri9pkf9v444.apps.googleusercontent.com'
+    static readonly CLIENT_ID: '61469011957-hah5f0jktnj1l7nim4i2v8i363qua2rs.apps.googleusercontent.com'
 }
