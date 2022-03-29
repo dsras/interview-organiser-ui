@@ -11,13 +11,9 @@ import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-<<<<<<< HEAD
-import { LoginComponent } from './login/login.component';
-=======
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
->>>>>>> 7152cab507282a95bbff6d48734e2d6ba52c2e41
 
 // [application components]
 import { LoginComponent } from './components/login/login.component';
@@ -58,18 +54,6 @@ import { AgingRendererComponent } from './components/candidates/cell-renderers/a
 
 const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_DEV;
 @NgModule({
-<<<<<<< HEAD
-  declarations: [
-    AppComponent,
-    LoginComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-=======
     declarations: [
         AppComponent,
         LoginComponent,
@@ -138,6 +122,5 @@ const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCON
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     bootstrap: [AppComponent]
->>>>>>> 7152cab507282a95bbff6d48734e2d6ba52c2e41
 })
 export class AppModule { }
