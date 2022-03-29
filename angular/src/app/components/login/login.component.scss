@@ -1,0 +1,38 @@
+@use "sass:map";
+@import '../../common/styles/common.scss';
+
+.login-main {
+    .login-image {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        height: 763px;
+        font-family: 'Poppins', sans-serif;
+        img {
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 80%;
+            display: block;
+            margin: 50px auto 20px;
+        }
+    }
+    .login-form {
+        font-family: 'Poppins', sans-serif;
+        min-height: 100vh;
+        display: block;
+        background-color: #f7f7f7;
+        padding: 173px 55px 55px;
+        .page-title {
+            span {
+                width: 100%;
+                display: block;
+                font-size: 30px;
+                color: #333;
+                line-height: 1.2;
+                text-align: center;
+                padding-bottom: 30px;
+            }
+        }
+    }
+}

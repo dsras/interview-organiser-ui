@@ -1,0 +1,74 @@
+.raft-grid {
+    .ag-row {
+        font-size: 11px !important;
+        .ag-cell-value {
+            border-right: 1px solid #ededed !important;
+            padding-left: 5px !important;
+            padding-right: 5px !important;
+        }
+    }
+    .ag-header {
+        background-color: map.get($theme-colors, "main") !important;
+        font-size: 10px;
+        .ag-header-cell-text {
+            color: #fff;
+            padding-left: 5px !important;
+            padding-right: 5px !important;
+        }
+    }
+    .ag-header-cell-text {
+        text-overflow: clip;
+        overflow: visible;
+        white-space: normal;
+    }
+    .ag-header-cell {
+        padding-left: 2px !important;
+        padding-right: 2px !important;
+    }
+    .pills {
+        background: #86797936;
+        border-radius: 5px;
+        padding: 4px;
+        font-size: 9px;
+        padding-left: 8px;
+        padding-right: 8px;
+        margin-right: 5px;
+    }
+    .bg-green {
+        background-color: green;
+        color: #FFF;
+    }
+    .bg-red {
+        background-color: red;
+        color: #FFF;
+    }
+    .bg-amber {
+        background-color: orange;
+    }
+    .candidate-edit {
+        font-size: 8px;
+        height: 18px;
+        padding-top: 2px;
+    }
+}
+
+.positionListingGrid {
+    .ag-row:hover {
+        cursor: pointer;
+        background-color: map.get($theme-colors, "selectedColorWithAlpha") !important;
+    }
+    .ag-row-selected {
+        background-color: map.get($theme-colors, "selectedColor") !important;
+    }
+}
+
+// [Grid specific styles]
+.mappedCandidatesGrid, .candidateGrid {
+    .ag-row:hover {
+        cursor: auto;
+        background-color: #fff;
+    }
+    .ag-row-selected {
+        background-color: #fff;
+    }
+}
