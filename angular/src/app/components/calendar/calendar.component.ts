@@ -67,6 +67,7 @@ const colors: any = {
 
 
 export class CalendarComponent {
+  @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
 
   constructor(private router: Router, private modal: NgbModal) { }
 
@@ -76,7 +77,6 @@ export class CalendarComponent {
 
 
 
-  @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
 
   view: CalendarView = CalendarView.Month;
 
@@ -84,7 +84,7 @@ export class CalendarComponent {
 
   viewDate: Date = new Date();
 
-  modalData: {
+  modalData!: {
     action: string;
     event: CalendarEvent;
   };
