@@ -53,6 +53,8 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { AgingRendererComponent } from './components/candidates/cell-renderers/aging-renderer/aging-renderer.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
+import { AvailabilityFormComponent } from './forms/availability-form/availability-form.component';
+import { SkillFormComponent } from './forms/skill-form/skill-form.component';
 
 const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_DEV;
 @NgModule({
@@ -85,7 +87,9 @@ const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCON
         SkillRendererComponent,
         AgingRendererComponent,
         DashboardComponent,
-        CalendarComponent
+        CalendarComponent,
+        AvailabilityFormComponent,
+        SkillFormComponent
     ],
     imports: [
         BrowserModule,
