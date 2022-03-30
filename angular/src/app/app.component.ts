@@ -7,7 +7,8 @@ import { DataSourceService } from './services/data-source.service';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit{
-    title = 'RaFT-ui';
+    /* !!! We need to put a name here */
+    title = 'Title';   
     constructor(private _dataSourceService: DataSourceService) {
     }
     ngOnInit() {

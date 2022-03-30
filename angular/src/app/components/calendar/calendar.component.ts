@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AvailabilityFormComponent } from 'src/app/forms/availability-form/availability-form.component';
 
 @Component({
   selector: 'app-calendar',
@@ -16,5 +17,7 @@ export class CalendarComponent implements OnInit {
   redirect(page: string) : void {
     this.router.navigate([page]);
   }
+
+  
 
 }
