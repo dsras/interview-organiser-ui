@@ -86,8 +86,7 @@ const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCON
         ExperiencePipe,
         SkillRendererComponent,
         AgingRendererComponent,
-        DashboardComponent,
-        CalendarComponent
+        DashboardComponent
     ],
     imports: [
         BrowserModule,
