@@ -21,4 +21,4 @@ import { CalendarComponent } from './calendar.component';
   declarations: [CalendarComponent],
   exports: [CalendarComponent],
 })
-export class DemoModule {}
+export class Calendar{}
