@@ -7,26 +7,26 @@ import { MDBModalRef } from 'ng-uikit-pro-standard';
 @Component({
   selector: 'app-modal-form',
   templateUrl: './modal-form.component.html',
-  styleUrls: ['./modal-form.component.css']
+  styleUrls: ['./modal-form.component.scss']
 })
 export class ModalFormComponent implements OnInit{
-  // validatingForm: FormGroup;
+  validatingForm: FormGroup;
 
   constructor(public modalRef: MDBModalRef) {
-    // this.validatingForm = new FormGroup({
-    //   loginFormModalEmail: new FormControl('', Validators.email),
-    //   loginFormModalPassword: new FormControl('', Validators.required)
-    // });
+    this.validatingForm = new FormGroup({
+      loginFormModalEmail: new FormControl('', Validators.email),
+      loginFormModalPassword: new FormControl('', Validators.required)
+    });
   }
 
   ngOnInit(): void {
   }
 
-  // get loginFormModalEmail() {
-  //   return this.validatingForm.get('loginFormModalEmail');
-  // }
+  get loginFormModalEmail() {
+    return this.validatingForm.get('loginFormModalEmail');
+  }
 
-  // get loginFormModalPassword() {
-  //   return this.validatingForm.get('loginFormModalPassword');
-  // }
+  get loginFormModalPassword() {
+    return this.validatingForm.get('loginFormModalPassword');
+  }
 }
