@@ -56,6 +56,8 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { AvailabilityFormComponent } from './forms/availability-form/availability-form.component';
 import { SkillFormComponent } from './forms/skill-form/skill-form.component';
 
+import { MyCalendarModule } from './components/calendar/module'
+
 const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_DEV;
 @NgModule({
     declarations: [
@@ -86,10 +88,7 @@ const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCON
         ExperiencePipe,
         SkillRendererComponent,
         AgingRendererComponent,
-        DashboardComponent,
-        CalendarComponent,
-        AvailabilityFormComponent,
-        SkillFormComponent
+        DashboardComponent
     ],
     imports: [
         BrowserModule,
@@ -108,7 +107,8 @@ const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCON
         PopoverModule.forRoot(),
         NgxSpinnerModule,
         TooltipModule.forRoot(),
-        NgMultiSelectDropDownModule.forRoot()
+        NgMultiSelectDropDownModule.forRoot(),
+        MyCalendarModule
     ],
     providers: [
         DataSourceService,
