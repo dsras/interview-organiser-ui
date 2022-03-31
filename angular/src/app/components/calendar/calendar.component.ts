@@ -1,13 +1,29 @@
- import { Router } from '@angular/router';
-
-import {Component, OnInit, ChangeDetectionStrategy,
-  ViewChild, TemplateRef, } from '@angular/core';
-import {startOfDay, endOfDay, subDays, addDays, endOfMonth,
-  isSameDay, isSameMonth, addHours, } from 'date-fns';
+import { Router } from '@angular/router';
+import {
+  Component, 
+  OnInit, 
+  ChangeDetectionStrategy,
+  ViewChild, 
+  TemplateRef, } from '@angular/core';
+import {
+  startOfDay, 
+  endOfDay, 
+  subDays, 
+  addDays, 
+  endOfMonth,
+  isSameDay, 
+  isSameMonth, 
+  addHours, } from 'date-fns';
 import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent,
-  CalendarView, } from 'angular-calendar';
+import {
+  CalendarEvent, 
+  CalendarEventAction, 
+  CalendarEventTimesChangedEvent,
+  CalendarView, 
+} from 'angular-calendar';
+import { ModalFormComponent } from '../modal-form/modal-form.component';
+import { MDBModalRef, MDBModalService } from 'ng-uikit-pro-standard';
 
 const colors: any = {
   red: {
@@ -23,11 +39,7 @@ const colors: any = {
     secondary: '#FDF1BA',
   },
 };
-// @Component({
-//   selector: 'app-calendar',
-//   templateUrl: './calendar.component.html',
-//   styleUrls: ['./calendar.component.scss']
-// })
+
 
 
 @Component({
@@ -45,21 +57,25 @@ const colors: any = {
       }
     `,
   ],
-  templateUrl: 'template.html',
+  templateUrl: './calendar.component.html',
 })
 
-
 export class CalendarComponent {
+  // modalRef: MDBModalRef | null = null;
+
   @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
 
-  constructor(private router: Router, private modal: NgbModal) { }
+  constructor(
+    private router: Router, 
+    private modal: NgbModal,
+    private modalService: MDBModalService,
+    ) {
+      
+    }
 
   redirect(page: string) : void {
     this.router.navigate([page]);
   }
-
-
-
 
   view: CalendarView = CalendarView.Month;
 
@@ -173,6 +189,7 @@ export class CalendarComponent {
     this.modal.open(this.modalContent, { size: 'lg' });
   }
 
+  // This is the default method that auto-generates an event for 'todays date'
   addEvent(): void {
     this.events = [
       ...this.events,
@@ -188,6 +205,24 @@ export class CalendarComponent {
         },
       },
     ];
+  }
+
+  addCustomEvent(): void {
+    this.events = [
+      ...this.events,
+      {
+        title: 'modalform output1',
+        start: startOfDay(new Date()),
+        end: endOfDay(new Date()),
+        color: colors.red,
+        draggable: true,
+        resizable: {
+          beforeStart: true,
+          afterEnd: true,
+        },
+      },
+    ];
+    this.modalService.show(ModalFormComponent)
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {
