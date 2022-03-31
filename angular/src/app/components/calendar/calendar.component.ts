@@ -1,12 +1,27 @@
 import { Router } from '@angular/router';
-import {Component, OnInit, ChangeDetectionStrategy,
-  ViewChild, TemplateRef, } from '@angular/core';
-import {startOfDay, endOfDay, subDays, addDays, endOfMonth,
-  isSameDay, isSameMonth, addHours, } from 'date-fns';
+import {
+  Component, 
+  OnInit, 
+  ChangeDetectionStrategy,
+  ViewChild, 
+  TemplateRef, } from '@angular/core';
+import {
+  startOfDay, 
+  endOfDay, 
+  subDays, 
+  addDays, 
+  endOfMonth,
+  isSameDay, 
+  isSameMonth, 
+  addHours, } from 'date-fns';
 import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent,
-  CalendarView, } from 'angular-calendar';
+import {
+  CalendarEvent, 
+  CalendarEventAction, 
+  CalendarEventTimesChangedEvent,
+  CalendarView, 
+} from 'angular-calendar';
 import { ModalFormComponent } from '../modal-form/modal-form.component';
 import { MDBModalRef, MDBModalService } from 'ng-uikit-pro-standard';
 
