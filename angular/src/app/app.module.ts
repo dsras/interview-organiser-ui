@@ -54,7 +54,11 @@ import { AgingRendererComponent } from './components/candidates/cell-renderers/a
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 
-import { MyCalendarModule } from './components/calendar/module'
+import { MyCalendarModule } from './components/calendar/module';
+import { ModalFormComponent } from './components/modal-form/modal-form.component'
+
+import { MDBBootstrapModulesPro } from 'ng-uikit-pro-standard';
+import { MDBSpinningPreloader } from 'ng-uikit-pro-standard';
 
 const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_DEV;
 @NgModule({
@@ -86,10 +90,12 @@ const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCON
         ExperiencePipe,
         SkillRendererComponent,
         AgingRendererComponent,
-        DashboardComponent
+        DashboardComponent,
+        ModalFormComponent
     ],
     imports: [
-        BrowserModule,
+        BrowserModule,  
+        MDBBootstrapModulesPro.forRoot(),
         AppRoutingModule,
         HttpClientModule,
         ReactiveFormsModule,
@@ -109,6 +115,7 @@ const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCON
         MyCalendarModule
     ],
     providers: [
+        MDBSpinningPreloader,
         DataSourceService,
         { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true },
         {
@@ -127,6 +134,7 @@ const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCON
         }
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
+    entryComponents: [ ModalComponent ]
 })
 export class AppModule { }
