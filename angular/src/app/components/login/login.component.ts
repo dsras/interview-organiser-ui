@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit, ILoginComponent {
                     password: user.idToken
                 }
                 //this.validate('social', loggedInObj);
-                this.router.navigate(['positions']);
+                this.router.navigate(['dashboard']);
             }
             console.log("reached1");
             console.log("info");

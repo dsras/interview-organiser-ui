@@ -54,7 +54,7 @@ import { AgingRendererComponent } from './components/candidates/cell-renderers/a
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 
-import { Calendar } from './components/calendar/module'
+import { MyCalendarModule } from './components/calendar/module'
 
 const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_DEV;
 @NgModule({
@@ -106,7 +106,7 @@ const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCON
         NgxSpinnerModule,
         TooltipModule.forRoot(),
         NgMultiSelectDropDownModule.forRoot(),
-        Calendar
+        MyCalendarModule
     ],
     providers: [
         DataSourceService,
