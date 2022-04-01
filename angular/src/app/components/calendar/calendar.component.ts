@@ -234,7 +234,7 @@ export class CalendarComponent {
       focus: true,
       show: false,
       ignoreBackdropClick: false,
-      class: 'modal-centre',
+      class: 'modal-lg modal-top',
       containerClass: 'bottom',
       animated: true
     });

@@ -45,4 +45,11 @@ export class ModalFormComponent implements OnInit{
   yell(): void {
     console.log('Yell')
   }
+
+  public test!: string;
+
+  setFormData(data: any): void {
+    this.test = data;
+
+  }
 }
