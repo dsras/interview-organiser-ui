@@ -65,6 +65,8 @@ export class CalendarComponent {
 
   @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
 
+  modalRef: MDBModalRef | null = null;
+
   constructor(
     private router: Router, 
     private modal: NgbModal,
@@ -207,22 +209,37 @@ export class CalendarComponent {
     ];
   }
 
-  addCustomEvent(): void {
-    this.events = [
-      ...this.events,
-      {
-        title: 'modalform output1',
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
-        color: colors.red,
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
-      },
-    ];
-    this.modalService.show(ModalFormComponent)
+  // addCustomEvent(): void {
+  //   this.events = [
+  //     ...this.events,
+  //     {
+  //       title: 'modalform output1',
+  //       start: startOfDay(new Date()),
+  //       end: endOfDay(new Date()),
+  //       color: colors.red,
+  //       draggable: true,
+  //       resizable: {
+  //         beforeStart: true,
+  //         afterEnd: true,
+  //       },
+  //     },
+  //   ];
+  //   this.modalService.show(ModalFormComponent)
+  // }
+
+  openModal() {
+    this.modalRef = this.modalService.show(ModalFormComponent, {
+      backdrop: true,
+      keyboard: true,
+      focus: true,
+      show: false,
+      ignoreBackdropClick: false,
+      class: 'modal-centre',
+      containerClass: 'bottom',
+      animated: true
+    });
+    this.modalRef.content.action.subscribe((result: any) => { console.log(result); });
+
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {
