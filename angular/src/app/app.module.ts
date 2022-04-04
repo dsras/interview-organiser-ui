@@ -52,13 +52,28 @@ import { SkillRendererComponent } from './components/candidates/cell-renderers/s
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { AgingRendererComponent } from './components/candidates/cell-renderers/aging-renderer/aging-renderer.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { CalendarComponent } from './components/calendar/calendar.component';
 
 import { MyCalendarModule } from './components/calendar/module';
-import { ModalFormComponent } from './components/modal-form/modal-form.component'
+// import { ModalFormComponent } from './components/modal-form/modal-form.component'
 
 import { MDBBootstrapModulesPro } from 'ng-uikit-pro-standard';
 import { MDBSpinningPreloader } from 'ng-uikit-pro-standard';
+import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
+import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
+import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
+import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
+import { MdbDropdownModule } from 'mdb-angular-ui-kit/dropdown';
+import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
+import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
+import { MdbPopoverModule } from 'mdb-angular-ui-kit/popover';
+import { MdbRadioModule } from 'mdb-angular-ui-kit/radio';
+import { MdbRangeModule } from 'mdb-angular-ui-kit/range';
+import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
+import { MdbScrollspyModule } from 'mdb-angular-ui-kit/scrollspy';
+import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
+import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
+import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
+import { AvailabilityFormComponent } from './components/forms/availability-form/availability-form.component';
 
 const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_DEV;
 @NgModule({
@@ -91,7 +106,8 @@ const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCON
         SkillRendererComponent,
         AgingRendererComponent,
         DashboardComponent,
-        ModalFormComponent
+        // ModalFormComponent,
+        AvailabilityFormComponent,
     ],
     imports: [
         BrowserModule,  
@@ -112,7 +128,22 @@ const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCON
         NgxSpinnerModule,
         TooltipModule.forRoot(),
         NgMultiSelectDropDownModule.forRoot(),
-        MyCalendarModule
+        MyCalendarModule,
+        MdbAccordionModule,
+        MdbCarouselModule,
+        MdbCheckboxModule,
+        MdbCollapseModule,
+        MdbDropdownModule,
+        MdbFormsModule,
+        MdbModalModule,
+        MdbPopoverModule,
+        MdbRadioModule,
+        MdbRangeModule,
+        MdbRippleModule,
+        MdbScrollspyModule,
+        MdbTabsModule,
+        MdbTooltipModule,
+        MdbValidationModule
     ],
     providers: [
         MDBSpinningPreloader,

@@ -22,8 +22,9 @@ import {
   CalendarEventTimesChangedEvent,
   CalendarView, 
 } from 'angular-calendar';
-import { ModalFormComponent } from '../modal-form/modal-form.component';
+// import { ModalFormComponent } from '../modal-form/modal-form.component';
 import { MDBModalRef, MDBModalService } from 'ng-uikit-pro-standard';
+import { AvailabilityFormComponent } from 'src/app/components/forms/availability-form/availability-form.component';
 
 const colors: any = {
   red: {
@@ -64,6 +65,8 @@ export class CalendarComponent {
   // modalRef: MDBModalRef | null = null;
 
   @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
+
+  modalRef: MDBModalRef | null = null;
 
   constructor(
     private router: Router, 
@@ -207,22 +210,37 @@ export class CalendarComponent {
     ];
   }
 
-  addCustomEvent(): void {
-    this.events = [
-      ...this.events,
-      {
-        title: 'modalform output1',
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
-        color: colors.red,
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
-      },
-    ];
-    this.modalService.show(ModalFormComponent)
+  // addCustomEvent(): void {
+  //   this.events = [
+  //     ...this.events,
+  //     {
+  //       title: 'modalform output1',
+  //       start: startOfDay(new Date()),
+  //       end: endOfDay(new Date()),
+  //       color: colors.red,
+  //       draggable: true,
+  //       resizable: {
+  //         beforeStart: true,
+  //         afterEnd: true,
+  //       },
+  //     },
+  //   ];
+  //   this.modalService.show(ModalFormComponent)
+  // }
+
+  openModal() {
+    this.modalRef = this.modalService.show(AvailabilityFormComponent, {
+      backdrop: true,
+      keyboard: true,
+      focus: true,
+      show: false,
+      ignoreBackdropClick: false,
+      class: '',
+      containerClass: 'bottom',
+      animated: true
+    });
+    this.modalRef.content.action.subscribe((result: any) => { console.log(result); });
+
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {

@@ -1,0 +1,20 @@
+<h3>Add/Amend your availability here!</h3>
+
+<form [formGroup]="availabilityForm" (ngSubmit)="onSubmit()">
+  <div formGroupName="timeSlot">
+    <h6>Time Slot</h6>
+
+    <label for="startTime">Start Time</label>
+    <input id="start-time" type='time' formControlName="startTime">
+
+    <label for="endTime">End Time</label>
+    <input id="end-time" type='time' formControlName="endTime">
+  </div>
+  <div>
+    <h6>Date</h6> 
+
+    <label for="date">Date</label>
+    <input id="date" type='date' formControlName="date">
+  </div>
+  <button class="btn btn-danger" type="submit" [disabled]="!availabilityForm.valid">Submit</button>
+</form>
