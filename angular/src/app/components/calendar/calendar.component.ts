@@ -229,7 +229,20 @@ export class CalendarComponent {
   //   this.modalService.show(ModalFormComponent)
   // }
 
+  openBlankModal() {
+    this.modalRef = this.modalService.show(AvailabilityFormComponent, {
+      backdrop: true,
+      keyboard: true,
+      focus: true,
+      show: false,
+      ignoreBackdropClick: false,
+      class: '',
+      containerClass: 'bottom',
+      animated: true
+    });
+    this.modalRef.content.action.subscribe((result: any) => { console.log(result); });
 
+  }
 
   openModal(dateSelected: Date, useDate: boolean) {
     

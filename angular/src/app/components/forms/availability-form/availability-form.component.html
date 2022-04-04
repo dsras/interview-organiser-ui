@@ -21,7 +21,7 @@
 
   <div class="card-body px-lg-5 pt-0">
 
-    <form [formGroup]="availabilityForm" class="md-form" style="color: #757575;">
+    <form [formGroup]="availabilityForm" (ngSubmit)="onSubmit()" class="md-form" style="color: #757575;">
       <div formGroupName="timeSlot">
         <h6>Time Slot</h6>
     
@@ -38,7 +38,10 @@
         <input id="date" type='date' formControlName="date">
       </div>
 
-      <button class="btn btn-outline-info btn-rounded btn-block z-depth-0 my-4 waves-effect" type="submit">Save</button>
+      <button
+       mdbBtn color="primary" 
+       type=""
+       [disabled]="!availabilityForm.valid">Save</button>
 
     </form>
   </div>
