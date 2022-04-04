@@ -73,4 +73,11 @@ export class ModalFormComponent implements OnInit{
     
     console.log(ModalFormComponent.events[0]);
   }
+
+  public test!: string;
+
+  setFormData(data: any): void {
+    this.test = data;
+
+  }
 }
