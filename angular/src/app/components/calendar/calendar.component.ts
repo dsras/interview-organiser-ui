@@ -22,8 +22,9 @@ import {
   CalendarEventTimesChangedEvent,
   CalendarView, 
 } from 'angular-calendar';
-import { ModalFormComponent } from '../modal-form/modal-form.component';
+// import { ModalFormComponent } from '../modal-form/modal-form.component';
 import { MDBModalRef, MDBModalService } from 'ng-uikit-pro-standard';
+import { AvailabilityFormComponent } from 'src/app/components/forms/availability-form/availability-form.component';
 
 const colors: any = {
   red: {
@@ -228,13 +229,13 @@ export class CalendarComponent {
   // }
 
   openModal() {
-    this.modalRef = this.modalService.show(ModalFormComponent, {
+    this.modalRef = this.modalService.show(AvailabilityFormComponent, {
       backdrop: true,
       keyboard: true,
       focus: true,
       show: false,
       ignoreBackdropClick: false,
-      class: 'modal-lg modal-top',
+      class: '',
       containerClass: 'bottom',
       animated: true
     });

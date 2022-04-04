@@ -52,10 +52,9 @@ import { SkillRendererComponent } from './components/candidates/cell-renderers/s
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { AgingRendererComponent } from './components/candidates/cell-renderers/aging-renderer/aging-renderer.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { CalendarComponent } from './components/calendar/calendar.component';
 
 import { MyCalendarModule } from './components/calendar/module';
-import { ModalFormComponent } from './components/modal-form/modal-form.component'
+// import { ModalFormComponent } from './components/modal-form/modal-form.component'
 
 import { MDBBootstrapModulesPro } from 'ng-uikit-pro-standard';
 import { MDBSpinningPreloader } from 'ng-uikit-pro-standard';
@@ -74,7 +73,7 @@ import { MdbScrollspyModule } from 'mdb-angular-ui-kit/scrollspy';
 import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
 import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
-import { AvailabilityFormComponent } from './forms/availability-form/availability-form.component';
+import { AvailabilityFormComponent } from './components/forms/availability-form/availability-form.component';
 
 const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_DEV;
 @NgModule({
@@ -107,8 +106,8 @@ const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCON
         SkillRendererComponent,
         AgingRendererComponent,
         DashboardComponent,
-        ModalFormComponent,
-        AvailabilityFormComponent
+        // ModalFormComponent,
+        AvailabilityFormComponent,
     ],
     imports: [
         BrowserModule,  
