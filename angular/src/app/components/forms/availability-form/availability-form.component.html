@@ -1,17 +1,4 @@
 <body (event)="setFormData($event)">
-<h3>Add/Amend your availability here!</h3>
-
-<div id="output" style="width: 500px;white-space: pre-line">This is your text!</div>
-<div class="modal-body" id = "body">
-  ...
-</div>
-<div class="modal-footer">
-  <div layout-align="start center">
-    <button type="button" mdbBtn color="warning" class="waves-light" aria-label="Add more" (click)="onNoClick()" mdbWavesEffect>Add more</button>
-  </div>
-  <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="onNoClick()" mdbWavesEffect>Close</button>
-  <button type="button" mdbBtn color="primary" class="relative waves-light" (click)="yell()" mdbWavesEffect>Save!</button>
-</div>
 
 <div class="card">
 
@@ -39,10 +26,7 @@
       </div>
 
       <button
-       mdbBtn color="primary" 
-       type=""
-       [disabled]="!availabilityForm.valid">Save</button>
-
+       mdbBtn color="primary" type="submit" [disabled]="!availabilityForm.valid">Save</button>
     </form>
   </div>
 </div>

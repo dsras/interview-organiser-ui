@@ -25,6 +25,7 @@ import {
 // import { ModalFormComponent } from '../modal-form/modal-form.component';
 import { MDBModalRef, MDBModalService } from 'ng-uikit-pro-standard';
 import { AvailabilityFormComponent } from 'src/app/components/forms/availability-form/availability-form.component';
+import { ViewAvailabilityModalComponent } from './view-availability-modal/view-availability-modal.component';
 
 const colors: any = {
   red: {
@@ -62,7 +63,6 @@ const colors: any = {
 })
 
 export class CalendarComponent {
-  // modalRef: MDBModalRef | null = null;
 
   @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
 
@@ -165,7 +165,7 @@ export class CalendarComponent {
         this.activeDayIsOpen = true;
       }
       this.viewDate = date;
-      this.openModal(date, true);
+      this.openDayModal(date, true);
 
     }
   }
@@ -229,7 +229,7 @@ export class CalendarComponent {
   //   this.modalService.show(ModalFormComponent)
   // }
 
-  openBlankModal() {
+  addAvailability() {
     this.modalRef = this.modalService.show(AvailabilityFormComponent, {
       backdrop: true,
       keyboard: true,
@@ -244,7 +244,7 @@ export class CalendarComponent {
 
   }
 
-  openModal(dateSelected: Date, useDate: boolean) {
+  openDayModal(dateSelected: Date, useDate: boolean) {
     
     var eventsOnDay= [];
     if(useDate){  
@@ -258,7 +258,7 @@ export class CalendarComponent {
       })
     }
 
-    var mfc = AvailabilityFormComponent;
+    var mfc = ViewAvailabilityModalComponent;
     this.modalRef = this.modalService.show(mfc, {
       backdrop: true,
       keyboard: true,
