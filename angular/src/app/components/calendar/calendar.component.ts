@@ -293,4 +293,13 @@ export class CalendarComponent {
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
   }
+
+  checkConnection(){
+    document.getElementById("headConnect")!.textContent = this.connection();
+  }
+
+  connection(){
+    return "message"
+  }
+
 }
