@@ -73,7 +73,6 @@ export class CalendarComponent {
     private modal: NgbModal,
     private modalService: MDBModalService,
     ) {
-      
     }
 
   redirect(page: string) : void {
