@@ -73,7 +73,6 @@ export class CalendarComponent {
     private modal: NgbModal,
     private modalService: MDBModalService,
     ) {
-      
     }
 
   redirect(page: string) : void {
@@ -96,7 +95,7 @@ export class CalendarComponent {
       label: '<i class="fas fa-fw fa-pencil-alt"></i>',
       a11yLabel: 'Edit',
       onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
+        //this.handleEvent('Edited', event);
       },
     },
     {
@@ -166,6 +165,8 @@ export class CalendarComponent {
         this.activeDayIsOpen = true;
       }
       this.viewDate = date;
+      this.openModal(date, true);
+
     }
   }
 
@@ -228,7 +229,7 @@ export class CalendarComponent {
   //   this.modalService.show(ModalFormComponent)
   // }
 
-  openModal() {
+  openBlankModal() {
     this.modalRef = this.modalService.show(AvailabilityFormComponent, {
       backdrop: true,
       keyboard: true,
@@ -241,6 +242,44 @@ export class CalendarComponent {
     });
     this.modalRef.content.action.subscribe((result: any) => { console.log(result); });
 
+  }
+
+  openModal(dateSelected: Date, useDate: boolean) {
+    
+    var eventsOnDay= [];
+    if(useDate){  
+      for (var index = 0; index < this.events.length; index++) {
+        if(isSameDay(this.events[index].start, dateSelected)){
+          eventsOnDay.push(this.events[index]);
+        }
+      }
+      eventsOnDay.forEach(function(eventSel){
+        console.log("From start: " + eventSel.start + ", to end: " + eventSel.end);
+      })
+    }
+
+    var mfc = AvailabilityFormComponent;
+    this.modalRef = this.modalService.show(mfc, {
+      backdrop: true,
+      keyboard: true,
+      focus: true,
+      show: false,
+      ignoreBackdropClick: false,
+      class: '',
+      containerClass: 'bottom',
+      animated: true
+    });
+    this.modalRef.content.action.subscribe((result: any) => { console.log(result); });
+
+    if(eventsOnDay.length == 0){
+      //new event
+    }
+    else{
+      mfc.addEventRef(eventsOnDay);
+    }
+
+   
+   
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {

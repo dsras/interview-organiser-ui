@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators, } from '@angular/forms';
-import { VerticalDirection } from 'ag-grid-community';
+import { CalendarEvent } from 'angular-calendar';
+import { Subject } from 'rxjs';
+
 
 @Component({
   selector: 'availability-form',
@@ -12,7 +14,9 @@ import { VerticalDirection } from 'ag-grid-community';
 export class AvailabilityFormComponent implements OnInit {
 
 
-  @Output() event:EventEmitter<string> = new EventEmitter();
+  // @Output() event:EventEmitter<string> = new EventEmitter();
+  static events: CalendarEvent [];
+  action = new Subject<any>();
 
   constructor(private fb: FormBuilder) { }
 
@@ -26,6 +30,14 @@ export class AvailabilityFormComponent implements OnInit {
   onSubmit() {
     console.warn(this.availabilityForm.value.timeSlot, this.availabilityForm.value.date);
   }
+
+  onYesClick() {
+    this.action.next('yes');
+  }
+
+  onNoClick() {
+    this.action.next('No');
+  } 
 
   // availabilityForm = new FormGroup ({
   //   timeSlot: new FormGroup ({
@@ -42,5 +54,31 @@ export class AvailabilityFormComponent implements OnInit {
     }),
     date: ['', Validators.required],
   })
+
+  static addEventRef(events: CalendarEvent []){
+    AvailabilityFormComponent.events = events;
+    const out = document.getElementById("output");
+    const text = document.createElement('p');
+    text.textContent += AvailabilityFormComponent.events[0].start.toLocaleString().substring(0,10) + "\n";
+
+    events.forEach(appointment => {
+      console.log(events.length);
+      var start = appointment.start;
+      var end = appointment.end;
+      text.textContent += start.toLocaleString().substring(12);
+      text.textContent += " -> " + end?.toLocaleString().substring(12) + '\n';
+      
+    });
+    out?.append(text);
+
+
+  }
+
+  public test!: string;
+
+  setFormData(data: any): void {
+    this.test = data;
+
+  }
 
 }
