@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder, Validators, } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, Validators, NgForm, } from '@angular/forms';
 import { CalendarEvent } from 'angular-calendar';
 import { Subject } from 'rxjs';
 
@@ -14,21 +14,26 @@ import { Subject } from 'rxjs';
 export class AvailabilityFormComponent implements OnInit {
 
 
-  // @Output() event:EventEmitter<string> = new EventEmitter();
   static events: CalendarEvent [];
+
   action = new Subject<any>();
+
+  
+  @Output() completedForm!: JSON;
 
   constructor(private fb: FormBuilder) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   yell(): void {
     console.log('Yell')
   }
 
-  onSubmit() {
-    console.warn(this.availabilityForm.value.timeSlot, this.availabilityForm.value.date);
+  onSubmit(f: FormGroup) {
+    console.log('f.value JSON string: ' + JSON.stringify(f.value));
+    console.log('this.completedForm before assignment: ' + JSON.stringify(this.completedForm))
+    this.completedForm = f.value;
+    console.log('this.completedForm after assignment: ' + JSON.stringify(this.completedForm))
   }
 
   onYesClick() {
@@ -41,10 +46,8 @@ export class AvailabilityFormComponent implements OnInit {
 
 
   availabilityForm = this.fb.group ({
-    timeSlot: this.fb.group ({
-      startTime: ['', Validators.required],
-      endTime: ['', Validators.required],
-    }),
+    startTime: ['', Validators.required],
+    endTime: ['', Validators.required],
     date: ['', Validators.required],
   })
 

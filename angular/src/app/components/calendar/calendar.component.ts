@@ -26,6 +26,7 @@ import {
 import { MDBModalRef, MDBModalService } from 'ng-uikit-pro-standard';
 import { AvailabilityFormComponent } from 'src/app/components/forms/availability-form/availability-form.component';
 import { ViewAvailabilityModalComponent } from './view-availability-modal/view-availability-modal.component';
+import { SkillsFormComponent } from '../forms/skills-form/skills-form.component';
 
 const colors: any = {
   red: {
@@ -239,6 +240,21 @@ export class CalendarComponent {
       class: '',
       containerClass: 'bottom',
       animated: true
+    });
+    this.modalRef.content.action.subscribe((result: any) => { console.log(result); });
+
+  }
+
+  addSkills() {
+    this.modalRef = this.modalService.show(SkillsFormComponent, {
+      backdrop: true,
+      keyboard: true,
+      focus: true,
+      show: false,
+      ignoreBackdropClick: false,
+      class: '',
+      containerClass: 'bottom',
+      animated: false
     });
     this.modalRef.content.action.subscribe((result: any) => { console.log(result); });
 
