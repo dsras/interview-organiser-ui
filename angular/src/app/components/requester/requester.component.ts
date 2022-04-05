@@ -36,7 +36,7 @@ export class RequesterComponent implements OnInit {
 
   processRequest(type: string, link: string, returnType: data) {
       
-    this.requester.getreturn(link)
+    this.requester.getreturn<userData>(link)
       .subscribe({
         next: (data: userData) => this.return = { ...data }, // success path
         error: error => this.error = error, // error path
