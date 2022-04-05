@@ -39,13 +39,6 @@ export class AvailabilityFormComponent implements OnInit {
     this.action.next('No');
   } 
 
-  // availabilityForm = new FormGroup ({
-  //   timeSlot: new FormGroup ({
-  //     startTime: new FormControl(''),
-  //     endTime: new FormControl(''),
-  //   }),
-  //   date : new FormControl(''),
-  // });
 
   availabilityForm = this.fb.group ({
     timeSlot: this.fb.group ({
