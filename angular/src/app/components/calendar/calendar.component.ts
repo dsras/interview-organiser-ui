@@ -25,6 +25,9 @@ import {
 // import { ModalFormComponent } from '../modal-form/modal-form.component';
 import { MDBModalRef, MDBModalService } from 'ng-uikit-pro-standard';
 import { AvailabilityFormComponent } from 'src/app/components/forms/availability-form/availability-form.component';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ConfigService } from '../config/config.service';
+import { ConfigComponent } from '../config/config.component';
 
 const colors: any = {
   red: {
@@ -40,9 +43,6 @@ const colors: any = {
     secondary: '#FDF1BA',
   },
 };
-
-
-
 @Component({
   selector: 'components-calendar',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -60,7 +60,6 @@ const colors: any = {
   ],
   templateUrl: './calendar.component.html',
 })
-
 export class CalendarComponent {
   // modalRef: MDBModalRef | null = null;
 
@@ -72,6 +71,7 @@ export class CalendarComponent {
     private router: Router, 
     private modal: NgbModal,
     private modalService: MDBModalService,
+    private conf: ConfigService,
     ) {
     }
 
@@ -295,11 +295,17 @@ export class CalendarComponent {
   }
 
   checkConnection(){
-    document.getElementById("headConnect")!.textContent = this.connection();
+    
+    this.conf.getConfig().forEach(val => {
+      console.log(val.userEmail);
+    });
+
+    //this.conf.getConfig()
+
+    // var data = this.conf.getConfig();
+    // console.log(data);
+
   }
 
-  connection(){
-    return "message"
-  }
 
 }

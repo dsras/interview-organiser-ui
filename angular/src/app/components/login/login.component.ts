@@ -38,13 +38,13 @@ export class LoginComponent implements OnInit, ILoginComponent {
                     username: user.email,
                     password: user.idToken
                 }
-                //this.validate('social', loggedInObj);
-                this.router.navigate(['dashboard']);
+                this.validate('social', loggedInObj);
+                //this.router.navigate(['dashboard']);
             }
-            console.log("reached1");
-            console.log("info");
-            console.log("auth token: " + user.authToken);
-            console.log("auth email: " + user.email);
+            // console.log("reached1");
+            // console.log("info");
+            // console.log("auth token: " + user.authToken);
+            // console.log("auth email: " + user.email);
         });
     }
     validate(type: string, loginObj?: any): void {

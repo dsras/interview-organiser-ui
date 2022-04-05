@@ -1,10 +1,10 @@
-export const prodEnv = true;
+export const prodEnv = false;
 
 class API_CONSTANTS {
     ENV: string = (prodEnv) ? 'PROD': 'DEV';
-    BASE_URL: string = (prodEnv) ? 'http://ec2-18-141-205-66.ap-southeast-1.compute.amazonaws.com:8080/' : 'http://ec2-18-141-205-66.ap-southeast-1.compute.amazonaws.com:8080/';
-    LOGIN: string = 'user/authenticate';
-    USER: string = 'user/get';
+    BASE_URL: string = (prodEnv) ? 'http://ec2-18-141-205-66.ap-southeast-1.compute.amazonaws.com:8080/' : 'http://localhost:8080/';
+    LOGIN: string = 'users/authenticate';
+    USER: string = 'users/get';
     POSITIONS: string = 'position/get';
     METADATA: string = 'position/positionmetadata';
     CREATE_POSITION: string = 'position/saveposition';
