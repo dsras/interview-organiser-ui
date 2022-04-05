@@ -26,8 +26,8 @@ import {
 import { MDBModalRef, MDBModalService } from 'ng-uikit-pro-standard';
 import { AvailabilityFormComponent } from 'src/app/components/forms/availability-form/availability-form.component';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ConfigService } from '../config/config.service';
-import { ConfigComponent } from '../config/config.component';
+import { Requester } from '../requester/requester.service';
+import { RequesterComponent } from '../requester/requester.component';
 
 const colors: any = {
   red: {
@@ -71,7 +71,7 @@ export class CalendarComponent {
     private router: Router, 
     private modal: NgbModal,
     private modalService: MDBModalService,
-    private conf: ConfigService,
+    private reqester: RequesterComponent,
     ) {
     }
 
@@ -295,8 +295,9 @@ export class CalendarComponent {
   }
 
   checkConnection(){
-    
-    this.conf.getConfig().forEach(val => {
+    var configUrl = 'http://localhost:8080/users/user?username=test_user1';
+
+    this.reqester.processRequest("get", configUrl, "user").forEach(val => {
       console.log(val.userEmail);
     });
 

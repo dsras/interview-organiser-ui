@@ -5,32 +5,37 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
-export interface data {
-    id: BigInteger,
-    username: String,
-    userpassword: String,
-    userEmail: String,
-    userMobile: any,
-    userName: String,
-    businessTitle: String,
-    account: any,
-    businessUnit: any,
-    dateOfJoining: any,
-    designation: any,
-    location: any,
-    priorExperience: any
+export interface data{}
+
+export interface userData extends data {
+  id: BigInteger,
+  username: String,
+  userpassword: String,
+  userEmail: String,
+  userMobile: any,
+  userName: String,
+  businessTitle: String,
+  account: any,
+  businessUnit: any,
+  dateOfJoining: any,
+  designation: any,
+  location: any,
+  priorExperience: any
+}
+
+export interface dummy extends data{
+  message: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
-export class ConfigService {
+export class Requester {
 
-  configUrl = 'http://localhost:8080/users/user?username=test_user1';
 
   constructor(private http: HttpClient) { }
-  getConfig() {
-    return this.http.get<data>(this.configUrl)
+  getreturn<type>(reqestURL: string) {
+    return this.http.get<type>(reqestURL)
       .pipe(
         retry(3), // retry a failed request up to 3 times
         catchError(this.handleError) // then handle the error
