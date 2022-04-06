@@ -75,7 +75,7 @@ import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { AvailabilityFormComponent } from './components/forms/availability-form/availability-form.component';
 import { SkillsFormComponent } from './components/forms/skills-form/skills-form.component';
-import { ConfigComponent } from './components/config/config.component';
+import { RequesterComponent } from './components/requester/requester.component';
 
 const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_DEV;
 @NgModule({
@@ -111,7 +111,7 @@ const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCON
         // ModalFormComponent,
         AvailabilityFormComponent,
         SkillsFormComponent,
-        ConfigComponent,
+        RequesterComponent,
     ],
     imports: [
         BrowserModule,  
