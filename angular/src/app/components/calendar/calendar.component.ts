@@ -154,6 +154,13 @@ export class CalendarComponent {
 
   activeDayIsOpen: boolean = true;
 
+  dumbMethod() : void {
+    // const dateObject = new Date();
+    // const current = dateObject.toJSON();
+    console.log('Dumb Method:')
+    console.log(new Date().toISOString())
+  }
+
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -211,6 +218,7 @@ export class CalendarComponent {
       },
     ];
   }
+
 
   // addCustomEvent(): void {
   //   this.events = [

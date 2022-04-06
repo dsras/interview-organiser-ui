@@ -9,6 +9,11 @@ import { Subject } from 'rxjs';
 })
 export class SkillsFormComponent implements OnInit {
 
+  skills = [
+    'Java', 'Python', 'Spring', 'C', 'C++', 'C#',
+    'Haskell', 'Angular', 'JavaScript', 'VISUAL-BASIC',
+  ]
+
 
   static events: CalendarEvent [];
 
@@ -37,12 +42,9 @@ export class SkillsFormComponent implements OnInit {
   }
 
  
-
-
-  availabilityForm = this.fb.group ({
-    startTime: ['', Validators.required],
-    endTime: ['', Validators.required],
-    date: ['', Validators.required],
+  skillsForm = this.fb.group ({
+    skill: ['', Validators.required],
+    level: ['', Validators.required],
   })
 
   // static addEventRef(events: CalendarEvent []){
