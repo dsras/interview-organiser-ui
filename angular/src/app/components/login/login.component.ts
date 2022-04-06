@@ -56,8 +56,9 @@ export class LoginComponent implements OnInit, ILoginComponent {
         this._dataSourceService.updateDataSource('loginType', type);
         this._backEndService.login(user).subscribe((response: any) => {
             if (response && response.token) {
+                //console.log(response.token);
                 localStorage.setItem('apiKey', response.token);
-                this.router.navigate(['positions']);
+                this.router.navigate(['dashboard']);
             }
         });
     }

@@ -26,7 +26,18 @@ export class userData implements data {
   }
 }
 export class skills implements data{
-  constructor(id:number, skillName:string, skillLevel:string){}
+  public id: number;
+  public skillName: string;
+  public skillLevel:string;
+
+  constructor(id:number, skillName:string, skillLevel:string){
+    this.id = id;
+    this.skillName = skillName;
+    this.skillLevel = skillLevel;
+  }
+  getID(){
+    return this.id;
+  }
 }
 
 export interface dummy extends data{
@@ -58,9 +69,11 @@ export class Requester {
   postRequest<Type>(link:string, obj:Type): Observable<Type> {
     const opt = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: <string>localStorage.getItem('apiKey'),
       })
     }
+
     return this.http.post<Type>(link, obj, opt)
     .pipe(
       catchError(this.handleError)

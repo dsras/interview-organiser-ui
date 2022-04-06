@@ -294,20 +294,23 @@ export class CalendarComponent {
   }
 
   checkConnection(){
-    var url = "http://localhost:8080/users/user?username=test_user1"
+    var url = "http://localhost:8080/users/user?username=test_user1";
     this.requester.getRequest<userData>(url).subscribe(returnData =>{
       console.log(returnData);
 
     })
 
-    url = "http://localhost:8080/skills/skill?name=running"
+    url = "http://localhost:8080/skills/skill?name=running";
     this.requester.getRequest<skills>(url).subscribe(returnData =>{
       console.log(returnData);
 
     })
 
-    url = "http://localhost:8080/skills/new"
-    this.requester.postRequest<>
+    var newSkill = new skills(1,"running", "expert");
+    url = "http://localhost:8080/skills/new";
+    this.requester.postRequest<skills>(url, newSkill).subscribe(returnData=>{
+      console.log(returnData);
+    })
 
     //this.conf.getConfig()
 
