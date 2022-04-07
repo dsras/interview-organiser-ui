@@ -81,6 +81,7 @@ export class CalendarComponent implements OnInit{
     }
   ngOnInit(): void {
     this.getMockAvailability()
+    this.addMockData();
   }
 
   redirect(page: string) : void {
