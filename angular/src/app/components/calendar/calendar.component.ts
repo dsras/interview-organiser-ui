@@ -27,6 +27,7 @@ import { MDBModalRef, MDBModalService } from 'ng-uikit-pro-standard';
 import { AvailabilityFormComponent } from 'src/app/components/forms/availability-form/availability-form.component';
 import { ViewAvailabilityModalComponent } from './view-availability-modal/view-availability-modal.component';
 import { SkillsFormComponent } from '../forms/skills-form/skills-form.component';
+import { MockInjectorService } from 'src/app/services/mock-injector.service';
 
 const colors: any = {
   red: {
@@ -63,7 +64,9 @@ const colors: any = {
   templateUrl: './calendar.component.html',
 })
 
-export class CalendarComponent {
+export class CalendarComponent implements OnInit{
+
+  mockAvailability!: any;
 
   @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
 
@@ -73,11 +76,52 @@ export class CalendarComponent {
     private router: Router, 
     private modal: NgbModal,
     private modalService: MDBModalService,
+    private dataInjector: MockInjectorService,
     ) {
     }
+  ngOnInit(): void {
+    this.getMockAvailability()
+  }
 
   redirect(page: string) : void {
     this.router.navigate([page]);
+  }
+
+  showMockData() : void {
+    console.log("Users Availability")
+    for (let i = 0; i < this.mockAvailability.length; i++) {
+      let data = this.mockAvailability[i];
+      console.log(
+        `
+        Date: ${data.date}
+        Start time: ${data.start_time}
+        End time: ${data.end_time}
+        Formatted start: ${new Date(`${data.date}T${ data.start_time}`)}`
+        )
+    }
+  }
+
+  addMockData(): void {
+    for (let i = 0; i < this.mockAvailability.length; i++) {
+      let data = this.mockAvailability[i];
+      let start = new Date(`${data.date}T${data.start_time}`)
+      let end = new Date(`${data.date}T${data.end_time}`)
+      this.events.push(
+        {
+          start: startOfDay(new Date(start)),
+          end: endOfDay(new Date(end)),
+          title: `User1 availability ${i}`,
+          color: colors.red,
+          actions: this.actions,
+          allDay: true,
+          resizable: {
+            beforeStart: true,
+            afterEnd: true,
+          },
+          draggable: true,
+        }
+      )
+    }
   }
 
   view: CalendarView = CalendarView.Month;
@@ -217,6 +261,10 @@ export class CalendarComponent {
         },
       },
     ];
+  }
+
+  getMockAvailability() : void {
+    this.mockAvailability = JSON.parse(this.dataInjector.getMockData()).user1Availability
   }
 
 
