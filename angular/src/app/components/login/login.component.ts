@@ -38,13 +38,13 @@ export class LoginComponent implements OnInit, ILoginComponent {
                     username: user.email,
                     password: user.idToken
                 }
-                //this.validate('social', loggedInObj);
-                this.router.navigate(['dashboard']);
+                this.validate('social', loggedInObj);
+                //this.router.navigate(['dashboard']);
             }
-            console.log("reached1");
-            console.log("info");
-            console.log("auth token: " + user.authToken);
-            console.log("auth email: " + user.email);
+            // console.log("reached1");
+            // console.log("info");
+            // console.log("auth token: " + user.authToken);
+            // console.log("auth email: " + user.email);
         });
     }
     validate(type: string, loginObj?: any): void {
@@ -56,8 +56,9 @@ export class LoginComponent implements OnInit, ILoginComponent {
         this._dataSourceService.updateDataSource('loginType', type);
         this._backEndService.login(user).subscribe((response: any) => {
             if (response && response.token) {
+                //console.log(response.token);
                 localStorage.setItem('apiKey', response.token);
-                this.router.navigate(['positions']);
+                this.router.navigate(['dashboard']);
             }
         });
     }

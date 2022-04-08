@@ -28,6 +28,13 @@ import { AvailabilityFormComponent } from 'src/app/components/forms/availability
 import { ViewAvailabilityModalComponent } from './view-availability-modal/view-availability-modal.component';
 import { SkillsFormComponent } from '../forms/skills-form/skills-form.component';
 import { MockInjectorService } from 'src/app/services/mock-injector.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Requester } from '../requester/requester.service';
+import { 
+  data,
+  userData,
+  skills
+ }from '../requester/requestBodyTypes/types'
 
 const colors: any = {
   red: {
@@ -43,9 +50,6 @@ const colors: any = {
     secondary: '#FDF1BA',
   },
 };
-
-
-
 @Component({
   selector: 'components-calendar',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -77,6 +81,7 @@ export class CalendarComponent implements OnInit{
     private modal: NgbModal,
     private modalService: MDBModalService,
     private dataInjector: MockInjectorService,
+    private requester: Requester,
     ) {
     }
   ngOnInit(): void {
@@ -366,4 +371,32 @@ export class CalendarComponent implements OnInit{
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
   }
+
+  checkConnection(){
+    var url = "http://localhost:8080/users/user?username=test_user1";
+    this.requester.getRequest<userData>(url).subscribe(returnData =>{
+      console.log(returnData);
+
+    })
+
+    url = "http://localhost:8080/skills/skill?name=running";
+    this.requester.getRequest<skills>(url).subscribe(returnData =>{
+      console.log(returnData);
+
+    })
+
+    var newSkill = new skills(1,"running", "expert");
+    url = "http://localhost:8080/skills/new";
+    this.requester.postRequest<skills>(url, newSkill).subscribe(returnData=>{
+      console.log(returnData);
+    })
+
+    //this.conf.getConfig()
+
+    // var data = this.conf.getConfig();
+    // console.log(data);
+
+  }
+
+
 }
