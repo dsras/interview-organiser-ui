@@ -26,7 +26,12 @@ import {
 import { MDBModalRef, MDBModalService } from 'ng-uikit-pro-standard';
 import { AvailabilityFormComponent } from 'src/app/components/forms/availability-form/availability-form.component';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Requester, skills, userData } from '../requester/requester.service';
+import { Requester } from '../requester/requester.service';
+import { 
+  data,
+  userData,
+  skills
+ }from '../requester/requestBodyTypes/types'
 
 const colors: any = {
   red: {

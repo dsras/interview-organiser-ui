@@ -1,48 +1,15 @@
 import { Injectable, Type } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { 
+  data,
+  userData,
 
+ } from './requestBodyTypes/types'
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
-export interface data{}
 
-export class userData implements data {
-  constructor(
-    id: number,
-    username: String,
-    userpassword: String,
-    userEmail: String,
-    userMobile: any,
-    userName: String,
-    businessTitle: String,
-    account: any,
-    businessUnit: any,
-    dateOfJoining: any,
-    designation: any,
-    location: any,
-    priorExperience: any){
-
-  }
-}
-export class skills implements data{
-  public id: number;
-  public skillName: string;
-  public skillLevel:string;
-
-  constructor(id:number, skillName:string, skillLevel:string){
-    this.id = id;
-    this.skillName = skillName;
-    this.skillLevel = skillLevel;
-  }
-  getID(){
-    return this.id;
-  }
-}
-
-export interface dummy extends data{
-  message: string;
-}
 
 @Injectable({
   providedIn: 'root'
