@@ -1,0 +1,40 @@
+{
+    "availability": [
+        {
+            "userId": 1,
+            "date": "2022-04-18",
+            "start_time": "09:00",
+            "end_time": "10:00"
+        },
+        {
+            "userId": 1,
+            "date": "2022-04-19",
+            "start_time": "09:00",
+            "end_time": "11:00"
+        },
+        {
+            "userId": 1,
+            "date": "2022-04-20",
+            "start_time": "11:00",
+            "end_time": "15:00"
+        },
+        {
+            "userId": 1,
+            "date": "2022-04-21",
+            "start_time": "10:00",
+            "end_time": "12:00"
+        },
+        {
+            "userId": 1,
+            "date": "2022-04-22",
+            "start_time": "09:00",
+            "end_time": "12:00"
+        },
+        {
+            "userId": 1,
+            "date": "2022-04-16",
+            "start_time": "09:00",
+            "end_time": "10:00"
+        }
+    ]
+}

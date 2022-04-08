@@ -1,28 +1,13 @@
-<body (event)="setFormData($event)">
-<h3>Add/Amend your availability here!</h3>
+<form [formGroup]="availabilityForm" (ngSubmit)="onSubmit(availabilityForm)" class="md-form" style="color: #757575;">
+  <div class="card">
 
-<div id="output" style="width: 500px;white-space: pre-line">This is your text!</div>
-<div class="modal-body" id = "body">
-  ...
-</div>
-<div class="modal-footer">
-  <div layout-align="start center">
-    <button type="button" mdbBtn color="warning" class="waves-light" aria-label="Add more" (click)="onNoClick()" mdbWavesEffect>Add more</button>
-  </div>
-  <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="onNoClick()" mdbWavesEffect>Close</button>
-  <button type="button" mdbBtn color="primary" class="relative waves-light" (click)="yell()" mdbWavesEffect>Save!</button>
-</div>
+    <h5 class="card-header info-color white-text text-center py-4">
+        <strong>Add Availability</strong>
+    </h5>
 
-<div class="card">
+    <div class="card-body px-lg-5 pt-0">
 
-  <h5 class="card-header info-color white-text text-center py-4">
-      <strong>Add Availability</strong>
-  </h5>
-
-  <div class="card-body px-lg-5 pt-0">
-
-    <form [formGroup]="availabilityForm" (ngSubmit)="onSubmit()" class="md-form" style="color: #757575;">
-      <div formGroupName="timeSlot">
+   
         <h6>Time Slot</h6>
     
         <label for="startTime">Start Time</label>
@@ -30,7 +15,6 @@
     
         <label for="endTime">End Time</label>
         <input id="end-time" type='time' formControlName="endTime">
-      </div>
       <div>
         <h6>Date</h6> 
     
@@ -38,15 +22,19 @@
         <input id="date" type='date' formControlName="date">
       </div>
 
-      <button
-       mdbBtn color="primary" 
-       type=""
-       [disabled]="!availabilityForm.valid">Save</button>
-
-    </form>
+   
+    </div>
   </div>
-</div>
-</body>
+  <button 
+    mdbBtn color="primary" 
+    type="submit" 
+    id="submit"
+    data-dismiss="modal" 
+    [disabled]="!availabilityForm.valid">
+      Save
+    </button>
+</form>
+
 
 <!-- <form [formGroup]="availabilityForm" (ngSubmit)="onSubmit()">
   <div formGroupName="timeSlot">

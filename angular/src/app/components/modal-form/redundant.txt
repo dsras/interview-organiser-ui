@@ -1,6 +1,0 @@
-This component is likely redundant, please find forms located within 
-app/components/forms instead of floating around as components
-
-
-The style from this component may be preferred so i've left the code for it here commented out
-as well as any reference in the codebase

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ModalFormComponent } from './modal-form.component';
+import { CreateInterviewComponent } from './create-interview.component';
 
-describe('ModalFormComponent', () => {
-  let component: ModalFormComponent;
-  let fixture: ComponentFixture<ModalFormComponent>;
+describe('CreateInterviewComponent', () => {
+  let component: CreateInterviewComponent;
+  let fixture: ComponentFixture<CreateInterviewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ModalFormComponent ]
+      declarations: [ CreateInterviewComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ModalFormComponent);
+    fixture = TestBed.createComponent(CreateInterviewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

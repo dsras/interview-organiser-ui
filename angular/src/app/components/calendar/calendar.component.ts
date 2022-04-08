@@ -25,6 +25,16 @@ import {
 // import { ModalFormComponent } from '../modal-form/modal-form.component';
 import { MDBModalRef, MDBModalService } from 'ng-uikit-pro-standard';
 import { AvailabilityFormComponent } from 'src/app/components/forms/availability-form/availability-form.component';
+import { ViewAvailabilityModalComponent } from './view-availability-modal/view-availability-modal.component';
+import { SkillsFormComponent } from '../forms/skills-form/skills-form.component';
+import { MockInjectorService } from 'src/app/services/mock-injector.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Requester } from '../requester/requester.service';
+import { 
+  data,
+  userData,
+  skills
+ }from '../requester/requestBodyTypes/types'
 
 const colors: any = {
   red: {
@@ -40,9 +50,6 @@ const colors: any = {
     secondary: '#FDF1BA',
   },
 };
-
-
-
 @Component({
   selector: 'components-calendar',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -61,8 +68,9 @@ const colors: any = {
   templateUrl: './calendar.component.html',
 })
 
-export class CalendarComponent {
-  // modalRef: MDBModalRef | null = null;
+export class CalendarComponent implements OnInit{
+
+  mockAvailability!: any;
 
   @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
 
@@ -72,11 +80,54 @@ export class CalendarComponent {
     private router: Router, 
     private modal: NgbModal,
     private modalService: MDBModalService,
+    private dataInjector: MockInjectorService,
+    private requester: Requester,
     ) {
     }
+  ngOnInit(): void {
+    this.getMockAvailability()
+    this.addMockData();
+  }
 
   redirect(page: string) : void {
     this.router.navigate([page]);
+  }
+
+  showMockData() : void {
+    console.log("Users Availability")
+    for (let i = 0; i < this.mockAvailability.length; i++) {
+      let data = this.mockAvailability[i];
+      console.log(
+        `
+        Date: ${data.date}
+        Start time: ${data.start_time}
+        End time: ${data.end_time}
+        Formatted start: ${new Date(`${data.date}T${ data.start_time}`)}`
+        )
+    }
+  }
+
+  addMockData(): void {
+    for (let i = 0; i < this.mockAvailability.length; i++) {
+      let data = this.mockAvailability[i];
+      let start = new Date(`${data.date}T${data.start_time}`)
+      let end = new Date(`${data.date}T${data.end_time}`)
+      this.events.push(
+        {
+          start: startOfDay(new Date(start)),
+          end: endOfDay(new Date(end)),
+          title: `User1 availability ${i}`,
+          color: colors.red,
+          actions: this.actions,
+          allDay: true,
+          resizable: {
+            beforeStart: true,
+            afterEnd: true,
+          },
+          draggable: true,
+        }
+      )
+    }
   }
 
   view: CalendarView = CalendarView.Month;
@@ -153,6 +204,13 @@ export class CalendarComponent {
 
   activeDayIsOpen: boolean = true;
 
+  dumbMethod() : void {
+    // const dateObject = new Date();
+    // const current = dateObject.toJSON();
+    console.log('Dumb Method:')
+    console.log(new Date().toISOString())
+  }
+
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -165,7 +223,7 @@ export class CalendarComponent {
         this.activeDayIsOpen = true;
       }
       this.viewDate = date;
-      this.openModal(date, true);
+      this.openDayModal(date, true);
 
     }
   }
@@ -211,6 +269,11 @@ export class CalendarComponent {
     ];
   }
 
+  getMockAvailability() : void {
+    this.mockAvailability = JSON.parse(this.dataInjector.getMockData()).user1Availability
+  }
+
+
   // addCustomEvent(): void {
   //   this.events = [
   //     ...this.events,
@@ -229,7 +292,7 @@ export class CalendarComponent {
   //   this.modalService.show(ModalFormComponent)
   // }
 
-  openBlankModal() {
+  addAvailability() {
     this.modalRef = this.modalService.show(AvailabilityFormComponent, {
       backdrop: true,
       keyboard: true,
@@ -244,7 +307,22 @@ export class CalendarComponent {
 
   }
 
-  openModal(dateSelected: Date, useDate: boolean) {
+  addSkills() {
+    this.modalRef = this.modalService.show(SkillsFormComponent, {
+      backdrop: true,
+      keyboard: true,
+      focus: true,
+      show: false,
+      ignoreBackdropClick: false,
+      class: '',
+      containerClass: 'bottom',
+      animated: false
+    });
+    this.modalRef.content.action.subscribe((result: any) => { console.log(result); });
+
+  }
+
+  openDayModal(dateSelected: Date, useDate: boolean) {
     
     var eventsOnDay= [];
     if(useDate){  
@@ -258,7 +336,7 @@ export class CalendarComponent {
       })
     }
 
-    var mfc = AvailabilityFormComponent;
+    var mfc = ViewAvailabilityModalComponent;
     this.modalRef = this.modalService.show(mfc, {
       backdrop: true,
       keyboard: true,
@@ -293,4 +371,32 @@ export class CalendarComponent {
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
   }
+
+  checkConnection(){
+    var url = "http://localhost:8080/users/user?username=test_user1";
+    this.requester.getRequest<userData>(url).subscribe(returnData =>{
+      console.log(returnData);
+
+    })
+
+    url = "http://localhost:8080/skills/skill?name=running";
+    this.requester.getRequest<skills>(url).subscribe(returnData =>{
+      console.log(returnData);
+
+    })
+
+    var newSkill = new skills(1,"running", "expert");
+    url = "http://localhost:8080/skills/new";
+    this.requester.postRequest<skills>(url, newSkill).subscribe(returnData=>{
+      console.log(returnData);
+    })
+
+    //this.conf.getConfig()
+
+    // var data = this.conf.getConfig();
+    // console.log(data);
+
+  }
+
+
 }

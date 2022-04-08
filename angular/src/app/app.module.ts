@@ -75,6 +75,9 @@ import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { AvailabilityFormComponent } from './components/forms/availability-form/availability-form.component';
 import { SkillsFormComponent } from './components/forms/skills-form/skills-form.component';
+import { ViewAvailabilityModalComponent } from './components/calendar/view-availability-modal/view-availability-modal.component';
+import { CreateInterviewComponent } from './components/dashboard/create-interview/create-interview.component';
+import { Requester } from './components/requester/requester.service';
 
 const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_DEV;
 @NgModule({
@@ -110,6 +113,8 @@ const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCON
         // ModalFormComponent,
         AvailabilityFormComponent,
         SkillsFormComponent,
+        ViewAvailabilityModalComponent,
+        CreateInterviewComponent,
     ],
     imports: [
         BrowserModule,  
@@ -150,6 +155,7 @@ const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCON
     providers: [
         MDBSpinningPreloader,
         DataSourceService,
+        Requester,
         { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true },
         {
             provide: 'SocialAuthServiceConfig',

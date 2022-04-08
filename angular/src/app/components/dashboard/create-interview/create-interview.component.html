@@ -1,0 +1,31 @@
+<button class="add-button" (click)="booleanButton()">Boolean</button>
+<form 
+  [formGroup]="createInterviewForm" 
+  (ngSubmit)="onSubmit(createInterviewForm)"
+  class="md-form" 
+  style="color: slateblue;"
+>
+
+  <h5>
+    <strong>Add Availability</strong>
+  </h5>
+
+  <div>
+    <label for="start">Start Time</label>
+    <input id="start" type='time' formControlName="start">
+
+    <label for="end">End Time</label>
+    <input id="end" type='time' formControlName="end">
+  </div>
+  <br>
+  <div>
+    <label for="firstDate">First Date</label>
+    <input id="firstDate" type='date' formControlName="firstDate">
+
+    <label for="lastDate">Last Date</label>
+    <input id="lastDate" type='date' formControlName="lastDate">
+  </div>
+
+  <button class="submit">Submit</button>
+
+</form>
