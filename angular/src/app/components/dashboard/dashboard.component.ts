@@ -1,3 +1,4 @@
+import { Time } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -14,9 +15,9 @@ export class DashboardComponent implements OnInit {
   //! These are only for testing, delete later
   allAvailabilityJSON !: string
   allAvailabilityOBJ !: any
-  user1Availability!: any
+  // user1Availability!: any
   formCheck: any = ''
-  
+
 
   constructor(
     private router: Router,
@@ -27,48 +28,68 @@ export class DashboardComponent implements OnInit {
 
   //? Probably delegate some of the functionality of determining validity to {@link interviewPossible}
   onSubmit(form: FormGroup) : void {
-    console.log("submitted")
-    let availability = this.user1Availability
+    let availability = this.allAvailabilityOBJ
     console.log(availability)
-    // TODO Add better options to filter availability
-    // let start = form.controls['start'].value;
-    // let end = form.controls['end'].value;
-    let date = form.get('date')?.value
-    console.log(date)
-    //form.get('date')?.value
 
-    for (let i = 0; i < availability.length; i ++){
-      console.warn(i)
-      if (this.interviewPossible() && date == availability[i].date) {
-        console.log(`An interview is available on: ${date}`)
+    //? Add better options to filter availability
+    let start = form.get('start')?.value;
+    let end = form.get('end')?.value;
+    let firstDate = form.get('firstDate')?.value
+    let lastDate = form.get('lastDate')?.value
+
+    console.warn(`Length: ${availability.totalAvailability.length}`)
+    let slots = 0;
+    for (let i = 0; i < availability.totalAvailability.length; i ++) {      
+      if (this.interviewPossible(start, end, firstDate, lastDate, availability.totalAvailability[i])) {
+        slots += 1;
+        console.log(
+          `An interview is available on: ${availability.totalAvailability[i].date} with ${availability.totalAvailability[i].userId}`)
       }
+      // else {
+      //   console.warn(`An interview is not available on:  ${availability.totalAvailability[i].date} with `)
+      // }
+      
     }
-    
-    
+    console.log(`Available interview slots ${slots}`)
   }
 
-  // TODO create ogic to test whether interviews can be found for certain search criteria
+  // TODO replace params with DateTime instead of dates and times
   interviewPossible(
-    //? Potential params here => intStart: Date, intEnd: Date, availStart: Date, availEnd: Date
+    start: Time, 
+    end: Time, 
+    firstDate: Date, 
+    lastDate: Date, 
+    availability: any
     ) : Boolean {
-    return true;
+      if (firstDate > availability.date || availability.date > lastDate) {
+        return false;
+      }
+      if (start >= availability.end_time || availability.start_time >= end) {
+        return false;
+      }
+      return true;
   }
 
   redirect(page: string) : void {
     this.router.navigate([page]);
   }
+
   //! This function is only for testing, delete later
   getMockdata() {
     this.allAvailabilityJSON = this.jsonGetter.getMockData()
     this.allAvailabilityOBJ = JSON.parse(this.allAvailabilityJSON)
-    this.user1Availability = this.allAvailabilityOBJ.user1Availability 
+    // this.user1Availability = this.allAvailabilityOBJ.user1Availability 
   }
+
   //! This function is only for testing, delete later
   printMockData() {
     console.log("Total availability : ")
     console.log(this.allAvailabilityOBJ)
-    console.log("User 1 Availability: ")
-    console.log(this.user1Availability)
+    let a = this.allAvailabilityOBJ
+    console.log(a);
+    
+    // console.log("User 1 Availability: ")
+    // console.log(this.user1Availability)
   }
 
 }

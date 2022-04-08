@@ -11,7 +11,8 @@ export class CreateInterviewComponent implements OnInit {
   createInterviewForm: FormGroup = this.fb.group({
     start: [''],
     end: [''],
-    date: ['']
+    firstDate: [''],
+    lastDate: ['']
     //? add additional params
   })
 
@@ -28,7 +29,7 @@ export class CreateInterviewComponent implements OnInit {
     this.createInterviewForm.setValue(f.value)
     console.log("create interview form")
     console.log(this.createInterviewForm.value)
-    console.warn(this.createInterviewForm.get('date')?.value)
+    console.warn(this.createInterviewForm.get('firstDate')?.value)
     this.formSubmitted.emit(f);
   }
 
