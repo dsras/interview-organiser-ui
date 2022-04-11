@@ -86,6 +86,7 @@ export class CalendarComponent implements OnInit{
     }
   ngOnInit(): void {
     this.getMockAvailability()
+    //TODO On Init we need a GET request to populate calendar from DB
     // this.addMockData();
   }
 
@@ -169,53 +170,52 @@ export class CalendarComponent implements OnInit{
   refresh = new Subject<void>();
 
   events: CalendarEvent[] = [
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
-      color: colors.red,
-      actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-    {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: colors.yellow,
-      actions: this.actions,
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-      color: colors.blue,
-      allDay: true,
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
-      title: 'A draggable and resizable event',
-      color: colors.yellow,
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
+    //* Commented out below are some prepopulated events from the original calendar
+    // {
+    //   start: subDays(startOfDay(new Date()), 1),
+    //   end: addDays(new Date(), 1),
+    //   title: 'A 3 day event',
+    //   color: colors.red,
+    //   actions: this.actions,
+    //   allDay: true,
+    //   resizable: {
+    //     beforeStart: true,
+    //     afterEnd: true,
+    //   },
+    //   draggable: true,
+    // },
+    // {
+    //   start: startOfDay(new Date()),
+    //   title: 'An event with no end date',
+    //   color: colors.yellow,
+    //   actions: this.actions,
+    // },
+    // {
+    //   start: subDays(endOfMonth(new Date()), 3),
+    //   end: addDays(endOfMonth(new Date()), 3),
+    //   title: 'A long event that spans 2 months',
+    //   color: colors.blue,
+    //   allDay: true,
+    // },
+    // {
+    //   start: addHours(startOfDay(new Date()), 2),
+    //   end: addHours(new Date(), 2),
+    //   title: 'A draggable and resizable event',
+    //   color: colors.yellow,
+    //   actions: this.actions,
+    //   resizable: {
+    //     beforeStart: true,
+    //     afterEnd: true,
+    //   },
+    //   draggable: true,
+    // },
   ];
 
   activeDayIsOpen: boolean = true;
 
-  dumbMethod() : void {
-    // const dateObject = new Date();
-    // const current = dateObject.toJSON();
-    console.log('Dumb Method:')
-    console.log(new Date().toISOString())
+  //* Basic button method to log current date, remove later
+  currentDate() : void {
+    console.log(`Current Date Button: ${new Date().toISOString()}`)
   }
 
 
@@ -296,7 +296,6 @@ export class CalendarComponent implements OnInit{
   //   ];
   //   this.modalService.show(ModalFormComponent)
   // }
-
   addAvailability() {
     this.modalRef = this.modalService.show(AvailabilityFormComponent, {
       backdrop: true,
@@ -311,7 +310,6 @@ export class CalendarComponent implements OnInit{
     this.modalRef.content.action.subscribe((result: any) => { console.log(result); });
 
   }
-
   addSkills() {
     this.modalRef = this.modalService.show(SkillsFormComponent, {
       backdrop: true,

@@ -42,7 +42,7 @@ export class SkillsFormComponent implements OnInit {
 
   onSubmit(f: FormGroup) {
     //TODO Replace console log with POST method 
-    console.log(JSON.stringify(f.value));
+    console.log(`POST body: ${JSON.stringify(f.value)}`);
   }
 
 //* test methods
