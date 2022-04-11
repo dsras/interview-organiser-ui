@@ -376,10 +376,14 @@ export class CalendarComponent implements OnInit{
   }
 
   checkConnection(){
+
+
+    
+
     var url = "http://localhost:8080/users/user?username=test_user1";
     this.requester.getRequest<userData>(url).subscribe(returnData =>{
       console.log(returnData);
-
+      
     })
 
     url = "http://localhost:8080/skills/skill?name=running";
