@@ -9,22 +9,43 @@ import { Subject } from 'rxjs';
 })
 export class SkillsFormComponent implements OnInit {
 
+  //? Should this be pulled from DB or better to store in frontend
   skills = [
     'Java', 'Python', 'Spring', 'C', 'C++', 'C#',
     'Haskell', 'Angular', 'JavaScript', 'VISUAL-BASIC',
   ]
 
+  //? As above
+  levels = [
+    'Level 1',
+    'Level 2',
+    'Level 3',
+    'Level 4',
+    'Level 5',
+  ]
+
+  skillsForm = this.fb.group ({
+    skill: ['', Validators.required],
+    level: ['', Validators.required],
+  })
 
   static events: CalendarEvent [];
 
   action = new Subject<any>();
 
-
+  //todo add Thorfinn's Services here
   constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
+    //! Add getSkillsMethod to init topopulate form with current skills.
   }
 
+  onSubmit(f: FormGroup) {
+    //TODO Replace console log with POST method 
+    console.log(JSON.stringify(f.value));
+  }
+
+//* test methods
   yell(): void {
     console.log('Yell')
   }
@@ -36,41 +57,5 @@ export class SkillsFormComponent implements OnInit {
   onNoClick() {
     this.action.next('No');
   }
-
-  onSubmit(f: FormGroup) {
-    console.log(JSON.stringify(f.value));
-  }
-
- 
-  skillsForm = this.fb.group ({
-    skill: ['', Validators.required],
-    level: ['', Validators.required],
-  })
-
-  // static addEventRef(events: CalendarEvent []){
-  //   SkillsFormComponent.events = events;
-  //   const out = document.getElementById("output");
-  //   const text = document.createElement('p');
-  //   text.textContent += SkillsFormComponent.events[0].start.toLocaleString().substring(0,10) + "\n";
-
-  //   events.forEach(appointment => {
-  //     console.log(events.length);
-  //     var start = appointment.start;
-  //     var end = appointment.end;
-  //     text.textContent += start.toLocaleString().substring(12);
-  //     text.textContent += " -> " + end?.toLocaleString().substring(12) + '\n';
-      
-  //   });
-  //   out?.append(text);
-
-
-  // }
-
-  // public test!: string;
-
-  // setFormData(data: any): void {
-  //   this.test = data;
-
-  // }
 
 }

@@ -86,27 +86,19 @@ export class CalendarComponent implements OnInit{
     }
   ngOnInit(): void {
     this.getMockAvailability()
-    this.addMockData();
+    // this.addMockData();
   }
 
   redirect(page: string) : void {
     this.router.navigate([page]);
   }
 
-  showMockData() : void {
-    console.log("Users Availability")
-    for (let i = 0; i < this.mockAvailability.length; i++) {
-      let data = this.mockAvailability[i];
-      console.log(
-        `
-        Date: ${data.date}
-        Start time: ${data.start_time}
-        End time: ${data.end_time}
-        Formatted start: ${new Date(`${data.date}T${ data.start_time}`)}`
-        )
-    }
+  //* Test method to unpack availability from JSON
+  getMockAvailability() : void {
+    this.mockAvailability = JSON.parse(this.dataInjector.getMockData()).totalAvailability
   }
 
+  //* Test method to populate calendar with mocked data, replaced by calls to DB 
   addMockData(): void {
     for (let i = 0; i < this.mockAvailability.length; i++) {
       let data = this.mockAvailability[i];
@@ -127,6 +119,21 @@ export class CalendarComponent implements OnInit{
           draggable: true,
         }
       )
+    }
+  }
+
+  //* Test method to log to console the outputted data from JSON
+  showMockData() : void {
+    console.log("Users Availability")
+    for (let i = 0; i < this.mockAvailability.length; i++) {
+      let data = this.mockAvailability[i];
+      console.log(
+        `
+        Date: ${data.date}
+        Start time: ${data.start_time}
+        End time: ${data.end_time}
+        Formatted start: ${new Date(`${data.date}T${ data.start_time}`)}`
+        )
     }
   }
 
@@ -269,9 +276,7 @@ export class CalendarComponent implements OnInit{
     ];
   }
 
-  getMockAvailability() : void {
-    this.mockAvailability = JSON.parse(this.dataInjector.getMockData()).user1Availability
-  }
+
 
 
   // addCustomEvent(): void {

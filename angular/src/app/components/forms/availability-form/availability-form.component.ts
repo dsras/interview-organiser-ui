@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators, NgForm, } from '@angular/forms';
 import { CalendarEvent } from 'angular-calendar';
 import { Subject } from 'rxjs';
