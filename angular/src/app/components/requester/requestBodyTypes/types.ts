@@ -99,13 +99,13 @@ export class applicant implements data{
 }
 
 export class availability implements data{
-    date: Date;
-    start_time: Date;
-    end_time: Date;
+    date: String;
+    start_time: String;
+    end_time: String;
     constructor(
-        date: Date,
-        start_time: Date,
-        end_time: Date
+        date: String,
+        start_time: String,
+        end_time: String
     ){
         this.date = date;
         this.start_time = start_time;
