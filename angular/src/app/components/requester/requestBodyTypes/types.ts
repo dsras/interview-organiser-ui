@@ -60,14 +60,14 @@ export class skills implements data{
 }
 
 export class available implements data{
-    date: Date;
-    startTime: Date;
-    endTime: Date;
+    date: string;
+    startTime: string;
+    endTime: string;
     skills: number[];
     constructor(
-        date: Date,
-        startTime: Date,
-        endTime: Date,
+        date: string,
+        startTime: string,
+        endTime: string,
         skills: number[]
     ){
         this.date = date;
@@ -99,13 +99,13 @@ export class applicant implements data{
 }
 
 export class availability implements data{
-    date: String;
-    start_time: String;
-    end_time: String;
+    date: string;
+    start_time: string;
+    end_time: string;
     constructor(
-        date: String,
-        start_time: String,
-        end_time: String
+        date: string,
+        start_time: string,
+        end_time: string
     ){
         this.date = date;
         this.start_time = start_time;
@@ -118,18 +118,18 @@ export class interview implements data{
     //organiserId: number;
     applicantId: number;
     roleApplied: number;
-    interviewDate: Date;
-    timeStart: Date;
-    timeEnd: Date;
+    interviewDate: string;
+    timeStart: string;
+    timeEnd: string;
     confirmed: number;
     constructor(
         interviewerId: number,
         //organiserId: number,
         applicantId: number,
         roleApplied: number,
-        interviewDate: Date,
-        timeStart: Date,
-        timeEnd: Date,
+        interviewDate: string,
+        timeStart: string,
+        timeEnd: string,
         confirmed: number
     ){
         this.interviewerId = interviewerId
