@@ -32,6 +32,7 @@ export class RequestCenterService {
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_GET;
     this.requester.getRequest<availability>(url).subscribe(returnData=>{
       console.log(returnData);
+      return returnData;
     })
   }
   addInterview(interviewerID: number, applicantID: number, roleApplied: number, timeStart: Date, timeEnd: Date, confirmed: number ){
@@ -47,30 +48,35 @@ export class RequestCenterService {
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_BY_INT;
     this.requester.getRequest<interview>(url).subscribe(returnData=>{
       console.log(returnData);
+      return returnData;
     })
   }
   getInterviewByRecruiter(){
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_BY_REC;
     this.requester.getRequest<interview>(url).subscribe(returnData=>{
       console.log(returnData);
+      return returnData;
     })
   }
   getInterviewAll(){
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ALL;
     this.requester.getRequest<interview>(url).subscribe(returnData=>{
       console.log(returnData);
+      return returnData;
     })
   }
   getUser(){
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.USER_FIND;
     this.requester.getRequest<userData>(url).subscribe(returnData=>{
       console.log(returnData);
+      return returnData;
     })
   }
   getSkills(){
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.SKILLS_GET;
     this.requester.getRequest<skills>(url).subscribe(returnData=>{
       console.log(returnData);
+      return returnData;
     })
   }
   addSkills(){//this might need refinement based on the fact that only skill IDs will be passed
@@ -84,6 +90,7 @@ export class RequestCenterService {
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.SKILLS_GET_ALL;
     this.requester.getRequest<skills>(url).subscribe(returnData=>{
       console.log(returnData);
+      return returnData;
     })
   }
 
