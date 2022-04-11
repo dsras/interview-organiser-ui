@@ -19,9 +19,7 @@ export class RequestCenterService {
 
   constructor(private requester: Requester ) { }
 
-  addAvailability(startTime: Date, endTime: Date){
-    var date = startTime;
-    date.setHours(0,0,0);
+  addAvailability(date: Date, startTime: Date, endTime: Date){
     var newAvail = new availability(date, startTime, endTime);
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_ADD;
     this.requester.postRequest<availability>(url, newAvail).subscribe(returnData=>{
