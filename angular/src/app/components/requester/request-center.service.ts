@@ -74,11 +74,11 @@ export class RequestCenterService {
     })
   }
   addSkills(){//this might need refinement based on the fact that only skill IDs will be passed
-    var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.SKILLS_ADD;
-    //////////////////////////////
-    this.requester.postRequest<skills>(url/*, newSkills*/).subscribe(returnData=>{
-      console.log(returnData);
-    })
+    // var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.SKILLS_ADD;
+    // //////////////////////////////
+    // this.requester.postRequest<skills>(url/*, newSkills*/).subscribe(returnData=>{
+    //   console.log(returnData);
+    // })
   }
   getAllSkills(){
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.SKILLS_GET_ALL;

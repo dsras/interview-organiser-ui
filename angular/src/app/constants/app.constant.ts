@@ -17,6 +17,20 @@ class API_CONSTANTS {
     SKILLS_GET: string = 'users/findSkills';
     SKILLS_ADD: string = 'users/addSkill';
     SKILLS_GET_ALL: string = 'skills/findAll';
+
+    USER: string = 'users/user';
+    POSITIONS: string = 'position/get';
+    METADATA: string = 'position/positionmetadata';
+    CREATE_POSITION: string = 'position/saveposition';
+    UPDATE_POSITION: string = 'position/update';
+    MAP_CANDIDATE_TO_POSITION: string = 'position/map';
+    MAPPED_CANDIATES_FOR_POSITION: string = 'positionrequirement/candidate/get';
+    UPDATE_MAPPED_CANDIDATE: string = 'positionrequirement/update';
+    CANDIDATES: string = 'candidate/get';
+    UPDATE_CANDIDATE: string = 'candidate/update';
+    CREATE_CANDIDATE: string = 'candidate/savecandidate';
+    POSITION_AUDIT_TRAIL: string = 'analytics/position';
+    CANDIDATE_AUDIT_TRAIL: string = 'analytics/candidate'
 }
 
 class DATA_SOURCE_CONSTANTS {
