@@ -214,8 +214,10 @@ export class CalendarComponent implements OnInit{
   ];
 
   populateCalendar() : void {
-    this.rs.getMyAvailability()
-  }
+
+    var out = this.rs.getMyAvailability();
+    console.log(out);
+    }
 
   activeDayIsOpen: boolean = true;
 
@@ -316,6 +318,7 @@ export class CalendarComponent implements OnInit{
       animated: true
     });
     this.modalRef.content.action.subscribe((result: any) => { console.log(result); });
+    
 
   }
   addSkills() {
