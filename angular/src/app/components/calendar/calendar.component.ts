@@ -35,6 +35,7 @@ import {
   userData,
   skills
  }from '../requester/requestBodyTypes/types'
+ import { RequestCenterService } from '../requester/request-center.service';
 
 const colors: any = {
   red: {
@@ -82,12 +83,13 @@ export class CalendarComponent implements OnInit{
     private modalService: MDBModalService,
     private dataInjector: MockInjectorService,
     private requester: Requester,
+    private rs: RequestCenterService
     ) {
     }
   ngOnInit(): void {
-    this.getMockAvailability()
-    //TODO On Init we need a GET request to populate calendar from DB
-    // this.addMockData();
+    this.getMockAvailability();
+    this.populateCalendar();
+  // this.addMockData();
   }
 
   redirect(page: string) : void {
@@ -211,6 +213,10 @@ export class CalendarComponent implements OnInit{
     // },
   ];
 
+  populateCalendar() : void {
+    this.rs.getMyAvailability()
+  }
+
   activeDayIsOpen: boolean = true;
 
   //* Basic button method to log current date, remove later
@@ -296,6 +302,8 @@ export class CalendarComponent implements OnInit{
   //   ];
   //   this.modalService.show(ModalFormComponent)
   // }
+
+
   addAvailability() {
     this.modalRef = this.modalService.show(AvailabilityFormComponent, {
       backdrop: true,
