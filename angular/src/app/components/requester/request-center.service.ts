@@ -19,7 +19,7 @@ export class RequestCenterService {
 
   constructor(private requester: Requester ) { }
 
-  addAvailability(date: String, startTime: String, endTime: String){
+  addAvailability(date: string, startTime: string, endTime: string){
     var newAvail = new availability(date, startTime, endTime);
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_ADD;
     this.requester.postRequest<availability>(url, newAvail).subscribe(returnData=>{
@@ -33,10 +33,8 @@ export class RequestCenterService {
       return returnData;
     })
   }
-  addInterview(interviewerID: number, applicantID: number, roleApplied: number, timeStart: Date, timeEnd: Date, confirmed: number ){
+  addInterview(interviewerID: number, applicantID: number, roleApplied: number, interviewDate: string, timeStart: string, timeEnd: string, confirmed: number ){
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ADD;
-
-    var interviewDate = timeStart;
     var newInterview = new interview(interviewerID, applicantID, roleApplied, interviewDate, timeStart, timeEnd, confirmed);
     this.requester.postRequest<interview>(url, newInterview).subscribe(returnData=>{
       console.log(returnData);
