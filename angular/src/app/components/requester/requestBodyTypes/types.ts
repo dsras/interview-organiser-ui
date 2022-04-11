@@ -56,6 +56,7 @@ export class skills implements data{
     this.skillName = skillName;
     this.skillLevel = skillLevel;
   }
+
 }
 
 export class available implements data{
@@ -98,17 +99,14 @@ export class applicant implements data{
 }
 
 export class availability implements data{
-    userID: number;
     date: Date;
     start_time: Date;
     end_time: Date;
     constructor(
-        userID: number,
         date: Date,
         start_time: Date,
         end_time: Date
     ){
-        this.userID = userID;
         this.date = date;
         this.start_time = start_time;
         this.end_time = end_time;
@@ -117,7 +115,7 @@ export class availability implements data{
 
 export class interview implements data{
     interviewerId: number;
-    organiserId: number;
+    //organiserId: number;
     applicantId: number;
     roleApplied: number;
     interviewDate: Date;
@@ -126,7 +124,7 @@ export class interview implements data{
     confirmed: number;
     constructor(
         interviewerId: number,
-        organiserId: number,
+        //organiserId: number,
         applicantId: number,
         roleApplied: number,
         interviewDate: Date,
@@ -135,7 +133,7 @@ export class interview implements data{
         confirmed: number
     ){
         this.interviewerId = interviewerId
-        this.organiserId = organiserId;
+        //this.organiserId = organiserId;
         this.applicantId = applicantId;
         this.roleApplied = roleApplied;
         this.interviewDate = interviewDate;
