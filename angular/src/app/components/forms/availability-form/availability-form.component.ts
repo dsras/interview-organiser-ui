@@ -42,10 +42,7 @@ export class AvailabilityFormComponent implements OnInit {
     //TODO Add POST request to submit f.value
     this.completedForm = f.value;
     console.log('this.completedForm after assignment: ' + JSON.stringify(this.completedForm))
-    const start = new Date(`${f.value.date}T${f.value.startTime}Z`);
-    const end = new Date(`${f.value.date}T${f.value.endTime}Z`)
-    console.log(`start: ${start} end: ${end}`)
-    this.rs.addAvailability(start, end);
+    this.rs.addAvailability(f.value.date, f.value.startTime, f.value.endTime);
   }
 
   //TODO re-evaluate where this code should exist if anywhere
