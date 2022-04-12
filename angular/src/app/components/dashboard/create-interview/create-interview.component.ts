@@ -1,18 +1,23 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-
+import { Component, OnInit, Output, EventEmitter, TemplateRef } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { TimepickerConfig } from 'ngx-bootstrap/timepicker';
 @Component({
   selector: 'create-interview',
   templateUrl: './create-interview.component.html',
-  styleUrls: ['./create-interview.component.scss']
+  styleUrls: ['./create-interview.component.scss'],
+  providers: [{ provide: TimepickerConfig, useFactory: getTimepickerConfig }]
 })
 export class CreateInterviewComponent implements OnInit {
+  
+  mytime?: string;
+  modalRef?: BsModalRef
 
   createInterviewForm: FormGroup = this.fb.group({
-    start: [''],
-    end: [''],
-    firstDate: [''],
-    lastDate: ['']
+    start: ['', Validators.required],
+    end: ['', Validators.required],
+    firstDate: ['', Validators.required],
+    lastDate: ['', Validators.required]
     //? add additional params
   })
 
@@ -20,10 +25,23 @@ export class CreateInterviewComponent implements OnInit {
 
   @Output() trueOrFalse!: Boolean;
 
+  constructor(
+    private fb: FormBuilder,
+    private ms: BsModalService
+    ) { }
+
+  ngOnInit(): void {
+  }
+
   booleanButton() : void {
     this.trueOrFalse = !this.trueOrFalse
     console.log(this.trueOrFalse)
   }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.ms.show(template);
+  }
+
 
   onSubmit(f: FormGroup) {
     this.createInterviewForm.setValue(f.value)
@@ -33,11 +51,23 @@ export class CreateInterviewComponent implements OnInit {
     this.formSubmitted.emit(f);
   }
 
-  constructor(
-    private fb: FormBuilder,
-    ) { }
+  
 
-  ngOnInit(): void {
-  }
 
 }
+export function getTimepickerConfig(): TimepickerConfig {
+  return Object.assign(new TimepickerConfig(), {
+    hourStep: 1,
+    minuteStep: 15,
+    showMeridian: false,
+    readonlyInput: false,
+    mousewheel: true,
+    showMinutes: true,
+    showSeconds: false,
+    labelHours: 'Hours',
+    labelMinutes: 'Minutes',
+    labelSeconds: 'Seconds'
+  });
+}
+
+

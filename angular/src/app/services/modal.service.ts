@@ -1,16 +1,18 @@
-import { Injectable } from '@angular/core';
-import { Component } from 'ag-grid-community';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-
+import { Injectable, TemplateRef } from '@angular/core';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 @Injectable({
   providedIn: 'root'
 })
 export class ModalService {
 
   constructor(
-    // public modalRef: MDBModalRef,
-    // private modalService: MDBModalService,
+    public ref: BsModalRef,
+    public ms: BsModalService
     ) {
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.ref = this.ms.show(template);
   }
 
   // openModal(component: any): void {

@@ -78,6 +78,8 @@ import { SkillsFormComponent } from './components/calendar/skills-form/skills-fo
 import { ViewAvailabilityModalComponent } from './components/calendar/view-availability-modal/view-availability.component';
 import { CreateInterviewComponent } from './components/dashboard/create-interview/create-interview.component';
 import { Requester } from './components/requester/requester.service';
+import { ModalTestComponent } from './components/dashboard/modal-test/modal-test.component';
+import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 
 const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_DEV;
 @NgModule({
@@ -115,6 +117,7 @@ const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCON
         SkillsFormComponent,
         ViewAvailabilityModalComponent,
         CreateInterviewComponent,
+        ModalTestComponent,
     ],
     imports: [
         BrowserModule,  
@@ -150,7 +153,8 @@ const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCON
         MdbScrollspyModule,
         MdbTabsModule,
         MdbTooltipModule,
-        MdbValidationModule
+        MdbValidationModule,
+        TimepickerModule
     ],
     providers: [
         MDBSpinningPreloader,
