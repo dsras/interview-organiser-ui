@@ -15,18 +15,15 @@ import { catchError, retry } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class Requester {
-  // httpOptions!: {
-  //   headers?: HttpHeaders | {[header: string]: string | string[]},
-  //   observe?: 'body' | 'events' | 'response',
-  //   params?: HttpParams|{[param: string]: string | number | boolean | ReadonlyArray<string | number | boolean>},
-  //   reportProgress?: boolean,
-  //   responseType?: 'arraybuffer'|'blob'|'json'|'text',
-  //   withCredentials?: boolean,
-  // }
-
   constructor(private http: HttpClient) { }
   getRequest<Type>(reqestURL: string): Observable<Type> {
-    return this.http.get<Type>(reqestURL)
+    const opt = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization' : "Bearer" + <string>localStorage.getItem('apiKey'),
+      })
+    }
+    return this.http.get<Type>(reqestURL, opt)
       .pipe(
         retry(3), // retry a failed request up to 3 times
         catchError(this.handleError) // then handle the error
@@ -37,10 +34,9 @@ export class Requester {
     const opt = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: <string>localStorage.getItem('apiKey'),
+        'Authorization' : "Bearer" + <string>localStorage.getItem('apiKey'),
       })
     }
-
     return this.http.post<Type>(link, obj, opt)
     .pipe(
       catchError(this.handleError)

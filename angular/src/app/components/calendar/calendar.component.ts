@@ -22,7 +22,6 @@ import {
   CalendarEventTimesChangedEvent,
   CalendarView, 
 } from 'angular-calendar';
-// import { ModalFormComponent } from '../modal-form/modal-form.component';
 import { MDBModalRef, MDBModalService } from 'ng-uikit-pro-standard';
 import { AvailabilityFormComponent } from 'src/app/components/forms/availability-form/availability-form.component';
 import { ViewAvailabilityModalComponent } from './view-availability-modal/view-availability-modal.component';
@@ -33,8 +32,11 @@ import { Requester } from '../requester/requester.service';
 import { 
   data,
   userData,
-  skills
+  skills,
+  availability
  }from '../requester/requestBodyTypes/types'
+ import { RequestCenterService } from '../requester/request-center.service';
+import { CalendarEventActionsComponent } from 'angular-calendar/modules/common/calendar-event-actions.component';
 
 const colors: any = {
   red: {
@@ -82,31 +84,24 @@ export class CalendarComponent implements OnInit{
     private modalService: MDBModalService,
     private dataInjector: MockInjectorService,
     private requester: Requester,
+    private rs: RequestCenterService
     ) {
     }
   ngOnInit(): void {
-    this.getMockAvailability()
-    this.addMockData();
+    this.getMockAvailability();
+    this.populateCalendar();
   }
 
   redirect(page: string) : void {
     this.router.navigate([page]);
   }
 
-  showMockData() : void {
-    console.log("Users Availability")
-    for (let i = 0; i < this.mockAvailability.length; i++) {
-      let data = this.mockAvailability[i];
-      console.log(
-        `
-        Date: ${data.date}
-        Start time: ${data.start_time}
-        End time: ${data.end_time}
-        Formatted start: ${new Date(`${data.date}T${ data.start_time}`)}`
-        )
-    }
+  //* Test method to unpack availability from JSON
+  getMockAvailability() : void {
+    this.mockAvailability = JSON.parse(this.dataInjector.getMockData()).totalAvailability
   }
 
+  //* Test method to populate calendar with mocked data, replaced by calls to DB 
   addMockData(): void {
     for (let i = 0; i < this.mockAvailability.length; i++) {
       let data = this.mockAvailability[i];
@@ -127,6 +122,21 @@ export class CalendarComponent implements OnInit{
           draggable: true,
         }
       )
+    }
+  }
+
+  //* Test method to log to console the outputted data from JSON
+  showMockData() : void {
+    console.log("Users Availability")
+    for (let i = 0; i < this.mockAvailability.length; i++) {
+      let data = this.mockAvailability[i];
+      console.log(
+        `
+        Date: ${data.date}
+        Start time: ${data.start_time}
+        End time: ${data.end_time}
+        Formatted start: ${new Date(`${data.date}T${ data.start_time}`)}`
+        )
     }
   }
 
@@ -162,6 +172,7 @@ export class CalendarComponent implements OnInit{
   refresh = new Subject<void>();
 
   events: CalendarEvent[] = [
+    //* Commented out below are some prepopulated events from the original calendar
     {
       start: subDays(startOfDay(new Date()), 1),
       end: addDays(new Date(), 1),
@@ -181,34 +192,69 @@ export class CalendarComponent implements OnInit{
       color: colors.yellow,
       actions: this.actions,
     },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-      color: colors.blue,
-      allDay: true,
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
-      title: 'A draggable and resizable event',
-      color: colors.yellow,
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
+    // {
+    //   start: subDays(endOfMonth(new Date()), 3),
+    //   end: addDays(endOfMonth(new Date()), 3),
+    //   title: 'A long event that spans 2 months',
+    //   color: colors.blue,
+    //   allDay: true,
+    // },
+    // {
+    //   start: addHours(startOfDay(new Date()), 2),
+    //   end: addHours(new Date(), 2),
+    //   title: 'A draggable and resizable event',
+    //   color: colors.yellow,
+    //   actions: this.actions,
+    //   resizable: {
+    //     beforeStart: true,
+    //     afterEnd: true,
+    //   },
+    //   draggable: true,
+    // },
   ];
 
+   populateCalendar()  {
+
+    this.rs.getMyAvailability(this.events);
+    // await this.delay();
+    // console.log(out);
+    //  out.forEach(element => {
+    //    console.log(element);
+    //   var date = new Date(element.date);
+    //   var times = element.start_time.split(":");
+    //   console.log("times1: " + times[0]);
+    //   console.log(times[1]);
+      
+    //   date.setHours(parseInt(times[0]), parseInt(times[1]));
+      
+    //   this.events.push({
+    //       start: startOfDay(new Date()),
+    //       title: 'An event with no end date',
+    //       color: colors.yellow,
+    //       actions: this.actions,
+    //     })
+    //});
+    
+
+  }
+
+ 
+  sleep(ms: number) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  async delay() {
+    //Say Hello
+    console.log('Hello');
+    // Say World after 2000 milliseconds
+    await this.sleep(2000).then(() =>console.log("World")).catch();
+    console.log("World2");
+  }
   activeDayIsOpen: boolean = true;
 
-  dumbMethod() : void {
-    // const dateObject = new Date();
-    // const current = dateObject.toJSON();
-    console.log('Dumb Method:')
-    console.log(new Date().toISOString())
+  //* Basic button method to log current date, remove later
+  currentDate() : void {
+    console.log(`Current Date Button: ${new Date().toISOString()}`)
   }
 
 
@@ -269,9 +315,7 @@ export class CalendarComponent implements OnInit{
     ];
   }
 
-  getMockAvailability() : void {
-    this.mockAvailability = JSON.parse(this.dataInjector.getMockData()).user1Availability
-  }
+
 
 
   // addCustomEvent(): void {
@@ -304,9 +348,8 @@ export class CalendarComponent implements OnInit{
       animated: true
     });
     this.modalRef.content.action.subscribe((result: any) => { console.log(result); });
-
+    
   }
-
   addSkills() {
     this.modalRef = this.modalService.show(SkillsFormComponent, {
       backdrop: true,
@@ -356,8 +399,6 @@ export class CalendarComponent implements OnInit{
       mfc.addEventRef(eventsOnDay);
     }
 
-   
-   
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {
@@ -373,10 +414,11 @@ export class CalendarComponent implements OnInit{
   }
 
   checkConnection(){
+
     var url = "http://localhost:8080/users/user?username=test_user1";
     this.requester.getRequest<userData>(url).subscribe(returnData =>{
       console.log(returnData);
-
+      
     })
 
     url = "http://localhost:8080/skills/skill?name=running";
@@ -391,12 +433,6 @@ export class CalendarComponent implements OnInit{
       console.log(returnData);
     })
 
-    //this.conf.getConfig()
-
-    // var data = this.conf.getConfig();
-    // console.log(data);
-
   }
-
 
 }

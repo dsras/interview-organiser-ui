@@ -56,17 +56,18 @@ export class skills implements data{
     this.skillName = skillName;
     this.skillLevel = skillLevel;
   }
+
 }
 
 export class available implements data{
-    date: Date;
-    startTime: Date;
-    endTime: Date;
+    date: string;
+    startTime: string;
+    endTime: string;
     skills: number[];
     constructor(
-        date: Date,
-        startTime: Date,
-        endTime: Date,
+        date: string,
+        startTime: string,
+        endTime: string,
         skills: number[]
     ){
         this.date = date;
@@ -98,17 +99,14 @@ export class applicant implements data{
 }
 
 export class availability implements data{
-    userID: number;
-    date: Date;
-    start_time: Date;
-    end_time: Date;
+    date: string;
+    start_time: string;
+    end_time: string;
     constructor(
-        userID: number,
-        date: Date,
-        start_time: Date,
-        end_time: Date
+        date: string,
+        start_time: string,
+        end_time: string
     ){
-        this.userID = userID;
         this.date = date;
         this.start_time = start_time;
         this.end_time = end_time;
@@ -117,25 +115,25 @@ export class availability implements data{
 
 export class interview implements data{
     interviewerId: number;
-    organiserId: number;
+    //organiserId: number;
     applicantId: number;
     roleApplied: number;
-    interviewDate: Date;
-    timeStart: Date;
-    timeEnd: Date;
+    interviewDate: string;
+    timeStart: string;
+    timeEnd: string;
     confirmed: number;
     constructor(
         interviewerId: number,
-        organiserId: number,
+        //organiserId: number,
         applicantId: number,
         roleApplied: number,
-        interviewDate: Date,
-        timeStart: Date,
-        timeEnd: Date,
+        interviewDate: string,
+        timeStart: string,
+        timeEnd: string,
         confirmed: number
     ){
         this.interviewerId = interviewerId
-        this.organiserId = organiserId;
+        //this.organiserId = organiserId;
         this.applicantId = applicantId;
         this.roleApplied = roleApplied;
         this.interviewDate = interviewDate;
