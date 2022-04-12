@@ -3,11 +3,11 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { CalendarEvent } from 'angular-calendar';
 import { MDBModalRef, MDBModalService } from 'ng-uikit-pro-standard';
 import { Subject } from 'rxjs';
-import { AvailabilityFormComponent } from '../../forms/availability-form/availability-form.component';
+import { AvailabilityFormComponent } from '../availability-form/availability-form.component';
 
 
 @Component({
-  selector: 'view-availability-modal',
+  selector: 'view-availability',
   templateUrl: './view-availability.component.html',
   styleUrls: ['./view-availability.component.scss']
 })
