@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ViewAvailabilityModalComponent } from './view-availability-modal.component';
+import { ViewAvailabilityModalComponent } from './view-availability.component';
 
 describe('ViewAvailabilityModalComponent', () => {
   let component: ViewAvailabilityModalComponent;
