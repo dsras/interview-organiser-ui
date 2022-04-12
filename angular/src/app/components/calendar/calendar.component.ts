@@ -24,7 +24,7 @@ import {
 } from 'angular-calendar';
 import { MDBModalRef, MDBModalService } from 'ng-uikit-pro-standard';
 import { AvailabilityFormComponent } from 'src/app/components/forms/availability-form/availability-form.component';
-import { ViewAvailabilityModalComponent } from './view-availability-modal/view-availability-modal.component';
+import { ViewAvailabilityModalComponent } from './view-availability/view-availability.component';
 import { SkillsFormComponent } from '../forms/skills-form/skills-form.component';
 import { MockInjectorService } from 'src/app/services/mock-injector.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';

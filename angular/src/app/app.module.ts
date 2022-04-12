@@ -75,7 +75,7 @@ import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { AvailabilityFormComponent } from './components/forms/availability-form/availability-form.component';
 import { SkillsFormComponent } from './components/forms/skills-form/skills-form.component';
-import { ViewAvailabilityModalComponent } from './components/calendar/view-availability-modal/view-availability-modal.component';
+import { ViewAvailabilityModalComponent } from './components/calendar/view-availability/view-availability.componentponent';
 import { CreateInterviewComponent } from './components/dashboard/create-interview/create-interview.component';
 import { Requester } from './components/requester/requester.service';
 

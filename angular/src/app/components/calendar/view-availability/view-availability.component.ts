@@ -8,8 +8,8 @@ import { AvailabilityFormComponent } from '../../forms/availability-form/availab
 
 @Component({
   selector: 'view-availability-modal',
-  templateUrl: './view-availability-modal.component.html',
-  styleUrls: ['./view-availability-modal.component.scss']
+  templateUrl: './view-availability.component.html',
+  styleUrls: ['./view-availability.component.scss']
 })
 export class ViewAvailabilityModalComponent implements OnInit {
 
