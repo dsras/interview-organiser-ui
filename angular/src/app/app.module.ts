@@ -73,9 +73,9 @@ import { MdbScrollspyModule } from 'mdb-angular-ui-kit/scrollspy';
 import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
 import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
-import { AvailabilityFormComponent } from './components/forms/availability-form/availability-form.component';
-import { SkillsFormComponent } from './components/forms/skills-form/skills-form.component';
-import { ViewAvailabilityModalComponent } from './components/calendar/view-availability-modal/view-availability-modal.component';
+import { AvailabilityFormComponent } from './components/calendar/availability-form/availability-form.component';
+import { SkillsFormComponent } from './components/calendar/skills-form/skills-form.component';
+import { ViewAvailabilityModalComponent } from './components/calendar/view-availability-modal/view-availability.component';
 import { CreateInterviewComponent } from './components/dashboard/create-interview/create-interview.component';
 import { Requester } from './components/requester/requester.service';
 
