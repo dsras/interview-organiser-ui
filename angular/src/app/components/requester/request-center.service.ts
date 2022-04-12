@@ -26,9 +26,13 @@ export class RequestCenterService {
   addAvailability(date: string, startTime: string, endTime: string){
     var newAvail = new availability(date, startTime, endTime);
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_ADD;
+    var out;
+
     this.requester.postRequest<availability>(url, newAvail).subscribe(returnData=>{
       console.log(returnData);
+      out = <availability><unknown>returnData;
     })
+    return out;
   }
   getMyAvailability(events: CalendarEvent[]){
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_GET;
@@ -58,6 +62,7 @@ export class RequestCenterService {
             title: 'An event made progmatically',
             color: colors.RED,
           })
+          console.log("length of events list: " + events.length);
       });
     })
     out = <Array<availability>><unknown>out;

@@ -83,7 +83,7 @@ export class CalendarComponent implements OnInit{
     private modal: NgbModal,
     private modalService: MDBModalService,
     private dataInjector: MockInjectorService,
-    private requester: Requester,
+    private requester: Requester, //*only used for testing at bootom of script, remove later
     private rs: RequestCenterService
     ) {
     }
@@ -215,28 +215,9 @@ export class CalendarComponent implements OnInit{
   ];
 
    populateCalendar()  {
-
     this.rs.getMyAvailability(this.events);
-    // await this.delay();
-    // console.log(out);
-    //  out.forEach(element => {
-    //    console.log(element);
-    //   var date = new Date(element.date);
-    //   var times = element.start_time.split(":");
-    //   console.log("times1: " + times[0]);
-    //   console.log(times[1]);
-      
-    //   date.setHours(parseInt(times[0]), parseInt(times[1]));
-      
-    //   this.events.push({
-    //       start: startOfDay(new Date()),
-    //       title: 'An event with no end date',
-    //       color: colors.yellow,
-    //       actions: this.actions,
-    //     })
-    //});
-    
-
+    console.log("length of events list ext: " + this.events.length);   
+    this.delayedRefresh();
   }
 
  
@@ -244,11 +225,11 @@ export class CalendarComponent implements OnInit{
       return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  async delay() {
+  async delayedRefresh() {
     //Say Hello
     console.log('Hello');
     // Say World after 2000 milliseconds
-    await this.sleep(2000).then(() =>console.log("World")).catch();
+    await this.sleep(2000).then(() =>this.refresh.next()).catch();
     console.log("World2");
   }
   activeDayIsOpen: boolean = true;
@@ -339,6 +320,7 @@ export class CalendarComponent implements OnInit{
 
 
   addAvailability() {
+    console.log("Show modal triggered");
     this.modalRef = this.modalService.show(AvailabilityFormComponent, {
       backdrop: true,
       keyboard: true,
@@ -349,7 +331,9 @@ export class CalendarComponent implements OnInit{
       containerClass: 'bottom',
       animated: true
     });
-    this.modalRef.content.action.subscribe((result: any) => { console.log(result); });
+    console.log("Show modal triggered off");
+
+    this.modalRef.content.action.subscribe((result: any) => { console.log("add result: "+ result); });
     
 
   }
@@ -420,26 +404,30 @@ export class CalendarComponent implements OnInit{
 
   checkConnection(){
 
-
-    
-
-    var url = "http://localhost:8080/users/user?username=test_user1";
-    this.requester.getRequest<userData>(url).subscribe(returnData =>{
+   var url = "http://localhost:8080/users/welcome";
+    this.requester.getRequest<string>(url).subscribe(returnData =>{
       console.log(returnData);
       
     })
+    
 
-    url = "http://localhost:8080/skills/skill?name=running";
-    this.requester.getRequest<skills>(url).subscribe(returnData =>{
-      console.log(returnData);
+    // var url = "http://localhost:8080/users/user?username=test_user1";
+    // this.requester.getRequest<userData>(url).subscribe(returnData =>{
+    //   console.log(returnData);
+      
+    // })
 
-    })
+    // url = "http://localhost:8080/skills/skill?name=running";
+    // this.requester.getRequest<skills>(url).subscribe(returnData =>{
+    //   console.log(returnData);
 
-    var newSkill = new skills(1,"running", "expert");
-    url = "http://localhost:8080/skills/new";
-    this.requester.postRequest<skills>(url, newSkill).subscribe(returnData=>{
-      console.log(returnData);
-    })
+    // })
+
+    // var newSkill = new skills(1,"running", "expert");
+    // url = "http://localhost:8080/skills/new";
+    // this.requester.postRequest<skills>(url, newSkill).subscribe(returnData=>{
+    //   console.log(returnData);
+    // })
 
     //this.conf.getConfig()
 

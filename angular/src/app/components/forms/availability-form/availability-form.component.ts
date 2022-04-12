@@ -20,9 +20,9 @@ export class AvailabilityFormComponent implements OnInit {
     date: ['', Validators.required],
   })
 
-  static events: CalendarEvent [];
+  //static events: CalendarEvent [];
 
-  action = new Subject<any>();
+  //action = new Subject<any>();
 
   
   @Output() completedForm!: JSON;
@@ -32,8 +32,8 @@ export class AvailabilityFormComponent implements OnInit {
     private rs: RequestCenterService
     ) { }
 
+  
   ngOnInit(): void {}
-
 
   onSubmit(f: FormGroup) {
     //TODO console logging needs removed, only for demo purposes
@@ -43,7 +43,8 @@ export class AvailabilityFormComponent implements OnInit {
     this.completedForm = f.value;
     console.log('this.completedForm after assignment: ' + JSON.stringify(this.completedForm))
     console.log(JSON.stringify(f.value.date))
-    this.rs.addAvailability(f.value.date, f.value.startTime, f.value.endTime);
+    var retData = this.rs.addAvailability(f.value.date, f.value.startTime, f.value.endTime);
+    
   }
 
   //TODO re-evaluate where this code should exist if anywhere
