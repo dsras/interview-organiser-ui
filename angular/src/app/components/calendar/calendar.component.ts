@@ -22,7 +22,6 @@ import {
   CalendarEventTimesChangedEvent,
   CalendarView, 
 } from 'angular-calendar';
-// import { ModalFormComponent } from '../modal-form/modal-form.component';
 import { MDBModalRef, MDBModalService } from 'ng-uikit-pro-standard';
 import { AvailabilityFormComponent } from 'src/app/components/forms/availability-form/availability-form.component';
 import { ViewAvailabilityModalComponent } from './view-availability-modal/view-availability-modal.component';
@@ -33,7 +32,8 @@ import { Requester } from '../requester/requester.service';
 import { 
   data,
   userData,
-  skills
+  skills,
+  availability
  }from '../requester/requestBodyTypes/types'
  import { RequestCenterService } from '../requester/request-center.service';
 
@@ -89,7 +89,6 @@ export class CalendarComponent implements OnInit{
   ngOnInit(): void {
     this.getMockAvailability();
     this.populateCalendar();
-  // this.addMockData();
   }
 
   redirect(page: string) : void {
@@ -173,25 +172,25 @@ export class CalendarComponent implements OnInit{
 
   events: CalendarEvent[] = [
     //* Commented out below are some prepopulated events from the original calendar
-    // {
-    //   start: subDays(startOfDay(new Date()), 1),
-    //   end: addDays(new Date(), 1),
-    //   title: 'A 3 day event',
-    //   color: colors.red,
-    //   actions: this.actions,
-    //   allDay: true,
-    //   resizable: {
-    //     beforeStart: true,
-    //     afterEnd: true,
-    //   },
-    //   draggable: true,
-    // },
-    // {
-    //   start: startOfDay(new Date()),
-    //   title: 'An event with no end date',
-    //   color: colors.yellow,
-    //   actions: this.actions,
-    // },
+    {
+      start: subDays(startOfDay(new Date()), 1),
+      end: addDays(new Date(), 1),
+      title: 'A 3 day event',
+      color: colors.red,
+      actions: this.actions,
+      allDay: true,
+      resizable: {
+        beforeStart: true,
+        afterEnd: true,
+      },
+      draggable: true,
+    },
+    {
+      start: startOfDay(new Date()),
+      title: 'An event with no end date',
+      color: colors.yellow,
+      actions: this.actions,
+    },
     // {
     //   start: subDays(endOfMonth(new Date()), 3),
     //   end: addDays(endOfMonth(new Date()), 3),
@@ -215,8 +214,6 @@ export class CalendarComponent implements OnInit{
 
   populateCalendar() : void {
 
-    var out = this.rs.getMyAvailability();
-    console.log(out);
     }
 
   activeDayIsOpen: boolean = true;
@@ -305,7 +302,6 @@ export class CalendarComponent implements OnInit{
   //   this.modalService.show(ModalFormComponent)
   // }
 
-
   addAvailability() {
     this.modalRef = this.modalService.show(AvailabilityFormComponent, {
       backdrop: true,
@@ -319,7 +315,6 @@ export class CalendarComponent implements OnInit{
     });
     this.modalRef.content.action.subscribe((result: any) => { console.log(result); });
     
-
   }
   addSkills() {
     this.modalRef = this.modalService.show(SkillsFormComponent, {
@@ -370,8 +365,6 @@ export class CalendarComponent implements OnInit{
       mfc.addEventRef(eventsOnDay);
     }
 
-   
-   
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {
@@ -387,9 +380,6 @@ export class CalendarComponent implements OnInit{
   }
 
   checkConnection(){
-
-
-    
 
     var url = "http://localhost:8080/users/user?username=test_user1";
     this.requester.getRequest<userData>(url).subscribe(returnData =>{
@@ -409,12 +399,6 @@ export class CalendarComponent implements OnInit{
       console.log(returnData);
     })
 
-    //this.conf.getConfig()
-
-    // var data = this.conf.getConfig();
-    // console.log(data);
-
   }
-
 
 }
