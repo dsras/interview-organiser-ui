@@ -36,6 +36,7 @@ import {
   availability
  }from '../requester/requestBodyTypes/types'
  import { RequestCenterService } from '../requester/request-center.service';
+import { CalendarEventActionsComponent } from 'angular-calendar/modules/common/calendar-event-actions.component';
 
 const colors: any = {
   red: {
@@ -212,10 +213,43 @@ export class CalendarComponent implements OnInit{
     // },
   ];
 
-  populateCalendar() : void {
+   populateCalendar()  {
 
-    }
+    this.rs.getMyAvailability(this.events);
+    // await this.delay();
+    // console.log(out);
+    //  out.forEach(element => {
+    //    console.log(element);
+    //   var date = new Date(element.date);
+    //   var times = element.start_time.split(":");
+    //   console.log("times1: " + times[0]);
+    //   console.log(times[1]);
+      
+    //   date.setHours(parseInt(times[0]), parseInt(times[1]));
+      
+    //   this.events.push({
+    //       start: startOfDay(new Date()),
+    //       title: 'An event with no end date',
+    //       color: colors.yellow,
+    //       actions: this.actions,
+    //     })
+    //});
+    
 
+  }
+
+ 
+  sleep(ms: number) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  async delay() {
+    //Say Hello
+    console.log('Hello');
+    // Say World after 2000 milliseconds
+    await this.sleep(2000).then(() =>console.log("World")).catch();
+    console.log("World2");
+  }
   activeDayIsOpen: boolean = true;
 
   //* Basic button method to log current date, remove later

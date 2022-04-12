@@ -11,6 +11,9 @@ import {
 import{
   APPCONSTANTS
 }from '../../constants/app.constant'
+import { analyzeAndValidateNgModules } from '@angular/compiler';
+import { CalendarEvent, CalendarEventAction } from 'angular-calendar';
+import { colors } from '../calendar/header/colours';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +22,7 @@ export class RequestCenterService {
 
   constructor(private requester: Requester ) { }
 
+
   addAvailability(date: string, startTime: string, endTime: string){
     var newAvail = new availability(date, startTime, endTime);
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_ADD;
@@ -26,12 +30,38 @@ export class RequestCenterService {
       console.log(returnData);
     })
   }
-  getMyAvailability(){
+  getMyAvailability(events: CalendarEvent[]){
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_GET;
+    var out;
+
     this.requester.getRequest<availability>(url).subscribe(returnData=>{
-      console.log(returnData);
-      return returnData;
+      console.log("ret" +returnData);
+      out = <Array<availability>><unknown>returnData;
+      console.log(out);
+      out.forEach(element => {
+        console.log(element);
+        var start = new Date(element.date);
+        var end = new Date(element.date);
+        var times1 = element.start_time.split(":");
+        var times2 = element.end_time.split(":");
+        console.log("times1: " + times1);
+        console.log("times2: " + times2);
+        
+        start.setHours(parseInt(times1[0]),parseInt(times1[1]));
+        end.setHours(parseInt(times2[0]),parseInt(times2[1]));
+        console.log(start);
+        console.log(end);
+        
+        events.push({
+            start: start,
+            end: end,
+            title: 'An event made progmatically',
+            color: colors.RED,
+          })
+      });
     })
+    out = <Array<availability>><unknown>out;
+    return out;
   }
   addInterview(interviewerID: number, applicantID: number, roleApplied: number, interviewDate: string, timeStart: string, timeEnd: string, confirmed: number ){
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ADD;
