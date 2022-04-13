@@ -1,50 +1,73 @@
-import { Component, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder, Validators, NgForm, } from '@angular/forms';
-import { CalendarEvent } from 'angular-calendar';
-import { Subject } from 'rxjs';
+import { Component, OnInit, Output, EventEmitter, TemplateRef } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { TimepickerConfig } from 'ngx-bootstrap/timepicker';
+// import { CalendarEvent } from 'angular-calendar';
+// import { Subject } from 'rxjs';
 import { RequestCenterService } from '../../requester/request-center.service';
 
 
 @Component({
   selector: 'availability-form',
   templateUrl: './availability-form.component.html',
-  styleUrls: ['./availability-form.component.scss']
+  styleUrls: ['./availability-form.component.scss'],
+  providers: [{ provide: TimepickerConfig, useFactory: getTimepickerConfig }]
+
 })
 
 
 export class AvailabilityFormComponent implements OnInit {
 
-  availabilityForm = this.fb.group ({
+  mytime?: string;
+  modalRef?: BsModalRef
+
+  createAvailabilityForm = this.fb.group ({
     startTime: ['', Validators.required],
     endTime: ['', Validators.required],
     date: ['', Validators.required],
   })
 
-  static events: CalendarEvent [];
+  @Output() formSubmitted: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
 
-  action = new Subject<any>();
+  // static events: CalendarEvent [];
+
+  // action = new Subject<any>();
 
   
-  @Output() completedForm!: JSON;
+  // @Output() completedForm!: JSON;
 
   constructor(
     private fb: FormBuilder,
-    private rs: RequestCenterService
+    private rs: RequestCenterService,
+    private ms: BsModalService
     ) { }
 
   ngOnInit(): void {}
 
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.ms.show(template);
+  }
 
   onSubmit(f: FormGroup) {
     //TODO console logging needs removed, only for demo purposes
-    console.log('f.value JSON string: ' + JSON.stringify(f.value));
-    console.log('this.completedForm before assignment: ' + JSON.stringify(this.completedForm))
+    // console.log('f.value JSON string: ' + JSON.stringify(f.value));
+    // console.log('this.completedForm before assignment: ' + JSON.stringify(this.createAvailabilityForm))
     //TODO Add POST request to submit f.value
-    this.completedForm = f.value;
-    console.log('this.completedForm after assignment: ' + JSON.stringify(this.completedForm))
-    console.log(JSON.stringify(f.value.date))
+    this.createAvailabilityForm.setValue(f.value);
+    // console.log('this.completedForm after assignment: ' + JSON.stringify(this.createAvailabilityForm))
+    // console.log(JSON.stringify(f.value.date))
     this.rs.addAvailability(f.value.date, f.value.startTime, f.value.endTime);
   }
+
+  // onSubmit(f: FormGroup) {
+  //   this.createInterviewForm.setValue(f.value)
+  //   console.log("create interview form")
+  //   console.log(this.createInterviewForm.value)
+  //   console.warn(this.createInterviewForm.get('firstDate')?.value)
+  //   this.formSubmitted.emit(f);
+  // }
+
+  
 
   //TODO re-evaluate where this code should exist if anywhere
   // static addEventRef(events: CalendarEvent []){
@@ -73,4 +96,20 @@ export class AvailabilityFormComponent implements OnInit {
 
   // }
 
+}
+
+//TODO Place this function in a service made available to all modals with timepickers
+export function getTimepickerConfig(): TimepickerConfig {
+  return Object.assign(new TimepickerConfig(), {
+    hourStep: 1,
+    minuteStep: 15,
+    showMeridian: false,
+    readonlyInput: false,
+    mousewheel: true,
+    showMinutes: true,
+    showSeconds: false,
+    labelHours: 'Hours',
+    labelMinutes: 'Minutes',
+    labelSeconds: 'Seconds'
+  });
 }

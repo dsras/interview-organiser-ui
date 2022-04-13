@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter, TemplateRef } from '@angular/c
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { TimepickerConfig } from 'ngx-bootstrap/timepicker';
+import { RequestCenterService } from '../../requester/request-center.service';
 @Component({
   selector: 'create-interview',
   templateUrl: './create-interview.component.html',
@@ -23,20 +24,18 @@ export class CreateInterviewComponent implements OnInit {
 
   @Output() formSubmitted: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
 
-  @Output() trueOrFalse!: Boolean;
 
   constructor(
     private fb: FormBuilder,
-    private ms: BsModalService
+    private ms: BsModalService,
+    private rs: RequestCenterService,
+
     ) { }
 
   ngOnInit(): void {
   }
 
-  booleanButton() : void {
-    this.trueOrFalse = !this.trueOrFalse
-    console.log(this.trueOrFalse)
-  }
+
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.ms.show(template);
@@ -49,12 +48,15 @@ export class CreateInterviewComponent implements OnInit {
     console.log(this.createInterviewForm.value)
     console.warn(this.createInterviewForm.get('firstDate')?.value)
     this.formSubmitted.emit(f);
-  }
+    //TODO set up Requester service call @Sulkyoptimism
+    // this.rs.addAvailability(f.value.date, f.value.startTime, f.value.endTime);
 
-  
+  }
 
 
 }
+
+//TODO Place this function in a service made available to all modals with timepickers
 export function getTimepickerConfig(): TimepickerConfig {
   return Object.assign(new TimepickerConfig(), {
     hourStep: 1,
