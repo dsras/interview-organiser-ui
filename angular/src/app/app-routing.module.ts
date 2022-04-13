@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CalendarComponent } from './components/calendar/calendar.component';
-import { ModalTestComponent } from './components/dashboard/modal-test/modal-test.component';
 import { CandidatesComponent } from './components/candidates/candidates.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LoginComponent } from './components/login/login.component';
@@ -19,9 +18,7 @@ const routes: Routes = [{
     path: 'dashboard', component: DashboardComponent, pathMatch: 'full'
 }, {
     path: 'calendar', component: CalendarComponent, pathMatch: 'full'
-}, {
-    path: 'modal', component: ModalTestComponent, pathMatch: 'full'
-}];
+},];
 
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
