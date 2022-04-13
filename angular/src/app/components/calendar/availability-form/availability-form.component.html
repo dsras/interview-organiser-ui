@@ -1,7 +1,7 @@
 <button type="button" class="btn btn-primary" (click)="openModal(form)">Form</button>
 
-
-<form [formGroup]="availabilityForm" (ngSubmit)="onSubmit(availabilityForm)" class="md-form" style="color: #757575;">
+<ng-template #form>
+<form [formGroup]="createAvailabilityForm" (ngSubmit)="onSubmit(createAvailabilityForm)" class="md-form" style="color: #757575;">
   <div class="card">
 
     <h5 class="card-header info-color white-text text-center py-4">
@@ -34,27 +34,8 @@
     id="submit"
     name="submit"
     data-dismiss="modal" 
-    [disabled]="!availabilityForm.valid">
+    [disabled]="!createAvailabilityForm.valid">
       Save
     </button>
 </form>
-
-
-<!-- <form [formGroup]="availabilityForm" (ngSubmit)="onSubmit()">
-  <div formGroupName="timeSlot">
-    <h6>Time Slot</h6>
-
-    <label for="startTime">Start Time</label>
-    <input id="start-time" type='time' formControlName="startTime">
-
-    <label for="endTime">End Time</label>
-    <input id="end-time" type='time' formControlName="endTime">
-  </div>
-  <div>
-    <h6>Date</h6> 
-
-    <label for="date">Date</label>
-    <input id="date" type='date' formControlName="date">
-  </div>
-  <button class="btn btn-danger" type="submit" [disabled]="!availabilityForm.valid">Submit</button>
-</form> -->
+</ng-template>
