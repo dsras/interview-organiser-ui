@@ -22,11 +22,10 @@ import {
   CalendarEventTimesChangedEvent,
   CalendarView, 
 } from 'angular-calendar';
-// import { ModalFormComponent } from '../modal-form/modal-form.component';
 import { MDBModalRef, MDBModalService } from 'ng-uikit-pro-standard';
-import { AvailabilityFormComponent } from 'src/app/components/forms/availability-form/availability-form.component';
-import { ViewAvailabilityModalComponent } from './view-availability-modal/view-availability-modal.component';
-import { SkillsFormComponent } from '../forms/skills-form/skills-form.component';
+import { AvailabilityFormComponent } from 'src/app/components/calendar/availability-form/availability-form.component';
+import { ViewAvailabilityModalComponent } from './view-availability-modal/view-availability.component';
+import { SkillsFormComponent } from './skills-form/skills-form.component';
 import { MockInjectorService } from 'src/app/services/mock-injector.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Requester } from '../requester/requester.service';
@@ -91,7 +90,6 @@ export class CalendarComponent implements OnInit{
   ngOnInit(): void {
     this.getMockAvailability();
     this.populateCalendar();
-  // this.addMockData();
   }
 
   redirect(page: string) : void {
@@ -324,8 +322,6 @@ export class CalendarComponent implements OnInit{
   //   this.modalService.show(ModalFormComponent)
   // }
 
-
-
   addAvailability() {
     console.log("Show modal triggered");
     this.modalRef = this.modalService.show(AvailabilityFormComponent, {
@@ -341,7 +337,6 @@ export class CalendarComponent implements OnInit{
     console.log("Show modal triggered off");
     this.modalRef.content.action.subscribe((result: any) => { console.log("add result: "+ result); });
     
-
   }
   addSkills() {
     this.modalRef = this.modalService.show(SkillsFormComponent, {
@@ -392,8 +387,6 @@ export class CalendarComponent implements OnInit{
       mfc.addEventRef(eventsOnDay);
     }
 
-   
-   
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {
@@ -435,12 +428,6 @@ export class CalendarComponent implements OnInit{
     //   console.log(returnData);
     // })
 
-    //this.conf.getConfig()
-
-    // var data = this.conf.getConfig();
-    // console.log(data);
-
   }
-
 
 }

@@ -1,31 +1,37 @@
-<button class="add-button" (click)="booleanButton()">Boolean</button>
+<button type="button" class="btn btn-primary" (click)="openModal(form)">Form</button>
+
+<ng-template  #form>
 <form 
   [formGroup]="createInterviewForm" 
   (ngSubmit)="onSubmit(createInterviewForm)"
   class="md-form" 
-  style="color: slateblue;"
+  style="color: black;"
 >
-
-  <h5>
-    <strong>Create Interview</strong>
-  </h5>
-
-  <div>
-    <label for="start">Start Time</label>
-    <input id="start" type='time' formControlName="start">
-
-    <label for="end">End Time</label>
-    <input id="end" type='time' formControlName="end">
+  
+  <div class="modal-header" style="padding: 10%; width: 100%; color: black; background-color: orange;">
+    <h5>
+      <strong>Create Interview</strong>
+    </h5>
   </div>
-  <br>
-  <div>
-    <label for="firstDate">First Date</label>
-    <input id="firstDate" type='date' formControlName="firstDate">
-
-    <label for="lastDate">Last Date</label>
-    <input id="lastDate" type='date' formControlName="lastDate">
+    
+  <div class="card" style="size: 1000px;">
+    <div class="row">
+      <label for="start">Start Time</label>
+      <timepicker   id="start" formControlName="start"></timepicker>
+      <label for="end">End Time</label>
+      <timepicker id="end" formControlName="end"></timepicker>
+    </div>
+    <br>
+    <div>
+      <label for="firstDate">First Date</label>
+      <input id="firstDate" type='datetime' formControlName="firstDate" bsDatepicker>
+      <br>
+      <label for="lastDate">Last Date</label>
+      <input id="lastDate" type='datetime' formControlName="lastDate" bsDatepicker>
+    </div>
   </div>
-
-  <button class="submit">Submit</button>
-
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary" [disabled]="!createInterviewForm.valid" (click)="this.modalRef?.hide()">Submit</button>
+  </div>
 </form>
+</ng-template>
