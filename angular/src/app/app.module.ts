@@ -54,8 +54,6 @@ import { AgingRendererComponent } from './components/candidates/cell-renderers/a
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 import { MyCalendarModule } from './components/calendar/module';
-// import { ModalFormComponent } from './components/modal-form/modal-form.component'
-
 import { MDBBootstrapModulesPro } from 'ng-uikit-pro-standard';
 import { MDBSpinningPreloader } from 'ng-uikit-pro-standard';
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
@@ -78,7 +76,6 @@ import { SkillsFormComponent } from './components/calendar/skills-form/skills-fo
 import { ViewAvailabilityModalComponent } from './components/calendar/view-availability-modal/view-availability.component';
 import { CreateInterviewComponent } from './components/dashboard/create-interview/create-interview.component';
 import { Requester } from './components/requester/requester.service';
-import { ModalTestComponent } from './components/dashboard/modal-test/modal-test.component';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 
 const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_DEV;
@@ -117,7 +114,6 @@ const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCON
         SkillsFormComponent,
         ViewAvailabilityModalComponent,
         CreateInterviewComponent,
-        ModalTestComponent,
     ],
     imports: [
         BrowserModule,  
