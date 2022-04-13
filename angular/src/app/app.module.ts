@@ -52,10 +52,7 @@ import { SkillRendererComponent } from './components/candidates/cell-renderers/s
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { AgingRendererComponent } from './components/candidates/cell-renderers/aging-renderer/aging-renderer.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-
-import { MyCalendarModule } from './components/calendar/module';
-// import { ModalFormComponent } from './components/modal-form/modal-form.component'
-
+import { MyCalendarModule } from './components/calendar/calendar.module';
 import { MDBBootstrapModulesPro } from 'ng-uikit-pro-standard';
 import { MDBSpinningPreloader } from 'ng-uikit-pro-standard';
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
@@ -73,11 +70,9 @@ import { MdbScrollspyModule } from 'mdb-angular-ui-kit/scrollspy';
 import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
 import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
-import { AvailabilityFormComponent } from './components/calendar/availability-form/availability-form.component';
-import { SkillsFormComponent } from './components/calendar/skills-form/skills-form.component';
-import { ViewAvailabilityModalComponent } from './components/calendar/view-availability/view-availability.component';
 import { CreateInterviewComponent } from './components/dashboard/create-interview/create-interview.component';
 import { Requester } from './components/requester/requester.service';
+import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 
 const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_DEV;
 @NgModule({
@@ -110,10 +105,6 @@ const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCON
         SkillRendererComponent,
         AgingRendererComponent,
         DashboardComponent,
-        // ModalFormComponent,
-        AvailabilityFormComponent,
-        SkillsFormComponent,
-        ViewAvailabilityModalComponent,
         CreateInterviewComponent,
     ],
     imports: [
@@ -150,7 +141,8 @@ const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCON
         MdbScrollspyModule,
         MdbTabsModule,
         MdbTooltipModule,
-        MdbValidationModule
+        MdbValidationModule,
+        TimepickerModule,
     ],
     providers: [
         MDBSpinningPreloader,

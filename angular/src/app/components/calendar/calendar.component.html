@@ -1,13 +1,18 @@
 <h1 id="headConnect">This better work too!!!!</h1>
 <div>
-  <button mdbBtn color="primary" (click)="addAvailability()">Add Availability</button>
-  <button mdbBtn color="primary" (click)="addSkills()">Add Skills</button>  
+  <!-- <button mdbBtn color="primary" (click)="addAvailability()">Add Availability</button>
+  <button mdbBtn color="primary" (click)="addSkills()">Add Skills</button>   -->
   <button mdbBtn color="primary" (click)="currentDate()">Log Current Date</button>
   <button mdbBtn color="primary" (click)="showMockData()">Show Mock Data</button>
   <button mdbBtn color="primary" (click)="addMockData()">Add Mock Data</button>
   <button mdbBtn color="primary" (click)="checkConnection()">Check Connection</button>
   <button mdbBtn color="primary" (click)="populateCalendar()">Populate Calendar</button>
+  <div>
+    <availability-form (availabilityFormSubmitted)="onSubmitAvailability($event)"></availability-form>
+    <skills-form (skillFormSubmitted)="onSubmitSkills($event)"></skills-form>
+  </div>
 </div>
+
 <br />
 <div>
   <div class="row text-center">

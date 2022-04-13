@@ -51,14 +51,6 @@ export class ViewAvailabilityModalComponent implements OnInit {
 
   }
 
-  // get loginFormModalEmail() {
-  //   return this.validatingForm.get('loginFormModalEmail');
-  // }
-
-  // get loginFormModalPassword() {
-  //   return this.validatingForm.get('loginFormModalPassword');
-  // }
-
   onYesClick() {
     this.action.next('yes');
   }
@@ -86,7 +78,7 @@ export class ViewAvailabilityModalComponent implements OnInit {
     this.modalRef.content.action.subscribe((result: any) => { console.log(result); });
 
   }
-
+//? What does this do @Sulkyoptimism?
   public test!: string;
 
   setFormData(data: any): void {

@@ -18,7 +18,7 @@ const routes: Routes = [{
     path: 'dashboard', component: DashboardComponent, pathMatch: 'full'
 }, {
     path: 'calendar', component: CalendarComponent, pathMatch: 'full'
-}];
+},];
 
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
