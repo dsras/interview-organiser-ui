@@ -7,67 +7,41 @@
   class="md-form" 
   style="color: black;"
 >
-<div class="modal-header" style="padding: 10%; width: 100%; color: black; background-color: orange;">
-  <h5>
-    <strong>Add Availability</strong>
-  </h5>
-</div>
-  
-<div class="card" style="size: 1000px;">
-  <div class="row">
-    <label for="start">Start Time</label>
-    <timepicker   id="start" type="time" formControlName="start"></timepicker>
-    <label for="end">End Time</label>
-    <timepicker id="end" type="time" formControlName="end"></timepicker>
-  </div>
-  <br>
-  <div>
-    <label for="date">Date</label>
-    <input 
-      id="date" 
-      placeholder="Select Date"
-      type='text' 
-      formControlName="date" 
-      bsDatepicker>
-  </div>
-</div>
-  <!-- <div class="card">
 
-    <h5 class="card-header info-color white-text text-center py-4">
-        <strong>Add Availability</strong>
+  <div class="modal-header" style="padding: 10%; width: 100%; color: black; background-color: orange;">
+    <h5>
+      <strong>Add Availability</strong>
     </h5>
+  </div>
+  
+  <div class="card" style="size: 1000px;">
+    <div class="row">
+      <label for="startTime">Start Time</label>
+      <timepicker   id="startTime" type="text" formControlName="startTime"></timepicker>
+      <label for="endTime">End Time</label>
+      <timepicker id="endTime"  type="text" formControlName="endTime"></timepicker>
+    </div>
+    <br>
+    <div>
+      <label for="date">Date</label>
+      <input 
+        id="date" 
+        placeholder="Select Date"
+        type='text' 
+        formControlName="date" 
+        bsDatepicker>
+    </div>
+  </div>
 
-    <div class="card-body px-lg-5 pt-0">
-
-   
-        <h6>Time Slot</h6>
-    
-        <label for="startTime">Start Time</label>
-        <input id="start-time" type='time' formControlName="startTime">
-    
-        <label for="endTime">End Time</label>
-        <input id="end-time" type='time' formControlName="endTime">
-      <div>
-        <h6>Date</h6> 
-    
-        <label for="date">Date</label>
-        <input id="date" type='date' formControlName="date">
-      </div>
-
-   
-    </div> 
-  </div> -->
-  <!-- <button 
-    mdbBtn color="primary" 
-    type="submit" 
-    id="submit"
-    name="submit"
-    data-dismiss="modal" 
-    [disabled]="!createAvailabilityForm.valid">
-      Save
-  </button> -->
   <div class="modal-footer">
-    <button type="submit" class="btn btn-primary" [disabled]="!createAvailabilityForm.valid" (click)="this.modalRef?.hide()">Submit</button>
+    <button 
+      type="submit" 
+      class="btn btn-primary" 
+      [disabled]="!createAvailabilityForm.valid" 
+      (click)="this.modalRef?.hide()"
+    >
+      Submit
+    </button>
   </div>
 </form>
 </ng-template>

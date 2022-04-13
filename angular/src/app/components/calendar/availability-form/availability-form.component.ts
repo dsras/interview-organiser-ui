@@ -14,7 +14,6 @@ import { RequestCenterService } from '../../requester/request-center.service';
 
 export class AvailabilityFormComponent implements OnInit {
 
-  mytime?: string;
   modalRef?: BsModalRef
 
   createAvailabilityForm: FormGroup = this.fb.group ({
@@ -23,7 +22,7 @@ export class AvailabilityFormComponent implements OnInit {
     date: ['', Validators.required],
   })
 
-  @Output() formSubmitted: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
+  @Output() availabilityFormSubmitted: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
 
 
   constructor(
@@ -47,7 +46,7 @@ export class AvailabilityFormComponent implements OnInit {
     // console.log('this.completedForm after assignment: ' + JSON.stringify(this.createAvailabilityForm))
     // console.log(JSON.stringify(f.value.date))
     this.rs.addAvailability(f.value.date, f.value.startTime, f.value.endTime);
-    this.formSubmitted.emit(f);
+    this.availabilityFormSubmitted.emit(f);
     console.log(f.value)
     this.createAvailabilityForm.reset();
   }

@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder, Validators, NgForm, } from '@angular/forms';
-import { CalendarEvent } from 'angular-calendar';
+import { Component, OnInit, Output, EventEmitter, TemplateRef } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, } from '@angular/forms';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
+import { RequestCenterService } from '../../requester/request-center.service';
 @Component({
   selector: 'skills-form',
   templateUrl: './skills-form.component.html',
@@ -24,25 +25,47 @@ export class SkillsFormComponent implements OnInit {
     'Level 5',
   ]
 
-  skillsForm = this.fb.group ({
+  modalRef?: BsModalRef;
+
+  addSkillsForm: FormGroup = this.fb.group ({
     skill: ['', Validators.required],
     level: ['', Validators.required],
   })
 
-  static events: CalendarEvent [];
+  @Output() skillFormSubmitted: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
+
+
 
   action = new Subject<any>();
 
   //todo add Thorfinn's Services here
-  constructor(private fb: FormBuilder) { }
+  constructor(
+    private fb: FormBuilder,
+    private rs: RequestCenterService,
+    private ms: BsModalService    ) { 
+
+  }
 
   ngOnInit(): void {
-    //! Add getSkillsMethod to init topopulate form with current skills.
+    //! Add getSkillsMethod to init to populate form with current skills.
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.ms.show(template);
   }
 
   onSubmit(f: FormGroup) {
-    //TODO Replace console log with POST method 
-    console.log(`POST body: ${JSON.stringify(f.value)}`);
+    //TODO console logging needs removed, only for demo purposes
+    // console.log('f.value JSON string: ' + JSON.stringify(f.value));
+    // console.log('this.completedForm before assignment: ' + JSON.stringify(this.createAvailabilityForm))
+    //TODO Add POST request to submit f.value
+    this.addSkillsForm.setValue(f.value);
+    // console.log('this.completedForm after assignment: ' + JSON.stringify(this.createAvailabilityForm))
+    // console.log(JSON.stringify(f.value.date))
+    this.rs.addAvailability(f.value.date, f.value.startTime, f.value.endTime);
+    this.skillFormSubmitted.emit(f);
+    console.log(f.value)
+    this.addSkillsForm.reset();
   }
 
 //* test methods

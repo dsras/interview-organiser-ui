@@ -13,7 +13,7 @@ import { RequestCenterService } from '../../requester/request-center.service';
 
 export class CreateInterviewComponent implements OnInit {
   
-  mytime?: string;
+  // mytime?: string;
   modalRef?: BsModalRef
 
   createInterviewForm: FormGroup = this.fb.group({

@@ -1,38 +1,52 @@
-<form  [formGroup]="skillsForm"  (ngSubmit)="onSubmit(skillsForm)" class="md-form" style="color: #757575;">
-  <div class="card">
+<button type="button" class="btn btn-primary" (click)="openModal(form)">Add Skill</button>
 
-    <h5 class="card-header info-color white-text text-center py-4">
-        <strong>Add Skill</strong>
+<ng-template #form>
+<form  
+  [formGroup]="addSkillsForm"  
+  (ngSubmit)="onSubmit(addSkillsForm)" 
+  class="md-form" 
+  style="color: black;"
+>
+
+  <div class="modal-header" style="padding: 10%; width: 100%; color: black; background-color: orange;">
+    <h5>
+      <strong>Add Skill</strong>
     </h5>
+  </div>
 
-    <div class="card-body px-lg-5 pt-0">
-       
-        <select id="skill" formControlName="skill">
-          <option value="">Skill</option>
-          <option *ngFor="let skill of skills" [ngValue]="skill">
-            {{ skill }}
-          </option>
-        </select>
-      <div>
-        <select id="level" formControlName="level">
-          <option value="">Level</option>
-          <option *ngFor="let level of levels" [ngValue]="level">
-            {{ level }}
-          </option>
-        </select>
-      </div>
-
-   
+  <div class="card" style="size: 1000px;">
+    <div>
+      <label for="skill">Skill: </label>
+      <br>
+      <select id="skill" formControlName="skill">
+        <option value="">Please select skill</option>
+        <option *ngFor="let skill of skills" [ngValue]="skill">
+          {{ skill }}
+        </option>
+      </select>
+      <br>
+      <label for="level">Level: </label>
+      <br>
+      <select id="level" formControlName="level">
+        <option value="">Please select level</option>
+        <option *ngFor="let level of levels" [ngValue]="level">
+          {{ level }}
+        </option>
+      </select>
     </div>
   </div>
-  <button 
-    mdbBtn color="primary" 
+
+  <div class="modal-footer">
+    <button 
+    class="btn btn-primary"
     type="submit" 
     id="submit"
-    data-dismiss="" 
-    [disabled]="!skillsForm.valid">
-      Save
-    </button>
+    [disabled]="!addSkillsForm.valid"
+    (click)="this.modalRef?.hide()"
+  >
+      Submit
+  </button>
+  </div>
 </form>
 
-
+</ng-template>

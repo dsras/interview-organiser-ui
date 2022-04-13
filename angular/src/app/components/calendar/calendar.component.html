@@ -8,10 +8,8 @@
   <button mdbBtn color="primary" (click)="checkConnection()">Check Connection</button>
   <button mdbBtn color="primary" (click)="populateCalendar()">Populate Calendar</button>
   <div>
-    <availability-form (formSubmitted)="onSubmitAvailability($event)"></availability-form>
-  </div>
-  <div>
-    <!-- <skills-form (formSubmitted)="onSubmitSkills($event)"></skills-form> -->
+    <availability-form (availabilityFormSubmitted)="onSubmitAvailability($event)"></availability-form>
+    <skills-form (skillFormSubmitted)="onSubmitSkills($event)"></skills-form>
   </div>
 </div>
 <br />
