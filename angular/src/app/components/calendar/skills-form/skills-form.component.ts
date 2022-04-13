@@ -28,9 +28,8 @@ export class SkillsFormComponent implements OnInit {
   //   'Level 5',
   // ]  
   //? Should this be pulled from DB or better to store in frontend
-  skillsAvailable: skills[] = [
-
-  ]
+  // TODO output from calendar later?
+  skillsAvailable: skills[] = [];
 
   skillNamesAvailable: Set<string> = new Set<string>();
 
@@ -46,8 +45,6 @@ export class SkillsFormComponent implements OnInit {
 
   @Output() skillFormSubmitted: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
 
-
-
   action = new Subject<any>();
 
   //todo add Thorfinn's Services here
@@ -60,8 +57,8 @@ export class SkillsFormComponent implements OnInit {
 
   ngOnInit(): void {
       //! Add getSkillsMethod to init topopulate form with current skills.
+      // TODO maybe put in parent as an input/output relationship
       this.rs.getAllSkills(this.skillsAvailable, this.skillNamesAvailable, this.levels );
-
       console.log("skillslist " + this.skillsAvailable.length);
       //.forEach(element => {
       //   this.skillsMap.set(element.id, [element.skillName, element.skillLevel])
@@ -73,13 +70,9 @@ export class SkillsFormComponent implements OnInit {
     this.modalRef = this.ms.show(template);
   }
   //? anything to be saved
-  // onSubmit(f: FormGroup) {
-  //    this.addSkillsForm.setValue(f.value);
-  //   this.rs.addAvailability(f.value.date, f.value.startTime, f.value.endTime);
-  //   this.skillFormSubmitted.emit(f);
-  //   console.log(f.value)
-  //   this.addSkillsForm.reset();
-  // }
+  onSubmit2(f: FormGroup) {
+    this.skillFormSubmitted.emit(f);
+  }
 
 
   test(){
@@ -87,19 +80,18 @@ export class SkillsFormComponent implements OnInit {
   }
 
   onSubmit(f: FormGroup) {
-    //TODO Replace console log with POST method 
-    console.log(`POST body: ${JSON.stringify(f.value)}`);
-    console.log(`some more body: ${f.value} `)
+    this.addSkillsForm.setValue(f.value);
     var skillName = JSON.stringify(f.value.skill);
     var skillLevel = JSON.stringify(f.value.level);
     var id = 0;
     this.skillsAvailable.forEach(element => {
       if(element.skillName == skillName && element.skillLevel == skillLevel){
         id = element.id;
-        
       }
     });
     this.rs.addSkills(id, skillName, skillLevel);
+    this.skillFormSubmitted.emit(f);
+    this.addSkillsForm.reset();
   }
 
 //* test methods

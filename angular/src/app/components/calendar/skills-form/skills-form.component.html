@@ -20,7 +20,7 @@
       <br>
       <select id="skill" formControlName="skill">
         <option value="">Please select skill</option>
-        <option *ngFor="let skill of skills" [ngValue]="skill">
+        <option *ngFor="let skill of skillsAvailable" [ngValue]="skill">
           {{ skill }}
         </option>
       </select>

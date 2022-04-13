@@ -76,7 +76,7 @@ export class CalendarComponent implements OnInit{
   //* This is where the local calendar events are stored
   skills: skills[]=[];
 
-  events: CalendarEvent[] = [];
+  events: CalendarEvent[] = [
     //* Commented out below are some prepopulated events from the original calendar
     // {
     //   start: subDays(startOfDay(new Date()), 1),
@@ -97,9 +97,7 @@ export class CalendarComponent implements OnInit{
     //   color: colors.yellow,
     //   actions: this.actions,
     // },
-
-  
-
+  ];
 
   constructor(
     private router: Router, 
@@ -107,10 +105,11 @@ export class CalendarComponent implements OnInit{
     //TODO These may need to be changed later, currently used by base calendar  
     private modal: NgbModal,
     private modalService: MDBModalService,
-    private requester: Requester, //*only used for testing at bootom of script, remove later
     private rs: RequestCenterService
-    ) {
-    }
+  ) {
+
+  }
+
   ngOnInit(): void {
     this.getMockAvailability();
     this.populateCalendar();
@@ -173,17 +172,6 @@ export class CalendarComponent implements OnInit{
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  async delay() {
-    //Say Hello
-    console.log('Hello');
-    // Say World after 2000 milliseconds
-    await this.sleep(2000).then(() =>console.log("World")).catch();
-    console.log("World2");
-  }
-
-  // populateCalendar()  {
-  //   this.rs.getMyAvailability(this.events);
-  // }
   async delayedRefresh() {
     //Say Hello
     console.log('Hello');
@@ -198,7 +186,7 @@ export class CalendarComponent implements OnInit{
     console.log("length of events list ext: " + this.events.length);   
     this.delayedRefresh();
   }
-
+  // * Test method
   checkConnection(){
 
     // var url = "http://localhost:8080/users/welcome";
@@ -230,11 +218,13 @@ export class CalendarComponent implements OnInit{
   onSubmitAvailability(form: FormGroup) : void {
     console.log("Availability added: ")
     console.log(form.value);
+    this.populateCalendar();
   }
 
   onSubmitSkills(form: FormGroup) : void {
     console.log("Skills added: ")
     console.log(form.value)
+    this.populateCalendar();
   }
 
   /**
