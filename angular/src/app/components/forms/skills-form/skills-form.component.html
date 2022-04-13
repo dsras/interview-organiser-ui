@@ -9,7 +9,7 @@
        
         <select id="skill" formControlName="skill">
           <option value="">Skill</option>
-          <option *ngFor="let skill of skills" [ngValue]="skill">
+          <option *ngFor="let skill of skillNamesAvailable" [ngValue]="skill">
             {{ skill }}
           </option>
         </select>
@@ -33,6 +33,7 @@
     [disabled]="!skillsForm.valid">
       Save
     </button>
+    <button mdbBtn color="primary" (click)="test()"  >test</button>
 </form>
 
 

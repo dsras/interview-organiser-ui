@@ -6,6 +6,7 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarComponent } from './calendar.component';
+import { AvailabilityFormComponent } from '../forms/availability-form/availability-form.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,9 @@ import { CalendarComponent } from './calendar.component';
       useFactory: adapterFactory,
     }),
   ],
-  declarations: [CalendarComponent],
+  declarations: [
+    CalendarComponent,
+  ],
   exports: [CalendarComponent],
 })
 export class MyCalendarModule{}

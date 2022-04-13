@@ -33,25 +33,26 @@ import { Requester } from '../requester/requester.service';
 import { 
   data,
   userData,
-  skills
+  skills,
+  availability
  }from '../requester/requestBodyTypes/types'
  import { RequestCenterService } from '../requester/request-center.service';
 import { CalendarEventActionsComponent } from 'angular-calendar/modules/common/calendar-event-actions.component';
-
-const colors: any = {
-  red: {
-    primary: '#ad2121',
-    secondary: '#FAE3E3',
-  },
-  blue: {
-    primary: '#1e90ff',
-    secondary: '#D1E8FF',
-  },
-  yellow: {
-    primary: '#e3bc08',
-    secondary: '#FDF1BA',
-  },
-};
+import { COLOURS } from '../../constants/colours.constant';
+// const colors: any = {
+//   red: {
+//     primary: '#ad2121',
+//     secondary: '#FAE3E3',
+//   },
+//   blue: {
+//     primary: '#1e90ff',
+//     secondary: '#D1E8FF',
+//   },
+//   yellow: {
+//     primary: '#e3bc08',
+//     secondary: '#FDF1BA',
+//   },
+// };
 @Component({
   selector: 'components-calendar',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -113,7 +114,7 @@ export class CalendarComponent implements OnInit{
           start: startOfDay(new Date(start)),
           end: endOfDay(new Date(end)),
           title: `User1 availability ${i}`,
-          color: colors.red,
+          color: COLOURS.RED_DARK,
           actions: this.actions,
           allDay: true,
           resizable: {
@@ -157,7 +158,7 @@ export class CalendarComponent implements OnInit{
       label: '<i class="fas fa-fw fa-pencil-alt"></i>',
       a11yLabel: 'Edit',
       onClick: ({ event }: { event: CalendarEvent }): void => {
-        //this.handleEvent('Edited', event);
+        this.handleEvent('Edited', event);
       },
     },
     {
@@ -172,8 +173,10 @@ export class CalendarComponent implements OnInit{
 
   refresh = new Subject<void>();
 
+  skills: skills[]=[];
+
   events: CalendarEvent[] = [
-    //* Commented out below are some prepopulated events from the original calendar
+    // * Commented out below are some prepopulated events from the original calendar
     // {
     //   start: subDays(startOfDay(new Date()), 1),
     //   end: addDays(new Date(), 1),
@@ -215,6 +218,7 @@ export class CalendarComponent implements OnInit{
   ];
 
    populateCalendar()  {
+    this.events = [];
     this.rs.getMyAvailability(this.events);
     console.log("length of events list ext: " + this.events.length);   
     this.delayedRefresh();
@@ -287,7 +291,7 @@ export class CalendarComponent implements OnInit{
         title: 'New event',
         start: startOfDay(new Date()),
         end: endOfDay(new Date()),
-        color: colors.red,
+        color: COLOURS.RED_DARK,
         draggable: true,
         resizable: {
           beforeStart: true,
@@ -297,6 +301,8 @@ export class CalendarComponent implements OnInit{
     ];
   }
 
+
+  
 
 
 
@@ -319,6 +325,7 @@ export class CalendarComponent implements OnInit{
   // }
 
 
+
   addAvailability() {
     console.log("Show modal triggered");
     this.modalRef = this.modalService.show(AvailabilityFormComponent, {
@@ -332,7 +339,6 @@ export class CalendarComponent implements OnInit{
       animated: true
     });
     console.log("Show modal triggered off");
-
     this.modalRef.content.action.subscribe((result: any) => { console.log("add result: "+ result); });
     
 

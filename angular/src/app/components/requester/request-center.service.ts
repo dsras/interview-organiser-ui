@@ -13,7 +13,8 @@ import{
 }from '../../constants/app.constant'
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { CalendarEvent, CalendarEventAction } from 'angular-calendar';
-import { colors } from '../calendar/header/colours';
+import { COLOURS } from '../../constants/colours.constant';
+
 
 @Injectable({
   providedIn: 'root'
@@ -60,7 +61,7 @@ export class RequestCenterService {
             start: start,
             end: end,
             title: 'An event made progmatically',
-            color: colors.RED,
+            color: COLOURS.GREEN_LITE,
           })
           console.log("length of events list: " + events.length);
       });
@@ -103,25 +104,39 @@ export class RequestCenterService {
       return returnData;
     })
   }
-  getSkills(){
+  getSkills() : Array<skills> {
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.SKILLS_GET;
+    var out;
     this.requester.getRequest<skills>(url).subscribe(returnData=>{
       console.log(returnData);
-      return returnData;
+      out = returnData;
+    })
+    out = <Array<skills>><unknown> out;
+    return out;
+  }
+  addSkills(id: number, name: string, level: string){//this might need refinement based on the fact that only skill IDs will be passed
+    var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.SKILLS_ADD;
+    var newSkills = new skills(id, name, level);
+    this.requester.postRequest<skills>(url, newSkills).subscribe(returnData=>{
+      console.log(returnData);
     })
   }
-  addSkills(){//this might need refinement based on the fact that only skill IDs will be passed
-    // var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.SKILLS_ADD;
-    // //////////////////////////////
-    // this.requester.postRequest<skills>(url/*, newSkills*/).subscribe(returnData=>{
-    //   console.log(returnData);
-    // })
-  }
-  getAllSkills(){
+  getAllSkills(skills: skills[], skillNames: Set<string>, levels: Set<string>) {
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.SKILLS_GET_ALL;
+    var out;
     this.requester.getRequest<skills>(url).subscribe(returnData=>{
-      console.log(returnData);
-      return returnData;
+      out = <Array<skills>><unknown>returnData;
+      console.log(out);
+      out.forEach(element => {
+        console.log(element);
+        skillNames.add(element.skillName);
+        levels.add(element.skillLevel);
+        skills.push({
+          id: element.id,
+          skillName: element.skillName,
+          skillLevel: element.skillLevel,
+        })
+      });
     })
   }
 

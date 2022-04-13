@@ -1,8 +1,9 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators, NgForm, } from '@angular/forms';
 import { CalendarEvent } from 'angular-calendar';
 import { Subject } from 'rxjs';
 import { RequestCenterService } from '../../requester/request-center.service';
+import { availability } from '../../requester/requestBodyTypes/types';
 
 
 @Component({
@@ -21,12 +22,12 @@ export class AvailabilityFormComponent implements OnInit {
   })
 
   //static events: CalendarEvent [];
-
   //action = new Subject<any>();
 
   
-  @Output() completedForm!: JSON;
 
+  @Output() completedForm!: JSON;
+  
   constructor(
     private fb: FormBuilder,
     private rs: RequestCenterService
@@ -44,7 +45,6 @@ export class AvailabilityFormComponent implements OnInit {
     console.log('this.completedForm after assignment: ' + JSON.stringify(this.completedForm))
     console.log(JSON.stringify(f.value.date))
     var retData = this.rs.addAvailability(f.value.date, f.value.startTime, f.value.endTime);
-    
   }
 
   //TODO re-evaluate where this code should exist if anywhere
