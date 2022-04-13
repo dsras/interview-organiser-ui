@@ -3,13 +3,13 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { CalendarEvent } from 'angular-calendar';
 import { MDBModalRef, MDBModalService } from 'ng-uikit-pro-standard';
 import { Subject } from 'rxjs';
-import { AvailabilityFormComponent } from '../../forms/availability-form/availability-form.component';
+import { AvailabilityFormComponent } from '../availability-form/availability-form.component';
 
 
 @Component({
-  selector: 'view-availability-modal',
-  templateUrl: './view-availability-modal.component.html',
-  styleUrls: ['./view-availability-modal.component.scss']
+  selector: 'view-availability',
+  templateUrl: './view-availability.component.html',
+  styleUrls: ['./view-availability.component.scss']
 })
 export class ViewAvailabilityModalComponent implements OnInit {
 
@@ -51,14 +51,6 @@ export class ViewAvailabilityModalComponent implements OnInit {
 
   }
 
-  // get loginFormModalEmail() {
-  //   return this.validatingForm.get('loginFormModalEmail');
-  // }
-
-  // get loginFormModalPassword() {
-  //   return this.validatingForm.get('loginFormModalPassword');
-  // }
-
   onYesClick() {
     this.action.next('yes');
   }
@@ -86,7 +78,7 @@ export class ViewAvailabilityModalComponent implements OnInit {
     this.modalRef.content.action.subscribe((result: any) => { console.log(result); });
 
   }
-
+//? What does this do @Sulkyoptimism?
   public test!: string;
 
   setFormData(data: any): void {
