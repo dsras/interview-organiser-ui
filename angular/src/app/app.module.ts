@@ -52,7 +52,6 @@ import { SkillRendererComponent } from './components/candidates/cell-renderers/s
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { AgingRendererComponent } from './components/candidates/cell-renderers/aging-renderer/aging-renderer.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-
 import { MyCalendarModule } from './components/calendar/module';
 import { MDBBootstrapModulesPro } from 'ng-uikit-pro-standard';
 import { MDBSpinningPreloader } from 'ng-uikit-pro-standard';
@@ -109,7 +108,6 @@ const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCON
         SkillRendererComponent,
         AgingRendererComponent,
         DashboardComponent,
-        // ModalFormComponent,
         AvailabilityFormComponent,
         SkillsFormComponent,
         ViewAvailabilityModalComponent,

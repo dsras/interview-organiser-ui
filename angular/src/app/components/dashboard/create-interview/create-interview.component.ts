@@ -3,12 +3,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { TimepickerConfig } from 'ngx-bootstrap/timepicker';
 import { RequestCenterService } from '../../requester/request-center.service';
+
 @Component({
   selector: 'create-interview',
   templateUrl: './create-interview.component.html',
   styleUrls: ['./create-interview.component.scss'],
   providers: [{ provide: TimepickerConfig, useFactory: getTimepickerConfig }]
 })
+
 export class CreateInterviewComponent implements OnInit {
   
   mytime?: string;
@@ -29,18 +31,14 @@ export class CreateInterviewComponent implements OnInit {
     private fb: FormBuilder,
     private ms: BsModalService,
     private rs: RequestCenterService,
-
     ) { }
 
   ngOnInit(): void {
   }
 
-
-
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.ms.show(template);
   }
-
 
   onSubmit(f: FormGroup) {
     this.createInterviewForm.setValue(f.value)
