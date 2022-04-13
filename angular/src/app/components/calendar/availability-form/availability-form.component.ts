@@ -29,12 +29,6 @@ export class AvailabilityFormComponent implements OnInit {
 
   @Output() formSubmitted: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
 
-  // static events: CalendarEvent [];
-
-  // action = new Subject<any>();
-
-  
-  // @Output() completedForm!: JSON;
 
   constructor(
     private fb: FormBuilder,
@@ -57,6 +51,7 @@ export class AvailabilityFormComponent implements OnInit {
     // console.log('this.completedForm after assignment: ' + JSON.stringify(this.createAvailabilityForm))
     // console.log(JSON.stringify(f.value.date))
     this.rs.addAvailability(f.value.date, f.value.startTime, f.value.endTime);
+    this.formSubmitted.emit(f);
   }
 
   // onSubmit(f: FormGroup) {
