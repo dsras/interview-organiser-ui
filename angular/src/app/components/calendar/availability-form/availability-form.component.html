@@ -5,7 +5,7 @@
   [formGroup]="createAvailabilityForm"
   (ngSubmit)="onSubmit(createAvailabilityForm)" 
   class="md-form" 
-  style="color: #757575;"
+  style="color: black;"
 >
 <div class="modal-header" style="padding: 10%; width: 100%; color: black; background-color: orange;">
   <h5>
@@ -16,14 +16,19 @@
 <div class="card" style="size: 1000px;">
   <div class="row">
     <label for="start">Start Time</label>
-    <timepicker   id="start" formControlName="start"></timepicker>
+    <timepicker   id="start" type="time" formControlName="start"></timepicker>
     <label for="end">End Time</label>
-    <timepicker id="end" formControlName="end"></timepicker>
+    <timepicker id="end" type="time" formControlName="end"></timepicker>
   </div>
   <br>
   <div>
     <label for="date">Date</label>
-    <input id="date" type='datetime' formControlName="date" bsDatepicker>
+    <input 
+      id="date" 
+      placeholder="Select Date"
+      type='text' 
+      formControlName="date" 
+      bsDatepicker>
   </div>
 </div>
   <!-- <div class="card">

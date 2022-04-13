@@ -10,6 +10,8 @@ import { AvailabilityFormComponent } from './availability-form/availability-form
 import { SkillsFormComponent } from './skills-form/skills-form.component';
 import { ViewAvailabilityModalComponent } from './view-availability-modal/view-availability.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TimepickerModule } from 'ngx-bootstrap/timepicker';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @NgModule({
   imports: [
@@ -17,6 +19,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
     NgbModalModule,
+    TimepickerModule,
+    BsDatepickerModule,
     FlatpickrModule.forRoot(),
     CalendarModule.forRoot({
       provide: DateAdapter,
@@ -27,7 +31,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     CalendarComponent,
     AvailabilityFormComponent,
     SkillsFormComponent, 
-    ViewAvailabilityModalComponent
+    ViewAvailabilityModalComponent,
   ],
   exports: [CalendarComponent],
 })

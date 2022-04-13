@@ -142,7 +142,7 @@ const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCON
         MdbTabsModule,
         MdbTooltipModule,
         MdbValidationModule,
-        TimepickerModule
+        TimepickerModule,
     ],
     providers: [
         MDBSpinningPreloader,

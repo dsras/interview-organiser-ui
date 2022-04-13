@@ -49,12 +49,12 @@ export class CreateInterviewComponent implements OnInit {
     //TODO set up Requester service call @Sulkyoptimism
     // this.rs.addAvailability(f.value.date, f.value.startTime, f.value.endTime);
 
+    this.createInterviewForm.reset();
   }
 
 
 }
 
-//TODO Place this function in a service made available to all modals with timepickers
 export function getTimepickerConfig(): TimepickerConfig {
   return Object.assign(new TimepickerConfig(), {
     hourStep: 1,
@@ -69,5 +69,3 @@ export function getTimepickerConfig(): TimepickerConfig {
     labelSeconds: 'Seconds'
   });
 }
-
-
