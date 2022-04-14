@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { Component, OnInit, TemplateRef, Output, EventEmitter } from '@angular/core';
 import { CalendarEvent } from 'angular-calendar';
-import { MDBModalRef, MDBModalService } from 'ng-uikit-pro-standard';
 import { Subject } from 'rxjs';
-import { AvailabilityFormComponent } from '../availability-form/availability-form.component';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 
 @Component({
@@ -13,6 +11,10 @@ import { AvailabilityFormComponent } from '../availability-form/availability-for
 })
 export class ViewAvailabilityModalComponent implements OnInit {
 
+  @Output() closeClicked: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+
+  modalRef?: BsModalRef
 
   ngOnInit(): void {
   }
@@ -20,12 +22,16 @@ export class ViewAvailabilityModalComponent implements OnInit {
   action = new Subject<any>();
   static events: CalendarEvent [];
 
+
+
   constructor(
-    public modalRef: MDBModalRef,
-    private modalService: MDBModalService,
+    private ms: BsModalService
     ) {
   }
 
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.ms.show(template);
+  }
 
   static addEventRef(events: CalendarEvent []){
     ViewAvailabilityModalComponent.events = events;
@@ -55,8 +61,10 @@ export class ViewAvailabilityModalComponent implements OnInit {
     this.action.next('yes');
   }
 
-  onNoClick() {
+  closeClick() {
     this.action.next('No');
+    this.modalRef?.hide();
+    this.closeClicked.emit(true);
   } 
 
   yell(): void {
@@ -64,20 +72,20 @@ export class ViewAvailabilityModalComponent implements OnInit {
     console.log(ViewAvailabilityModalComponent.events[0]);
   }
 
-  addAvailability(): void {
-    this.modalRef = this.modalService.show(AvailabilityFormComponent, {
-      backdrop: true,
-      keyboard: true,
-      focus: true,
-      show: false,
-      ignoreBackdropClick: false,
-      class: '',
-      containerClass: 'bottom',
-      animated: true
-    });
-    this.modalRef.content.action.subscribe((result: any) => { console.log(result); });
+  // addAvailability(): void {
+  //   this.modalRef = this.modalService.show(AvailabilityFormComponent, {
+  //     backdrop: true,
+  //     keyboard: true,
+  //     focus: true,
+  //     show: false,
+  //     ignoreBackdropClick: false,
+  //     class: '',
+  //     containerClass: 'bottom',
+  //     animated: true
+  //   });
+  //   this.modalRef.content.action.subscribe((result: any) => { console.log(result); });
 
-  }
+  // }
 //? What does this do @Sulkyoptimism?
   public test!: string;
 

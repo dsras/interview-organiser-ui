@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, TemplateRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { TimepickerConfig } from 'ngx-bootstrap/timepicker';
 import { RequestCenterService } from '../../requester/request-center.service';
@@ -17,12 +17,41 @@ export class CreateInterviewComponent implements OnInit {
   modalRef?: BsModalRef
 
   createInterviewForm: FormGroup = this.fb.group({
-    start: ['', Validators.required],
-    end: ['', Validators.required],
+    startTime: ['', Validators.required],
+    endTime: ['', Validators.required],
     firstDate: ['', Validators.required],
-    lastDate: ['', Validators.required]
-    //? add additional params
+    lastDate: ['', Validators.required],
+    skills: this.fb.array([
+      this.fb.group({
+        skillType: [''],
+        skillLevel: ['']
+      })
+    ])
   })
+
+  skillsRequired: FormGroup = this.fb.group({
+    skillType: [''],
+    skillLevel: ['']
+  })
+
+  get skills() {
+    return this.createInterviewForm.get('skills') as FormArray; 
+  }
+
+  addSkill() {
+    this.skills.push(this.fb.group({skill: [''], level: ['']}))
+  }
+
+  skillTypes = [
+    'Java', 'Python', 'Spring', 'C', 'C++', 'C#',
+    'Haskell', 'Angular', 'JavaScript', 'VISUAL-BASIC',
+  ]
+
+  skillLevels = [
+    'Level 1',
+    'Level 2',
+    'Level 3',
+  ]  
 
   @Output() formSubmitted: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
 
