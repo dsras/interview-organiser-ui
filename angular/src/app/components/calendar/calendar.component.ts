@@ -188,6 +188,8 @@ export class CalendarComponent implements OnInit{
   }
   // * Test method
   checkConnection(){
+    var skillsIDs = [1,2,3];
+    this.rs.getAvailabilityOnSkill(skillsIDs);
 
     // var url = "http://localhost:8080/users/welcome";
     // this.requester.getRequest<string>(url).subscribe(returnData =>{
@@ -201,7 +203,7 @@ export class CalendarComponent implements OnInit{
       
     // })
 
-    // url = "http://localhost:8080/skills/skill?name=running";
+    // url = "http://localhost:8080/skills/skill?name=Java";
     // this.requester.getRequest<skills>(url).subscribe(returnData =>{
     //   console.log(returnData);
 

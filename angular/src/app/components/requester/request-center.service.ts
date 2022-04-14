@@ -6,7 +6,8 @@ import {
   userData,
   skills,
   availability,
-  interview
+  interview,
+  skillIdOnly
  }from '../requester/requestBodyTypes/types'
 import{
   APPCONSTANTS
@@ -14,6 +15,8 @@ import{
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { CalendarEvent, CalendarEventAction } from 'angular-calendar';
 import { COLOURS } from '../../constants/colours.constant';
+import { appendFile } from 'fs';
+import { start } from 'repl';
 
 
 @Injectable({
@@ -25,7 +28,15 @@ export class RequestCenterService {
 
 
   addAvailability(date: string, startTime: string, endTime: string){
-    var newAvail = new availability(date, startTime, endTime);
+    var newDate = new Date(date);
+    var newStart = new Date(startTime);
+    var newEnd = new Date(endTime);
+
+    var dateString = newDate.getFullYear().toString() + "-" + this.bufTimeString((newDate.getUTCMonth() + 1).toString()) + "-" + newDate.getDate().toString();
+    var startString = this.bufTimeString(newStart.getHours().toString()) + ":" + this.bufTimeString(newStart.getMinutes().toString());
+    var endString = this.bufTimeString(newEnd.getHours().toString()) + ":" + this.bufTimeString(newEnd.getMinutes().toString());
+
+    var newAvail = new availability(dateString, startString, endString);
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_ADD;
     var out;
 
@@ -35,6 +46,16 @@ export class RequestCenterService {
     })
     return out;
   }
+
+  bufTimeString(input:string){
+    var out = "";
+    if(input.length < 2){
+      out+="0"+ input;
+      return out;
+    }
+    return input;  
+  }
+
   getMyAvailability(events: CalendarEvent[]){
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_GET;
     var out;
@@ -69,6 +90,28 @@ export class RequestCenterService {
     out = <Array<availability>><unknown>out;
     return out;
   }
+
+  getAvailabilityOnSkill(input: Array<number>){
+    var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_SKILL;
+    var started = false;
+    input.forEach(element =>{
+
+      url += (started?",":"")+element.toString();
+      started = true;
+    })
+    this.requester.getRequest<availability>(url).subscribe(returnData=>{
+      console.log(returnData);
+      return returnData;
+    })
+  }
+  //! not ready yet
+  // getAllAvailability(){
+  //   var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_BY_INT;
+  //   this.requester.getRequest<interview>(url).subscribe(returnData=>{
+  //     console.log(returnData);
+  //     return returnData;
+  //   })
+  // }
   addInterview(interviewerID: number, applicantID: number, roleApplied: number, interviewDate: string, timeStart: string, timeEnd: string, confirmed: number ){
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ADD;
     var newInterview = new interview(interviewerID, applicantID, roleApplied, interviewDate, timeStart, timeEnd, confirmed);
@@ -114,10 +157,16 @@ export class RequestCenterService {
     out = <Array<skills>><unknown> out;
     return out;
   }
-  addSkills(id: number, name: string, level: string){//this might need refinement based on the fact that only skill IDs will be passed
+  addSkills(id: number){//this might need refinement based on the fact that only skill IDs will be passed
+    // var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.SKILLS_ADD;
+    // var newSkillID = new skillIdOnly(id);
+    // this.requester.postRequest<skillIdOnly>(url, newSkillID).subscribe(returnData=>{
+    //   console.log(returnData);
+    // })
+
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.SKILLS_ADD;
-    var newSkills = new skills(id, name, level);
-    this.requester.postRequest<skills>(url, newSkills).subscribe(returnData=>{
+    var newSkillID = id;
+    this.requester.postRequest<number>(url, id).subscribe(returnData=>{
       console.log(returnData);
     })
   }

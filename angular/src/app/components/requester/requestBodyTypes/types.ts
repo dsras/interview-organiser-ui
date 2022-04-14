@@ -1,5 +1,11 @@
 
 export interface data{}
+export class skillIdOnly implements data{
+    skillId:number;
+    constructor(skillId:number){
+        this.skillId = skillId;
+    }
+}
 
 export class userData implements data {
     id: number;

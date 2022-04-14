@@ -8,6 +8,9 @@ class API_CONSTANTS {
     USER_FIND: string = 'users/findUser';
     AVAIL_ADD: string = 'availability/new';
     AVAIL_GET: string = 'availability/find';
+    //! this url REQUIRES params, do not use if not sure
+    AVAIL_SKILL: string = 'availability/findBySkills?ids='
+    //AVAIL_ALL: string = 'availability/'
 
     INTER_ADD: string = 'interviews/new';
     INTER_BY_INT: string = 'interviews/findByInterviewer';
