@@ -123,29 +123,32 @@ export class interview implements data{
     interviewerId: number;
     //organiserId: number;
     applicantId: number;
-    roleApplied: number;
+    //roleApplied: number;
     interviewDate: string;
     timeStart: string;
     timeEnd: string;
-    confirmed: number;
+    skillID: number; 
+    //confirmed: number;
     constructor(
         interviewerId: number,
         //organiserId: number,
         applicantId: number,
-        roleApplied: number,
+        //roleApplied: number,
         interviewDate: string,
         timeStart: string,
         timeEnd: string,
-        confirmed: number
+        //confirmed: number
+        skillID: number
     ){
         this.interviewerId = interviewerId
         //this.organiserId = organiserId;
         this.applicantId = applicantId;
-        this.roleApplied = roleApplied;
+        //this.roleApplied = roleApplied;
         this.interviewDate = interviewDate;
         this.timeStart = timeStart;
         this.timeEnd = timeEnd;
-        this.confirmed =confirmed;
+        //this.confirmed =confirmed;
+        this.skillID = skillID;
     }
 
 }
