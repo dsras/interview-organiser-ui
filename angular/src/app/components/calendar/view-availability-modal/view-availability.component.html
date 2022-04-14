@@ -1,7 +1,8 @@
+<!-- <button type="button" class="btn btn-primary" (click)="openModal(display)">Add Availability</button> -->
 
 
-<!-- DO WE NEED THIS EVENT? -->
-<body (event)="setFormData($event)">
+
+<!-- <body (event)="setFormData($event)"> -->
 
   <div class="card">
     <h5 class="card-header info-color white-text text-center py-4">
@@ -12,13 +13,10 @@
   <div class="card" id="output" style="width: 500px;white-space: pre-line"></div>
   <div class="modal-footer">
     <div layout-align="start center">
-      <button
-      type="button" mdbBtn color="warning" class="waves-light" aria-label="Add more" 
-      (click)="addAvailability()" mdbWavesEffect>Add more</button>
+      <availability-form></availability-form>
     </div>
-    <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="onNoClick()" mdbWavesEffect>Close</button>
-    <button type="button" mdbBtn color="primary" class="relative waves-light" (click)="yell()" mdbWavesEffect>Save!</button>
+    <!-- <button type="button" class="btn btn-warning" aria-label="Close" (click)="closeClick()" >Close</button> -->
   </div>
 
 
-</body>
+<!-- </body> -->

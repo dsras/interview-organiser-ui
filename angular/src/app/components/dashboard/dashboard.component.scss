@@ -1,0 +1,42 @@
+.jumbotron {
+  background-color: #f4511e; /* Orange */
+  color: #000000;
+  padding: 25px 25px;
+}
+
+.bg-grey {
+  background-color: #f6f6f6;
+}
+
+.btn-org {
+  color: #000000;
+  background-color: #f4511e;
+}
+
+.container-fluid {
+  padding: 30px 50px;
+}
+
+.logo {
+  font-size: 200px;
+}
+
+.logo-med {
+  font-size: 80px;
+}
+
+.logo-small {
+  font-size: 40px;
+}
+
+@media screen and (max-width: 768px) {
+  .col-sm-4 {
+    text-align: center;
+    margin: 25px 0;
+  }
+}
+
+
+
+
+
