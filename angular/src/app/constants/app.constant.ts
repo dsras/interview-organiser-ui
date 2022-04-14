@@ -11,6 +11,9 @@ class API_CONSTANTS {
     //! this url REQUIRES params, do not use if not sure
     AVAIL_SKILL: string = 'availability/findBySkills?ids='
     //AVAIL_ALL: string = 'availability/'
+    AVAIL_FILTER: string = 'users/findInterviewers'
+
+    APPLICANT_ADD: string = 'applicants/new';
 
     INTER_ADD: string = 'interviews/new';
     INTER_BY_INT: string = 'interviews/findByInterviewer';

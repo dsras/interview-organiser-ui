@@ -84,23 +84,26 @@ export class available implements data{
 }
 
 export class applicant implements data{
-    id: number;
+    //id: number;
     firstName: string;
     lastName: string;
     email: string;
     mobile: number;
+    skillID: number;
     constructor(
-        id: number,
+        //id: number,
         firstName: string,
         lastName: string,
         email: string,
-        mobile: number
+        mobile: number,
+        skillID: number
     ){
-        this.id = id;
+        //this.id = id;
         this.firstName =firstName;
         this.lastName =lastName;
         this.email = email;
         this.mobile = mobile;
+        this.skillID = skillID;
     }
 }
 
@@ -116,6 +119,27 @@ export class availability implements data{
         this.date = date;
         this.start_time = start_time;
         this.end_time = end_time;
+    }
+}
+
+export class interviewRange implements data{
+    startDate: string;
+    endDate: string;
+    startTime: string;
+    endTime: string;
+    skills: number[];
+    constructor(
+        startdate: string,
+        endDate: string,
+        startTime: string,
+        endTime: string,
+        skills: number[]
+    ){
+        this.startDate = startdate;
+        this.endDate = endDate;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.skills = skills;
     }
 }
 

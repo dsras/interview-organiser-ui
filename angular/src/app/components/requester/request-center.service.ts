@@ -7,7 +7,9 @@ import {
   skills,
   availability,
   interview,
-  skillIdOnly
+  skillIdOnly,
+  applicant,
+  interviewRange
  }from '../requester/requestBodyTypes/types'
 import{
   APPCONSTANTS
@@ -188,8 +190,35 @@ export class RequestCenterService {
       });
     })
   }
+  // * in progress
+  getAvailabilityByRange(startDate:string, endDate:string, startTime: string, endTime: string, skillsIDList:number[]){
+    var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_FILTER;
+    var newStartDate= new Date(startDate);
+    var newEndDate = new Date(endDate);
+    var newStartTime = new Date(startTime);
+    var newEndTime = new Date(endTime);
 
+    var startDateString = newStartDate.getFullYear().toString() + "-" + this.bufTimeString((newStartDate.getUTCMonth() + 1).toString()) + "-" + newStartDate.getDate().toString();
+    var endDateString = newEndDate.getFullYear().toString() + "-" + this.bufTimeString((newEndDate.getUTCMonth() + 1).toString()) + "-" + newEndDate.getDate().toString();
+    var startString = this.bufTimeString(newStartTime.getHours().toString()) + ":" + this.bufTimeString(newStartTime.getMinutes().toString());
+    var endString = this.bufTimeString(newEndTime.getHours().toString()) + ":" + this.bufTimeString(newEndTime.getMinutes().toString());
 
+    var newRange = new interviewRange(startDateString, endDateString, startString, endString, skillsIDList);
+    this.requester.postRequest<interviewRange>(url, newRange).subscribe(returnData=>{
+      console.log(returnData);
+
+    })
+
+  }
+
+  addApplicant(){
+    
+    var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.APPLICANT_ADD;
+    var newApplicant = new applicant("ted", "testerton", "ted@test.com", 100, 1);
+    this.requester.postRequest<applicant>(url, newApplicant).subscribe(returnData=>{
+      console.log(returnData);
+    })
+  }
 
   demo(){
     

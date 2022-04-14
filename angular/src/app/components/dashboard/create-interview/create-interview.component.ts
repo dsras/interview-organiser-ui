@@ -83,9 +83,9 @@ export class CreateInterviewComponent implements OnInit {
     console.log("create interview form")
     console.log(this.createInterviewForm.value)
     console.warn(this.createInterviewForm.get('firstDate')?.value)
-    console.log(f.value.skills);
+    console.log(f.value.firstDate);
     var tempArr = [];
-    var idArr = [];
+    var idArr = <Array<number>>[];
     tempArr= f.value.skills;
 
 
@@ -99,6 +99,7 @@ export class CreateInterviewComponent implements OnInit {
       });
     });
 
+    this.rs.getAvailabilityByRange(f.value.firstDate, f.value.lastDate, f.value.startTime, f.value.endTime, idArr);
 
 
 
