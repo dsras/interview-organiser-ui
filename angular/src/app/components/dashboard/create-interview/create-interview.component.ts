@@ -16,7 +16,18 @@ export class CreateInterviewComponent implements OnInit {
   // mytime?: string;
   modalRef?: BsModalRef
 
-  createInterviewForm!: FormGroup;
+  createInterviewForm: FormGroup = this.fb.group({
+    startTime: ['', Validators.required],
+    endTime: ['', Validators.required],
+    firstDate: ['', Validators.required],
+    lastDate: ['', Validators.required],
+    skills: this.fb.array([
+      this.fb.group({
+        skillType: [''],
+        skillLevel: ['']
+      })
+    ])
+  })
 
   skillsRequired: FormGroup = this.fb.group({
     skillType: [''],
@@ -52,20 +63,6 @@ export class CreateInterviewComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.createInterviewForm = this.fb.group({
-      startTime: ['', Validators.required],
-      endTime: ['', Validators.required],
-      firstDate: ['', Validators.required],
-      lastDate: ['', Validators.required],
-      skills: this.fb.array([ this.initSkillLists() ])
-    })
-  }
-
-  initSkillLists() {
-    return this.fb.group({
-      skillName: [''],
-      skillLevel: ['']
-    })
   }
 
   openModal(template: TemplateRef<any>) {
