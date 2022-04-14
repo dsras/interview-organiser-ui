@@ -1,5 +1,5 @@
 <button type="button" class="btn btn-org btn-block" (click)="openModal(form)">
-  <i class="glyphicon glyphicon-plus logo-med"></i><h2>Create Interview</h2>
+  <h2>Create Interview  <i class="bi bi-calendar-plus logo-med"></i></h2>
 </button>
 
 <ng-template  #form>
@@ -10,30 +10,61 @@
   style="color: black;"
 >
   
-  <div class="modal-header" style="padding: 10%; width: 100%; color: black; background-color: orange;">
-    <h5>
+  <div class="modal-header modal-org" >
+    <h3>
       <strong>Create Interview</strong>
-    </h5>
+    </h3>
   </div>
     
-  <div class="card" style="size: 1000px;">
+  <div class="card padded" >
     <div class="row">
-      <label for="start">Start Time</label>
-      <timepicker   id="start" formControlName="start"></timepicker>
-      <label for="end">End Time</label>
-      <timepicker id="end" formControlName="end"></timepicker>
+      <div class="col-sm-3">
+        <label for="startTime">Start Time</label>
+        <timepicker id="startTime" formControlName="startTime"></timepicker>
+      </div>
+      <div class="col-sm-3"></div>
+      <div class="col-sm-3">
+        <label for="endTime">End Time</label>
+        <timepicker id="endTime" formControlName="endTime"></timepicker>
+      </div>
     </div>
     <br>
     <div>
       <label for="firstDate">First Date</label>
       <input id="firstDate" type='datetime' formControlName="firstDate" bsDatepicker>
-      <br>
+      <br><br>
       <label for="lastDate">Last Date</label>
       <input id="lastDate" type='datetime' formControlName="lastDate" bsDatepicker>
     </div>
+  
+    <div formArrayName="skills">
+      <h2>Skills</h2>
+
+      <div *ngFor="let item of skillTypes;">
+        <div formGroupName="{{item}}">
+          <select id="skillType" formControlName="skillType">
+            <option value="">Which skill is needed?</option>
+            <option *ngFor="let skillType of skillTypes" [ngValue]="skillType">
+              {{ skillType }}
+            </option>
+          </select>         
+          <select id="skillLevel" formControlName="skillLevel">
+            <option value="">Which level is needed?</option>
+            <option *ngFor="let skillLevel of skillLevels" [ngValue]="skillLevel">
+              {{ skillLevel }}
+            </option>
+          </select>  
+        </div>
+      </div>
+
+      <br>
+      <button type="button" class="btn btn-org" (click)="addSkill()">+ Add another skill</button>
+    </div>
   </div>
-  <div class="modal-footer">
-    <button type="submit" class="btn btn-primary" [disabled]="!createInterviewForm.valid" (click)="this.modalRef?.hide()">Submit</button>
+
+  <div class="modal-footer bg-grey">
+    <button type="submit" class="btn btn-org" [disabled]="!createInterviewForm.valid" (click)="this.modalRef?.hide()">Submit</button>
   </div>
+
 </form>
 </ng-template>

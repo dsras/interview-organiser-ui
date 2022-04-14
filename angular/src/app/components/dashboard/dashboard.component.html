@@ -33,49 +33,33 @@
 
 <div class="jumbotron">
   <h1>Recruiter Dashboard</h1>
-  <!-- <p>Add some description here</p> -->
 </div>
 
 <div class="container-fluid text-center">
-  <!-- <h2>SERVICES</h2>
-  <h4>What we offer</h4>
-  <br> -->
   <div class="row">
     <div class="col-sm-4">
       <button type="button" class="btn btn-org btn-block" (click)="redirect('calendar'); ">
-        <i class="glyphicon glyphicon-calendar logo-med"></i><h2>Calendar</h2>
+        <h2>Calendar  <i class="bi bi-calendar logo-med"></i></h2>
       </button>
     </div>
     <div class="col-sm-4">
       <button type="button" class="btn btn-block btn-org" (click)="getMockdata()">
-        <i class="glyphicon glyphicon-download logo-small"></i><h4>Get Data</h4>
+        <h4>Get Data  <i class="bi bi-download logo-small"></i></h4>
       </button>
       <button type="button" class="btn btn-block btn-org" (click)="printMockData()">
-        <i class="glyphicon glyphicon-check logo-small"></i><h4>Log Data</h4>
+        <h4>Log Data  <i class="bi bi-body-text logo-small"></i></h4>
       </button>
     </div>
     <div class="col-sm-4">
       <create-interview (formSubmitted)="onSubmit($event)"></create-interview>
     </div>
-    </div>
-    <br><br>
-  <!-- <div class="row">
-    <div class="col-sm-4">
-      <span class="glyphicon glyphicon-leaf logo-small"></span>
-      <h4>GREEN</h4>
-      <p>Lorem ipsum dolor sit amet..</p>
-    </div>
-    <div class="col-sm-4">
-      <span class="glyphicon glyphicon-certificate logo-small"></span>
-      <h4>CERTIFIED</h4>
-      <p>Lorem ipsum dolor sit amet..</p>
-    </div>
-    <div class="col-sm-4">
-      <span class="glyphicon glyphicon-wrench logo-small"></span>
-      <h4>HARD WORK</h4>
-      <p>Lorem ipsum dolor sit amet..</p>
-    </div>
-  </div> -->
+  </div>
+  <div>
+    <ul>
+      <li *ngFor="let avail of allAvailabilityOBJ; let index = index">Something {{ index }}{{ avail }}
+      </li>
+   </ul>
+  </div>
 </div>
 
 <!-- <div class="container-fluid">

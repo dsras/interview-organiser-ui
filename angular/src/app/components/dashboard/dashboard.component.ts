@@ -19,7 +19,6 @@ export class DashboardComponent implements OnInit {
   // user1Availability!: any
   // formCheck: any = ''
 
-
   constructor(
     private router: Router,
     private jsonGetter: MockInjectorService) { }
