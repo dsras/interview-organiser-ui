@@ -1,8 +1,9 @@
 import { Component, EventEmitter, OnInit, Output, TemplateRef } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CalendarEvent } from 'angular-calendar';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { RequestCenterService } from '../../requester/request-center.service';
-import { skills } from '../../requester/requestBodyTypes/types';
+import { availability, skills } from '../../requester/requestBodyTypes/types';
 
 @Component({
   selector: 'create-interview',
@@ -15,7 +16,8 @@ export class CreateInterviewComponent implements OnInit {
   // mytime?: string;
   modalRef?: BsModalRef
 
-  availableInterviews = []
+  availableInterviewObjects =<Array<CalendarEvent>> []
+  availableInterviews = <Array<string>>[]
 
   availableApplicants = []
 
@@ -46,6 +48,11 @@ export class CreateInterviewComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+    this.rs.getInterviewByRecruiter(this.availableInterviewObjects);
+    this.availableInterviewObjects.forEach(ele =>{
+      this.availableInterviews.push(ele.start.getTime().toString());
+    })
+    this.rs.getAllApplicants(this.availableApplicants);
     // this.availableInterviews = GETREQUESTBODY
     // this.availableApplicants = GETREQUESTBODY
   }

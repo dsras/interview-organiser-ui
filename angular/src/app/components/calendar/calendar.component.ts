@@ -183,7 +183,7 @@ export class CalendarComponent implements OnInit{
     console.log("World2");
   }
   getInterviewsByRec(){
-    this.rs.getInterviewByRecruiter();
+    this.rs.getInterviewByRecruiter(this.events);
   }
   getInterviewsByInter(){
     this.rs.getInterviewByInterviewer(this.events);
@@ -193,7 +193,7 @@ export class CalendarComponent implements OnInit{
     this.rs.getSkills();
   }
   getApplicants(){
-    this.rs.getAllApplicants();
+    //this.rs.getAllApplicants();
   }
   getUser(){
     this.rs.getUser();
