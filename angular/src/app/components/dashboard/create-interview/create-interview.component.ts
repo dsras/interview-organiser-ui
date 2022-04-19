@@ -21,8 +21,6 @@ export class CreateInterviewComponent implements OnInit {
 
   availableApplicants = []
 
-  showContent: boolean = false;
- 
   createInterviewForm: FormGroup = this.fb.group({
     interviewSelected: ['', Validators.required],
     applicantSelected: ['', Validators.required]

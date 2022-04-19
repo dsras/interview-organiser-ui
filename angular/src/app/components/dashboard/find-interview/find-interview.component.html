@@ -1,20 +1,24 @@
 <button type="button" class="btn btn-org btn-block" (click)="openModal(form)">
-  <h2>Create Interview  <i class="bi bi-calendar-plus logo-med"></i></h2>
+  <h2>Find Interview  <i class="bi bi-calendar-plus logo-med"></i></h2>
 </button>
 
 <ng-template  #form>
-<form 
-  [formGroup]="createInterviewForm" 
-  (ngSubmit)="onSubmit(createInterviewForm)"
+
+  <div class="modal-header modal-org" >
+    <h3>
+      <strong>Find Interview</strong>
+    </h3>
+  </div>
+
+<div id="find" style="display: block;">
+  <form 
+  [formGroup]="findInterviewsForm" 
+  (ngSubmit)="findInterview(findInterviewsForm)"
   class="md-form" 
   style="color: black;"
 >
   
-  <div class="modal-header modal-org" >
-    <h3>
-      <strong>Create Interview</strong>
-    </h3>
-  </div>
+
     
   <div class="card padded" >
     <div class="row">
@@ -40,31 +44,69 @@
     <div formArrayName="skills">
       <h2>Skills</h2>
 
-          <select id="skillType" formControlName="skillType">
-            <option value="">Which skill is needed?</option>
-            <option *ngFor="let skillType of skillTypes" [ngValue]="skillType">
-              {{ skillType }}
-            </option>
-          </select>         
-          <select id="skillLevel" formControlName="skillLevel">
-            <option value="">Which level is needed?</option>
-            <option *ngFor="let skillLevel of skillLevels" [ngValue]="skillLevel">
-              {{ skillLevel }}
-            </option>
-          </select>  
-
-
-      <br>
-      <button type="button" class="btn btn-org" (click)="addSkill()">+ Add another skill</button>
+      <select id="skillType" formControlName="skillType">
+        <option value="">Which skill is needed?</option>
+        <option *ngFor="let skillType of skillTypes" [ngValue]="skillType">
+          {{ skillType }}
+        </option>
+      </select>         
+      <select id="skillLevel" formControlName="skillLevel">
+        <option value="">Which level is needed?</option>
+        <option *ngFor="let skillLevel of skillLevels" [ngValue]="skillLevel">
+          {{ skillLevel }}
+        </option>
+      </select>  
     </div>
   </div>
 
-  <div class="modal-footer bg-grey">
-    <create-interview></create-interview>
-    <!-- <button type="submit" class="btn btn-org" [disabled]="!createInterviewForm.valid" (click)="this.modalRef?.hide()">Submit</button> -->
+</form>
+</div>
+
+<div class="modal-footer bg-grey">
+  <!-- <create-interview></create-interview> -->
+  <button type="submit" class="btn btn-org" [disabled]="!findInterviewsForm.valid" (click)="buttonClicked()">Find Interviews</button>
+</div>
+
+<div id="confirm" style="display: none;">
+  <form 
+  [formGroup]="createInterviewForm"
+  (ngSubmit)="submitInterview(createInterviewForm)" 
+  class="md-form" 
+  style="color: black;"
+>
+
+  <div class="modal-header modal-org" >
+    <h3>
+      <strong>Create Interview</strong>
+    </h3>
   </div>
 
+  <div class="card padded">
+    <div class="row">
+      <select id="interviewSelected" formControlName="interviewSelected">
+        <option value="">Which interview slot?</option>
+        <option *ngFor="let interview of availableInterviews" [ngValue]="interview">
+          {{ interview }}
+        </option>
+      </select>  
+    </div>       
+    <br>
+    <div class="row">
+      <select id="applicantSelected" formControlName="applicantSelected">
+        <option value="">Which applicant is needed?</option>
+        <option *ngFor="let applicant of availableApplicants" [ngValue]="applicant">
+          {{ applicant }}
+        </option>
+      </select>
+    </div>
+  </div> 
+  <div class="modal-footer bg-grey">
+    <button type="submit" (click)="this.modalRef?.hide()" class="btn btn-org">
+      Create Interview<i class="bi bi-calendar-plus logo-mini"></i>
+    </button>
+  </div>
 </form>
+</div>
 
 </ng-template>
 
