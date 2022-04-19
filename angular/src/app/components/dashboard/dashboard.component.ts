@@ -2,6 +2,7 @@ import { Time } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+//TODO remove mock injector service
 import { MockInjectorService } from 'src/app/services/mock-injector.service';
 
 
@@ -16,8 +17,7 @@ export class DashboardComponent implements OnInit {
   allAvailabilityJSON !: string
   allAvailabilityOBJ !: any
   // user1Availability!: any
-  formCheck: any = ''
-
+  // formCheck: any = ''
 
   constructor(
     private router: Router,

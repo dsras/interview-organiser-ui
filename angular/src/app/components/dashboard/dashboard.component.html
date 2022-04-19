@@ -1,19 +1,76 @@
-<h2>Dashboard</h2>
-<div>
-  <!-- (click) passes input value to add() and then clears the input -->
-  <button type="button" class="add-button" (click)="redirect('calendar'); ">
-    Calendar
-  </button>
-  <button type="button" class="add-button" (click)="getMockdata()">
-    Get Data
-  </button>
-  <button type="button" class="add-button" (click)="printMockData()">
-    Log Data
-  </button>
-  <button type="button" class="btn btn-primary" >
-    Single Button
-  </button>
+<!-- <h2>Dashboard</h2>
+
+<div class="jumbotron text-center">
+  <h1>My First Bootstrap Page</h1>
+  <p>Resize this responsive page to see the effect!</p>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-2">
+      <h3>Buttons here</h3>
+      <button type="button" class="btn btn-lg" (click)="redirect('calendar'); ">
+        Calendar
+      </button>
+      <button type="button" class="btn btn-lg" (click)="getMockdata()">
+        Get Data
+      </button>
+      <button type="button" class="btn btn-lg" (click)="printMockData()">
+        Log Data
+      </button>
+      <create-interview (formSubmitted)="onSubmit($event)"></create-interview>
+    </div>
+    <div class="col-sm-4">
+      <h3>Interviews</h3>
+      <p>Lorem ipsum dolor..</p>
+    </div>
+    <div class="col-sm-4">
+      <h3>Maybe some other Data</h3>
+      <p>Lorem ipsum dolor..</p>
+    </div>
+  </div>
+</div> -->
+
+<div class="jumbotron">
+  <h1>Recruiter Dashboard</h1>
+</div>
+
+<div class="container-fluid text-center">
+  <div class="row">
+    <div class="col-sm-4">
+      <button type="button" class="btn btn-org btn-block" (click)="redirect('calendar'); ">
+        <h2>Calendar  <i class="bi bi-calendar logo-med"></i></h2>
+      </button>
+    </div>
+    <div class="col-sm-4">
+      <button type="button" class="btn btn-block btn-org" (click)="getMockdata()">
+        <h4>Get Data  <i class="bi bi-download logo-small"></i></h4>
+      </button>
+      <button type="button" class="btn btn-block btn-org" (click)="printMockData()">
+        <h4>Log Data  <i class="bi bi-body-text logo-small"></i></h4>
+      </button>
+    </div>
+    <div class="col-sm-4">
+      <create-interview (formSubmitted)="onSubmit($event)"></create-interview>
+    </div>
+  </div>
   <div>
-    <create-interview (formSubmitted)="onSubmit($event)"></create-interview>
+    <ul>
+      <li *ngFor="let avail of allAvailabilityOBJ; let index = index">Something {{ index }}{{ avail }}
+      </li>
+   </ul>
   </div>
 </div>
+
+<!-- <div class="container-fluid">
+  <h2>About Company Page</h2>
+  <h4>Lorem ipsum..</h4>
+  <p>Lorem ipsum..</p>
+  <button class="btn btn-default btn-lg">Get in Touch</button>
+</div>
+
+<div class="container-fluid bg-grey">
+  <h2>Our Values</h2>
+  <h4><strong>MISSION:</strong> Our mission lorem ipsum..</h4>
+  <p><strong>VISION:</strong> Our vision Lorem ipsum..
+</div> -->
