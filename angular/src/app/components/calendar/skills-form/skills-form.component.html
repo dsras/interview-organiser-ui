@@ -1,4 +1,4 @@
-<button type="button" class="btn btn-primary" (click)="openModal(form)">Add Skill</button>
+<button type="button" class="btn btn-org" (click)="openModal(form)">Add Skill</button>
 
 <ng-template #form>
 <form  
@@ -8,7 +8,7 @@
   style="color: black;"
 >
 
-  <div class="modal-header" style="padding: 10%; width: 100%; color: black; background-color: orange;">
+  <div class="modal-header header-org">
     <h5>
       <strong>Add Skill</strong>
     </h5>
@@ -38,7 +38,7 @@
 
   <div class="modal-footer">
     <button 
-    class="btn btn-primary"
+    class="btn btn-org"
     type="submit" 
     id="submit"
     [disabled]="!addSkillsForm.valid"
