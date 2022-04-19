@@ -179,7 +179,7 @@ export class CalendarComponent implements OnInit{
     //Say Hello
     console.log('Hello');
     // Say World after 2000 milliseconds
-    await this.sleep(2000).then(() =>this.refresh.next()).catch();
+    await this.sleep(2250).then(() =>this.refresh.next()).catch();
     console.log("World2");
   }
   getInterviewsByRec(){
@@ -211,7 +211,9 @@ export class CalendarComponent implements OnInit{
     this.rs.getInterviewByInterviewer(this.events);
     this.delayedRefresh();
   }
-  
+  buttonRefresh(){
+    this.refresh.next();
+  }
   // * Test method
   checkConnection(){
     // var skillsIDs = [1,2,3];
@@ -348,7 +350,7 @@ export class CalendarComponent implements OnInit{
         this.activeDayIsOpen = true;
       }
       this.viewDate = date;
-      this.openDayModal(date, true);
+      //this.openDayModal(date, true);
 
     }
   }
