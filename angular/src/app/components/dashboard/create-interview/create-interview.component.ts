@@ -21,16 +21,7 @@ export class CreateInterviewComponent implements OnInit {
 
   availableApplicants = []
 
-  // skillTypes = [
-  //   'Java', 'Python', 'Spring', 'C', 'C++', 'C#',
-  //   'Haskell', 'Angular', 'JavaScript', 'VISUAL-BASIC',
-  // ]
-
-  // skillLevels = [
-  //   'Level 1',
-  //   'Level 2',
-  //   'Level 3',
-  // ]  
+  showContent: boolean = false;
  
   createInterviewForm: FormGroup = this.fb.group({
     interviewSelected: ['', Validators.required],
@@ -53,8 +44,6 @@ export class CreateInterviewComponent implements OnInit {
       this.availableInterviews.push(ele.start.getTime().toString());
     })
     this.rs.getAllApplicants(this.availableApplicants);
-    // this.availableInterviews = GETREQUESTBODY
-    // this.availableApplicants = GETREQUESTBODY
   }
 
   openModal(template: TemplateRef<any>) {
@@ -64,7 +53,6 @@ export class CreateInterviewComponent implements OnInit {
   onSubmit(f: FormGroup) {
     this.createInterviewForm.setValue(f.value);
     this.formSubmitted.emit(f);
-    //this.rs.addInterview();
     this.createInterviewForm.reset();
   }
 
