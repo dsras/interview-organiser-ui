@@ -1,0 +1,31 @@
+<button type="button" class="btn btn-org btn-block" (click)="openModal(create)">
+  <h2>Create Interview  <i class="bi bi-calendar-plus logo-med"></i></h2>
+</button>
+
+<ng-template #create>
+
+  <form 
+  [formGroup]="createInterviewForm"
+  (ngSubmit)="onSubmit(createInterviewForm)" 
+  class="md-form" 
+  style="color: black;"
+>
+    <div class="card">
+      <select id="interviewSelected" formControlName="interviewSelected">
+        <option value="">Which interview slot?</option>
+        <option *ngFor="let interview of availableInterviews" [ngValue]="interview">
+          {{ interview }}
+        </option>
+      </select>         
+      <select id="applicantSelected" formControlName="applicantSelected">
+        <option value="">Which applicant is needed?</option>
+        <option *ngFor="let applicant of availableApplicants" [ngValue]="applicant">
+          {{ applicant }}
+        </option>
+      </select>
+    </div> 
+    <button type="submit" class="btn btn-org btn-block">
+      <h2>Create Interview for real<i class="bi bi-calendar-plus logo-med"></i></h2>
+    </button>
+  </form>
+</ng-template>

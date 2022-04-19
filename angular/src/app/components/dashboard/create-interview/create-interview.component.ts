@@ -1,0 +1,66 @@
+import { Component, EventEmitter, OnInit, Output, TemplateRef } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { RequestCenterService } from '../../requester/request-center.service';
+import { skills } from '../../requester/requestBodyTypes/types';
+
+@Component({
+  selector: 'create-interview',
+  templateUrl: './create-interview.component.html',
+  styleUrls: ['./create-interview.component.scss']
+})
+export class CreateInterviewComponent implements OnInit {
+
+
+  // mytime?: string;
+  modalRef?: BsModalRef
+
+  availableInterviews = []
+
+  availableApplicants = []
+
+  // skillTypes = [
+  //   'Java', 'Python', 'Spring', 'C', 'C++', 'C#',
+  //   'Haskell', 'Angular', 'JavaScript', 'VISUAL-BASIC',
+  // ]
+
+  // skillLevels = [
+  //   'Level 1',
+  //   'Level 2',
+  //   'Level 3',
+  // ]  
+ 
+  createInterviewForm: FormGroup = this.fb.group({
+    interviewSelected: ['', Validators.required],
+    applicantSelected: ['', Validators.required]
+  })
+
+
+  @Output() formSubmitted: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
+
+
+  constructor(
+    private fb: FormBuilder,
+    private ms: BsModalService,
+    private rs: RequestCenterService,
+    ) { }
+
+  ngOnInit(): void {
+    // this.availableInterviews = GETREQUESTBODY
+    // this.availableApplicants = GETREQUESTBODY
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.ms.show(template);
+  }
+
+  onSubmit(f: FormGroup) {
+    this.createInterviewForm.setValue(f.value);
+    this.formSubmitted.emit(f);
+    //this.rs.addInterview();
+    this.createInterviewForm.reset();
+  }
+
+
+}
+

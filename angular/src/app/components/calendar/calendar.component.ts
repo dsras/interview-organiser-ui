@@ -26,7 +26,8 @@ import {
   data,
   userData,
   skills,
-  availability
+  availability,
+  interview
  }from '../requester/requestBodyTypes/types'
  import { RequestCenterService } from '../requester/request-center.service';
 import { CalendarEventActionsComponent } from 'angular-calendar/modules/common/calendar-event-actions.component';
@@ -76,6 +77,7 @@ export class CalendarComponent implements OnInit{
 
   //* This is where the local calendar events are stored
   skills: skills[]=[];
+
 
   events: CalendarEvent[] = [
     //* Commented out below are some prepopulated events from the original calendar
@@ -177,18 +179,46 @@ export class CalendarComponent implements OnInit{
     //Say Hello
     console.log('Hello');
     // Say World after 2000 milliseconds
-    await this.sleep(2000).then(() =>this.refresh.next()).catch();
+    await this.sleep(2250).then(() =>this.refresh.next()).catch();
     console.log("World2");
   }
+  getInterviewsByRec(){
+    this.rs.getInterviewByRecruiter();
+  }
+  getInterviewsByInter(){
+    this.rs.getInterviewByInterviewer(this.events);
+  }
 
+  getSkillsforUser(){
+    this.rs.getSkills();
+  }
+  getApplicants(){
+    this.rs.getAllApplicants();
+  }
+  getUser(){
+    this.rs.getUser();
+  }
+  populateViaRecruiter(){
+    this.events=[];
+    this.rs.getAllAvailability(this.events);
+    console.log("length of events list ext: " + this.events.length);   
+    this.delayedRefresh();
+  }
   populateCalendar()  {
     this.events = [];
     this.rs.getMyAvailability(this.events);
     console.log("length of events list ext: " + this.events.length);
+    this.rs.getInterviewByInterviewer(this.events);
     this.delayedRefresh();
+  }
+  buttonRefresh(){
+    this.refresh.next();
   }
   // * Test method
   checkConnection(){
+    // var skillsIDs = [1,2,3];
+    // this.rs.getAvailabilityOnSkill(skillsIDs);
+    this.rs.addApplicant();
 
     // var url = "http://localhost:8080/users/welcome";
     // this.requester.getRequest<string>(url).subscribe(returnData =>{
@@ -202,7 +232,7 @@ export class CalendarComponent implements OnInit{
 
     // })
 
-    // url = "http://localhost:8080/skills/skill?name=running";
+    // url = "http://localhost:8080/skills/skill?name=Java";
     // this.requester.getRequest<skills>(url).subscribe(returnData =>{
     //   console.log(returnData);
 
@@ -268,12 +298,19 @@ export class CalendarComponent implements OnInit{
   openDayModal(dateSelected: Date, useDate: boolean) {
 
     var eventsOnDay= [];
+    var interviewsOnDay= [];
     if(useDate){
       for (var index = 0; index < this.events.length; index++) {
         if(isSameDay(this.events[index].start, dateSelected)){
-          eventsOnDay.push(this.events[index]);
+          if(this.events[index].title === 'availability'){
+            eventsOnDay.push(this.events[index]);
+          }
+          else if(this.events[index].title === 'interview'){
+            interviewsOnDay.push(this.events[index]);
+          }
         }
       }
+     
       eventsOnDay.forEach(function(eventSel){
         console.log("From start: " + eventSel.start + ", to end: " + eventSel.end);
       })
@@ -296,7 +333,7 @@ export class CalendarComponent implements OnInit{
       //new event
     }
     else{
-      mfc.addEventRef(eventsOnDay);
+      mfc.addEventRef(eventsOnDay,interviewsOnDay);
     }
 
 
@@ -313,7 +350,7 @@ export class CalendarComponent implements OnInit{
         this.activeDayIsOpen = true;
       }
       this.viewDate = date;
-      this.openDayModal(date, true);
+      //this.openDayModal(date, true);
 
     }
   }

@@ -1,5 +1,11 @@
 
 export interface data{}
+export class skillIdOnly implements data{
+    skillId:number;
+    constructor(skillId:number){
+        this.skillId = skillId;
+    }
+}
 
 export class userData implements data {
     id: number;
@@ -78,23 +84,26 @@ export class available implements data{
 }
 
 export class applicant implements data{
-    id: number;
+    //id: number;
     firstName: string;
     lastName: string;
     email: string;
     mobile: number;
+    skillID: number;
     constructor(
-        id: number,
+        //id: number,
         firstName: string,
         lastName: string,
         email: string,
-        mobile: number
+        mobile: number,
+        skillID: number
     ){
-        this.id = id;
+        //this.id = id;
         this.firstName =firstName;
         this.lastName =lastName;
         this.email = email;
         this.mobile = mobile;
+        this.skillID = skillID;
     }
 }
 
@@ -113,33 +122,57 @@ export class availability implements data{
     }
 }
 
+export class interviewRange implements data{
+    start_date: string;
+    end_date: string;
+    start_time: string;
+    end_time: string;
+    skills: number[];
+    constructor(
+        start_date: string,
+        end_date: string,
+        start_time: string,
+        end_time: string,
+        skills: number[]
+    ){
+        this.start_date = start_date;
+        this.end_date = end_date;
+        this.start_time = start_time;
+        this.end_time = end_time;
+        this.skills = skills;
+    }
+}
+
 export class interview implements data{
     interviewerId: number;
     //organiserId: number;
     applicantId: number;
-    roleApplied: number;
+    //roleApplied: number;
     interviewDate: string;
     timeStart: string;
     timeEnd: string;
-    confirmed: number;
+    skillID: number; 
+    //confirmed: number;
     constructor(
         interviewerId: number,
         //organiserId: number,
         applicantId: number,
-        roleApplied: number,
+        //roleApplied: number,
         interviewDate: string,
         timeStart: string,
         timeEnd: string,
-        confirmed: number
+        //confirmed: number
+        skillID: number
     ){
         this.interviewerId = interviewerId
         //this.organiserId = organiserId;
         this.applicantId = applicantId;
-        this.roleApplied = roleApplied;
+        //this.roleApplied = roleApplied;
         this.interviewDate = interviewDate;
         this.timeStart = timeStart;
         this.timeEnd = timeEnd;
-        this.confirmed =confirmed;
+        //this.confirmed =confirmed;
+        this.skillID = skillID;
     }
 
 }

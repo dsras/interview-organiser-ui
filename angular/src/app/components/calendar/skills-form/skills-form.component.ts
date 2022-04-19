@@ -59,8 +59,8 @@ export class SkillsFormComponent implements OnInit {
       //! Add getSkillsMethod to init topopulate form with current skills.
       // TODO maybe put in parent as an input/output relationship
       this.rs.getAllSkills(this.skillsAvailable, this.skillNamesAvailable, this.levels );
-      console.log("skillslist " + this.skillsAvailable.length);
-      //.forEach(element => {
+      console.log("skillslist " + this.skillsAvailable.length)
+      // .forEach(element => {
       //   this.skillsMap.set(element.id, [element.skillName, element.skillLevel])
       //   this.skillsAvailable.push(element.skillName);
       // });
@@ -83,13 +83,16 @@ export class SkillsFormComponent implements OnInit {
     this.addSkillsForm.setValue(f.value);
     var skillName = JSON.stringify(f.value.skill);
     var skillLevel = JSON.stringify(f.value.level);
+    skillName = skillName.slice(1,-1);
+    skillLevel = skillLevel.slice(1,-1);
     var id = 0;
     this.skillsAvailable.forEach(element => {
-      if(element.skillName == skillName && element.skillLevel == skillLevel){
+      if(element.skillName === skillName && element.skillLevel === skillLevel){
         id = element.id;
+        console.log("found id: " + id); 
       }
     });
-    this.rs.addSkills(id, skillName, skillLevel);
+    this.rs.addSkills(id);
     this.skillFormSubmitted.emit(f);
     this.addSkillsForm.reset();
   }
