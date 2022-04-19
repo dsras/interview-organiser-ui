@@ -1,0 +1,34 @@
+.bg-grey {
+  background-color: #D8D8D8;
+}
+
+.modal-org {
+  color: #000000;
+  background-color: #ff9800;
+}
+
+.padded {
+  padding: 25px;
+}
+
+.btn-org {
+  color: #000000;
+  background-color: #ff9800;
+}
+
+.logo {
+  font-size: 200px;
+}
+
+.logo-med {
+  font-size: 80px;
+}
+
+.logo-small {
+  font-size: 40px;
+} 
+
+::ng-deep.bs-datepicker-theming {
+  background-color: #ff9800;
+  
+}
