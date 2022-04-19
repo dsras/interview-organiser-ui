@@ -26,7 +26,8 @@ import {
   data,
   userData,
   skills,
-  availability
+  availability,
+  interview
  }from '../requester/requestBodyTypes/types'
  import { RequestCenterService } from '../requester/request-center.service';
 import { CalendarEventActionsComponent } from 'angular-calendar/modules/common/calendar-event-actions.component';
@@ -76,6 +77,7 @@ export class CalendarComponent implements OnInit{
 
   //* This is where the local calendar events are stored
   skills: skills[]=[];
+
 
   events: CalendarEvent[] = [
     //* Commented out below are some prepopulated events from the original calendar
@@ -184,9 +186,12 @@ export class CalendarComponent implements OnInit{
     this.rs.getInterviewByRecruiter();
   }
   getInterviewsByInter(){
-    this.rs.getInterviewByInterviewer();
+    this.rs.getInterviewByInterviewer(this.events);
   }
 
+  getSkillsforUser(){
+    this.rs.getSkills();
+  }
   getApplicants(){
     this.rs.getAllApplicants();
   }
@@ -203,8 +208,10 @@ export class CalendarComponent implements OnInit{
     this.events = [];
     this.rs.getMyAvailability(this.events);
     console.log("length of events list ext: " + this.events.length);
+    this.rs.getInterviewByInterviewer(this.events);
     this.delayedRefresh();
   }
+  
   // * Test method
   checkConnection(){
     // var skillsIDs = [1,2,3];
@@ -289,12 +296,19 @@ export class CalendarComponent implements OnInit{
   openDayModal(dateSelected: Date, useDate: boolean) {
 
     var eventsOnDay= [];
+    var interviewsOnDay= [];
     if(useDate){
       for (var index = 0; index < this.events.length; index++) {
         if(isSameDay(this.events[index].start, dateSelected)){
-          eventsOnDay.push(this.events[index]);
+          if(this.events[index].title === 'availability'){
+            eventsOnDay.push(this.events[index]);
+          }
+          else if(this.events[index].title === 'interview'){
+            interviewsOnDay.push(this.events[index]);
+          }
         }
       }
+     
       eventsOnDay.forEach(function(eventSel){
         console.log("From start: " + eventSel.start + ", to end: " + eventSel.end);
       })
@@ -317,7 +331,7 @@ export class CalendarComponent implements OnInit{
       //new event
     }
     else{
-      mfc.addEventRef(eventsOnDay);
+      mfc.addEventRef(eventsOnDay,interviewsOnDay);
     }
 
 

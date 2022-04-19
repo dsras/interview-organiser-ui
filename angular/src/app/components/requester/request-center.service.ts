@@ -83,7 +83,7 @@ export class RequestCenterService {
         events.push({
             start: start,
             end: end,
-            title: 'An event made progmatically',
+            title: 'availability',
             color: COLOURS.GREEN_LITE,
           })
           console.log("length of events list: " + events.length);
@@ -121,10 +121,42 @@ export class RequestCenterService {
       console.log(returnData);
     })
   }
-  getInterviewByInterviewer(){
+  getInterviewByInterviewer(events: CalendarEvent[]){
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_BY_INT;
-    this.requester.getRequest<interview>(url).subscribe(returnData=>{
+    var out;
+    this.requester.getRequest<availability>(url).subscribe(returnData=>{
       console.log(returnData);
+      out=<Array<availability>><unknown>returnData;
+      out.forEach(element =>{
+        console.log(" in question!!!!!");
+        console.log(element);
+        console.log(element.start_time);
+        var start = new Date(element.date);
+        var end = new Date(element.date);
+        var times1 = element.start_time.split(":");
+        var times2 = element.end_time.split(":");
+        console.log("times1: " + times1);
+        console.log("times2: " + times2);
+        
+        start.setHours(parseInt(times1[0]),parseInt(times1[1]));
+        end.setHours(parseInt(times2[0]),parseInt(times2[1]));
+        console.log(start);
+        console.log(end);
+        
+
+        // var dateString = start.getFullYear().toString() + "-" + this.bufTimeString((start.getUTCMonth() + 1).toString()) + "-" + start.getDate().toString();
+        // var startString = this.bufTimeString(start.getHours().toString()) + ":" + this.bufTimeString(start.getMinutes().toString());
+        // var endString = this.bufTimeString(end.getHours().toString()) + ":" + this.bufTimeString(end.getMinutes().toString());
+    
+
+        events.push({
+            start: start,
+            end: end,
+            title: 'interview',
+            color: COLOURS.RED_DARK,
+          })
+          console.log("length of events list: " + events.length);
+      })
       return returnData;
     })
   }
@@ -247,6 +279,7 @@ export class RequestCenterService {
     })
 
   }
+
 
   addApplicant(){
     
