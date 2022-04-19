@@ -179,7 +179,25 @@ export class CalendarComponent implements OnInit{
     await this.sleep(2000).then(() =>this.refresh.next()).catch();
     console.log("World2");
   }
+  getInterviewsByRec(){
+    this.rs.getInterviewByRecruiter();
+  }
+  getInterviewsByInter(){
+    this.rs.getInterviewByInterviewer();
+  }
 
+  getApplicants(){
+    this.rs.getAllApplicants();
+  }
+  getUser(){
+    this.rs.getUser();
+  }
+  populateViaRecruiter(){
+    this.events=[];
+    this.rs.getAllAvailability(this.events);
+    console.log("length of events list ext: " + this.events.length);   
+    this.delayedRefresh();
+  }
   populateCalendar()  {
     this.events = [];
     this.rs.getMyAvailability(this.events);

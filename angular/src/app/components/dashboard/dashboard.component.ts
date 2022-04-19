@@ -37,7 +37,7 @@ export class DashboardComponent implements OnInit {
     let firstDate = form.get('firstDate')?.value
     let lastDate = form.get('lastDate')?.value
 
-    console.warn(`Length: ${availability.totalAvailability.length}`)
+    //console.warn(`Length: ${availability.totalAvailability.length}`)
     let slots = 0;
     for (let i = 0; i < availability.totalAvailability.length; i ++) {      
       if (this.interviewPossible(start, end, firstDate, lastDate, availability.totalAvailability[i])) {

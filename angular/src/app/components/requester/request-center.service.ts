@@ -142,6 +142,7 @@ export class RequestCenterService {
       return returnData;
     })
   }
+  //*Tested
   getUser(){
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.USER_FIND;
     this.requester.getRequest<userData>(url).subscribe(returnData=>{
@@ -149,6 +150,7 @@ export class RequestCenterService {
       return returnData;
     })
   }
+  //! not tested
   getSkills() : Array<skills> {
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.SKILLS_GET;
     var out;
@@ -190,6 +192,41 @@ export class RequestCenterService {
       });
     })
   }
+  //* Tested
+  getAllAvailability(events: CalendarEvent[]){
+    var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_ALL;
+    var out;
+
+    this.requester.getRequest<availability>(url).subscribe(returnData=>{
+      console.log("ret" +returnData);
+      out = <Array<availability>><unknown>returnData;
+      console.log(out);
+      out.forEach(element => {
+        console.log(element);
+        var start = new Date(element.date);
+        var end = new Date(element.date);
+        var times1 = element.start_time.split(":");
+        var times2 = element.end_time.split(":");
+        console.log("times1: " + times1);
+        console.log("times2: " + times2);
+        
+        start.setHours(parseInt(times1[0]),parseInt(times1[1]));
+        end.setHours(parseInt(times2[0]),parseInt(times2[1]));
+        console.log(start);
+        console.log(end);
+        
+        events.push({
+            start: start,
+            end: end,
+            title: 'An event made progmatically',
+            color: COLOURS.GREEN_LITE,
+          })
+          console.log("length of events list: " + events.length);
+      });
+    })
+    out = <Array<availability>><unknown>out;
+    return out;
+  }
   // * in progress
   getAvailabilityByRange(startDate:string, endDate:string, startTime: string, endTime: string, skillsIDList:number[]){
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_FILTER;
@@ -216,6 +253,13 @@ export class RequestCenterService {
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.APPLICANT_ADD;
     var newApplicant = new applicant("ted", "testerton", "ted@test.com", 100, 1);
     this.requester.postRequest<applicant>(url, newApplicant).subscribe(returnData=>{
+      console.log(returnData);
+    })
+  }
+  getAllApplicants(){
+        
+    var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.APPLICANT_ALL;
+    this.requester.getRequest<applicant>(url).subscribe(returnData=>{
       console.log(returnData);
     })
   }
