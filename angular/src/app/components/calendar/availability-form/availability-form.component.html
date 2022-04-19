@@ -1,4 +1,4 @@
-<button type="button" class="btn btn-primary" (click)="openModal(form)">Add Availability</button>
+<button type="button" class="btn btn-org" (click)="openModal(form)">Add Availability</button>
 
 <ng-template #form>
 <form 
@@ -36,7 +36,7 @@
   <div class="modal-footer">
     <button 
       type="submit" 
-      class="btn btn-primary" 
+      class="btn btn-org" 
       [disabled]="!createAvailabilityForm.valid" 
       (click)="this.modalRef?.hide()"
     >
