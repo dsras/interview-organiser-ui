@@ -1,28 +1,28 @@
 import { Router } from '@angular/router';
 import { Component, OnInit, ChangeDetectionStrategy, ViewChild, TemplateRef, } from '@angular/core';
 import {
-  startOfDay, 
-  endOfDay, 
-  subDays, 
-  addDays, 
+  startOfDay,
+  endOfDay,
+  subDays,
+  addDays,
   endOfMonth,
-  isSameDay, 
-  isSameMonth, 
+  isSameDay,
+  isSameMonth,
   addHours, } from 'date-fns';
 import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
-  CalendarEvent, 
-  CalendarEventAction, 
+  CalendarEvent,
+  CalendarEventAction,
   CalendarEventTimesChangedEvent,
-  CalendarView, 
+  CalendarView,
 } from 'angular-calendar';
 import { MDBModalRef, MDBModalService } from 'ng-uikit-pro-standard';
 import { ViewAvailabilityModalComponent } from './view-availability-modal/view-availability.component';
 import { MockInjectorService } from 'src/app/services/mock-injector.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Requester } from '../requester/requester.service';
-import { 
+import {
   data,
   userData,
   skills,
@@ -47,6 +47,7 @@ import { COLOURS } from '../../constants/colours.constant';
 //   },
 // };
 @Component({
+  //Hadi's cmnt
   selector: 'calendar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styles: [
@@ -100,9 +101,9 @@ export class CalendarComponent implements OnInit{
   ];
 
   constructor(
-    private router: Router, 
+    private router: Router,
     private dataInjector: MockInjectorService,
-    //TODO These may need to be changed later, currently used by base calendar  
+    //TODO These may need to be changed later, currently used by base calendar
     private modal: NgbModal,
     private modalService: MDBModalService,
     private rs: RequestCenterService
@@ -124,7 +125,7 @@ export class CalendarComponent implements OnInit{
     this.mockAvailability = JSON.parse(this.dataInjector.getMockData()).totalAvailability
   }
 
-  //* Test method to populate calendar with mocked data, replaced by calls to DB 
+  //* Test method to populate calendar with mocked data, replaced by calls to DB
   addMockData(): void {
     for (let i = 0; i < this.mockAvailability.length; i++) {
       let data = this.mockAvailability[i];
@@ -183,7 +184,7 @@ export class CalendarComponent implements OnInit{
   populateCalendar()  {
     this.events = [];
     this.rs.getMyAvailability(this.events);
-    console.log("length of events list ext: " + this.events.length);   
+    console.log("length of events list ext: " + this.events.length);
     this.delayedRefresh();
   }
   // * Test method
@@ -192,13 +193,13 @@ export class CalendarComponent implements OnInit{
     // var url = "http://localhost:8080/users/welcome";
     // this.requester.getRequest<string>(url).subscribe(returnData =>{
     //   console.log(returnData);
-      
+
     // })
 
     // var url = "http://localhost:8080/users/user?username=test_user1";
     // this.requester.getRequest<userData>(url).subscribe(returnData =>{
     //   console.log(returnData);
-      
+
     // })
 
     // url = "http://localhost:8080/skills/skill?name=running";
@@ -265,9 +266,9 @@ export class CalendarComponent implements OnInit{
   activeDayIsOpen: boolean = true;
 
   openDayModal(dateSelected: Date, useDate: boolean) {
-  
+
     var eventsOnDay= [];
-    if(useDate){  
+    if(useDate){
       for (var index = 0; index < this.events.length; index++) {
         if(isSameDay(this.events[index].start, dateSelected)){
           eventsOnDay.push(this.events[index]);
