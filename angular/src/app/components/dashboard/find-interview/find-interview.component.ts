@@ -5,13 +5,13 @@ import { TimepickerConfig } from 'ngx-bootstrap/timepicker';
 import { RequestCenterService } from '../../requester/request-center.service';
 
 @Component({
-  selector: 'create-interview',
-  templateUrl: './create-interview.component.html',
-  styleUrls: ['./create-interview.component.scss'],
+  selector: 'find-interview',
+  templateUrl: './find-interview.component.html',
+  styleUrls: ['./find-interview.component.scss'],
   providers: [{ provide: TimepickerConfig, useFactory: getTimepickerConfig }]
 })
 
-export class CreateInterviewComponent implements OnInit {
+export class FindInterviewComponent implements OnInit {
   
   // mytime?: string;
   modalRef?: BsModalRef
