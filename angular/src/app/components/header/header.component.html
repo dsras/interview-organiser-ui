@@ -39,7 +39,7 @@
 
 
     <div class="container-fluid">
-        <nav class="navbar px-3 px-lg-0 navbar-expand-lg py-3 py-lg-3">
+        <nav class="navbar px-3 px-lg-0 navbar-expand-lg py-3 py-lg-3 col-md-9 logo-wrapper">
             <a class="navbar-brand pl-2" href="/">
                 <img src="https://www.accolite.com/assets/jpg/homebannerimages/accolite-logo.svg" class="navbar-image" alt="Accolite Digital Logo">
             </a>
@@ -47,33 +47,33 @@
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fa fa-bars text-black w-20" ></i>
             </button>
-            <div class="col-md-1" *ngIf="isHeader">
+            <div class="col-md-2" *ngIf="isHeader">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
                     <span class="menu" (click)="onMenuChange('dashboard')" [ngClass]="getSelectedClass('dashboard')">Dashboard</span>
                     </li>
                 </ul>
             </div>
-            <div class="col-md-1" *ngIf="isHeader">
+            <div class="col-md-2" *ngIf="isHeader">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
                     <span class="menu" (click)="onMenuChange('calendar')" [ngClass]="getSelectedClass('calendar')">Calendar</span>
                     </li>
                 </ul>
             </div>
-            <div class="btn-group col-md-1" dropdown placement="bottom left" *ngIf="isHeader">
+            <div class="btn-group col-md-2 button_example" dropdown placement="bottom left" *ngIf="isHeader">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item dropdown">
-                        <button dropdownToggle type="button" class="btn dropdown-toggle float-end"
+                        <button button id="button-animated" dropdownToggle type="button" class="btn dropdown-toggle float-end"
                         aria-controls="dropdown-animated" style = "width: 60px;">
                             <img [src]="user.photoUrl" class="rounded-circle" style="height: 30px; width: 30px;" *ngIf="user">
-                            <!-- <i class="fa fa-user-circle" aria-hidden="true" *ngIf="!user"></i> -->
+                            <i class="fa fa-user-circle" aria-hidden="true" *ngIf="!user"></i>
                         </button>
                     <ul id="dropdown-animated" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-animated">
                         <li role="menuitem" style="cursor: pointer;">
-                            <span class="dropdown-item" *ngIf="user" style="padding-left: 70px;">
+                            <span class="dropdown-item" *ngIf="user" style="padding-left: 50px;">
                                 <img [src]="user.photoUrl" class="rounded-circle" style="height: 30px;">
-                                <p style="margin-left: -35px;">{{user.name}}</p>
+                                <p style="margin-left: -15px;">{{user.name}}</p>
                             </span>
                             <span class="dropdown-item" style="display: grid;">
                                 <button class="btn primary-btn" (click)="logout()">
