@@ -65,7 +65,7 @@ export class FindInterviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.rs.getAllSkills(this.skillsAvailable, this.skillTypes, this.skillLevels );
-    this.rs.getInterviewByRecruiter(this.availableInterviewObjects);
+    this.rs.getAllAvailabilityUI(this.availableInterviews);
     this.availableInterviewObjects.forEach(ele =>{
       this.availableInterviews.push(ele.start.getTime().toString());
     })
