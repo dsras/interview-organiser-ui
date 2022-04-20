@@ -308,7 +308,11 @@ export class RequestCenterService {
         console.log(start);
         console.log(end);
         
-        events.push(start.getTime().toString() + " -> " + end.getTime().toString())
+        var startTime = this.bufTimeString(start.getHours().toString()) + ":" + this.bufTimeString(start.getMinutes().toString());
+        var endTime = this.bufTimeString(end.getHours().toString()) + ":" + this.bufTimeString(end.getMinutes().toString());
+
+        events.push(
+          startTime + " -> " + endTime + "\n")
           console.log("length of events list: " + events.length);
       });
     })
@@ -353,7 +357,7 @@ export class RequestCenterService {
       console.log(returnData);
       out = <Array<applicant>><unknown>returnData;
       out.forEach(ele=>{
-        applicantList.push(ele.firstName);
+        applicantList.push(ele.firstName +",");
       })
     })
     
