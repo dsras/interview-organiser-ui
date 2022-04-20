@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output, TemplateRef } from '@angular/c
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CalendarEvent } from 'angular-calendar';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { Observable } from 'rxjs';
 import { RequestCenterService } from '../../requester/request-center.service';
 import { availability, skills } from '../../requester/requestBodyTypes/types';
 
@@ -16,10 +17,15 @@ export class CreateInterviewComponent implements OnInit {
   // mytime?: string;
   modalRef?: BsModalRef
 
-  availableInterviewObjects =<Array<CalendarEvent>> []
-  availableInterviews = <Array<string>>[]
+  
+  
+  availableInterviewObjects =<Array<CalendarEvent>> [];
+  availableInterviews =<Array<string>> [];
+  availableInterviews$!:Observable<Array<CalendarEvent>> ;
+  
 
-  availableApplicants = []
+  availableApplicants = <Array<string>>[]
+  availableApplicants$!:Observable<Array<CalendarEvent>> ;
 
   // skillTypes = [
   //   'Java', 'Python', 'Spring', 'C', 'C++', 'C#',
@@ -39,6 +45,7 @@ export class CreateInterviewComponent implements OnInit {
 
 
   @Output() formSubmitted: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
+  @Output() refresh: EventEmitter<boolean> = new EventEmitter<boolean>();
 
 
   constructor(
@@ -48,13 +55,17 @@ export class CreateInterviewComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.rs.getInterviewByRecruiter(this.availableInterviewObjects);
-    this.availableInterviewObjects.forEach(ele =>{
-      this.availableInterviews.push(ele.start.getTime().toString());
-    })
+    console.log("this is the init for create!!!!!!!!!");
+    this.rs.getAllAvailabilityUI(this.availableInterviews);
+
+    console.log("Confirm after");
+
+
     this.rs.getAllApplicants(this.availableApplicants);
-    // this.availableInterviews = GETREQUESTBODY
-    // this.availableApplicants = GETREQUESTBODY
+    //* while this does nothing in the program it fixes things, pls no remove
+    this.availableApplicants$.subscribe(ele =>{
+      console.log(ele);
+    })
   }
 
   openModal(template: TemplateRef<any>) {
