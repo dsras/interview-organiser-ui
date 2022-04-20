@@ -27,17 +27,6 @@ export class CreateInterviewComponent implements OnInit {
   availableApplicants = <Array<string>>[]
   availableApplicants$!:Observable<Array<CalendarEvent>> ;
 
-  // skillTypes = [
-  //   'Java', 'Python', 'Spring', 'C', 'C++', 'C#',
-  //   'Haskell', 'Angular', 'JavaScript', 'VISUAL-BASIC',
-  // ]
-
-  // skillLevels = [
-  //   'Level 1',
-  //   'Level 2',
-  //   'Level 3',
-  // ]  
- 
   createInterviewForm: FormGroup = this.fb.group({
     interviewSelected: ['', Validators.required],
     applicantSelected: ['', Validators.required]
@@ -56,16 +45,12 @@ export class CreateInterviewComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("this is the init for create!!!!!!!!!");
-    this.rs.getAllAvailabilityUI(this.availableInterviews);
+    // this.rs.getAllAvailability(this.availableInterviews);
 
     console.log("Confirm after");
 
 
-    this.rs.getAllApplicants(this.availableApplicants);
-    //* while this does nothing in the program it fixes things, pls no remove
-    this.availableApplicants$.subscribe(ele =>{
-      console.log(ele);
-    })
+    // this.rs.getAllApplicants(this.availableApplicants);
   }
 
   openModal(template: TemplateRef<any>) {
@@ -75,7 +60,6 @@ export class CreateInterviewComponent implements OnInit {
   onSubmit(f: FormGroup) {
     this.createInterviewForm.setValue(f.value);
     this.formSubmitted.emit(f);
-    //this.rs.addInterview();
     this.createInterviewForm.reset();
   }
 
