@@ -117,13 +117,13 @@
 // .button {
 //     background-color: white;
 //     color: black;
-//     border: 2px solid #000000; 
+//     border: 2px solid #000000;
 // }
 // @import '~@fortawesome/fontawesome-free/scss/fontawesome.scss';
 // @import '~@fortawesome/fontawesome-free/scss/solid.scss';
 // @import '~@fortawesome/fontawesome-free/scss/regular.scss';
 // @import '~@fortawesome/fontawesome-free/scss/brands.scss';
- 
+
 // @import '~mdb-angular-ui-kit/assets/scss/mdb.scss';
 
 // /* Importing Bootstrap SCSS file. */
@@ -301,3 +301,9 @@ h4 small {
 	background-size: cover;
 	background-position: center;
 }
+
+.btn {
+	font-size: 0.8rem;
+}
+
+
