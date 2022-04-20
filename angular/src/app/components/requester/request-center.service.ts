@@ -125,23 +125,15 @@ export class RequestCenterService {
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_BY_INT;
     var out;
     this.requester.getRequest<availability>(url).subscribe(returnData=>{
-      console.log(returnData);
       out=<Array<availability>><unknown>returnData;
       out.forEach(element =>{
-        console.log(" in question!!!!!");
-        console.log(element);
-        console.log(element.start_time);
         var start = new Date(element.date);
         var end = new Date(element.date);
         var times1 = element.start_time.split(":");
         var times2 = element.end_time.split(":");
-        console.log("times1: " + times1);
-        console.log("times2: " + times2);
         
         start.setHours(parseInt(times1[0]),parseInt(times1[1]));
         end.setHours(parseInt(times2[0]),parseInt(times2[1]));
-        console.log(start);
-        console.log(end);
         
 
         // var dateString = start.getFullYear().toString() + "-" + this.bufTimeString((start.getUTCMonth() + 1).toString()) + "-" + start.getDate().toString();
@@ -155,15 +147,17 @@ export class RequestCenterService {
             title: 'interview',
             color: COLOURS.RED_DARK,
           })
-          console.log("length of events list: " + events.length);
       })
       return returnData;
     })
   }
+  //! Only for use in calendar app
   getInterviewByRecruiter(events: CalendarEvent[]){
+    console.log("ints vis recuiter !!!!!!!")
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_BY_REC;
     var out;
     this.requester.getRequest<availability>(url).subscribe(returnData=>{
+      console.log("into the return !!!!!!");
       console.log(returnData);
       out=<Array<availability>><unknown>returnData;
       out.forEach(element =>{
@@ -199,6 +193,7 @@ export class RequestCenterService {
       return returnData;
     })
   }
+
   getInterviewAll(){
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ALL;
     this.requester.getRequest<interview>(url).subscribe(returnData=>{
@@ -291,6 +286,35 @@ export class RequestCenterService {
     out = <Array<availability>><unknown>out;
     return out;
   }
+
+  getAllAvailabilityUI(events: string[]){
+    var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_ALL;
+    var out;
+
+    this.requester.getRequest<availability>(url).subscribe(returnData=>{
+      out = <Array<availability>><unknown>returnData;
+      console.log(out);
+      out.forEach(element => {
+        console.log(element);
+        var start = new Date(element.date);
+        var end = new Date(element.date);
+        var times1 = element.start_time.split(":");
+        var times2 = element.end_time.split(":");
+        console.log("times1: " + times1);
+        console.log("times2: " + times2);
+        
+        start.setHours(parseInt(times1[0]),parseInt(times1[1]));
+        end.setHours(parseInt(times2[0]),parseInt(times2[1]));
+        console.log(start);
+        console.log(end);
+        
+        events.push(start.getTime().toString() + " -> " + end.getTime().toString())
+          console.log("length of events list: " + events.length);
+      });
+    })
+    out = <Array<availability>><unknown>out;
+    return out;
+  }
   // * in progress
   getAvailabilityByRange(startDate:string, endDate:string, startTime: string, endTime: string, skillsIDList:number[]){
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_FILTER;
@@ -321,7 +345,7 @@ export class RequestCenterService {
       console.log(returnData);
     })
   }
-  getAllApplicants(applicantList: applicant[]){
+  getAllApplicants(applicantList: string[]){
         
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.APPLICANT_ALL;
     var out;
@@ -329,7 +353,7 @@ export class RequestCenterService {
       console.log(returnData);
       out = <Array<applicant>><unknown>returnData;
       out.forEach(ele=>{
-        applicantList.push(ele);
+        applicantList.push(ele.firstName);
       })
     })
     

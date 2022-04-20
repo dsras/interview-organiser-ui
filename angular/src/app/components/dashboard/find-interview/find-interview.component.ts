@@ -1,7 +1,9 @@
 import { Component, OnInit, Output, EventEmitter, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { CalendarEvent } from 'angular-calendar';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { TimepickerConfig } from 'ngx-bootstrap/timepicker';
+import { Observable } from 'rxjs';
 import { RequestCenterService } from '../../requester/request-center.service';
 import { skills } from '../../requester/requestBodyTypes/types';
 
@@ -14,6 +16,9 @@ import { skills } from '../../requester/requestBodyTypes/types';
 })
 
 export class FindInterviewComponent implements OnInit {
+
+  // buttonPressed: boolean = false;
+
   skillsAvailable: skills[] = [];
 
   skillTypes: Set<string> = new Set<string>();
@@ -23,7 +28,20 @@ export class FindInterviewComponent implements OnInit {
   // mytime?: string;
   modalRef?: BsModalRef
 
+  availableInterviewObjects =<Array<CalendarEvent>> [];
+  availableInterviews =<Array<string>> [];
+  availableInterviews$!:Observable<Array<CalendarEvent>> ;
+  
+
+  availableApplicants = <Array<string>>[]
+  availableApplicants$!:Observable<Array<CalendarEvent>> ;
+
   createInterviewForm: FormGroup = this.fb.group({
+    interviewSelected: ['', Validators.required],
+    applicantSelected: ['', Validators.required]
+  })
+
+  findInterviewsForm: FormGroup = this.fb.group({
     startTime: ['', Validators.required],
     endTime: ['', Validators.required],
     firstDate: ['', Validators.required],
@@ -36,30 +54,6 @@ export class FindInterviewComponent implements OnInit {
     ])
   })
 
-  skillsRequired: FormGroup = this.fb.group({
-    skillType: [''],
-    skillLevel: ['']
-  })
-
-  get skills() {
-    return this.createInterviewForm.get('skills') as FormArray; 
-  }
-
-  addSkill() {
-    this.skills.push(this.fb.group({skill: [''], level: ['']}))
-  }
-
-  // skillTypes = [
-  //   'Java', 'Python', 'Spring', 'C', 'C++', 'C#',
-  //   'Haskell', 'Angular', 'JavaScript', 'VISUAL-BASIC',
-  // ]
-
-  // skillLevels = [
-  //   'Level 1',
-  //   'Level 2',
-  //   'Level 3',
-  // ]  
-
   @Output() formSubmitted: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
 
 
@@ -71,22 +65,26 @@ export class FindInterviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.rs.getAllSkills(this.skillsAvailable, this.skillTypes, this.skillLevels );
+    this.rs.getInterviewByRecruiter(this.availableInterviewObjects);
+    this.availableInterviewObjects.forEach(ele =>{
+      this.availableInterviews.push(ele.start.getTime().toString());
+    })
+    this.rs.getAllApplicants(this.availableApplicants);
   }
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.ms.show(template);
   }
 
-  onSubmit(f: FormGroup) {
-    this.createInterviewForm.setValue(f.value)
+  findInterview(f: FormGroup) {
+    this.findInterviewsForm.setValue(f.value)
     console.log("create interview form")
-    console.log(this.createInterviewForm.value)
-    console.warn(this.createInterviewForm.get('firstDate')?.value)
+    console.log(this.findInterviewsForm.value)
+    console.warn(this.findInterviewsForm.get('firstDate')?.value)
     console.log(f.value.firstDate);
     var tempArr = [];
     var idArr = <Array<number>>[];
     tempArr= f.value.skills;
-
 
     tempArr.forEach((skillReq: any) => {
       console.log(skillReq.skillType);
@@ -99,13 +97,28 @@ export class FindInterviewComponent implements OnInit {
     });
 
     this.rs.getAvailabilityByRange(f.value.firstDate, f.value.lastDate, f.value.startTime, f.value.endTime, idArr);
-
-
-
     this.formSubmitted.emit(f);
     //TODO set up Requester service call @Sulkyoptimism
     // this.rs.addAvailability(f.value.date, f.value.startTime, f.value.endTime);
+    this.findInterviewsForm.reset();
+  }
 
+  buttonClicked() {
+    let find = document.getElementById("find");
+    let confirm = document.getElementById("confirm")
+    if (find?.style.display === "block" && confirm?.style.display === "none") {
+      find.style.display = "none"
+      confirm.style.display = "block"      
+    }
+    //  if (find?.style.display === "none" && confirm?.style.display === "block") {
+    //   find.style.display = "block"
+    //   confirm.style.display = "none"
+    // }
+  }
+
+  submitInterview(f: FormGroup) {
+    this.createInterviewForm.setValue(f.value);
+    this.formSubmitted.emit(f);
     this.createInterviewForm.reset();
   }
 
