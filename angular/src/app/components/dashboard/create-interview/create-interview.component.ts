@@ -45,12 +45,12 @@ export class CreateInterviewComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("this is the init for create!!!!!!!!!");
-    // this.rs.getAllAvailability(this.availableInterviews);
+    this.rs.getAllAvailabilityUI(this.availableInterviews);
 
     console.log("Confirm after");
 
 
-    // this.rs.getAllApplicants(this.availableApplicants);
+    this.rs.getAllApplicants(this.availableApplicants);
   }
 
   openModal(template: TemplateRef<any>) {

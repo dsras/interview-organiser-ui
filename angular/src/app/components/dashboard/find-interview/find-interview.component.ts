@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { CalendarEvent } from 'angular-calendar';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { TimepickerConfig } from 'ngx-bootstrap/timepicker';
+import { Observable } from 'rxjs';
 import { RequestCenterService } from '../../requester/request-center.service';
 import { skills } from '../../requester/requestBodyTypes/types';
 
@@ -27,10 +28,13 @@ export class FindInterviewComponent implements OnInit {
   // mytime?: string;
   modalRef?: BsModalRef
 
-  availableInterviewObjects =<Array<CalendarEvent>> []
-  availableInterviews = <Array<string>>[]
+  availableInterviewObjects =<Array<CalendarEvent>> [];
+  availableInterviews =<Array<string>> [];
+  availableInterviews$!:Observable<Array<CalendarEvent>> ;
+  
 
-  availableApplicants = []
+  availableApplicants = <Array<string>>[]
+  availableApplicants$!:Observable<Array<CalendarEvent>> ;
 
   createInterviewForm: FormGroup = this.fb.group({
     interviewSelected: ['', Validators.required],
