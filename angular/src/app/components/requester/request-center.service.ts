@@ -9,7 +9,8 @@ import {
   interview,
   skillIdOnly,
   applicant,
-  interviewRange
+  interviewRange,
+  availabilityForInterviews
  }from '../requester/requestBodyTypes/types'
 import{
   APPCONSTANTS
@@ -320,7 +321,18 @@ export class RequestCenterService {
     return out;
   }
   // * in progress
-  getAvailabilityByRange(startDate:string, endDate:string, startTime: string, endTime: string, skillsIDList:number[]){
+  getAvailabilityByRange(
+    startDate:string, 
+    endDate:string, 
+    startTime: string, 
+    endTime: string, 
+    skillsIDList:number[], 
+    interviewsReturn: string[]){
+
+    var skillsList =  <Array<skills>>[];
+    var skillsNames = new Set<string>();
+    var skillsLevels = new Set<string>();
+    this.getAllSkills(skillsList, skillsNames, skillsLevels);
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_FILTER;
     var newStartDate= new Date(startDate);
     var newEndDate = new Date(endDate);
@@ -333,9 +345,16 @@ export class RequestCenterService {
     var endString = this.bufTimeString(newEndTime.getHours().toString()) + ":" + this.bufTimeString(newEndTime.getMinutes().toString());
 
     var newRange = new interviewRange(startDateString, endDateString, startString, endString, skillsIDList);
-    this.requester.postRequest<interviewRange>(url, newRange).subscribe(returnData=>{
+    this.requester.postRequestNoType<availabilityForInterviews>(url, newRange).subscribe(returnData=>{
+      console.log("ret data");
       console.log(returnData);
-
+      var data = <Array<availabilityForInterviews>> returnData;
+      // var newInterview = new availabilityForInterviews(data.name, data.id, data.date, data.startTime, data.endTime);
+      data.forEach(ele => {
+        interviewsReturn.push("On " + ele.date 
+        + " between " + ele.startTime + " -> " + ele.endTime 
+        + "\nthis is with: " + ele.name /*+ "skills: " + skillsList[skillsIDList[0]]*/);
+      })
     })
 
   }

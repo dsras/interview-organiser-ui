@@ -30,6 +30,18 @@ export class Requester {
       );
   }
 
+  postRequestNoType<type>(link: string, obj: any): Observable<any>{
+    const opt = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization' : "Bearer" + <string>localStorage.getItem('apiKey'),
+      })
+    }
+    return this.http.post<type>(link, obj, opt)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
   postRequest<Type>(link:string, obj:Type): Observable<Type> {
     const opt = {
       headers: new HttpHeaders({

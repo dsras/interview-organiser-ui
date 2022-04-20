@@ -107,6 +107,31 @@ export class applicant implements data{
     }
 }
 
+export class availabilityForInterviews implements data{
+    name : string;
+    id: number;
+    date : string;
+    startTime: string;
+    endTime: string;
+    constructor(
+        name: string,
+        id: number,
+        date: string,
+        startTime: string,
+        endTime: string
+    ){
+        this.name = name;
+        this.date = date;
+        this.id = id;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+    toString(){
+        return ("On " + this.date + " between " + this.startTime + " -> " + this.endTime + " this is with: " + this.name);
+    }
+
+}
+
 export class availability implements data{
     date: string;
     start_time: string;
