@@ -122,6 +122,24 @@ export class availability implements data{
     }
 }
 
+export class availabilityRange implements data{
+    start_date: string;
+    end_date: string;
+    start_time: string;
+    end_time: string;
+    constructor(
+        start_date: string,
+        end_date: string,
+        start_time: string,
+        end_time: string
+    ){
+        this.start_date = start_date;
+        this.end_date = end_date;
+        this.start_time = start_time;
+        this.end_time = end_time;
+    }
+}
+
 export class interviewRange implements data{
     start_date: string;
     end_date: string;

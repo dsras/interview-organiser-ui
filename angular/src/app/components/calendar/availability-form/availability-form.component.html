@@ -19,21 +19,32 @@
 
   <div class="card" style="size: 1000px;">
     <div class="row">
-      <label for="startTime">Start Time</label>
-      <timepicker   id="startTime" type="text" formControlName="startTime"></timepicker>
-      <label for="endTime">End Time</label>
-      <timepicker id="endTime"  type="text" formControlName="endTime"></timepicker>
+      <div class="col-md-6">
+        <label for="startTime">Start Time</label>
+        <timepicker   id="startTime" type="time" formControlName="startTime"></timepicker>
+      </div>
+      <div class="col-md-6">
+        <label for="endTime">End Time</label>
+        <timepicker id="endTime"  type="time" formControlName="endTime"></timepicker>
+      </div>
     </div>
+
     <br>
-    <div>
-      <label for="date">Date</label>
-      <input
-        id="date"
-        placeholder="Select Date"
-        type='text'
-        formControlName="date"
-        bsDatepicker>
+
+    <div class="row">
+      <label for="dateRange">Date range</label>
+      <div class="col-md-3">
+        <input
+          id="dateRange"
+          #dp
+          placeholder="Select Date(s)"
+          formControlName="dateRange"
+          bsDaterangepicker
+          [bsConfig]="{ containerClass: 'theme-orange'  }"
+          >
+      </div>
     </div>
+
   </div>
   <div class="modal-footer">
     <div class="col-12 col-md-12 mx-auto services">

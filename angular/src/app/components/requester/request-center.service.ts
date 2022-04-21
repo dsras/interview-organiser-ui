@@ -9,7 +9,8 @@ import {
   interview,
   skillIdOnly,
   applicant,
-  interviewRange
+  interviewRange,
+  availabilityRange
  }from '../requester/requestBodyTypes/types'
 import{
   APPCONSTANTS
@@ -29,22 +30,26 @@ export class RequestCenterService {
   constructor(private requester: Requester ) { }
 
 
-  addAvailability(date: string, startTime: string, endTime: string){
-    var newDate = new Date(date);
-    var newStart = new Date(startTime);
-    var newEnd = new Date(endTime);
 
-    var dateString = newDate.getFullYear().toString() + "-" + this.bufTimeString((newDate.getUTCMonth() + 1).toString()) + "-" + newDate.getDate().toString();
+  addAvailability(first: string, last: string, start: string, end: string){
+    var firstDate = new Date(first);
+    var lastDate = new Date(last)
+    var newStart = new Date(start);
+    var newEnd = new Date(end);
+
+    var firstDateString = firstDate.getFullYear().toString() + "-" + this.bufTimeString((firstDate.getUTCMonth() + 1).toString()) + "-" + this.bufTimeString(firstDate.getDate().toString());
+    var lastDateString = lastDate.getFullYear().toString() + "-" + this.bufTimeString((lastDate.getUTCMonth() + 1).toString()) + "-" + this.bufTimeString(lastDate.getDate().toString());
+
     var startString = this.bufTimeString(newStart.getHours().toString()) + ":" + this.bufTimeString(newStart.getMinutes().toString());
     var endString = this.bufTimeString(newEnd.getHours().toString()) + ":" + this.bufTimeString(newEnd.getMinutes().toString());
 
-    var newAvail = new availability(dateString, startString, endString);
+    var newAvail = new availabilityRange(firstDateString, lastDateString, startString, endString);
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_ADD;
     var out;
 
-    this.requester.postRequest<availability>(url, newAvail).subscribe(returnData=>{
+    this.requester.postRequest<availabilityRange>(url, newAvail).subscribe(returnData=>{
       console.log(returnData);
-      out = <availability><unknown>returnData;
+      out = <availabilityRange><unknown>returnData;
     })
     return out;
   }
