@@ -30,16 +30,18 @@ export class RequestCenterService {
   constructor(private requester: Requester ) { }
 
 
-  addAvailability(date: string, startTime: string, endTime: string){
-    var newDate = new Date(date);
+  addAvailability(dateStart: string, dateEnd: string, startTime: string, endTime: string){
+    var newDateStart = new Date(dateStart);
+    var newDateEnd = new Date(dateStart);
     var newStart = new Date(startTime);
     var newEnd = new Date(endTime);
 
-    var dateString = newDate.getFullYear().toString() + "-" + this.bufTimeString((newDate.getUTCMonth() + 1).toString()) + "-" + newDate.getDate().toString();
+    var dateStartString = newDateStart.getFullYear().toString() + "-" + this.bufTimeString((newDateStart.getUTCMonth() + 1).toString()) + "-" + newDateStart.getDate().toString();
+    var dateEndString = newDateStart.getFullYear().toString() + "-" + this.bufTimeString((newDateStart.getUTCMonth() + 1).toString()) + "-" + newDateStart.getDate().toString();
     var startString = this.bufTimeString(newStart.getHours().toString()) + ":" + this.bufTimeString(newStart.getMinutes().toString());
     var endString = this.bufTimeString(newEnd.getHours().toString()) + ":" + this.bufTimeString(newEnd.getMinutes().toString());
 
-    var newAvail = new availability(dateString, startString, endString);
+    var newAvail = new availability(dateStartString, dateEndString, startString, endString);
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_ADD;
     var out;
 
@@ -69,8 +71,8 @@ export class RequestCenterService {
       console.log(out);
       out.forEach(element => {
         console.log(element);
-        var start = new Date(element.date);
-        var end = new Date(element.date);
+        var start = new Date(element.dateStart);
+        var end = new Date(element.dateStart);
         var times1 = element.start_time.split(":");
         var times2 = element.end_time.split(":");
         console.log("times1: " + times1);
@@ -128,8 +130,8 @@ export class RequestCenterService {
     this.requester.getRequest<availability>(url).subscribe(returnData=>{
       out=<Array<availability>><unknown>returnData;
       out.forEach(element =>{
-        var start = new Date(element.date);
-        var end = new Date(element.date);
+        var start = new Date(element.dateStart);
+        var end = new Date(element.dateStart);
         var times1 = element.start_time.split(":");
         var times2 = element.end_time.split(":");
         
@@ -165,8 +167,8 @@ export class RequestCenterService {
         console.log(" in question!!!!!");
         console.log(element);
         console.log(element.start_time);
-        var start = new Date(element.date);
-        var end = new Date(element.date);
+        var start = new Date(element.dateStart);
+        var end = new Date(element.dateStart);
         var times1 = element.start_time.split(":");
         var times2 = element.end_time.split(":");
         console.log("times1: " + times1);
@@ -263,8 +265,8 @@ export class RequestCenterService {
       console.log(out);
       out.forEach(element => {
         console.log(element);
-        var start = new Date(element.date);
-        var end = new Date(element.date);
+        var start = new Date(element.dateStart);
+        var end = new Date(element.dateStart);
         var times1 = element.start_time.split(":");
         var times2 = element.end_time.split(":");
         console.log("times1: " + times1);
@@ -297,8 +299,8 @@ export class RequestCenterService {
       console.log(out);
       out.forEach(element => {
         console.log(element);
-        var start = new Date(element.date);
-        var end = new Date(element.date);
+        var start = new Date(element.dateStart);
+        var end = new Date(element.dateStart);
         var times1 = element.start_time.split(":");
         var times2 = element.end_time.split(":");
         console.log("times1: " + times1);

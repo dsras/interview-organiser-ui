@@ -133,15 +133,18 @@ export class availabilityForInterviews implements data{
 }
 
 export class availability implements data{
-    date: string;
+    dateStart: string;
+    dateEnd: string;
     start_time: string;
     end_time: string;
     constructor(
-        date: string,
+        dateStart: string,
+        dateEnd: string,
         start_time: string,
         end_time: string
     ){
-        this.date = date;
+        this.dateStart = dateStart;
+        this.dateEnd = dateEnd;
         this.start_time = start_time;
         this.end_time = end_time;
     }

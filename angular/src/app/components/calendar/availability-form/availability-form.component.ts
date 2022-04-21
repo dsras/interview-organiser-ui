@@ -45,7 +45,7 @@ export class AvailabilityFormComponent implements OnInit {
     this.createAvailabilityForm.setValue(f.value);
     // console.log('this.completedForm after assignment: ' + JSON.stringify(this.createAvailabilityForm))
     // console.log(JSON.stringify(f.value.date))
-    this.rs.addAvailability(f.value.date, f.value.startTime, f.value.endTime);
+    this.rs.addAvailability(f.value.firstDate, f.value.lastDate, f.value.startTime, f.value.endTime);
     this.availabilityFormSubmitted.emit(f);
     console.log(f.value)
     this.createAvailabilityForm.reset();
