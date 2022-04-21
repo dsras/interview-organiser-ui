@@ -63,7 +63,7 @@
 </div>
 
 <div class="modal-footer bg-grey">
-  <!-- <create-interview></create-interview> -->
+  <!-- Does this need to be an empty brace for this call? -->
   <button type="submit" class="btn btn-org" [disabled]="!findInterviewsForm.valid" (click)="buttonClicked(findInterviewsForm)">Find Interviews</button>
 </div>
 
@@ -92,12 +92,6 @@
     </div>       
     <br>
     <div class="row">
-      <!-- <select id="applicantSelected" formControlName="applicantSelected">
-        <option value="">Which applicant is needed?</option>
-        <option *ngFor="let applicant of availableApplicants" [ngValue]="applicant">
-          {{ applicant }}
-        </option>
-      </select> -->
       <textarea placeholder="Additional information" formControlName="additionalInformation" ></textarea>
 
     </div>
