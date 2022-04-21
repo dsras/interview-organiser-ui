@@ -357,9 +357,10 @@ export class RequestCenterService {
       var data = <Array<availabilityForInterviews>> returnData;
       // var newInterview = new availabilityForInterviews(data.name, data.id, data.date, data.startTime, data.endTime);
       data.forEach(ele => {
+        console.log(ele);
         interviewsReturn.push("On " + ele.date 
-        + " between " + ele.startTime + " -> " + ele.endTime 
-        + "\nthis is with: " + ele.name /*+ "skills: " + skillsList[skillsIDList[0]]*/);
+        + " between " + ele.start_time + " -> " + ele.end_time 
+        + "\nthis is with: " + ele.interviewer /*+ "skills: " + skillsList[skillsIDList[0]]*/);
       })
     })
 
