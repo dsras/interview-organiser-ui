@@ -117,9 +117,9 @@ export class RequestCenterService {
   //     return returnData;
   //   })
   // }
-  addInterview(interviewerID: number, applicantID: number, interviewDate: string, timeStart: string, timeEnd: string, skillID: number ){
+  addInterview(interviewerID: number[],  interviewDate: string, timeStart: string, timeEnd: string, additionalInfo: string ){
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ADD;
-    var newInterview = new interview(interviewerID, applicantID, interviewDate, timeStart, timeEnd, skillID);
+    var newInterview = new interview(interviewerID, interviewDate, timeStart, timeEnd, additionalInfo);
     this.requester.postRequest<interview>(url, newInterview).subscribe(returnData=>{
       console.log(returnData);
     })

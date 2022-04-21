@@ -7,7 +7,6 @@ import { Observable } from 'rxjs';
 import { RequestCenterService } from '../../requester/request-center.service';
 import { availabilityForInterviews, skills } from '../../requester/requestBodyTypes/types';
 
-
 @Component({
   selector: 'find-interview',
   templateUrl: './find-interview.component.html',
@@ -68,7 +67,7 @@ export class FindInterviewComponent implements OnInit {
     // this.availableInterviewObjects.forEach(ele =>{
     //   this.availableInterviews.push(ele.start.getTime().toString());
     // })
-    this.rs.getAllApplicants(this.availableApplicants);
+    //this.rs.getAllApplicants(this.availableApplicants);
   }
 
   openModal(template: TemplateRef<any>) {

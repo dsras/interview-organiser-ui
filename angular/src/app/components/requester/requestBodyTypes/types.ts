@@ -172,35 +172,38 @@ export class interviewRange implements data{
 }
 
 export class interview implements data{
-    interviewerId: number;
+    interviewerId: number[];
     //organiserId: number;
-    applicantId: number;
+    // applicantId: number;
     //roleApplied: number;
     interviewDate: string;
     timeStart: string;
     timeEnd: string;
-    skillID: number; 
+    additionalInfo: string;
+    // skillID: number; 
     //confirmed: number;
     constructor(
-        interviewerId: number,
+        interviewerId: number[],
         //organiserId: number,
-        applicantId: number,
+        // applicantId: number,
         //roleApplied: number,
         interviewDate: string,
         timeStart: string,
         timeEnd: string,
         //confirmed: number
-        skillID: number
+        // skillID: number
+        additionalInfo: string,
     ){
         this.interviewerId = interviewerId
         //this.organiserId = organiserId;
-        this.applicantId = applicantId;
+        // this.applicantId = applicantId;
         //this.roleApplied = roleApplied;
         this.interviewDate = interviewDate;
         this.timeStart = timeStart;
         this.timeEnd = timeEnd;
         //this.confirmed =confirmed;
-        this.skillID = skillID;
+        // this.skillID = skillID;
+        this.additionalInfo = additionalInfo;
     }
 
 }
