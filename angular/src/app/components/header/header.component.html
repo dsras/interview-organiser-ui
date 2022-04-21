@@ -47,21 +47,23 @@
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fa fa-bars text-black w-20" ></i>
             </button>
-            <div class="col-md-2" *ngIf="isHeader">
+            <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                    <span class="menu" (click)="onMenuChange('dashboard')" [ngClass]="getSelectedClass('dashboard')">Dashboard</span>
+                      <a class="nav-link" href="#" id="industriesDropdown" role="button" aria-haspopup="true" aria-expanded="false">Dashboard</a>
+                    <!-- <span class="menu" (click)="onMenuChange('dashboard')" [ngClass]="getSelectedClass('dashboard')"></span> -->
                     </li>
                 </ul>
             </div>
-            <div class="col-md-2" *ngIf="isHeader">
+            <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                    <span class="menu" (click)="onMenuChange('calendar')" [ngClass]="getSelectedClass('calendar')">Calendar</span>
+                      <a class="nav-link" href="#" id="industriesDropdown" role="button" aria-haspopup="true" aria-expanded="false">Calendar</a>
+                    <!-- <span class="menu" (click)="onMenuChange('calendar')" [ngClass]="getSelectedClass('calendar')"></span> -->
                     </li>
                 </ul>
             </div>
-            <div class="btn-group col-md-2 button_example" dropdown placement="bottom left" *ngIf="isHeader">
+            <div class="collapse navbar-collapse" id="navbarNav" dropdown placement="bottom left" *ngIf="isHeader">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item dropdown">
                         <button button id="button-animated" dropdownToggle type="button" class="btn dropdown-toggle float-end"
