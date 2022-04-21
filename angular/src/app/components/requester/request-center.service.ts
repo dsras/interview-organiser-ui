@@ -73,8 +73,10 @@ export class RequestCenterService {
       console.log(out);
       out.forEach(element => {
         console.log(element);
-        var start = new Date(element.dateStart);
-        var end = new Date(element.dateStart);
+        var start = new Date(element.date);
+        var end = new Date(element.date);
+        console.log("look here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
         var times1 = element.start_time.split(":");
         var times2 = element.end_time.split(":");
         console.log("times1: " + times1);
@@ -82,8 +84,7 @@ export class RequestCenterService {
         
         start.setHours(parseInt(times1[0]),parseInt(times1[1]));
         end.setHours(parseInt(times2[0]),parseInt(times2[1]));
-        console.log(start);
-        console.log(end);
+
         
         events.push({
             start: start,
@@ -132,8 +133,8 @@ export class RequestCenterService {
     this.requester.getRequest<availability>(url).subscribe(returnData=>{
       out=<Array<availability>><unknown>returnData;
       out.forEach(element =>{
-        var start = new Date(element.dateStart);
-        var end = new Date(element.dateStart);
+        var start = new Date(element.date);
+        var end = new Date(element.date);
         var times1 = element.start_time.split(":");
         var times2 = element.end_time.split(":");
         
@@ -169,8 +170,8 @@ export class RequestCenterService {
         console.log(" in question!!!!!");
         console.log(element);
         console.log(element.start_time);
-        var start = new Date(element.dateStart);
-        var end = new Date(element.dateStart);
+        var start = new Date(element.date);
+        var end = new Date(element.date);
         var times1 = element.start_time.split(":");
         var times2 = element.end_time.split(":");
         console.log("times1: " + times1);
@@ -267,8 +268,8 @@ export class RequestCenterService {
       console.log(out);
       out.forEach(element => {
         console.log(element);
-        var start = new Date(element.dateStart);
-        var end = new Date(element.dateStart);
+        var start = new Date(element.date);
+        var end = new Date(element.date);
         var times1 = element.start_time.split(":");
         var times2 = element.end_time.split(":");
         console.log("times1: " + times1);
@@ -301,8 +302,8 @@ export class RequestCenterService {
       console.log(out);
       out.forEach(element => {
         console.log(element);
-        var start = new Date(element.dateStart);
-        var end = new Date(element.dateStart);
+        var start = new Date(element.date);
+        var end = new Date(element.date);
         var times1 = element.start_time.split(":");
         var times2 = element.end_time.split(":");
         console.log("times1: " + times1);
