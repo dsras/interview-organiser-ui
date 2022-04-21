@@ -56,14 +56,9 @@ export class SkillsFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      //! Add getSkillsMethod to init topopulate form with current skills.
       // TODO maybe put in parent as an input/output relationship
       this.rs.getAllSkills(this.skillsAvailable, this.skillNamesAvailable, this.levels );
       console.log("skillslist " + this.skillsAvailable.length)
-      // .forEach(element => {
-      //   this.skillsMap.set(element.id, [element.skillName, element.skillLevel])
-      //   this.skillsAvailable.push(element.skillName);
-      // });
   }
 
   openModal(template: TemplateRef<any>) {

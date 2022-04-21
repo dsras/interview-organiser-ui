@@ -74,6 +74,7 @@ import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { Requester } from './components/requester/requester.service';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { CreateInterviewComponent } from './components/dashboard/create-interview/create-interview.component';
+import { AddApplicantComponent } from './components/dashboard/add-applicant/add-applicant.component';
 
 const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_DEV;
 @NgModule({
@@ -108,6 +109,7 @@ const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCON
         DashboardComponent,
         FindInterviewComponent,
         CreateInterviewComponent,
+        AddApplicantComponent,
     ],
     imports: [
         BrowserModule,  

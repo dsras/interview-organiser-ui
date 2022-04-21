@@ -1,0 +1,87 @@
+<button type="button" class="btn btn-org btn-block" (click)="openModal(form)">
+  <h2>Add New Applicant<i class="bi bi-person-plus-fill logo-med"></i></h2>
+</button>
+
+<ng-template #form>
+  <div class="modal-header modal-org" >
+    <h3>
+      <strong>Add Applicant</strong>
+    </h3>
+  </div>
+
+  <form
+  [formGroup]="addApplicantForm" 
+  (ngSubmit)="onSubmit(addApplicantForm)"
+  class="md-form" 
+  style="color: black;"
+  >
+    <div class="container-padded modal-body">
+      <div class="row">
+        <label for="firstName">First Name</label>
+        <input 
+          id="firstName" 
+          placeholder="..." 
+          type="text"
+          formControlName="firstName" >
+      </div>
+      <div class="row">
+        <label for="lastName">Last Name</label>
+        <input 
+          id="lastName" 
+          placeholder="..." 
+          type="text"
+          formControlName="lastName" >
+      </div>
+      <div class="row">
+        <label for="email">Email Address</label>
+        <input 
+          id="email" 
+          placeholder="..." 
+          type="email"
+          formControlName="email" >
+      </div>
+      <div class="row">
+        <label for="mobile">Mobile No.</label>
+        <input 
+          id="mobile" 
+          placeholder="optional" 
+          type="tel"
+          formControlName="mobile" >
+      </div>
+      <div class="row" style="size: 1000px;">
+        <div class="col-sm-6">
+          <label for="skillName">Skill: </label>
+          <br>
+          <select id="skillName" formControlName="skillName">
+            <option value="">Please select skill</option>
+            <option *ngFor="let skillName of skillNamesAvailable" [ngValue]="skillName">
+              {{ skillName }}
+            </option>
+          </select>
+        </div>
+        <div class="col-sm-6">
+          <label for="skillLevel">Level: </label>
+          <br>
+          <select id="skillLevel" formControlName="skillLevel">
+            <option value="">Please select level</option>
+            <option *ngFor="let skillLevel of skillLevels" [ngValue]="skillLevel">
+              {{ skillLevel }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal-footer">
+      <button 
+      class="btn btn-org"
+      type="submit" 
+      id="submit"
+      [disabled]="!addApplicantForm.valid"
+      (click)="this.modalRef?.hide()"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+</ng-template>
