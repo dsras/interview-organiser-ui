@@ -19,7 +19,9 @@ export class AvailabilityFormComponent implements OnInit {
   createAvailabilityForm: FormGroup = this.fb.group ({
     startTime: ['', Validators.required],
     endTime: ['', Validators.required],
-    date: ['', Validators.required],
+    dateRange: ['', Validators.required],  
+    firstDate: [''],
+    lastDate: ['']
   })
 
   @Output() availabilityFormSubmitted: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
@@ -38,17 +40,10 @@ export class AvailabilityFormComponent implements OnInit {
   }
 
   onSubmit(f: FormGroup) {
-    //TODO console logging needs removed, only for demo purposes
-    // console.log('f.value JSON string: ' + JSON.stringify(f.value));
-    // console.log('this.completedForm before assignment: ' + JSON.stringify(this.createAvailabilityForm))
-    //TODO Add POST request to submit f.value
-    this.createAvailabilityForm.setValue(f.value);
-    // console.log('this.completedForm after assignment: ' + JSON.stringify(this.createAvailabilityForm))
-    // console.log(JSON.stringify(f.value.date))
+    f.value.firstDate = f.value.dateRange[0]
+    f.value.lastDate = f.value.dateRange[1]
     this.rs.addAvailability(f.value.firstDate, f.value.lastDate, f.value.startTime, f.value.endTime);
-    this.availabilityFormSubmitted.emit(f);
-    console.log(f.value)
-    this.createAvailabilityForm.reset();
+    f.reset();
   }
 
 }
