@@ -29,12 +29,6 @@ export class RequestCenterService {
 
   constructor(private requester: Requester ) { }
 
-  addZero(day: string){
-    if (day.length == 0) {
-      day = `0${day}`
-    }
-    return day
-  }
 
 
   addAvailability(first: string, last: string, start: string, end: string){
@@ -43,8 +37,8 @@ export class RequestCenterService {
     var newStart = new Date(start);
     var newEnd = new Date(end);
 
-    var firstDateString = firstDate.getFullYear().toString() + "-" + this.bufTimeString((firstDate.getUTCMonth() + 1).toString()) + "-" + this.addZero(firstDate.getDate().toString());
-    var lastDateString = lastDate.getFullYear().toString() + "-" + this.bufTimeString((lastDate.getUTCMonth() + 1).toString()) + "-" + this.addZero(lastDate.getDate().toString());
+    var firstDateString = firstDate.getFullYear().toString() + "-" + this.bufTimeString((firstDate.getUTCMonth() + 1).toString()) + "-" + this.bufTimeString(firstDate.getDate().toString());
+    var lastDateString = lastDate.getFullYear().toString() + "-" + this.bufTimeString((lastDate.getUTCMonth() + 1).toString()) + "-" + this.bufTimeString(lastDate.getDate().toString());
 
     var startString = this.bufTimeString(newStart.getHours().toString()) + ":" + this.bufTimeString(newStart.getMinutes().toString());
     var endString = this.bufTimeString(newEnd.getHours().toString()) + ":" + this.bufTimeString(newEnd.getMinutes().toString());

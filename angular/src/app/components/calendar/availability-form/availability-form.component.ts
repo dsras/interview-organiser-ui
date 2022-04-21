@@ -49,7 +49,7 @@ export class AvailabilityFormComponent implements OnInit {
     console.log(f.value.firstDate)
     console.log(f.value.lastDate)
 
-    // this.rs.addAvailability(f.value.firstDate, f.value.lastDate, f.value.startTime, f.value.endTime);
+    this.rs.addAvailability(f.value.firstDate, f.value.lastDate, f.value.startTime, f.value.endTime);
     f.reset()
   }
 
