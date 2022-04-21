@@ -29,6 +29,19 @@
 //   font-size: 40px;
 // }
 
+.services a .image-container>img {
+	height: 70px;
+}
+
+.services a{
+    transition: all 0.5s ease;
+}
+
+.services a:hover
+{
+    transform: scale(1.05);
+}
+
 
 
 

@@ -1,46 +1,48 @@
-<button type="button" class="btn btn-org btn-block" (click)="openModal(form)">
-  <h2>Find Interview  <i class="bi bi-calendar-plus logo-med"></i></h2>
+<button type="button" class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx-auto d-inline-block" (click)="openModal(form)">
+  <img width="auto" height="70px" src="../../../assets/images/findInterview.png">
+              <h6 class="mt-4 font-weight-normal">
+                Find Interviews
+              </h6>
+              <i class="fa fa-arrow-right" style="font-size: 18px; padding-top:8px; padding-right: 7px"></i>
 </button>
 
 <ng-template  #form>
-
-  <div class="modal-header modal-org" >
-    <h3>
-      <strong>Find Interview</strong>
-    </h3>
+  <!-- <div id="find" style="display: block;"> -->
+  <form
+    [formGroup]="findInterviewsForm"
+    (ngSubmit)="findInterview(findInterviewsForm)"
+    class="md-form"
+    style="color: black;"
+  >
+<div class="container text-center text-black pt-4 mt-4">
+  <div class="modal-header" style="padding: 10%; width: 100%; color: black; background-color: orange;">
+    <div class="container-fluid py-2 intro-section-color">
+      <h4 class="text-black font-weight-bold text-center">
+          Find Interview
+      </h4>
+    </div>
   </div>
 
-<div id="find" style="display: block;">
-  <form 
-  [formGroup]="findInterviewsForm" 
-  (ngSubmit)="findInterview(findInterviewsForm)"
-  class="md-form" 
-  style="color: black;"
->
-  
-
-    
-  <div class="card padded" >
-    <div class="row">
-      <div class="col-sm-3">
+  <div class="card" style="size: 1000px;">
+    <div class="row text-center">
+      <div class="col-md-6">
         <label for="startTime">Start Time</label>
-        <timepicker id="startTime" formControlName="startTime"></timepicker>
+        <timepicker   id="startTime" type="time" formControlName="startTime"></timepicker>
       </div>
-      <div class="col-sm-3"></div>
-      <div class="col-sm-3">
+      <div class="col-md-6">
         <label for="endTime">End Time</label>
-        <timepicker id="endTime" formControlName="endTime"></timepicker>
+        <timepicker id="endTime"  type="time" formControlName="endTime"></timepicker>
       </div>
     </div>
     <br>
-    <div>
+    <div class="container-fluid">
       <label for="firstDate">First Date</label>
       <input id="firstDate" type='datetime' formControlName="firstDate" bsDatepicker>
-      <br><br>
+      <br>
       <label for="lastDate">Last Date</label>
       <input id="lastDate" type='datetime' formControlName="lastDate" bsDatepicker>
     </div>
-  
+
     <div formArrayName="skills">
       <h2>Skills</h2>
 
@@ -49,62 +51,78 @@
         <option *ngFor="let skillType of skillTypes" [ngValue]="skillType">
           {{ skillType }}
         </option>
-      </select>         
+      </select>
       <select id="skillLevel" formControlName="skillLevel">
         <option value="">Which level is needed?</option>
         <option *ngFor="let skillLevel of skillLevels" [ngValue]="skillLevel">
           {{ skillLevel }}
         </option>
-      </select>  
+      </select>
     </div>
   </div>
-
-</form>
 </div>
+<br>
 
-<div class="modal-footer bg-grey">
+<!-- </div> -->
+
+<!-- <div class="modal-footer bg-grey">
   <button type="submit" class="btn btn-org" [disabled]="!findInterviewsForm.valid" (click)="buttonClicked()">Find Interviews</button>
-</div>
+</div> -->
 
-<div id="confirm" style="display: none;">
-  <form 
-  [formGroup]="createInterviewForm"
-  (ngSubmit)="submitInterview(createInterviewForm)" 
-  class="md-form" 
-  style="color: black;"
->
-
-  <div class="modal-header modal-org" >
-    <h3>
-      <strong>Create Interview</strong>
-    </h3>
+  <div class="modal-footer">
+    <div class="col-12 col-md-12 mx-auto services">
+      <div class="row text-center">
+        <button type="submit" class="view-here-btn text-lefttext-black mx-auto"
+          [disabled]="!findInterviewsForm.valid"
+          (click)="buttonClicked()">
+          <h6 class="mt-4 font-weight-normal">
+            Find Interview
+          </h6>
+        </button>
+      </div>
+    </div>
   </div>
 
-  <div class="card padded">
-    <div class="row">
-      <select id="interviewSelected" formControlName="interviewSelected">
-        <option value="">Which interview slot?</option>
-        <option *ngFor="let interview of availableInterviews" [ngValue]="interview">
-          {{ interview }}
-        </option>
-      </select>  
-    </div>       
-    <br>
-    <div class="row">
-      <textarea placeholder="Additional information" formControlName="additionalInformation" ></textarea>
+  <div id="confirm" style="display: none;">
+    <form
+    [formGroup]="createInterviewForm"
+    (ngSubmit)="submitInterview(createInterviewForm)"
+    class="md-form"
+    style="color: black;"
+  >
+
+    <div class="modal-header modal-org" >
+      <h3>
+        <strong>Create Interview</strong>
+      </h3>
+    </div>
+
+    <div class="card padded">
+      <div class="row">
+        <select id="interviewSelected" formControlName="interviewSelected">
+          <option value="">Which interview slot?</option>
+          <option *ngFor="let interview of availableInterviews" [ngValue]="interview">
+            {{ interview }}
+          </option>
+        </select>
+      </div>
+      <br>
+      <div class="row">
+        <textarea placeholder="Additional information" formControlName="additionalInformation" ></textarea>
+
+      </div>
+    </div>
+    <div class="container-padded">
 
     </div>
-  </div> 
-  <div class="container-padded">
-
+    <div class="modal-footer bg-grey">
+      <button type="submit" [disabled]="!createInterviewForm.valid" (click)="this.modalRef?.hide()" class="btn btn-org">
+        Create Interview<i class="bi bi-calendar-plus logo-mini"></i>
+      </button>
+    </div>
+  </form>
   </div>
-  <div class="modal-footer bg-grey">
-    <button type="submit" [disabled]="!createInterviewForm.valid" (click)="this.modalRef?.hide()" class="btn btn-org">
-      Create Interview<i class="bi bi-calendar-plus logo-mini"></i>
-    </button>
-  </div>
-</form>
-</div>
 
+  </form>
 </ng-template>
 

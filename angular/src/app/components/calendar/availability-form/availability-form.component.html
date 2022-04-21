@@ -18,7 +18,7 @@
   </div>
 
   <div class="card" style="size: 1000px;">
-    <div class="row">
+    <div class="row text-center">
       <div class="col-md-6">
         <label for="startTime">Start Time</label>
         <timepicker   id="startTime" type="time" formControlName="startTime"></timepicker>
@@ -35,15 +35,15 @@
       <label for="dateRange">Date range</label>
       <div class="col-md-3">
         <input
-          id="dateRange"
-          #dp
+          id="dateRange" #dp
           placeholder="Select Date(s)"
           formControlName="dateRange"
           bsDaterangepicker
-          [bsConfig]="{ containerClass: 'theme-orange'  }"
+          [bsConfig]="{ containerClass: 'theme-orange'}"
           >
       </div>
     </div>
+    <br>
 
   </div>
   <div class="modal-footer">
