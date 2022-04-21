@@ -92,16 +92,21 @@
     </div>       
     <br>
     <div class="row">
-      <select id="applicantSelected" formControlName="applicantSelected">
+      <!-- <select id="applicantSelected" formControlName="applicantSelected">
         <option value="">Which applicant is needed?</option>
         <option *ngFor="let applicant of availableApplicants" [ngValue]="applicant">
           {{ applicant }}
         </option>
-      </select>
+      </select> -->
+      <textarea placeholder="Additional information" formControlName="additionalInformation" ></textarea>
+
     </div>
   </div> 
+  <div class="container-padded">
+
+  </div>
   <div class="modal-footer bg-grey">
-    <button type="submit" (click)="this.modalRef?.hide()" class="btn btn-org">
+    <button type="submit" [disabled]="!createInterviewForm.valid" (click)="this.modalRef?.hide()" class="btn btn-org">
       Create Interview<i class="bi bi-calendar-plus logo-mini"></i>
     </button>
   </div>
