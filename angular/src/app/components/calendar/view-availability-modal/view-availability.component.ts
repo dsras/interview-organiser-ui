@@ -89,20 +89,7 @@ export class ViewAvailabilityModalComponent implements OnInit {
     console.log(ViewAvailabilityModalComponent.events[0]);
   }
 
-  // addAvailability(): void {
-  //   this.modalRef = this.modalService.show(AvailabilityFormComponent, {
-  //     backdrop: true,
-  //     keyboard: true,
-  //     focus: true,
-  //     show: false,
-  //     ignoreBackdropClick: false,
-  //     class: '',
-  //     containerClass: 'bottom',
-  //     animated: true
-  //   });
-  //   this.modalRef.content.action.subscribe((result: any) => { console.log(result); });
 
-  // }
 //? What does this do @Sulkyoptimism?
   public test!: string;
 
