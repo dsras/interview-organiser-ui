@@ -218,8 +218,9 @@ export class CalendarComponent implements OnInit{
   checkConnection(){
     // var skillsIDs = [1,2,3];
     // this.rs.getAvailabilityOnSkill(skillsIDs);
-    this.rs.addApplicant();
+    //this.rs.addApplicant();
 
+    this.rs.addInterview([23], "2022-04-22","09:00", "10:00", "some additional info");
     // var url = "http://localhost:8080/users/welcome";
     // this.requester.getRequest<string>(url).subscribe(returnData =>{
     //   console.log(returnData);
