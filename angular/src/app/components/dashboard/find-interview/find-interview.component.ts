@@ -38,7 +38,8 @@ export class FindInterviewComponent implements OnInit {
 
   createInterviewForm: FormGroup = this.fb.group({
     interviewSelected: ['', Validators.required],
-    applicantSelected: ['', Validators.required]
+    // applicantSelected: ['', Validators.required]
+    additionalInformation: ['', Validators.maxLength(255)]
   })
 
   findInterviewsForm: FormGroup = this.fb.group({
@@ -46,12 +47,10 @@ export class FindInterviewComponent implements OnInit {
     endTime: ['', Validators.required],
     firstDate: ['', Validators.required],
     lastDate: ['', Validators.required],
-    skills: this.fb.array([
-      this.fb.group({
-        skillType: [''],
-        skillLevel: ['']
-      })
-    ])
+    skills: this.fb.group({
+        skillType: ['', Validators.required],
+        skillLevel: ['', Validators.required]
+    })
   })
 
   @Output() formSubmitted: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
@@ -110,6 +109,7 @@ export class FindInterviewComponent implements OnInit {
       find.style.display = "none"
       confirm.style.display = "block"      
     }
+    console.log(this.findInterviewsForm)
     //  if (find?.style.display === "none" && confirm?.style.display === "block") {
     //   find.style.display = "block"
     //   confirm.style.display = "none"
