@@ -138,6 +138,8 @@ export class FindInterviewComponent implements OnInit {
   }
 
   submitInterview(f: FormGroup) {
+    console.log("sumbit button");
+    console.log(f);
     this.createInterviewForm.setValue(f.value);
     this.formSubmitted.emit(f);
     this.createInterviewForm.reset();
