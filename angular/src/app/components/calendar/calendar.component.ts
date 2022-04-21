@@ -114,7 +114,7 @@ export class CalendarComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.getMockAvailability();
+    //this.getMockAvailability();
     this.populateCalendar();
   }
 
@@ -301,13 +301,13 @@ export class CalendarComponent implements OnInit{
     var eventsOnDay= [];
     var interviewsOnDay= [];
     if(useDate){
-      for (var index = 0; index < this.events.length; index++) {
-        if(isSameDay(this.events[index].start, dateSelected)){
-          if(this.events[index].title === 'availability'){
-            eventsOnDay.push(this.events[index]);
+      for (const element of this.events) {
+        if(isSameDay(element.start, dateSelected)){
+          if(element.title === 'availability'){
+            eventsOnDay.push(element);
           }
-          else if(this.events[index].title === 'interview'){
-            interviewsOnDay.push(this.events[index]);
+          else if(element.title === 'interview'){
+            interviewsOnDay.push(element);
           }
         }
       }
