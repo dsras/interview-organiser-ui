@@ -322,12 +322,12 @@ export class RequestCenterService {
   }
   // * in progress
   getAvailabilityByRange(
-    startDate:string, 
-    endDate:string, 
-    startTime: string, 
-    endTime: string, 
-    skillsIDList:number[], 
-    interviewsReturn: string[]){
+      startDate:string, 
+      endDate:string, 
+      startTime: string, 
+      endTime: string, 
+      skillsIDList:number[], 
+      interviewsReturn: string[]){
 
     var skillsList =  <Array<skills>>[];
     var skillsNames = new Set<string>();
