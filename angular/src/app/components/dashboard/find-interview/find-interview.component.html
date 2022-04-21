@@ -63,7 +63,6 @@
 </div>
 
 <div class="modal-footer bg-grey">
-  <!-- <create-interview></create-interview> -->
   <button type="submit" class="btn btn-org" [disabled]="!findInterviewsForm.valid" (click)="buttonClicked()">Find Interviews</button>
 </div>
 
@@ -92,12 +91,6 @@
     </div>       
     <br>
     <div class="row">
-      <!-- <select id="applicantSelected" formControlName="applicantSelected">
-        <option value="">Which applicant is needed?</option>
-        <option *ngFor="let applicant of availableApplicants" [ngValue]="applicant">
-          {{ applicant }}
-        </option>
-      </select> -->
       <textarea placeholder="Additional information" formControlName="additionalInformation" ></textarea>
 
     </div>

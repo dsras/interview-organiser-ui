@@ -29,6 +29,10 @@ export class RequestCenterService {
 
   constructor(private requester: Requester ) { }
 
+  addZero(){
+    
+  }
+
 
   addAvailability(first: string, last: string, start: string, end: string){
     var firstDate = new Date(first);
@@ -36,8 +40,8 @@ export class RequestCenterService {
     var newStart = new Date(start);
     var newEnd = new Date(end);
 
-    var firstDateString = firstDate.getFullYear().toString() + "-" + this.bufTimeString((firstDate.getUTCMonth() + 1).toString()) + "-" + newStart.getDate().toString();
-    var lastDateString = lastDate.getFullYear().toString() + "-" + this.bufTimeString((lastDate.getUTCMonth() + 1).toString()) + "-" + newStart.getDate().toString();
+    var firstDateString = firstDate.getFullYear().toString() + "-" + this.bufTimeString((firstDate.getUTCMonth() + 1).toString()) + "-" + firstDate.getDate().toString();
+    var lastDateString = lastDate.getFullYear().toString() + "-" + this.bufTimeString((lastDate.getUTCMonth() + 1).toString()) + "-" + lastDate.getDate().toString();
 
     var startString = this.bufTimeString(newStart.getHours().toString()) + ":" + this.bufTimeString(newStart.getMinutes().toString());
     var endString = this.bufTimeString(newEnd.getHours().toString()) + ":" + this.bufTimeString(newEnd.getMinutes().toString());
@@ -48,7 +52,7 @@ export class RequestCenterService {
 
     this.requester.postRequest<availabilityRange>(url, newAvail).subscribe(returnData=>{
       console.log(returnData);
-      out = <availability><unknown>returnData;
+      out = <availabilityRange><unknown>returnData;
     })
     return out;
   }
