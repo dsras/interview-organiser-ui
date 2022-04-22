@@ -26,7 +26,7 @@
 
 .logo-small {
   font-size: 40px;
-} 
+}
 
 .logo-mini {
   font-size: 20px;
@@ -34,5 +34,35 @@
 
 ::ng-deep.bs-datepicker-theming {
   background-color: #ff9800;
-  
+
+}
+
+#startTime {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+}
+
+#endTime {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+}
+
+.card {
+  /* Add shadows to create the "card" effect */
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+/* Add some padding inside the card container */
+.container {
+  padding: 2px 16px;
 }

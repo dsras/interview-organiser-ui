@@ -1,0 +1,15 @@
+<p>all-interviews works!</p>
+<button type="button" (click)="logInterviews()">TEST</button>
+
+<h2>Interviews</h2>
+<div class="col-12 mt-3 mx-auto orange-border">
+  <ul class="interviews">
+    <li *ngFor="let interview of interviews">
+      {{interview.interviewerId}}> Start: {{interview.timeStart}} End: {{interview.timeEnd}} Date {{interview.interviewDate}}
+      <button 
+        type="button" title="None" (click)="print(interview)"
+        class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx-auto d-inline-block" 
+      >print</button>
+    </li>
+  </ul>
+</div>

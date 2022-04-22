@@ -1,4 +1,37 @@
-<div class="jumbotron">
+<!-- <h2>Dashboard</h2>
+
+<div class="jumbotron text-center">
+  <h1>My First Bootstrap Page</h1>
+  <p>Resize this responsive page to see the effect!</p>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-2">
+      <h3>Buttons here</h3>
+      <button type="button" class="btn btn-lg" (click)="redirect('calendar'); ">
+        Calendar
+      </button>
+      <button type="button" class="btn btn-lg" (click)="getMockdata()">
+        Get Data
+      </button>
+      <button type="button" class="btn btn-lg" (click)="printMockData()">
+        Log Data
+      </button>
+      <create-interview (formSubmitted)="onSubmit($event)"></create-interview>
+    </div>
+    <div class="col-sm-4">
+      <h3>Interviews</h3>
+      <p>Lorem ipsum dolor..</p>
+    </div>
+    <div class="col-sm-4">
+      <h3>Maybe some other Data</h3>
+      <p>Lorem ipsum dolor..</p>
+    </div>
+  </div>
+</div> -->
+
+<!-- <div class="jumbotron">
   <h1>Recruiter Dashboard</h1>
 </div>
 
@@ -16,10 +49,36 @@
       <find-interview></find-interview>
     </div>
   </div>
+  <div>
+    <ul>
+      <li *ngFor="let avail of allAvailabilityOBJ; let index = index">Something {{ index }}{{ avail }}
+      </li>
+   </ul>
+  </div>
+</div> -->
+
+<div class="container-fluid py-5 intro-section-color">
+  <h2 class="text-black font-weight-bold text-center">
+       Recruiter Dashboard
+  </h2>
+  <div class="col-1 mt-3 mx-auto orange-border"></div>
+  </div>
+<div class="container text-center text-black pt-4 mt-4">
+  <div class="col-12 col-md-12 mx-auto services">
+      <div class="row text-center">
+          <button type="button" class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx-auto d-inline-block" (click)="redirect('calendar'); ">
+            <img width="auto" height="70px" src="../../../assets/images/calendar.png">
+            <h6 class="mt-4 font-weight-normal">
+              Calendar
+            </h6>
+            <i class="fa fa-arrow-right" style="font-size: 18px; padding-top:8px; padding-right: 7px"></i>
+          </button>
+          <find-interview ></find-interview>
+      </div>
+  </div>
 </div>
 <div class="panel text-center">
   <h1>HI</h1>
+  <all-interviews></all-interviews>
 </div>
 
-  
-  

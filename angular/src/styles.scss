@@ -1,127 +1,486 @@
-@use "sass:map";
-@import './app/common/styles/common.scss';
-@import './app/common/styles/ag-grid.scss';
-@import './app/common/styles/modal.scss';
+// @use "sass:map";
+// @import './app/common/styles/common.scss';
+// @import './app/common/styles/ag-grid.scss';
+// @import './app/common/styles/modal.scss';
 
-/* You can add global styles to this file, and also import other style files */
-html, body {
-    height: 100%;
-    width: 100%;
-    padding: 0;
-    overflow: auto;
-    background-color: #f2f2f2;;
-    .primary-btn {
-        height: auto;
-        background-color: map.get($theme-colors, "selectedColorWithAlpha");
-        border: none;
-        font-size: 10px;
-        color: map.get($theme-colors, "main");
-        i {
-            font-size: 12px;
-            margin-right: 3px;
-        }
-    }
-    .primary-btn:focus {
-        outline: none;
-        box-shadow: none;
-    }
-    .primary-btn:hover {
-        background-color: map.get($theme-colors, "selectedColor");
-        color: #fff;
-    }
+// /* You can add global styles to this file, and also import other style files */
+// html, body {
+//     height: 100%;
+//     width: 100%;
+//     padding: 0;
+//     overflow: auto;
+//     background-color: #ed91ea;;
+//     .primary-btn {
+//         height: auto;
+//         background-color: map.get($theme-colors, "selectedColorWithAlpha");
+//         border: none;
+//         font-size: 10px;
+//         color: map.get($theme-colors, "main");
+//         i {
+//             font-size: 12px;
+//             margin-right: 3px;
+//         }
+//     }
+//     .primary-btn:focus {
+//         outline: none;
+//         box-shadow: none;
+//     }
+//     .primary-btn:hover {
+//         background-color: map.get($theme-colors, "selectedColor");
+//         color: #fff;
+//     }
 
-    .ag-theme-alpine {
-        font-family: 'Poppins', sans-serif;
-    }
+//     .ag-theme-alpine {
+//         font-family: 'Poppins', sans-serif;
+//     }
 
-    //[ inputs]
-    .input-wrapper {
-        display: flex;
-        place-items: center;
-        margin-bottom: 15px;
+//     //[ inputs]
+//     .input-wrapper {
+//         display: flex;
+//         place-items: center;
+//         margin-bottom: 15px;
 
-        input {
-            height: 35px;
-            border: 1px solid lightgray;
-            border-radius: 5px;
-            padding-left: 10px;
-            font-size: 12px;
-        }
-        input:focus-visible {
-            border: 1px solid;
-            border-color: map.get($theme-colors, "selectedColor");
-            outline: none;
-        }
+//         input {
+//             height: 35px;
+//             border: 1px solid lightgray;
+//             border-radius: 5px;
+//             padding-left: 10px;
+//             font-size: 12px;
+//         }
+//         input:focus-visible {
+//             border: 1px solid;
+//             border-color: map.get($theme-colors, "selectedColor");
+//             outline: none;
+//         }
 
-        .btn {
-            margin-top: 20px;
-        }
-    }
-    .raft-tooltip {
-        font-size: 10px;
-        .tooltip-inner {
-            background-color: lightgray;
-            color: black;
-        }
-        .tooltip-arrow {
-            border-top-color: lightgray !important;
-        }
-    }
+//         .btn {
+//             margin-top: 20px;
+//         }
+//     }
+//     .raft-tooltip {
+//         font-size: 10px;
+//         .tooltip-inner {
+//             background-color: lightgray;
+//             color: black;
+//         }
+//         .tooltip-arrow {
+//             border-top-color: lightgray !important;
+//         }
+//     }
+// }
+
+// /* NGX Bootstrap Datepicker changes; theme-default unique class */
+// .bs-datepicker.theme-default {
+//     font-family: 'Poppins', sans-serif;
+//     font-size: smaller;
+//     .bs-datepicker-body {
+//         min-height: 0px;
+//         min-width: 0px;
+//         table {
+//             font-family: 'Poppins', sans-serif;
+//             font-size: smaller;
+//             .week, th:first-child {
+//                 display: none;
+//             }
+//             &.days span {
+//                 width: 20px;
+//                 height: 20px;
+//                 line-height: 20px;
+//             }
+//         }
+//     }
+//     .bs-datepicker-head {
+//         background-color: map.get($theme-colors, "selectedColor") !important;
+//     }
+// }
+
+// /* NGX Bootstrap Typeahead changes */
+// typeahead-container {
+//     button {
+//         font-family: 'Poppins', sans-serif;
+//         font-size: smaller;
+//         &:hover{
+//             background-color: map.get($theme-colors, "selectedColor") !important;
+//         }
+//     }
+// }
+
+// /* Importing Datepicker SCSS file. */
+// @import "~ngx-bootstrap/datepicker/bs-datepicker";
+
+
+// .popover-content {
+//     background-color: #f2969742;
+//     color: red !important;
+// }
+
+// .button {
+//     background-color: white;
+//     color: black;
+//     border: 2px solid #000000;
+// }
+// @import '~@fortawesome/fontawesome-free/scss/fontawesome.scss';
+// @import '~@fortawesome/fontawesome-free/scss/solid.scss';
+// @import '~@fortawesome/fontawesome-free/scss/regular.scss';
+// @import '~@fortawesome/fontawesome-free/scss/brands.scss';
+
+// @import '~mdb-angular-ui-kit/assets/scss/mdb.scss';
+
+// /* Importing Bootstrap SCSS file. */
+// @import "~bootstrap/scss/bootstrap";
+
+// @import "~bootstrap-icons/font/bootstrap-icons.css";
+
+@font-face {
+	font-family: AvenirPro;
+	src: url('assets/fonts/AvenirNextLTProRegular.otf');
+	font-display: swap;
 }
 
-/* NGX Bootstrap Datepicker changes; theme-default unique class */
-.bs-datepicker.theme-default {
-    font-family: 'Poppins', sans-serif;
-    font-size: smaller;
-    .bs-datepicker-body {
-        min-height: 0px;
-        min-width: 0px;
-        table {
-            font-family: 'Poppins', sans-serif;
-            font-size: smaller;
-            .week, th:first-child {
-                display: none;
-            }
-            &.days span {
-                width: 20px;
-                height: 20px;
-                line-height: 20px;
-            }
-        }
-    }
-    .bs-datepicker-head {
-        background-color: map.get($theme-colors, "selectedColor") !important;
-    }
+// @font-face {
+// 	font-family: AvenirPro;
+// 	src: url('assets/fonts/AvenirNextLTPro-Demi.otf');
+// 	font-weight: bold;
+// 	font-display: swap;
+// }
+
+// @font-face {
+// 	font-family: AvenirPro;
+// 	src: url('assets/fonts/AvenirNextLTPro-Demi.otf');
+// 	font-weight: 500;
+// 	font-display: swap;
+// }
+
+body {
+	font-family: AvenirPro;
+	font-style: normal;
+	color: black;
+	transition: all 0.5s ease;
+	background: white;
 }
 
-/* NGX Bootstrap Typeahead changes */
-typeahead-container {
-    button {
-        font-family: 'Poppins', sans-serif;
-        font-size: smaller;
-        &:hover{
-            background-color: map.get($theme-colors, "selectedColor") !important;
-        }
-    }
+a {
+	color: #292929;
 }
 
-/* Importing Datepicker SCSS file. */
-@import "~ngx-bootstrap/datepicker/bs-datepicker";
-
-
-.popover-content {
-    background-color: #f2969742;
-    color: red !important;
+a:hover {
+	text-decoration: none;
 }
-@import '~@fortawesome/fontawesome-free/scss/fontawesome.scss';
-@import '~@fortawesome/fontawesome-free/scss/solid.scss';
-@import '~@fortawesome/fontawesome-free/scss/regular.scss';
-@import '~@fortawesome/fontawesome-free/scss/brands.scss';
- 
-@import '~mdb-angular-ui-kit/assets/scss/mdb.scss';
+
+img {
+	max-width: 100%;
+}
+
+button{
+	outline: none !important;
+    background-color: #FFF;
+}
+
+.float-end{
+    float: right;
+}
+
+.text-black {
+	color: #292929 !important;
+}
+
+.intro-section-color {
+	// background-image: url("./assets/jpg/homebannerimages/insights_backgroundhome2.png");
+	background-position: top left !important;
+	background-repeat: no-repeat !important;
+	background-size: 746px 390px !important;
+}
+
+.first-section-color {
+	background-color: #e9e9e9;
+	// background-image: url("./assets/jpg/homebannerimages/insights_backgroundhome1.png");
+	background-position: bottom right !important;
+	background-repeat: no-repeat !important;
+	background-size: 746px 390px !important;
+}
+
+.second-section-color {
+	background-color: #f6f7fb;
+	// background-image: url("./assets/jpg/homebannerimages/insights_backgroundhome2.png");
+	background-position: top left !important;
+	background-repeat: no-repeat !important;
+	background-size: 746px 390px !important;
+}
+
+.section {
+	padding: 3rem 0px;
+}
+
+p.MsoNormal,
+p.MsoNormal span,
+.container.text-white,
+.container.text-black,
+.container.text-black span,
+.container.text-white span {
+	font-family: AvenirPro !important;
+}
+
+.font-weight-500 {
+	font-weight: 500;
+}
+
+.navbar-image {
+	max-width: 270px;
+}
+
+.nav-item {
+	padding: 0 2.25rem;
+	min-height: 37px;
+}
+.dropdown-menu{
+	margin: 0;
+}
+
+a.nav-link {
+	text-transform: capitalize;
+	font-size: 14px;
+	line-height: 22px;
+	color: #292929;
+}
+
+button.nav-link {
+	text-transform: capitalize;
+	font-size: 14px;
+	line-height: 22px;
+	color: #FFF;
+	background-color: transparent;
+	border: none;
+	outline: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h6 {
+	font-weight: 500;
+}
+
+h1 small,
+h2 small,
+h3 small,
+h4 small {
+	font-size: 60%;
+}
+
+.text-orange {
+	color: #ff8500;
+}
+
+.bg-orange {
+	color: #ff8500;
+}
+
+.btn {
+	font-size: 0.8rem;
+}
+
+.btn img.arrow {
+	float: right;
+	margin-top: 2px;
+	margin-left: 7px;
+	width: 15px;
+}
+
+.btn-outline-secondary {
+	text-transform: uppercase;
+	font-weight: 600;
+	padding: 15px;
+}
+
+.w-20 {
+	width: 20px;
+}
+
+.container-fluid {
+	background-size: cover;
+	background-position: center;
+}
+
+.btn {
+	font-size: 0.8rem;
+}
+
+.view-here-btn {
+	margin-top: 20px;
+	border-radius: 50px;
+	width: 180px !important;
+	background-color: white;
+	border: 1px solid #ff8500;
+	color: #292929;
+	padding: 4px 20px;
+	line-height: 30px;
+	font-size: 18px;
+	font-weight: normal;
+}
+.view-here-btn:hover{
+	color: #292929 ;
+}
+
+.view-here-btn div{
+	display:inline-block;
+	font-size:14px;
+	width:32px;
+	height:32px;
+	border-radius:50%;
+	color:white;
+	background-color:#ff8500;
+	line-height:26px;
+	float: right;
+	text-align:right;
+	margin-right: -16px;
+}
+
+.orange-border {
+	/* border-top: 2px solid #ff8500; */
+	border: 1px solid transparent;
+  	border-image: linear-gradient(90deg, rgba(241,100,33,1) 0%, rgba(145,57,146,1) 100%);
+  	border-image-slice: 1;
+}
+
+.thumbnail-img {
+	padding: 0px;
+	height: 200px;
+}
+
+.thumbnail-img img {
+	@media screen and (min-width: 360px) {
+		.sect-solutions {
+			background-color:#292929;
+			margin-top: 50px;
+		}
+		.solutions-content {
+			padding: 30px;
+		}
+		.thumbnail-img {
+			padding: 0px;
+		}
+		.thumbnail-img img {
+			width: 100%;
+		}
+	}
+}
+
+.blog-widget {
+	border: none;
+	height: 100%;
+	width: 100%;
+	background-color: white !important;
+	transition: ease-in-out 0.4s;
+	box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.15) !important;
+}
+
+.blog-widget:hover {
+	border: none;
+	transform: scale(1.05);
+	box-shadow: 0px 15px 20px 0px rgba(0, 0, 0, 0.15) !important;
+}
+
+.blog-widget img {
+	min-height: 200px;
+	max-height: 200px;
+	min-width: 100%;
+	max-width: 100%;
+}
+
+.blog-widget .blog-content {
+	padding: 10px;
+	text-align: left;
+	color: #292929 !important;
+	font-size: 1.25em;
+}
+
+.services a .image-container>img {
+	height: 70px;
+}
+
+.services a{
+    transition: all 0.5s ease;
+}
+
+.services a:hover
+{
+    transform: scale(1.05);
+}
+
+#carouselServicesControls .image-container {
+	height: 85px;
+}
+
+#carouselServicesControls .image-container>img {
+	max-height: 100%;
+}
+
+#carouselServicesControls {
+	height: auto !important;
+}
+
+#carouselServicesControls .carousel-item {
+	min-height: 100px !important;
+	height: auto !important;
+}
+
+#carouselServicesControls a:hover {
+	text-transform: none;
+}
+
+#carouselServicesControls a .image-container>img {
+	transition: all 0.5s ease;
+	height: 70px;
+}
+
+#carouselServicesControls a:hover .image-container>img {
+	height: 80px;
+}
+
+.bg-blue-shadow:hover .btn {
+	display: inline-block;
+}
+
+.text-black {
+	color: #292929 !important;
+}
+
+footer {
+	background-color: #e1e1e1 !important;
+}
+
+footer ul {
+	list-style: none;
+	padding-left: 0;
+	padding-bottom: 10px;
+}
+
+footer ul li {
+	padding-bottom: 8px;
+}
+
+footer a:not([class^='normal-size']) {
+	color: #292929;
+	font-size: 12px !important;
+}
+
+footer a:hover {
+	color: #898989;
+}
+footer .privacy-section{
+	border-top: 1px solid #ababab;
+}
+footer .footer-image {
+	width: 200px;
+}
+footer .footer-copyright{
+	font-size: 12px;
+}
+
 
 /* Importing Bootstrap SCSS file. */
 @import "~bootstrap/scss/bootstrap";
 
-@import "~bootstrap-icons/font/bootstrap-icons.css";
-
+/* Importing Datepicker SCSS file. */
+@import "~ngx-bootstrap/datepicker/bs-datepicker";

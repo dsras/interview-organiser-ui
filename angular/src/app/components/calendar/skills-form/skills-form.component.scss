@@ -14,7 +14,7 @@
 .header-org {
   color: #000000;
   background-color: #ff9800;
-  padding: 10%; 
+  padding: 10%;
   width: 100%;
 }
 
@@ -33,9 +33,28 @@
 
 .logo-small {
   font-size: 40px;
-} 
+}
 
 ::ng-deep.bs-datepicker-theming {
   background-color: #ff9800;
-  
+
+}
+
+.container-fluid {
+	background-size: cover;
+	background-position: center;
+}
+
+#skill {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 35%;
+}
+
+#level {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 35%;
 }
