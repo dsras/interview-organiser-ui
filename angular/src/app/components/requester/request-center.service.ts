@@ -10,7 +10,8 @@ import {
   skillIdOnly,
   applicant,
   interviewRange,
-  availabilityRange
+  availabilityRange,
+  availabilityForInterviews
  }from '../requester/requestBodyTypes/types'
 import{
   APPCONSTANTS
@@ -77,6 +78,8 @@ export class RequestCenterService {
         console.log(element);
         var start = new Date(element.date);
         var end = new Date(element.date);
+        console.log("look here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
         var times1 = element.start_time.split(":");
         var times2 = element.end_time.split(":");
         console.log("times1: " + times1);
@@ -84,8 +87,7 @@ export class RequestCenterService {
         
         start.setHours(parseInt(times1[0]),parseInt(times1[1]));
         end.setHours(parseInt(times2[0]),parseInt(times2[1]));
-        console.log(start);
-        console.log(end);
+
         
         events.push({
             start: start,
@@ -121,9 +123,23 @@ export class RequestCenterService {
   //     return returnData;
   //   })
   // }
-  addInterview(interviewerID: number, applicantID: number, interviewDate: string, timeStart: string, timeEnd: string, skillID: number ){
+
+  addInterviewForm(formInput: string, additional: string){
+    var formDecomp = formInput.split(" ");
+    var dateString = formDecomp[1];
+    var startTimeString = formDecomp[3];
+    var endTimeString = formDecomp[5];
+    var nameString = formDecomp[9] + " " + formDecomp[10];
+    var id = [Number.parseInt(formDecomp[12])];
+
+    this.addInterview(id, dateString, startTimeString, endTimeString, additional);
+
+  }
+
+  addInterview(interviewerID: number[],  interviewDate: string, timeStart: string, timeEnd: string, additionalInfo: string ){
+    console.log("Interview send");
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ADD;
-    var newInterview = new interview(interviewerID, applicantID, interviewDate, timeStart, timeEnd, skillID);
+    var newInterview = new interview(interviewerID, interviewDate, timeStart, timeEnd, additionalInfo);
     this.requester.postRequest<interview>(url, newInterview).subscribe(returnData=>{
       console.log(returnData);
     })
@@ -340,7 +356,18 @@ export class RequestCenterService {
     return out;
   }
   // * in progress
-  getAvailabilityByRange(startDate:string, endDate:string, startTime: string, endTime: string, skillsIDList:number[]){
+  getAvailabilityByRange(
+      startDate:string, 
+      endDate:string, 
+      startTime: string, 
+      endTime: string, 
+      skillsIDList:number[], 
+      interviewsReturn: string[]){
+
+    var skillsList =  <Array<skills>>[];
+    var skillsNames = new Set<string>();
+    var skillsLevels = new Set<string>();
+    this.getAllSkills(skillsList, skillsNames, skillsLevels);
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_FILTER;
     var newStartDate= new Date(startDate);
     var newEndDate = new Date(endDate);
@@ -353,16 +380,24 @@ export class RequestCenterService {
     var endString = this.bufTimeString(newEndTime.getHours().toString()) + ":" + this.bufTimeString(newEndTime.getMinutes().toString());
 
     var newRange = new interviewRange(startDateString, endDateString, startString, endString, skillsIDList);
-    this.requester.postRequest<interviewRange>(url, newRange).subscribe(returnData=>{
+    this.requester.postRequestNoType<availabilityForInterviews>(url, newRange).subscribe(returnData=>{
+      console.log("ret data");
       console.log(returnData);
-
+      var data = <Array<availabilityForInterviews>> returnData;
+      // var newInterview = new availabilityForInterviews(data.name, data.id, data.date, data.startTime, data.endTime);
+      data.forEach(ele => {
+        console.log(ele);
+        interviewsReturn.push("On " + ele.date 
+        + " between " + ele.start_time + " -> " + ele.end_time 
+        + " this is with: " + ele.interviewer + " id: " + ele.interviewer_id 
+        /*+ "skills: " + skillsList[skillsIDList[0]]*/);
+      })
     })
 
   }
 
 
   addApplicant(){
-    
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.APPLICANT_ADD;
     var newApplicant = new applicant("ted", "testerton", "ted@test.com", 100, 1);
     this.requester.postRequest<applicant>(url, newApplicant).subscribe(returnData=>{
