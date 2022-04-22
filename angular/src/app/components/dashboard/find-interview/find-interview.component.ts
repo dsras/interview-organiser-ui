@@ -43,8 +43,7 @@ export class FindInterviewComponent implements OnInit {
   findInterviewsForm: FormGroup = this.fb.group({
     startTime: ['', Validators.required],
     endTime: ['', Validators.required],
-    firstDate: ['', Validators.required],
-    lastDate: ['', Validators.required],
+    dateRange:['', Validators.required],
     skills: this.fb.group({
         skillType: ['', Validators.required],
         skillLevel: ['', Validators.required]
@@ -92,7 +91,7 @@ export class FindInterviewComponent implements OnInit {
         console.log("found id: " + skillStore.id); 
       }
     });
-    this.rs.getAvailabilityByRange(f.value.firstDate, f.value.lastDate, f.value.startTime, f.value.endTime, idArr, this.availableInterviews);
+    this.rs.getAvailabilityByRange(f.value.dateRange[0], f.value.dateRange[1], f.value.startTime, f.value.endTime, idArr, this.availableInterviews);
 
     let find = document.getElementById("find");
     let confirm = document.getElementById("confirm")
