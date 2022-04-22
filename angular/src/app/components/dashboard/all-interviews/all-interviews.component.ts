@@ -9,16 +9,24 @@ import { RequestCenterService } from '../../requester/request-center.service';
 export class AllInterviewsComponent implements OnInit {
 
   //todo type any to appropriate type
-  interviews: Array<any> = [];
+  interviews : any;
 
   constructor(
     private rs: RequestCenterService
   ) { }
 
   ngOnInit(): void {
-    this.rs.getInterviewByRecruiter(this.interviews);
-    document.getElementById('interviews')?.appendChild(this.createOL(this.interviews))
+    this.rs.getInterviewsDashboard(this.interviews);
     }
+
+  print(obj: any) {
+    console.log('print')
+    console.warn(obj)
+  }
+
+  logInterviews() {
+    console.log(this.interviews)
+  }
 
   createOL(array: any[]) {
     let list = document.createElement('ol');

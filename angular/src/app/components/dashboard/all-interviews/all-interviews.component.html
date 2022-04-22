@@ -1,4 +1,13 @@
 <p>all-interviews works!</p>
+<button type="button" (click)="logInterviews()">TEST</button>
 
-<ol id="interviews">
-</ol>
+<h2>Interviews</h2>
+<ul class="interviews">
+  <li *ngFor="let interview of interviews">
+    <a routerLink="/detail/{{interview}}">
+      <span class="badge">{{interview}}</span> {{interview}}
+    </a>
+    <button type="button" class="btn" title="None"
+      (click)="print(interview)">print</button>
+  </li>
+</ul>
