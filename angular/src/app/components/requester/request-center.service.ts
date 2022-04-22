@@ -373,15 +373,31 @@ export class RequestCenterService {
     var endString = this.bufTimeString(newEndTime.getHours().toString()) + ":" + this.bufTimeString(newEndTime.getMinutes().toString());
 
     var newRange = new interviewRange(startDateString, endDateString, startString, endString, skillsIDList);
+
     this.requester.postRequestNoType<availabilityForInterviews>(url, newRange).subscribe(returnData=>{
-      // console.log("ret data");
-      // console.log(returnData);
       var data = <Array<availabilityForInterviews>> returnData;
-      // var newInterview = new availabilityForInterviews(data.name, data.id, data.date, data.startTime, data.endTime);
       data.forEach(ele => {
         // console.log(ele);
+        var refStart = new Date(ele.start_time);
+        var refEnd = new Date(ele.end_time);
+
+        var startInput = "";
+        var endInput = "";
+        if(refStart.getTime() > newStartDate.getTime()){
+          startInput = this.bufTimeString(refStart.getHours().toString()) + ":" + this.bufTimeString(refStart.getMinutes().toString());
+        }
+        else{
+          startInput = this.bufTimeString(newStartDate.getHours().toString()) + ":" + this.bufTimeString(newStartDate.getMinutes().toString());
+        }
+        if(refEnd.getTime() > newEndDate.getTime()){
+          endInput = this.bufTimeString(refEnd.getHours().toString()) + ":" + this.bufTimeString(refEnd.getMinutes().toString());
+        }
+        else{
+          endInput = this.bufTimeString(newEndDate.getHours().toString()) + ":" + this.bufTimeString(newEndDate.getMinutes().toString());
+        }
+
         interviewsReturn.push("On " + ele.date 
-        + " between " + startTime + " -> " + endTime 
+        + " between " + startInput + " -> " + endInput
         + " this is with: " + ele.interviewer + " id: " + ele.interviewer_id 
         /*+ "skills: " + skillsList[skillsIDList[0]]*/);
       })
