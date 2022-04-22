@@ -19,6 +19,7 @@ export class FindInterviewComponent implements OnInit {
   // buttonPressed: boolean = false;
 
   skillsAvailable: skills[] = [];
+  trueData: string[] = [];
 
   skillTypes: Set<string> = new Set<string>();
 
@@ -89,7 +90,16 @@ export class FindInterviewComponent implements OnInit {
         console.log("found id: " + skillStore.id); 
       }
     });
-    this.rs.getAvailabilityByRange(f.value.dateRange[0], f.value.dateRange[1], f.value.startTime, f.value.endTime, idArr, this.availableInterviews);
+    this.rs.getAvailabilityByRange(
+      f.value.dateRange[0], 
+      f.value.dateRange[1], 
+      f.value.startTime, 
+      f.value.endTime, 
+      idArr, 
+      this.availableInterviews);
+
+    this.trueData.push(f.value.startTime);
+    this.trueData.push(f.value.endTime);
 
     let find = document.getElementById("find");
     let confirm = document.getElementById("confirm")
