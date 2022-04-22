@@ -179,7 +179,7 @@ export class CalendarComponent implements OnInit{
     //Say Hello
     console.log('Hello');
     // Say World after 2000 milliseconds
-    await this.sleep(2250).then(() =>this.refresh.next()).catch();
+    await this.sleep(2500).then(() =>this.refresh.next()).catch();
     console.log("World2");
   }
   getInterviewsByRec(){
@@ -207,7 +207,6 @@ export class CalendarComponent implements OnInit{
   populateCalendar()  {
     this.events = [];
     this.rs.getMyAvailability(this.events);
-    console.log("length of events list ext: " + this.events.length);
     this.rs.getInterviewByInterviewer(this.events);
     this.delayedRefresh();
   }

@@ -76,9 +76,7 @@ export class FindInterviewComponent implements OnInit {
     console.log(f);
     console.log(f.value.skills);
 
-    var tempArr = [];
     var idArr = <Array<number>>[];
-    tempArr= f.value.skills;
 
     var skillReq = {
       skillType: f.value.skills.skillType,
@@ -109,9 +107,10 @@ export class FindInterviewComponent implements OnInit {
   submitInterview(f: FormGroup) {
     console.log("sumbit button");
     console.log(f.value);
-    // this.rs.addInterview(f.value)
+
+    this.rs.addInterviewForm(f.value.interviewSelected, f.value.additionalInformation);
     this.createInterviewForm.reset();
-    console.log(f.value)
+    console.log(f.value);
 
   }
 

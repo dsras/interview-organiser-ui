@@ -121,7 +121,21 @@ export class RequestCenterService {
   //     return returnData;
   //   })
   // }
+
+  addInterviewForm(formInput: string, additional: string){
+    var formDecomp = formInput.split(" ");
+    var dateString = formDecomp[1];
+    var startTimeString = formDecomp[3];
+    var endTimeString = formDecomp[5];
+    var nameString = formDecomp[9] + " " + formDecomp[10];
+    var id = [Number.parseInt(formDecomp[12])];
+
+    this.addInterview(id, dateString, startTimeString, endTimeString, additional);
+
+  }
+
   addInterview(interviewerID: number[],  interviewDate: string, timeStart: string, timeEnd: string, additionalInfo: string ){
+    console.log("Interview send");
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ADD;
     var newInterview = new interview(interviewerID, interviewDate, timeStart, timeEnd, additionalInfo);
     this.requester.postRequest<interview>(url, newInterview).subscribe(returnData=>{
@@ -360,7 +374,8 @@ export class RequestCenterService {
         console.log(ele);
         interviewsReturn.push("On " + ele.date 
         + " between " + ele.start_time + " -> " + ele.end_time 
-        + "\nthis is with: " + ele.interviewer /*+ "skills: " + skillsList[skillsIDList[0]]*/);
+        + " this is with: " + ele.interviewer + " id: " + ele.interviewer_id 
+        /*+ "skills: " + skillsList[skillsIDList[0]]*/);
       })
     })
 
@@ -368,7 +383,6 @@ export class RequestCenterService {
 
 
   addApplicant(){
-    
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.APPLICANT_ADD;
     var newApplicant = new applicant("ted", "testerton", "ted@test.com", 100, 1);
     this.requester.postRequest<applicant>(url, newApplicant).subscribe(returnData=>{

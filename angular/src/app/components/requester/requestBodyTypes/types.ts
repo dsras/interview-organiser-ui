@@ -109,26 +109,27 @@ export class applicant implements data{
 
 export class availabilityForInterviews implements data{
     interviewer : string;
+    interviewer_id: number;
     availability_id: number;
     date : string;
     start_time: string;
     end_time: string;
     constructor(
         interviewer: string,
+        interviewer_id: number, 
         availability_id: number,
         date: string,
         start_time: string,
         end_time: string
     ){
         this.interviewer = interviewer;
+        this.interviewer_id = interviewer_id;
         this.date = date;
         this.availability_id = availability_id;
         this.start_time = start_time;
         this.end_time = end_time;
     }
-    toString(){
-        return ("On " + this.date + " between " + this.start_time + " -> " + this.end_time + " this is with: " + this.interviewer);
-    }
+
 
 }
 
