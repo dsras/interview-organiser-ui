@@ -209,11 +209,15 @@ export class RequestCenterService {
     })
   }
 
-  getInterviewsDashboard(interviews: any) {
+  getInterviewsDashboard(interviews: Array<interview>) {
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ALL;
     this.requester.getRequest<interview>(url).subscribe(returnData=>{
-      interviews = <Array<interview>><unknown>returnData;
-      console.warn(interviews[1])
+      var dataArray = <Array<interview>><unknown>returnData
+      dataArray.forEach(element => {
+        interviews.push(element)
+      });
+      // interviews.push(returnData);
+      console.warn(interviews[2])
       return interviews
     });
   }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RequestCenterService } from '../../requester/request-center.service';
+import { interview } from '../../requester/requestBodyTypes/types';
 
 @Component({
   selector: 'all-interviews',
@@ -9,7 +10,7 @@ import { RequestCenterService } from '../../requester/request-center.service';
 export class AllInterviewsComponent implements OnInit {
 
   //todo type any to appropriate type
-  interviews : any;
+  interviews = [];
 
   constructor(
     private rs: RequestCenterService
@@ -28,17 +29,17 @@ export class AllInterviewsComponent implements OnInit {
     console.log(this.interviews)
   }
 
-  createOL(array: any[]) {
-    let list = document.createElement('ol');
+  // createOL(array: any[]) {
+  //   let list = document.createElement('ol');
     
-    for (let i = 0; i < array.length; i++) {
-      let item = document.createElement('li');
-      item.appendChild(document.createTextNode(array[i]));
-      list.appendChild(item);
-    }
+  //   for (let i = 0; i < array.length; i++) {
+  //     let item = document.createElement('li');
+  //     item.appendChild(document.createTextNode(array[i]));
+  //     list.appendChild(item);
+  //   }
 
-    return list
+  //   return list
 
-  }
+  // }
 
 }
