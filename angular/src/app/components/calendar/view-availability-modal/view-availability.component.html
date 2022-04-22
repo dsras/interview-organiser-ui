@@ -1,19 +1,24 @@
-<body class="container-padded">
-  <div class="card">
-    <h5 class="card-header info-color white-text text-center py-4">
-      This is your current availability offered.
-    </h5>
+<div class="card-header info-color white-text text-center py-4" style="width: 100%; color: black; background-color: orange;">
+  <h5>
+    This is your current availability offered.
+  </h5>
+</div>
+<div class="card" id="availabilityOutput" style="width: 500px; padding: 3%; white-space: pre-line"></div>
+<div class="card-header info-color white-text text-center py-4">
+  <h5>
+    This is your current interviews booked
+  </h5>
+</div>
+<div class="card" id="interviewOutput" style="width: 500px; padding: 3%; white-space: pre-line"></div>
+<!-- <div class="card" id="dan-output" style="width: 500px; padding: 3%; white-space: pre-line">
+  <ol class="interviews">
+    <li *ngFor="let interview of interviews">
+      {{ interview.start }}
+    </li>
+  </ol>
+</div> -->
+<div class="modal-footer">
+  <div layout-align="start center">
+    <availability-form></availability-form>
   </div>
-  <div class="card" id="availabilityOutput" style="width: 500px;white-space: pre-line"></div>
-  <div class="card">
-    <h5 class="card-header info-color white-text text-center py-4">
-      This is your current interviews booked
-    </h5>
-  </div>
-  <div class="card" id="interviewOutput" style="width: 500px;white-space: pre-line"></div>
-  <div class="modal-footer">
-    <div layout-align="start center">
-      <availability-form></availability-form>
-    </div>
-  </div>
-</body>
+</div>
