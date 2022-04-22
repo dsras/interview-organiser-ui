@@ -1,10 +1,9 @@
 import { Component, EventEmitter, OnInit, Output, TemplateRef } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CalendarEvent } from 'angular-calendar';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
 import { RequestCenterService } from '../../requester/request-center.service';
-import { availability, skills } from '../../requester/requestBodyTypes/types';
 
 @Component({
   selector: 'create-interview',
@@ -13,17 +12,13 @@ import { availability, skills } from '../../requester/requestBodyTypes/types';
 })
 export class CreateInterviewComponent implements OnInit {
 
-
   // mytime?: string;
   modalRef?: BsModalRef
 
-  
-  
   availableInterviewObjects =<Array<CalendarEvent>> [];
   availableInterviews =<Array<string>> [];
   availableInterviews$!:Observable<Array<CalendarEvent>> ;
   
-
   availableApplicants = <Array<string>>[]
   availableApplicants$!:Observable<Array<CalendarEvent>> ;
 
@@ -32,10 +27,7 @@ export class CreateInterviewComponent implements OnInit {
     applicantSelected: ['', Validators.required]
   })
 
-
   @Output() formSubmitted: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
-  @Output() refresh: EventEmitter<boolean> = new EventEmitter<boolean>();
-
 
   constructor(
     private fb: FormBuilder,
