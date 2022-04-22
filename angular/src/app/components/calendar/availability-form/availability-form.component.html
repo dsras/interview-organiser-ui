@@ -1,21 +1,33 @@
 <button type="button" class="btn btn-org" (click)="openModal(form)">Add Availability</button>
 
 <ng-template #form>
-<form 
+<form
   [formGroup]="createAvailabilityForm"
-  (ngSubmit)="onSubmit(createAvailabilityForm)" 
-  class="md-form" 
+  (ngSubmit)="onSubmit(createAvailabilityForm)"
+  class="md-form"
   style="color: black;"
 >
 
+<!-- <div class="container text-center text-black pt-4 mt-4">
   <div class="modal-header" style="padding: 10%; width: 100%; color: black; background-color: orange;">
-    <h5>
-      <strong>Add Availability</strong>
-    </h5>
-  </div>
-  
+    <div class="container-fluid py-2 intro-section-color">
+      <h4 class="text-black font-weight-bold text-center">
+          Add Availability
+      </h4>
+    </div>
+  </div> -->
+
   <div class="card" style="size: 1000px;">
-    <div class="row">
+    <div class="container text-center text-black pt-4 mt-4">
+      <!-- padding: 10%;  -->
+      <div class="modal-header" style="width: 100%; color: black; background-color: orange;">
+        <div class="container-fluid py-2 intro-section-color">
+          <h4 class="text-black font-weight-bold text-center">
+              Add Availability
+          </h4>
+        </div>
+      </div>
+    <div class="row text-center">
       <div class="col-md-6">
         <label for="startTime">Start Time</label>
         <timepicker   id="startTime" type="time" formControlName="startTime"></timepicker>
@@ -31,28 +43,43 @@
     <div class="row">
       <label for="dateRange">Date range</label>
       <div class="col-md-3">
-        <input 
-          id="dateRange" 
-          #dp
+        <input
+          id="dateRange" #dp
           placeholder="Select Date(s)"
           formControlName="dateRange"
           bsDaterangepicker
-          [bsConfig]="{ containerClass: 'theme-orange'  }"
+          [bsConfig]="{ containerClass: 'theme-orange'}"
           >
       </div>
     </div>
-    
+    <br>
+    <div class="col-12 col-md-12 mx-auto services">
+      <div class="row text-center">
+        <button type="submit" class="view-here-btn text-lefttext-black mx-auto"
+          [disabled]="!createAvailabilityForm.valid"
+          (click)="this.modalRef?.hide()">
+          <h6 class="mt-4 font-weight-normal">
+            Submit
+          </h6>
+        </button>
+      </div>
+    </div>
   </div>
 
+  <!-- </div>
   <div class="modal-footer">
-    <button 
-      type="submit" 
-      class="btn btn-org" 
-      [disabled]="!createAvailabilityForm.valid" 
-      (click)="this.modalRef?.hide()"
-    >
-      Submit
-    </button>
-  </div>
+    <div class="col-12 col-md-12 mx-auto services">
+      <div class="row text-center">
+        <button type="submit" class="view-here-btn text-lefttext-black mx-auto"
+          [disabled]="!createAvailabilityForm.valid"
+          (click)="this.modalRef?.hide()">
+          <h6 class="mt-4 font-weight-normal">
+            Submit
+          </h6>
+        </button>
+      </div>
+    </div>
+  </div> -->
+</div>
 </form>
 </ng-template>

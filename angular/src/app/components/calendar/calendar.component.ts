@@ -64,6 +64,7 @@ import { COLOURS } from '../../constants/colours.constant';
     `,
   ],
   templateUrl: './calendar.component.html',
+  styleUrls: ['../../../styles.scss']
 })
 
 export class CalendarComponent implements OnInit{

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss', '../../../styles.scss']
 })
 export class DashboardComponent implements OnInit {
 

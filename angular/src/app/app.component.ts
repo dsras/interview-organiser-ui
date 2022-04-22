@@ -4,7 +4,8 @@ import { DataSourceService } from './services/data-source.service';
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+    styleUrls: ['./app.component.scss', '../styles.scss']
+    
 })
 export class AppComponent implements OnInit{
     title = 'Title-app.component.ts';

@@ -26,9 +26,29 @@
 
 .logo-small {
   font-size: 40px;
-} 
+}
 
 ::ng-deep.bs-datepicker-theming {
   background-color: #ff9800;
-  
+
 }
+
+.container-fluid {
+	background-size: cover;
+	background-position: center;
+}
+
+#startTime {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+}
+
+#endTime {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+}
+
