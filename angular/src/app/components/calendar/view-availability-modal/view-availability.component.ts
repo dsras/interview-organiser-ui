@@ -14,17 +14,14 @@ export class ViewAvailabilityModalComponent implements OnInit {
 
   @Output() closeClicked: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-
   modalRef?: BsModalRef
 
   ngOnInit(): void {
   }
   // validatingForm: FormGroup;
   action = new Subject<any>();
-  static events: CalendarEvent [];
+  static availability: CalendarEvent [];
   static interviews: CalendarEvent [];
-
-
 
   constructor(
     private ms: BsModalService
@@ -36,14 +33,14 @@ export class ViewAvailabilityModalComponent implements OnInit {
   }
 
   static addEventRef(events: CalendarEvent [], interviews: CalendarEvent[]){
-    ViewAvailabilityModalComponent.events = events;
-    ViewAvailabilityModalComponent.interviews = interviews;
+    this.availability = events;
+    this.interviews = interviews;
     const out1 = document.getElementById("availabilityOutput");
     const text1 = document.createElement('p');
-    text1.textContent += ViewAvailabilityModalComponent.events[0].start.toLocaleString().substring(0,10) + "\n";
+    text1.textContent += this.availability[0].start.toLocaleString().substring(0,10) + "\n";
     const out2 = document.getElementById("interviewOutput");
     const text2 = document.createElement('p');
-    text2.textContent += ViewAvailabilityModalComponent.events[0].start.toLocaleString().substring(0,10) + "\n";
+    text2.textContent += this.availability[0].start.toLocaleString().substring(0,10) + "\n";
 
     events.forEach(appointment => {
       console.log(events.length);
@@ -65,30 +62,7 @@ export class ViewAvailabilityModalComponent implements OnInit {
     });
     out1?.append(text1);
     out2?.append(text2);
-
-
   }
-
-
-  reflectEvent(){
-
-  }
-
-  onYesClick() {
-    this.action.next('yes');
-  }
-
-  closeClick() {
-    this.action.next('No');
-    this.modalRef?.hide();
-    this.closeClicked.emit(true);
-  } 
-
-  yell(): void {
-    
-    console.log(ViewAvailabilityModalComponent.events[0]);
-  }
-
 
 //? What does this do @Sulkyoptimism?
   public test!: string;

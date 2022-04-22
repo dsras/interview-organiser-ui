@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Requester } from '../requester/requester.service';
 import { 
   data,
@@ -13,15 +12,9 @@ import {
   availabilityRange,
   availabilityForInterviews
  }from '../requester/requestBodyTypes/types'
-import{
-  APPCONSTANTS
-}from '../../constants/app.constant'
-import { analyzeAndValidateNgModules } from '@angular/compiler';
+import{ APPCONSTANTS }from '../../constants/app.constant'
 import { CalendarEvent, CalendarEventAction } from 'angular-calendar';
 import { COLOURS } from '../../constants/colours.constant';
-import { appendFile } from 'fs';
-import { start } from 'repl';
-import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -93,7 +86,7 @@ export class RequestCenterService {
             start: start,
             end: end,
             title: 'availability',
-            color: COLOURS.GREEN_LITE,
+            color: COLOURS.BLUE_DARK,
           })
           console.log("length of events list: " + events.length);
       });
