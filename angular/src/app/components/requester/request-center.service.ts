@@ -381,7 +381,7 @@ export class RequestCenterService {
       data.forEach(ele => {
         // console.log(ele);
         interviewsReturn.push("On " + ele.date 
-        + " between " + ele.start_time + " -> " + ele.end_time 
+        + " between " + startTime + " -> " + endTime 
         + " this is with: " + ele.interviewer + " id: " + ele.interviewer_id 
         /*+ "skills: " + skillsList[skillsIDList[0]]*/);
       })
