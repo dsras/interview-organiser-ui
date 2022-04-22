@@ -5,7 +5,7 @@
 <div class="col-12 mt-3 mx-auto orange-border">
   <ul class="interviews">
     <li *ngFor="let interview of interviews">
-      {{interview['interview_id']}}> Start: {{interview['start_time']}} End: {{interview['end_time']}} Date {{interview['date']}}
+      {{interview.interviewerId}}> Start: {{interview.timeStart}} End: {{interview.timeEnd}} Date {{interview.interviewDate}}
       <button 
         type="button" title="None" (click)="print(interview)"
         class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx-auto d-inline-block" 

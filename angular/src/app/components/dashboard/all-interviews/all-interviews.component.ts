@@ -10,7 +10,7 @@ import { interview } from '../../requester/requestBodyTypes/types';
 export class AllInterviewsComponent implements OnInit {
 
   //todo type any to appropriate type
-  interviews = [];
+  interviews = <Array<interview>>[];
 
   constructor(
     private rs: RequestCenterService
