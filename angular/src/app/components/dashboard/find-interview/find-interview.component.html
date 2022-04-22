@@ -33,13 +33,17 @@
       </div>
     </div>
     <br>
-    <div>
-      <label for="firstDate">First Date</label>
-      <input id="firstDate" type='datetime' formControlName="firstDate" bsDatepicker>
-      <br><br>
-      <label for="lastDate">Last Date</label>
-      <input id="lastDate" type='datetime' formControlName="lastDate" bsDatepicker>
+    <div class="row">
+      <label for="dateRange">Date Range</label>
+      <input 
+      id="dateRange" 
+      formControlName="dateRange"
+      placeholder="Select Date(s)"
+      bsDaterangepicker
+      [bsConfig]="{ containerClass: 'theme-orange'  }"
+      >
     </div>
+
   
     <div formArrayName="skills">
       <h2>Skills</h2>
@@ -64,7 +68,7 @@
 
 <div class="modal-footer bg-grey">
   <!-- Does this need to be an empty brace for this call? -->
-  <button type="submit" class="btn btn-org" [disabled]="!findInterviewsForm.valid" (click)="buttonClicked(findInterviewsForm)">Find Interviews</button>
+  <button type="submit" class="btn btn-org" [disabled]="!findInterviewsForm.valid" (click)="findInterview(findInterviewsForm)">Find Interviews</button>
 </div>
 
 <div id="confirm" style="display: none;">

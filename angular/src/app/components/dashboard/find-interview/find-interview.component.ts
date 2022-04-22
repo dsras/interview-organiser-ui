@@ -37,7 +37,6 @@ export class FindInterviewComponent implements OnInit {
 
   createInterviewForm: FormGroup = this.fb.group({
     interviewSelected: ['', Validators.required],
-    // applicantSelected: ['', Validators.required]
     additionalInformation: ['', Validators.maxLength(255)]
   })
 
@@ -51,9 +50,6 @@ export class FindInterviewComponent implements OnInit {
         skillLevel: ['', Validators.required]
     })
   })
-
-  @Output() formSubmitted: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
-
 
   constructor(
     private fb: FormBuilder,
@@ -75,34 +71,8 @@ export class FindInterviewComponent implements OnInit {
     this.modalRef = this.ms.show(template);
   }
 
+
   findInterview(f: FormGroup) {
-    this.findInterviewsForm.setValue(f.value);
-    console.log("create interview form !!!!!!!!!!!!");
-    // console.log(this.findInterviewsForm.value)
-    // console.warn(this.findInterviewsForm.get('firstDate')?.value)
-    // console.log(f.value.firstDate);
-    var tempArr = [];
-    var idArr = <Array<number>>[];
-    tempArr= f.value.skills;
-
-    tempArr.forEach((skillReq: any) => {
-      console.log(skillReq.skillType);
-      this.skillsAvailable.forEach(skillStore => {
-        if(skillStore.skillName === skillReq.skillType && skillStore.skillLevel === skillReq.skillLevel){
-          idArr.push(skillStore.id);
-          console.log("found id: " + skillStore.id); 
-        }
-      });
-    });
-
-    //this.rs.getAvailabilityByRange(f.value.firstDate, f.value.lastDate, f.value.startTime, f.value.endTime, idArr);
-    this.formSubmitted.emit(f);
-    //TODO set up Requester service call @Sulkyoptimism
-    // this.rs.addAvailability(f.value.date, f.value.startTime, f.value.endTime);
-    this.findInterviewsForm.reset();
-  }
-
-  buttonClicked(f: FormGroup) {
     console.log("open button");
     console.log(f);
     console.log(f.value.skills);
@@ -140,10 +110,7 @@ export class FindInterviewComponent implements OnInit {
   submitInterview(f: FormGroup) {
     console.log("sumbit button");
     console.log(f.value);
-    this.createInterviewForm.setValue(f.value);
-    this.formSubmitted.emit(f);
-
-    console.log(f);
+    // this.rs.addInterview(f.value)
     this.createInterviewForm.reset();
     console.log(f.value)
 
