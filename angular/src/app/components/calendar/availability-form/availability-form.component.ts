@@ -20,8 +20,6 @@ export class AvailabilityFormComponent implements OnInit {
     startTime: ['', Validators.required],
     endTime: ['', Validators.required],
     dateRange: ['', Validators.required],  
-    firstDate: [''],
-    lastDate: ['']
   })
 
   @Output() availabilityFormSubmitted: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
@@ -40,19 +38,10 @@ export class AvailabilityFormComponent implements OnInit {
   }
 
   onSubmit(f: FormGroup) {
-    f.value.firstDate = f.value.dateRange[0]
-    f.value.lastDate = f.value.dateRange[1]
-    console.log(f.value.dateRange)
-    console.log(f.value.dateRange[0])
-    console.log(f.value.dateRange[1])
-
-    console.log(f.value.firstDate)
-    console.log(f.value.lastDate)
-
-    this.rs.addAvailability(f.value.firstDate, f.value.lastDate, f.value.startTime, f.value.endTime);
+    this.rs.addAvailability(f.value.dateRange[0], f.value.dateRange[1], f.value.startTime, f.value.endTime);
     f.reset();
   }
-
+  
 }
 
 export function getTimepickerConfig(): TimepickerConfig {

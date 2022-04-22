@@ -72,9 +72,9 @@ export class FindInterviewComponent implements OnInit {
 
 
   findInterview(f: FormGroup) {
-    console.log("open button");
-    console.log(f);
-    console.log(f.value.skills);
+    // console.log("open button");
+    // console.log(f);
+    // console.log(f.value.skills);
 
     var idArr = <Array<number>>[];
 
@@ -86,7 +86,7 @@ export class FindInterviewComponent implements OnInit {
     this.skillsAvailable.forEach(skillStore => {
       if(skillStore.skillName === skillReq.skillType && skillStore.skillLevel === skillReq.skillLevel){
         idArr.push(skillStore.id);
-        console.log("found id: " + skillStore.id); 
+        // console.log("found id: " + skillStore.id); 
       }
     });
     this.rs.getAvailabilityByRange(f.value.dateRange[0], f.value.dateRange[1], f.value.startTime, f.value.endTime, idArr, this.availableInterviews);
