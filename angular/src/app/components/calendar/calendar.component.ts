@@ -294,7 +294,7 @@ export class CalendarComponent implements OnInit{
 
   refresh = new Subject<void>();
 
-  activeDayIsOpen: boolean = true;
+  activeDayIsOpen: boolean = false;
 
   openDayModal(dateSelected: Date, useDate: boolean) {
 
