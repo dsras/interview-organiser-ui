@@ -107,16 +107,42 @@ export class applicant implements data{
     }
 }
 
+export class availabilityForInterviews implements data{
+    interviewer : string;
+    interviewer_id: number;
+    availability_id: number;
+    date : string;
+    start_time: string;
+    end_time: string;
+    constructor(
+        interviewer: string,
+        interviewer_id: number, 
+        availability_id: number,
+        date: string,
+        start_time: string,
+        end_time: string
+    ){
+        this.interviewer = interviewer;
+        this.interviewer_id = interviewer_id;
+        this.date = date;
+        this.availability_id = availability_id;
+        this.start_time = start_time;
+        this.end_time = end_time;
+    }
+
+
+}
+
 export class availability implements data{
     date: string;
     start_time: string;
     end_time: string;
     constructor(
-        date: string,
+        dateStart: string,
         start_time: string,
         end_time: string
     ){
-        this.date = date;
+        this.date = dateStart;
         this.start_time = start_time;
         this.end_time = end_time;
     }
@@ -162,35 +188,38 @@ export class interviewRange implements data{
 }
 
 export class interview implements data{
-    interviewerId: number;
+    interviewer_ids: number[];
     //organiserId: number;
-    applicantId: number;
+    // applicantId: number;
     //roleApplied: number;
-    interviewDate: string;
-    timeStart: string;
-    timeEnd: string;
-    skillID: number; 
+    date: string;
+    start_time: string;
+    end_time: string;
+    additional_info: string;
+    // skillID: number; 
     //confirmed: number;
     constructor(
-        interviewerId: number,
+        interviewer_ids: number[],
         //organiserId: number,
-        applicantId: number,
+        // applicantId: number,
         //roleApplied: number,
-        interviewDate: string,
-        timeStart: string,
-        timeEnd: string,
+        date: string,
+        start_time: string,
+        end_time: string,
         //confirmed: number
-        skillID: number
+        // skillID: number
+        additional_info: string,
     ){
-        this.interviewerId = interviewerId
+        this.interviewer_ids = interviewer_ids;
         //this.organiserId = organiserId;
-        this.applicantId = applicantId;
+        // this.applicantId = applicantId;
         //this.roleApplied = roleApplied;
-        this.interviewDate = interviewDate;
-        this.timeStart = timeStart;
-        this.timeEnd = timeEnd;
+        this.date = date;
+        this.start_time = start_time;
+        this.end_time = end_time;
         //this.confirmed =confirmed;
-        this.skillID = skillID;
+        // this.skillID = skillID;
+        this.additional_info = additional_info;
     }
 
 }

@@ -64,6 +64,7 @@ import { COLOURS } from '../../constants/colours.constant';
     `,
   ],
   templateUrl: './calendar.component.html',
+  styleUrls: ['../../../styles.scss']
 })
 
 export class CalendarComponent implements OnInit{
@@ -114,7 +115,7 @@ export class CalendarComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.getMockAvailability();
+    //this.getMockAvailability();
     this.populateCalendar();
   }
 
@@ -179,7 +180,7 @@ export class CalendarComponent implements OnInit{
     //Say Hello
     console.log('Hello');
     // Say World after 2000 milliseconds
-    await this.sleep(2250).then(() =>this.refresh.next()).catch();
+    await this.sleep(2500).then(() =>this.refresh.next()).catch();
     console.log("World2");
   }
   getInterviewsByRec(){
@@ -207,7 +208,6 @@ export class CalendarComponent implements OnInit{
   populateCalendar()  {
     this.events = [];
     this.rs.getMyAvailability(this.events);
-    console.log("length of events list ext: " + this.events.length);
     this.rs.getInterviewByInterviewer(this.events);
     this.delayedRefresh();
   }
@@ -218,8 +218,9 @@ export class CalendarComponent implements OnInit{
   checkConnection(){
     // var skillsIDs = [1,2,3];
     // this.rs.getAvailabilityOnSkill(skillsIDs);
-    this.rs.addApplicant();
+    //this.rs.addApplicant();
 
+    this.rs.addInterview([23], "2022-04-22","09:00", "10:00", "some additional info");
     // var url = "http://localhost:8080/users/welcome";
     // this.requester.getRequest<string>(url).subscribe(returnData =>{
     //   console.log(returnData);
@@ -300,13 +301,13 @@ export class CalendarComponent implements OnInit{
     var eventsOnDay= [];
     var interviewsOnDay= [];
     if(useDate){
-      for (var index = 0; index < this.events.length; index++) {
-        if(isSameDay(this.events[index].start, dateSelected)){
-          if(this.events[index].title === 'availability'){
-            eventsOnDay.push(this.events[index]);
+      for (const element of this.events) {
+        if(isSameDay(element.start, dateSelected)){
+          if(element.title === 'availability'){
+            eventsOnDay.push(element);
           }
-          else if(this.events[index].title === 'interview'){
-            interviewsOnDay.push(this.events[index]);
+          else if(element.title === 'interview'){
+            interviewsOnDay.push(element);
           }
         }
       }
