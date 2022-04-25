@@ -378,9 +378,11 @@ export class RequestCenterService {
     var endString = this.dateToTimeString(newEndTime);
 
     var newRange = new interviewRange(startDateString, endDateString, startString, endString, skillsIDList);
-
     this.requester.postRequestNoType<availabilityForInterviews>(url, newRange).subscribe(returnData=>{
+      // console.log("ret data");
+      // console.log(returnData);
       var data = <Array<availabilityForInterviews>> returnData;
+      // var newInterview = new availabilityForInterviews(data.name, data.id, data.date, data.startTime, data.endTime);
       data.forEach(ele => {
         var earlierTimeDate = this.getEarlierTime(ele.end_time, this.dateToTimeString(newEndTime), true)
         var laterTimeDate = this.getEarlierTime(ele.start_time, this.dateToTimeString(newStartTime), false)
