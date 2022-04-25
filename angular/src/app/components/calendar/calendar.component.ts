@@ -270,7 +270,7 @@ export class CalendarComponent implements OnInit{
       //new event
     }
     else{
-      mfc.addRefs(eventsOnDay,interviewsOnDay);
+      mfc.addEventRef(eventsOnDay,interviewsOnDay);
     }
 
 

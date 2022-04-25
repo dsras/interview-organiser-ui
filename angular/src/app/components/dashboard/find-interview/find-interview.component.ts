@@ -38,8 +38,7 @@ export class FindInterviewComponent implements OnInit {
 
   createInterviewForm: FormGroup = this.fb.group({
     interviewSelected: ['', Validators.required],
-    additionalInformation: ['', Validators.maxLength(255)],
-    startTime: ['']
+    additionalInformation: ['', Validators.maxLength(255)]
   })
 
   findInterviewsForm: FormGroup = this.fb.group({
@@ -119,7 +118,7 @@ export class FindInterviewComponent implements OnInit {
     console.log("sumbit button");
     console.log(f.value);
 
-    this.rs.addInterviewForm(f.value.interviewSelected, f.value.additionalInformation, f.value.startTime, f.value.endTime);
+    this.rs.addInterviewForm(f.value.interviewSelected, f.value.additionalInformation);
     this.createInterviewForm.reset();
     console.log(f.value);
 
