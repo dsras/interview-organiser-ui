@@ -115,6 +115,16 @@
         </select>
       </div>
       <br>
+      <label for="selectors">If the slot chosen has only one hour duration then that timeslot will be used, 
+        if it is however more than one hour in duration feel free to specify times from that duration below. 
+        If left blank it will select the first hour of the duration selected above.</label>
+      <div id="selectors" class="row text-center">
+        <div class="col-md-6">
+          <label for="startTime">Start Time</label>
+          <timepicker   id="startTime" type="time" formControlName="startTime"></timepicker>
+        </div>
+      </div>
+      <br/>
       <div class="row">
         <textarea placeholder="Additional information" formControlName="additionalInformation" ></textarea>
 

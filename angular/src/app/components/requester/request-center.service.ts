@@ -15,6 +15,7 @@ import {
 import{ APPCONSTANTS }from '../../constants/app.constant'
 import { CalendarEvent, CalendarEventAction } from 'angular-calendar';
 import { COLOURS } from '../../constants/colours.constant';
+import { start } from 'repl';
 
 
 @Injectable({
@@ -44,7 +45,6 @@ export class RequestCenterService {
     var out;
 
     this.requester.postRequest<availabilityRange>(url, newAvail).subscribe(returnData=>{
-      console.log(returnData);
       out = <availabilityRange><unknown>returnData;
     })
     return out;
@@ -64,19 +64,13 @@ export class RequestCenterService {
     var out;
 
     this.requester.getRequest<availability>(url).subscribe(returnData=>{
-      console.log("ret" +returnData);
       out = <Array<availability>><unknown>returnData;
-      console.log(out);
       out.forEach(element => {
-        console.log(element);
         var start = new Date(element.date);
         var end = new Date(element.date);
-        console.log("look here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
         var times1 = element.start_time.split(":");
         var times2 = element.end_time.split(":");
-        console.log("times1: " + times1);
-        console.log("times2: " + times2);
         
         start.setHours(parseInt(times1[0]),parseInt(times1[1]));
         end.setHours(parseInt(times2[0]),parseInt(times2[1]));
@@ -88,7 +82,6 @@ export class RequestCenterService {
             title: 'availability',
             color: COLOURS.BLUE_DARK,
           })
-          console.log("length of events list: " + events.length);
       });
     })
     out = <Array<availability>><unknown>out;
@@ -117,11 +110,19 @@ export class RequestCenterService {
   //   })
   // }
 
-  addInterviewForm(formInput: string, additional: string){
+  addInterviewForm(formInput: string, additional: string, startTime: Date, endTime: Date){
     var formDecomp = formInput.split(" ");
     var dateString = formDecomp[1];
-    var startTimeString = formDecomp[3];
-    var endTimeString = formDecomp[5];
+    if(startTime.toString() ==""){
+      var startTimeString = formDecomp[3];
+      var endTimeString = this.bufTimeString((Number.parseInt(formDecomp[3].split(':')[0]) + 1).toString())+":"+formDecomp[3].split(':')[1]; 
+      
+    }
+    else{
+      var startTimeString = this.dateToTimeString(startTime);
+      startTime.setHours(startTime.getHours()+1)
+      var endTimeString = this.dateToTimeString(startTime);
+    }
     var nameString = formDecomp[9] + " " + formDecomp[10];
     var id = [Number.parseInt(formDecomp[12])];
 
@@ -169,23 +170,18 @@ export class RequestCenterService {
   }
   //! Only for use in calendar app
   getInterviewByRecruiter(events: CalendarEvent[]){
-    console.log("ints vis recuiter !!!!!!!")
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_BY_REC;
     var out;
     this.requester.getRequest<availability>(url).subscribe(returnData=>{
-      console.log("into the return !!!!!!");
       console.log(returnData);
       out=<Array<availability>><unknown>returnData;
       out.forEach(element =>{
-        console.log(" in question!!!!!");
         console.log(element);
         console.log(element.start_time);
         var start = new Date(element.date);
         var end = new Date(element.date);
         var times1 = element.start_time.split(":");
         var times2 = element.end_time.split(":");
-        console.log("times1: " + times1);
-        console.log("times2: " + times2);
         
         start.setHours(parseInt(times1[0]),parseInt(times1[1]));
         end.setHours(parseInt(times2[0]),parseInt(times2[1]));
@@ -204,7 +200,6 @@ export class RequestCenterService {
             title: 'interview',
             color: COLOURS.RED_DARK,
           })
-          console.log("length of events list: " + events.length);
       })
       return returnData;
     })
@@ -357,47 +352,41 @@ export class RequestCenterService {
       skillsIDList:number[], 
       interviewsReturn: string[]){
 
-    var skillsList =  <Array<skills>>[];
-    var skillsNames = new Set<string>();
-    var skillsLevels = new Set<string>();
-    this.getAllSkills(skillsList, skillsNames, skillsLevels);
+    //We take a start date, end date, start time and end time, then check in this range.
+    //first take the data and create two date object that can be used to create strings to pass to the calls
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_FILTER;
     var newStartDate= new Date(startDate);
     var newEndDate = new Date(endDate);
-    var newStartTime = new Date(startTime);
+    var newStartTime = new Date(startTime); //These two only hold times so we disregard the date which is todays.
     var newEndTime = new Date(endTime);
+    newStartDate.setHours(newStartTime.getHours()); //assigning time to dates
+    newStartDate.setMinutes(newStartTime.getMinutes());    
+    newEndDate.setHours(newEndTime.getHours());
+    newEndDate.setMinutes(newEndTime.getMinutes());
 
+    // var refStart = new Date(startDate);
+    // var refEnd = new Date(endDate);
+    // refStart.setHours(newStartTime.getHours());
+    // refStart.setMinutes(newStartTime.getMinutes());    
+    // refEnd.setHours(newEndTime.getHours());
+    // refEnd.setMinutes(newEndTime.getMinutes());
+
+    //we have a very specific format that dates must be handed through the system 
     var startDateString = newStartDate.getFullYear().toString() + "-" + this.bufTimeString((newStartDate.getUTCMonth() + 1).toString()) + "-" + this.bufTimeString(newStartDate.getDate().toString());
     var endDateString = newEndDate.getFullYear().toString() + "-" + this.bufTimeString((newEndDate.getUTCMonth() + 1).toString()) + "-" + this.bufTimeString(newEndDate.getDate().toString());
-    var startString = this.bufTimeString(newStartTime.getHours().toString()) + ":" + this.bufTimeString(newStartTime.getMinutes().toString());
-    var endString = this.bufTimeString(newEndTime.getHours().toString()) + ":" + this.bufTimeString(newEndTime.getMinutes().toString());
+    var startString = this.dateToTimeString(newStartTime);
+    var endString = this.dateToTimeString(newEndTime);
 
     var newRange = new interviewRange(startDateString, endDateString, startString, endString, skillsIDList);
 
     this.requester.postRequestNoType<availabilityForInterviews>(url, newRange).subscribe(returnData=>{
       var data = <Array<availabilityForInterviews>> returnData;
       data.forEach(ele => {
-        // console.log(ele);
-        var refStart = new Date(ele.start_time);
-        var refEnd = new Date(ele.end_time);
-
-        var startInput = "";
-        var endInput = "";
-        if(refStart.getTime() > newStartDate.getTime()){
-          startInput = this.bufTimeString(refStart.getHours().toString()) + ":" + this.bufTimeString(refStart.getMinutes().toString());
-        }
-        else{
-          startInput = this.bufTimeString(newStartDate.getHours().toString()) + ":" + this.bufTimeString(newStartDate.getMinutes().toString());
-        }
-        if(refEnd.getTime() > newEndDate.getTime()){
-          endInput = this.bufTimeString(refEnd.getHours().toString()) + ":" + this.bufTimeString(refEnd.getMinutes().toString());
-        }
-        else{
-          endInput = this.bufTimeString(newEndDate.getHours().toString()) + ":" + this.bufTimeString(newEndDate.getMinutes().toString());
-        }
+        var earlierTimeDate = this.getEarlierTime(ele.end_time, this.dateToTimeString(newEndTime), true)
+        var laterTimeDate = this.getEarlierTime(ele.start_time, this.dateToTimeString(newStartTime), false)
 
         interviewsReturn.push("On " + ele.date 
-        + " between " + startInput + " -> " + endInput
+        + " between " + this.dateToTimeString(laterTimeDate) + " -> " + this.dateToTimeString(earlierTimeDate)
         + " this is with: " + ele.interviewer + " id: " + ele.interviewer_id 
         /*+ "skills: " + skillsList[skillsIDList[0]]*/);
       })
@@ -405,6 +394,25 @@ export class RequestCenterService {
 
   }
 
+  dateToTimeString(date:Date){
+    return this.bufTimeString(date.getHours().toString()) + ":" + this.bufTimeString(date.getMinutes().toString());
+  }
+  getEarlierTime(input1: string, input2: string, early:boolean){
+    var date1 = new Date();
+    var times1 = input1.split(':');
+    date1.setHours(Number.parseInt(times1[0]));
+    date1.setMinutes(Number.parseInt(times1[1]));
+    var date2 = new Date();
+    var times2 = input2.split(':');
+    date2.setHours(Number.parseInt(times2[0]));
+    date2.setMinutes(Number.parseInt(times2[1]));
+    if(early){
+      return (date1.getTime() < date2.getTime() ? date1 : date2);
+    }
+    else{
+      return (date1.getTime() > date2.getTime() ? date1 : date2);
+    }
+  }
 
   addApplicant(){
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.APPLICANT_ADD;

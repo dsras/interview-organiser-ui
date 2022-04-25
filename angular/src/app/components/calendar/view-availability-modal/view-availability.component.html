@@ -4,7 +4,11 @@
       This is your current availability offered.
     </h5>
   </div>
-  <div class="card" id="availabilityOutput" style="width: 500px;white-space: pre-line"></div>
+  <div class="card" id="availabilityOutput" style="width: 500px;white-space: pre-line">
+    <li *ngFor="let event of EventsRef">
+      <span class="badge">{{event}}</span>
+    </li>
+  </div>
   <div class="card">
     <h5 class="card-header info-color white-text text-center py-4">
       This is your current interviews booked
