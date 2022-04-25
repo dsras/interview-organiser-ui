@@ -18,11 +18,6 @@
     </h4>
     <div class="col-1 mt-3 mx-auto orange-border"></div>
   </div>
-  <!-- <button mdbBtn color="primary" (click)="addAvailability()">Add Availability</button>
-  <button mdbBtn color="primary" (click)="addSkills()">Add Skills</button>   -->
-  <button mdbBtn color="primary" (click)="currentDate()">Log Current Date</button>
-  <button mdbBtn color="primary" (click)="showMockData()">Show Mock Data</button>
-  <button mdbBtn color="primary" (click)="addMockData()">Add Mock Data</button>
   <button mdbBtn color="primary" (click)="checkConnection()">Check Connection</button>
   <button mdbBtn color="primary" (click)="populateCalendar()">Populate Calendar</button>
   <button mdbBtn color="primary" (click)="populateViaRecruiter()">Populate Recruiter Calendar</button>
@@ -33,8 +28,8 @@
   <button mdbBtn color="primary" (click)="getSkillsforUser()">getSkillsforUSer</button>
   <button mdbBtn color="primary" (click)="buttonRefresh()">refresh</button>
   <div>
-    <availability-form (availabilityFormSubmitted)="onSubmitAvailability($event)"></availability-form>
-    <skills-form (skillFormSubmitted)="onSubmitSkills($event)"></skills-form>
+    <availability-form></availability-form>
+    <skills-form></skills-form>
   </div>
   <hr>
 </div>

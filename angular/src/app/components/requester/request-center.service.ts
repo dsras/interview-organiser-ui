@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Requester } from '../requester/requester.service';
 import { 
   data,
@@ -10,22 +9,19 @@ import {
   skillIdOnly,
   applicant,
   interviewRange,
-  availabilityRange
+  availabilityRange,
+  availabilityForInterviews
  }from '../requester/requestBodyTypes/types'
-import{
-  APPCONSTANTS
-}from '../../constants/app.constant'
-import { analyzeAndValidateNgModules } from '@angular/compiler';
+import{ APPCONSTANTS }from '../../constants/app.constant'
 import { CalendarEvent, CalendarEventAction } from 'angular-calendar';
 import { COLOURS } from '../../constants/colours.constant';
-import { appendFile } from 'fs';
-import { start } from 'repl';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class RequestCenterService {
+
 
   constructor(private requester: Requester ) { }
 
@@ -75,6 +71,8 @@ export class RequestCenterService {
         console.log(element);
         var start = new Date(element.date);
         var end = new Date(element.date);
+        console.log("look here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
         var times1 = element.start_time.split(":");
         var times2 = element.end_time.split(":");
         console.log("times1: " + times1);
@@ -82,14 +80,13 @@ export class RequestCenterService {
         
         start.setHours(parseInt(times1[0]),parseInt(times1[1]));
         end.setHours(parseInt(times2[0]),parseInt(times2[1]));
-        console.log(start);
-        console.log(end);
+
         
         events.push({
             start: start,
             end: end,
             title: 'availability',
-            color: COLOURS.GREEN_LITE,
+            color: COLOURS.BLUE_DARK,
           })
           console.log("length of events list: " + events.length);
       });
@@ -119,9 +116,23 @@ export class RequestCenterService {
   //     return returnData;
   //   })
   // }
-  addInterview(interviewerID: number, applicantID: number, interviewDate: string, timeStart: string, timeEnd: string, skillID: number ){
+
+  addInterviewForm(formInput: string, additional: string){
+    var formDecomp = formInput.split(" ");
+    var dateString = formDecomp[1];
+    var startTimeString = formDecomp[3];
+    var endTimeString = formDecomp[5];
+    var nameString = formDecomp[9] + " " + formDecomp[10];
+    var id = [Number.parseInt(formDecomp[12])];
+
+    this.addInterview(id, dateString, startTimeString, endTimeString, additional);
+
+  }
+
+  addInterview(interviewerID: number[],  interviewDate: string, timeStart: string, timeEnd: string, additionalInfo: string ){
+    console.log("Interview send");
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ADD;
-    var newInterview = new interview(interviewerID, applicantID, interviewDate, timeStart, timeEnd, skillID);
+    var newInterview = new interview(interviewerID, interviewDate, timeStart, timeEnd, additionalInfo);
     this.requester.postRequest<interview>(url, newInterview).subscribe(returnData=>{
       console.log(returnData);
     })
@@ -198,13 +209,26 @@ export class RequestCenterService {
       return returnData;
     })
   }
-
+  //? Currently not referenced
   getInterviewAll(){
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ALL;
     this.requester.getRequest<interview>(url).subscribe(returnData=>{
       console.log(returnData);
       return returnData;
     })
+  }
+
+  getInterviewsDashboard(interviews: Array<interview>) {
+    var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ALL;
+    this.requester.getRequest<interview>(url).subscribe(returnData=>{
+      var dataArray = <Array<interview>><unknown>returnData
+      dataArray.forEach(element => {
+        interviews.push(element)
+      });
+      // interviews.push(returnData);
+      console.warn(interviews[2])
+      return interviews
+    });
   }
   //*Tested
   getUser(){
@@ -235,7 +259,7 @@ export class RequestCenterService {
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.SKILLS_ADD;
     var newSkillID = id;
     this.requester.postRequest<number>(url, id).subscribe(returnData=>{
-      console.log(returnData);
+      // console.log(returnData);
     })
   }
   getAllSkills(skills: skills[], skillNames: Set<string>, levels: Set<string>) {
@@ -243,9 +267,9 @@ export class RequestCenterService {
     var out;
     this.requester.getRequest<skills>(url).subscribe(returnData=>{
       out = <Array<skills>><unknown>returnData;
-      console.log(out);
+      // console.log(out);
       out.forEach(element => {
-        console.log(element);
+        // console.log(element);
         skillNames.add(element.skillName);
         levels.add(element.skillLevel);
         skills.push({
@@ -300,18 +324,18 @@ export class RequestCenterService {
       out = <Array<availability>><unknown>returnData;
       console.log(out);
       out.forEach(element => {
-        console.log(element);
+        // console.log(element);
         var start = new Date(element.date);
         var end = new Date(element.date);
         var times1 = element.start_time.split(":");
         var times2 = element.end_time.split(":");
-        console.log("times1: " + times1);
-        console.log("times2: " + times2);
+        // console.log("times1: " + times1);
+        // console.log("times2: " + times2);
         
         start.setHours(parseInt(times1[0]),parseInt(times1[1]));
         end.setHours(parseInt(times2[0]),parseInt(times2[1]));
-        console.log(start);
-        console.log(end);
+        // console.log(start);
+        // console.log(end);
         
         var startTime = this.bufTimeString(start.getHours().toString()) + ":" + this.bufTimeString(start.getMinutes().toString());
         var endTime = this.bufTimeString(end.getHours().toString()) + ":" + this.bufTimeString(end.getMinutes().toString());
@@ -325,29 +349,48 @@ export class RequestCenterService {
     return out;
   }
   // * in progress
-  getAvailabilityByRange(startDate:string, endDate:string, startTime: string, endTime: string, skillsIDList:number[]){
+  getAvailabilityByRange(
+      startDate:string, 
+      endDate:string, 
+      startTime: string, 
+      endTime: string, 
+      skillsIDList:number[], 
+      interviewsReturn: string[]){
+
+    var skillsList =  <Array<skills>>[];
+    var skillsNames = new Set<string>();
+    var skillsLevels = new Set<string>();
+    this.getAllSkills(skillsList, skillsNames, skillsLevels);
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_FILTER;
     var newStartDate= new Date(startDate);
     var newEndDate = new Date(endDate);
     var newStartTime = new Date(startTime);
     var newEndTime = new Date(endTime);
 
-    var startDateString = newStartDate.getFullYear().toString() + "-" + this.bufTimeString((newStartDate.getUTCMonth() + 1).toString()) + "-" + newStartDate.getDate().toString();
-    var endDateString = newEndDate.getFullYear().toString() + "-" + this.bufTimeString((newEndDate.getUTCMonth() + 1).toString()) + "-" + newEndDate.getDate().toString();
+    var startDateString = newStartDate.getFullYear().toString() + "-" + this.bufTimeString((newStartDate.getUTCMonth() + 1).toString()) + "-" + this.bufTimeString(newStartDate.getDate().toString());
+    var endDateString = newEndDate.getFullYear().toString() + "-" + this.bufTimeString((newEndDate.getUTCMonth() + 1).toString()) + "-" + this.bufTimeString(newEndDate.getDate().toString());
     var startString = this.bufTimeString(newStartTime.getHours().toString()) + ":" + this.bufTimeString(newStartTime.getMinutes().toString());
     var endString = this.bufTimeString(newEndTime.getHours().toString()) + ":" + this.bufTimeString(newEndTime.getMinutes().toString());
 
     var newRange = new interviewRange(startDateString, endDateString, startString, endString, skillsIDList);
-    this.requester.postRequest<interviewRange>(url, newRange).subscribe(returnData=>{
-      console.log(returnData);
-
+    this.requester.postRequestNoType<availabilityForInterviews>(url, newRange).subscribe(returnData=>{
+      // console.log("ret data");
+      // console.log(returnData);
+      var data = <Array<availabilityForInterviews>> returnData;
+      // var newInterview = new availabilityForInterviews(data.name, data.id, data.date, data.startTime, data.endTime);
+      data.forEach(ele => {
+        // console.log(ele);
+        interviewsReturn.push("On " + ele.date 
+        + " between " + startTime + " -> " + endTime 
+        + " this is with: " + ele.interviewer + " id: " + ele.interviewer_id 
+        /*+ "skills: " + skillsList[skillsIDList[0]]*/);
+      })
     })
 
   }
 
 
   addApplicant(){
-    
     var url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.APPLICANT_ADD;
     var newApplicant = new applicant("ted", "testerton", "ted@test.com", 100, 1);
     this.requester.postRequest<applicant>(url, newApplicant).subscribe(returnData=>{

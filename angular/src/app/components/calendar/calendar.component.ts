@@ -79,7 +79,6 @@ export class CalendarComponent implements OnInit{
   //* This is where the local calendar events are stored
   skills: skills[]=[];
 
-
   events: CalendarEvent[] = [
     //* Commented out below are some prepopulated events from the original calendar
     // {
@@ -105,8 +104,6 @@ export class CalendarComponent implements OnInit{
 
   constructor(
     private router: Router,
-    private dataInjector: MockInjectorService,
-    //TODO These may need to be changed later, currently used by base calendar
     private modal: NgbModal,
     private modalService: MDBModalService,
     private rs: RequestCenterService
@@ -115,61 +112,11 @@ export class CalendarComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.getMockAvailability();
     this.populateCalendar();
   }
 
   redirect(page: string) : void {
     this.router.navigate([page]);
-  }
-
-  //* Test method to unpack availability from JSON
-  getMockAvailability() : void {
-    this.mockAvailability = JSON.parse(this.dataInjector.getMockData()).totalAvailability
-  }
-
-  //* Test method to populate calendar with mocked data, replaced by calls to DB
-  addMockData(): void {
-    for (let i = 0; i < this.mockAvailability.length; i++) {
-      let data = this.mockAvailability[i];
-      let start = new Date(`${data.date}T${data.start_time}`)
-      let end = new Date(`${data.date}T${data.end_time}`)
-      this.events.push(
-        {
-          start: startOfDay(new Date(start)),
-          end: endOfDay(new Date(end)),
-          title: `User1 availability ${i}`,
-          color: COLOURS.RED_DARK,
-          actions: this.actions,
-          allDay: true,
-          resizable: {
-            beforeStart: true,
-            afterEnd: true,
-          },
-          draggable: true,
-        }
-      )
-    }
-  }
-
-  //* Test method to log to console the outputted data from JSON
-  showMockData() : void {
-    console.log("Users Availability")
-    for (let i = 0; i < this.mockAvailability.length; i++) {
-      let data = this.mockAvailability[i];
-      console.log(
-        `
-        Date: ${data.date}
-        Start time: ${data.start_time}
-        End time: ${data.end_time}
-        Formatted start: ${new Date(`${data.date}T${ data.start_time}`)}`
-        )
-    }
-  }
-
-  //* Basic button method to log current date, remove later
-  currentDate() : void {
-    console.log(`Current Date Button: ${new Date().toISOString()}`)
   }
 
   sleep(ms: number) {
@@ -180,7 +127,7 @@ export class CalendarComponent implements OnInit{
     //Say Hello
     console.log('Hello');
     // Say World after 2000 milliseconds
-    await this.sleep(2250).then(() =>this.refresh.next()).catch();
+    await this.sleep(2500).then(() =>this.refresh.next()).catch();
     console.log("World2");
   }
   getInterviewsByRec(){
@@ -208,7 +155,6 @@ export class CalendarComponent implements OnInit{
   populateCalendar()  {
     this.events = [];
     this.rs.getMyAvailability(this.events);
-    console.log("length of events list ext: " + this.events.length);
     this.rs.getInterviewByInterviewer(this.events);
     this.delayedRefresh();
   }
@@ -219,8 +165,9 @@ export class CalendarComponent implements OnInit{
   checkConnection(){
     // var skillsIDs = [1,2,3];
     // this.rs.getAvailabilityOnSkill(skillsIDs);
-    this.rs.addApplicant();
+    //this.rs.addApplicant();
 
+    this.rs.addInterview([23], "2022-04-22","09:00", "10:00", "some additional info");
     // var url = "http://localhost:8080/users/welcome";
     // this.requester.getRequest<string>(url).subscribe(returnData =>{
     //   console.log(returnData);
@@ -247,17 +194,6 @@ export class CalendarComponent implements OnInit{
 
   }
 
-  onSubmitAvailability(form: FormGroup) : void {
-    console.log("Availability added: ")
-    console.log(form.value);
-    this.populateCalendar();
-  }
-
-  onSubmitSkills(form: FormGroup) : void {
-    console.log("Skills added: ")
-    console.log(form.value)
-    this.populateCalendar();
-  }
 
   /**
    * ! Calendar core functionality contained here, shouldn't need to touch it!
@@ -294,20 +230,20 @@ export class CalendarComponent implements OnInit{
 
   refresh = new Subject<void>();
 
-  activeDayIsOpen: boolean = true;
+  activeDayIsOpen: boolean = false;
 
   openDayModal(dateSelected: Date, useDate: boolean) {
 
     var eventsOnDay= [];
     var interviewsOnDay= [];
     if(useDate){
-      for (var index = 0; index < this.events.length; index++) {
-        if(isSameDay(this.events[index].start, dateSelected)){
-          if(this.events[index].title === 'availability'){
-            eventsOnDay.push(this.events[index]);
+      for (const element of this.events) {
+        if(isSameDay(element.start, dateSelected)){
+          if(element.title === 'availability'){
+            eventsOnDay.push(element);
           }
-          else if(this.events[index].title === 'interview'){
-            interviewsOnDay.push(this.events[index]);
+          else if(element.title === 'interview'){
+            interviewsOnDay.push(element);
           }
         }
       }
@@ -342,15 +278,15 @@ export class CalendarComponent implements OnInit{
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
-      if (
-        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-        events.length === 0
-      ) {
-        this.activeDayIsOpen = false;
-      } else {
-        this.activeDayIsOpen = true;
-      }
-      this.viewDate = date;
+      // if (
+      //   (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
+      //   events.length === 0
+      // ) {
+      //   this.activeDayIsOpen = false;
+      // } else {
+      //   this.activeDayIsOpen = true;
+      // }
+      // this.viewDate = date;
       this.openDayModal(date, true);
 
     }

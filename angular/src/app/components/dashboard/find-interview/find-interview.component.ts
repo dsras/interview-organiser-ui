@@ -5,8 +5,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { TimepickerConfig } from 'ngx-bootstrap/timepicker';
 import { Observable } from 'rxjs';
 import { RequestCenterService } from '../../requester/request-center.service';
-import { skills } from '../../requester/requestBodyTypes/types';
-
+import { availabilityForInterviews, skills } from '../../requester/requestBodyTypes/types';
 
 @Component({
   selector: 'find-interview',
@@ -20,6 +19,7 @@ export class FindInterviewComponent implements OnInit {
   // buttonPressed: boolean = false;
 
   skillsAvailable: skills[] = [];
+  trueData: string[] = [];
 
   skillTypes: Set<string> = new Set<string>();
 
@@ -38,23 +38,18 @@ export class FindInterviewComponent implements OnInit {
 
   createInterviewForm: FormGroup = this.fb.group({
     interviewSelected: ['', Validators.required],
-    // applicantSelected: ['', Validators.required]
     additionalInformation: ['', Validators.maxLength(255)]
   })
 
   findInterviewsForm: FormGroup = this.fb.group({
     startTime: ['', Validators.required],
     endTime: ['', Validators.required],
-    firstDate: ['', Validators.required],
-    lastDate: ['', Validators.required],
+    dateRange:['', Validators.required],
     skills: this.fb.group({
         skillType: ['', Validators.required],
         skillLevel: ['', Validators.required]
     })
   })
-
-  @Output() formSubmitted: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
-
 
   constructor(
     private fb: FormBuilder,
@@ -64,45 +59,48 @@ export class FindInterviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.rs.getAllSkills(this.skillsAvailable, this.skillTypes, this.skillLevels );
-    this.rs.getAllAvailabilityUI(this.availableInterviews);
-    this.availableInterviewObjects.forEach(ele =>{
-      this.availableInterviews.push(ele.start.getTime().toString());
-    })
-    this.rs.getAllApplicants(this.availableApplicants);
+    //this.rs.getAllAvailabilityUI(this.availableInterviews);
+    // this.availableInterviewObjects.forEach(ele =>{
+    //   this.availableInterviews.push(ele.start.getTime().toString());
+    // })
+    //this.rs.getAllApplicants(this.availableApplicants);
   }
 
   openModal(template: TemplateRef<any>) {
+    console.log("open template");
     this.modalRef = this.ms.show(template);
   }
 
+
   findInterview(f: FormGroup) {
-    this.findInterviewsForm.setValue(f.value)
-    console.log("create interview form")
-    console.log(this.findInterviewsForm.value)
-    console.warn(this.findInterviewsForm.get('firstDate')?.value)
-    console.log(f.value.firstDate);
-    var tempArr = [];
+    // console.log("open button");
+    // console.log(f);
+    // console.log(f.value.skills);
+
     var idArr = <Array<number>>[];
-    tempArr= f.value.skills;
 
-    tempArr.forEach((skillReq: any) => {
-      console.log(skillReq.skillType);
-      this.skillsAvailable.forEach(skillStore => {
-        if(skillStore.skillName === skillReq.skillType && skillStore.skillLevel === skillReq.skillLevel){
-          idArr.push(skillStore.id);
-          console.log("found id: " + skillStore.id); 
-        }
-      });
+    var skillReq = {
+      skillType: f.value.skills.skillType,
+      skillLevel: f.value.skills.skillLevel
+    }
+
+    this.skillsAvailable.forEach(skillStore => {
+      if(skillStore.skillName === skillReq.skillType && skillStore.skillLevel === skillReq.skillLevel){
+        idArr.push(skillStore.id);
+        // console.log("found id: " + skillStore.id); 
+      }
     });
+    this.rs.getAvailabilityByRange(
+      f.value.dateRange[0], 
+      f.value.dateRange[1], 
+      f.value.startTime, 
+      f.value.endTime, 
+      idArr, 
+      this.availableInterviews);
 
-    this.rs.getAvailabilityByRange(f.value.firstDate, f.value.lastDate, f.value.startTime, f.value.endTime, idArr);
-    this.formSubmitted.emit(f);
-    //TODO set up Requester service call @Sulkyoptimism
-    // this.rs.addAvailability(f.value.date, f.value.startTime, f.value.endTime);
-    this.findInterviewsForm.reset();
-  }
+    this.trueData.push(f.value.startTime);
+    this.trueData.push(f.value.endTime);
 
-  buttonClicked() {
     let find = document.getElementById("find");
     let confirm = document.getElementById("confirm")
     if (find?.style.display === "block" && confirm?.style.display === "none") {
@@ -117,11 +115,12 @@ export class FindInterviewComponent implements OnInit {
   }
 
   submitInterview(f: FormGroup) {
+    console.log("sumbit button");
     console.log(f.value);
-    this.createInterviewForm.setValue(f.value);
-    this.formSubmitted.emit(f);
+
+    this.rs.addInterviewForm(f.value.interviewSelected, f.value.additionalInformation);
     this.createInterviewForm.reset();
-    console.log(f.value)
+    console.log(f.value);
 
   }
 
