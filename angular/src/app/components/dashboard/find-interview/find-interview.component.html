@@ -46,10 +46,10 @@
     <br>
     <div class="container-fluid">
       <label for="firstDate">First Date</label>
-      <input id="firstDate" type='datetime' formControlName="firstDate" bsDatepicker>
+      <input id="firstDate" type='datetime' formControlName="firstDate" bsDatepicker [bsConfig]="{ containerClass: 'theme-orange', adaptivePosition: true}">
       <br>
       <label for="lastDate">Last Date</label>
-      <input id="lastDate" type='datetime' formControlName="lastDate" bsDatepicker>
+      <input id="lastDate" type='datetime' formControlName="lastDate" bsDatepicker [bsConfig]="{ containerClass: 'theme-orange', adaptivePosition: true}">
     </div>
 
     <div formArrayName="skills">
@@ -68,7 +68,8 @@
         </option>
       </select>
     </div>
-    <button type="submit" class="view-here-btn text-lefttext-black mx-auto"
+    <br>
+    <!-- <button type="submit" class="view-here-btn text-lefttext-black mx-auto"
           [disabled]="!findInterviewsForm.valid"
           (click)="buttonClicked()">
           <h6 class="mt-4 font-weight-normal">
@@ -76,7 +77,7 @@
           </h6>
         </button>
   </div>
-</div>
+</div> -->
 
 <!-- </div> -->
 
@@ -84,19 +85,21 @@
   <button type="submit" class="btn btn-org" [disabled]="!findInterviewsForm.valid" (click)="buttonClicked()">Find Interviews</button>
 </div> -->
 
-  <!-- <div class="modal-footer">
-    <div class="col-12 col-md-12 mx-auto services">
-      <div class="row text-center">
-        <button type="submit" class="view-here-btn text-lefttext-black mx-auto"
-          [disabled]="!findInterviewsForm.valid"
-          (click)="buttonClicked()">
-          <h6 class="mt-4 font-weight-normal">
-            Find Interview
-          </h6>
-        </button>
+      <div class="modal-footer">
+        <div class="col-12 col-md-12 mx-auto services">
+          <div class="row text-center">
+            <button type="submit" class="view-here-btn text-lefttext-black mx-auto"
+              [disabled]="!findInterviewsForm.valid"
+              (click)="buttonClicked()">
+              <h6 class="mt-4 font-weight-normal">
+                Find Interview
+              </h6>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-  </div> -->
+  </div>
 
   <div id="confirm" style="display: none;">
     <form
