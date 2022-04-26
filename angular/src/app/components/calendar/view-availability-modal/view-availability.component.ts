@@ -9,7 +9,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
   templateUrl: './view-availability.component.html',
   styleUrls: ['./view-availability.component.scss']
 })
-export class ViewAvailabilityModalComponent implements OnInit {
+export class ViewAvailabilityComponent implements OnInit {
 
   @Output() closeClicked: EventEmitter<boolean> = new EventEmitter<boolean>();
 

@@ -18,7 +18,7 @@ import {
   CalendarView,
 } from 'angular-calendar';
 import { MDBModalRef, MDBModalService } from 'ng-uikit-pro-standard';
-import { ViewAvailabilityModalComponent } from './view-availability-modal/view-availability.component';
+import { ViewAvailabilityComponent } from './view-availability-modal/view-availability.component';
 import { MockInjectorService } from 'src/app/services/mock-injector.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Requester } from '../requester/requester.service';
@@ -253,7 +253,7 @@ export class CalendarComponent implements OnInit{
       })
     }
 
-    var mfc = ViewAvailabilityModalComponent;
+    var mfc = ViewAvailabilityComponent;
     this.modalRef = this.modalService.show(mfc, {
       backdrop: true,
       keyboard: true,
