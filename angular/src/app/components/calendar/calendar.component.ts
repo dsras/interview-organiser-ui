@@ -1,54 +1,30 @@
 import { Router } from '@angular/router';
 import { Component, OnInit, ChangeDetectionStrategy, ViewChild, TemplateRef, } from '@angular/core';
-import {
-  startOfDay,
-  endOfDay,
-  subDays,
-  addDays,
-  endOfMonth,
-  isSameDay,
-  isSameMonth,
-  addHours, } from 'date-fns';
+import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours, } from 'date-fns';
 import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {
-  CalendarEvent,
-  CalendarEventAction,
-  CalendarEventTimesChangedEvent,
-  CalendarView,
-} from 'angular-calendar';
+import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, } from 'angular-calendar';
 import { MDBModalRef, MDBModalService } from 'ng-uikit-pro-standard';
 import { ViewAvailabilityComponent } from './view-availability-modal/view-availability.component';
-import { MockInjectorService } from 'src/app/services/mock-injector.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Requester } from '../requester/requester.service';
-import {
-  data,
-  userData,
-  skills,
-  availability,
-  interview
- }from '../requester/requestBodyTypes/types'
- import { RequestCenterService } from '../requester/request-center.service';
-import { CalendarEventActionsComponent } from 'angular-calendar/modules/common/calendar-event-actions.component';
-import { FormGroup } from '@angular/forms';
-import { COLOURS } from '../../constants/colours.constant';
-// const colors: any = {
-//   red: {
-//     primary: '#ad2121',
-//     secondary: '#FAE3E3',
-//   },
-//   blue: {
-//     primary: '#1e90ff',
-//     secondary: '#D1E8FF',
-//   },
-//   yellow: {
-//     primary: '#e3bc08',
-//     secondary: '#FDF1BA',
-//   },
-// };
+import { skills, } from '../requester/requestBodyTypes/types'
+import { RequestCenterService } from '../requester/request-center.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+
+const colors: any = {
+  red: {
+    primary: '#ad2121',
+    secondary: '#FAE3E3',
+  },
+  blue: {
+    primary: '#1e90ff',
+    secondary: '#D1E8FF',
+  },
+  yellow: {
+    primary: '#e3bc08',
+    secondary: '#FDF1BA',
+  },
+};
 @Component({
-  //Hadi's cmnt
   selector: 'calendar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styles: [
@@ -70,46 +46,28 @@ import { COLOURS } from '../../constants/colours.constant';
 export class CalendarComponent implements OnInit{
 
   modalRef: MDBModalRef | null = null;
+  modalRef2?: BsModalRef;
 
   //TODO Test data initialiser, needs removed after testing complete
   mockAvailability!: any;
 
-  @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
+  @ViewChild('dayContent', { static: true }) dayContent!: TemplateRef<any>;
+  @ViewChild('eventClickedContent', { static: true }) eventClickedContent!: TemplateRef<any>;
+  dayAvailability: CalendarEvent[] = [];
+  dayInterviews: CalendarEvent[] = [];
+
 
   //* This is where the local calendar events are stored
   skills: skills[]=[];
-
-  events: CalendarEvent[] = [
-    //* Commented out below are some prepopulated events from the original calendar
-    // {
-    //   start: subDays(startOfDay(new Date()), 1),
-    //   end: addDays(new Date(), 1),
-    //   title: 'A 3 day event',
-    //   color: colors.red,
-    //   actions: this.actions,
-    //   allDay: true,
-    //   resizable: {
-    //     beforeStart: true,
-    //     afterEnd: true,
-    //   },
-    //   draggable: true,
-    // },
-    // {
-    //   start: startOfDay(new Date()),
-    //   title: 'An event with no end date',
-    //   color: colors.yellow,
-    //   actions: this.actions,
-    // },
-  ];
+  events: CalendarEvent[] = [];
 
   constructor(
     private router: Router,
     private modal: NgbModal,
     private modalService: MDBModalService,
+    private ms: BsModalService,
     private rs: RequestCenterService
-  ) {
-
-  }
+  ) {  }
 
   ngOnInit(): void {
     this.populateCalendar();
@@ -124,15 +82,15 @@ export class CalendarComponent implements OnInit{
   }
 
   async delayedRefresh() {
-    //Say Hello
     console.log('Hello');
-    // Say World after 2000 milliseconds
     await this.sleep(2500).then(() =>this.refresh.next()).catch();
     console.log("World2");
   }
+
   getInterviewsByRec(){
     this.rs.getInterviewByRecruiter(this.events);
   }
+
   getInterviewsByInter(){
     this.rs.getInterviewByInterviewer(this.events);
   }
@@ -140,27 +98,33 @@ export class CalendarComponent implements OnInit{
   getSkillsforUser(){
     this.rs.getSkills();
   }
+
   getApplicants(){
-    //this.rs.getAllApplicants();
+    // this.rs.getAllApplicants();
   }
+
   getUser(){
     this.rs.getUser();
   }
+
   populateViaRecruiter(){
     this.events=[];
     this.rs.getAllAvailability(this.events);
     console.log("length of events list ext: " + this.events.length);   
     this.delayedRefresh();
   }
+
   populateCalendar()  {
     this.events = [];
     this.rs.getMyAvailability(this.events);
     this.rs.getInterviewByInterviewer(this.events);
     this.delayedRefresh();
   }
+
   buttonRefresh(){
     this.refresh.next();
   }
+
   // * Test method
   checkConnection(){
     // var skillsIDs = [1,2,3];
@@ -232,48 +196,21 @@ export class CalendarComponent implements OnInit{
 
   activeDayIsOpen: boolean = false;
 
-  openDayModal(dateSelected: Date, useDate: boolean) {
+  openDayModal(dateSelected: Date, /*useDate: boolean*/) {
+    this.dayAvailability = [];
+    this.dayInterviews = [];
 
-    var eventsOnDay= [];
-    var interviewsOnDay= [];
-    if(useDate){
-      for (const element of this.events) {
-        if(isSameDay(element.start, dateSelected)){
-          if(element.title === 'availability'){
-            eventsOnDay.push(element);
-          }
+    for (const element of this.events) {
+      if(isSameDay(element.start, dateSelected)){
+        if(element.title === 'availability'){
+            this.dayAvailability.push(element);
+        }
           else if(element.title === 'interview'){
-            interviewsOnDay.push(element);
-          }
+            this.dayInterviews.push(element);
         }
       }
-     
-      eventsOnDay.forEach(function(eventSel){
-        console.log("From start: " + eventSel.start + ", to end: " + eventSel.end);
-      })
     }
-
-    var mfc = ViewAvailabilityComponent;
-    this.modalRef = this.modalService.show(mfc, {
-      backdrop: true,
-      keyboard: true,
-      focus: true,
-      show: false,
-      ignoreBackdropClick: false,
-      class: '',
-      containerClass: 'bottom',
-      animated: true
-    });
-    this.modalRef.content.action.subscribe((result: any) => { console.log(result); });
-
-    if(eventsOnDay.length == 0){
-      //new event
-    }
-    else{
-      mfc.addEventRef(eventsOnDay,interviewsOnDay);
-    }
-
-
+    this.modalRef = this.modalService.show(this.dayContent)
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -287,16 +224,11 @@ export class CalendarComponent implements OnInit{
       //   this.activeDayIsOpen = true;
       // }
       // this.viewDate = date;
-      this.openDayModal(date, true);
-
+      this.openDayModal(date);
     }
   }
 
-  eventTimesChanged({
-    event,
-    newStart,
-    newEnd,
-  }: CalendarEventTimesChangedEvent): void {
+  eventTimesChanged({ event, newStart, newEnd, }: CalendarEventTimesChangedEvent): void {
     this.events = this.events.map((iEvent) => {
       if (iEvent === event) {
         return {
@@ -312,7 +244,7 @@ export class CalendarComponent implements OnInit{
 
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
-    this.modal.open(this.modalContent, { size: 'lg' });
+    this.modal.open(this.eventClickedContent, { size: 'lg' });
   }
 
   // This is the default method that auto-generates an event for 'todays date'
@@ -323,7 +255,7 @@ export class CalendarComponent implements OnInit{
         title: 'New event',
         start: startOfDay(new Date()),
         end: endOfDay(new Date()),
-        color: COLOURS.RED_DARK,
+        color: colors.red,
         draggable: true,
         resizable: {
           beforeStart: true,
