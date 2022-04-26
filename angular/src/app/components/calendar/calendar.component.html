@@ -36,9 +36,9 @@
 
 <br />
 <div>
-  <div class="row" >
+  <div class="row" style="width:100%" >
     <div class=" col-sm">
-      <div class="btn-group">
+      <div class="btn-group pl-3">
         <div
           class="btn btn-primary"
           mwlCalendarPreviousView
@@ -46,14 +46,14 @@
           [(viewDate)]="viewDate"
           (viewDateChange)="closeOpenMonthViewDay()"
         >
-          Previous
+         <h6 class="text-center">Previous</h6>
         </div>
         <div
           class="btn btn-outline-secondary"
           mwlCalendarToday
           [(viewDate)]="viewDate"
         >
-          Today
+        <h6 class="text-black text-center">Today</h6>
         </div>
         <div
           class="btn btn-primary"
@@ -62,7 +62,7 @@
           [(viewDate)]="viewDate"
           (viewDateChange)="closeOpenMonthViewDay()"
         >
-          Next
+        <h6 class="text-center">Next</h6>
         </div>
       </div>
     </div>
@@ -76,21 +76,21 @@
           (click)="setView(CalendarView.Month)"
           [class.active]="view === CalendarView.Month"
         >
-          Month
+        <h6 class="text-center">Month</h6>
         </div>
         <div
-          class="btn btn-primary"
+          class="btn btn-outline-secondary"
           (click)="setView(CalendarView.Week)"
           [class.active]="view === CalendarView.Week"
         >
-          Week
+        <h6 class="text-black text-center">Week</h6>
         </div>
         <div
           class="btn btn-primary"
           (click)="setView(CalendarView.Day)"
           [class.active]="view === CalendarView.Day"
         >
-          Day
+        <h6 class="text-center">Day</h6>
         </div>
       </div>
     </div>
