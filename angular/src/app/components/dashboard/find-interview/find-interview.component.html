@@ -1,10 +1,24 @@
-<button type="button" class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx-auto d-inline-block" (click)="openModal(form)">
+<!-- <button type="button" class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx-auto d-inline-block" (click)="openModal(form)">
   <img width="auto" height="70px" src="../../../assets/images/findInterview.png">
               <h6 class="mt-4 font-weight-normal">
                 Find Interviews
               </h6>
               <i class="fa fa-arrow-right" style="font-size: 18px; padding-top:8px; padding-right: 7px"></i>
-</button>
+</button> -->
+
+<!-- <div class="col-md-4 col-sm-6 my-3"> -->
+  <div class="blog-widget">
+    <div class="col-lg-12 thumbnail-img" data-aos="fade-left" data-aos-delay="100" style="background-image:url(../../../../assets/images/findInterviewBG.png); background-size:cover;background-position: center">
+    </div>
+    <div class="blog-content">
+      <button type="button" class="view-here-btn text-lefttext-black" (click)="openModal(form)">
+        <h5>
+          Find Interview <i class="fa fa-arrow-right" style="font-size: 18px; padding-top:8px; padding-right: 7px"></i>
+        </h5>
+      </button>
+    </div>
+  </div>
+<!-- </div> -->
 
 <ng-template  #form>
   <div id="find" style="display: block;">
@@ -44,7 +58,7 @@
             <input id="lastDate" type='datetime' formControlName="lastDate" bsDatepicker [bsConfig]="{ containerClass: 'theme-orange', adaptivePosition: true}">
           </div>
 
-      
+
           <div formArrayName="skills">
             <h2>Skills</h2>
 
