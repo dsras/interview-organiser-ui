@@ -6,4 +6,6 @@ The application can be run after navigating to the angular directory in a termin
 
 1. `npm install --legacy-peer-deps`
 
-2. `ng serve`
+2. `npm audit fix`
+
+3. `ng serve`
