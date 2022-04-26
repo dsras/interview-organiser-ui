@@ -319,7 +319,7 @@ h4 small {
 	font-weight: normal;
 }
 .view-here-btn:hover{
-	color: #292929 ;
+	color: orange;
 }
 
 .view-here-btn div{
@@ -334,6 +334,10 @@ h4 small {
 	float: right;
 	text-align:right;
 	margin-right: -16px;
+}
+
+.view-here-btn:disabled {
+	display: none;
 }
 
 .orange-border {

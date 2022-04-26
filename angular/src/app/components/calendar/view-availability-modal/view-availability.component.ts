@@ -2,7 +2,6 @@ import { Component, OnInit, TemplateRef, Output, EventEmitter } from '@angular/c
 import { CalendarEvent } from 'angular-calendar';
 import { Subject } from 'rxjs';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { interview } from '../../requester/requestBodyTypes/types';
 
 
 @Component({
@@ -20,8 +19,8 @@ export class ViewAvailabilityModalComponent implements OnInit {
   }
   // validatingForm: FormGroup;
   action = new Subject<any>();
-  static availability: CalendarEvent [];
-  static interviews: CalendarEvent [];
+  static availability: CalendarEvent [] = [];
+  static interviews: CalendarEvent[] = [];
 
   constructor(
     private ms: BsModalService
@@ -35,19 +34,19 @@ export class ViewAvailabilityModalComponent implements OnInit {
   static addEventRef(events: CalendarEvent [], interviews: CalendarEvent[]){
     this.availability = events;
     this.interviews = interviews;
-    const out1 = document.getElementById("availabilityOutput");
-    const text1 = document.createElement('p');
-    text1.textContent += this.availability[0].start.toLocaleString().substring(0,10) + "\n";
-    const out2 = document.getElementById("interviewOutput");
-    const text2 = document.createElement('p');
-    text2.textContent += this.availability[0].start.toLocaleString().substring(0,10) + "\n";
+    const availabilityOutput = document.getElementById("availabilityOutput");
+    const availabilityList = document.createElement('p');
+    availabilityList.textContent += this.availability[0].start.toLocaleString().substring(0,10) + "\n";
+    const interviewoutput = document.getElementById("interviewOutput");
+    const interviewList = document.createElement('p');
+    interviewList.textContent += this.availability[0].start.toLocaleString().substring(0,10) + "\n";
 
     events.forEach(appointment => {
       console.log(events.length);
       var start = appointment.start;
       var end = appointment.end;
-      text1.textContent += start.toLocaleString().substring(12);
-      text1.textContent += " -> " + end?.toLocaleString().substring(12) + '\n';
+      availabilityList.textContent += start.toLocaleString().substring(12);
+      availabilityList.textContent += " -> " + end?.toLocaleString().substring(12) + '\n';
       
     });
 
@@ -56,12 +55,12 @@ export class ViewAvailabilityModalComponent implements OnInit {
       console.log(interviews.length);
       var start = appointment.start;
       var end = appointment.end;
-      text2.textContent += start.toLocaleString().substring(12);
-      text2.textContent += " -> " + end?.toLocaleString().substring(12) + '\n';
+      interviewList.textContent += start.toLocaleString().substring(12);
+      interviewList.textContent += " -> " + end?.toLocaleString().substring(12) + '\n';
       
     });
-    out1?.append(text1);
-    out2?.append(text2);
+    availabilityOutput?.append(availabilityList);
+    interviewoutput?.append(interviewList);
   }
 
 //? What does this do @Sulkyoptimism?

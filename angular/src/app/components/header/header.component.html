@@ -37,7 +37,8 @@
     </div>
 </div> -->
 
-    <div class="container-fluid">
+    <!-- <div class="container-fluid"> -->
+      <div class="row">
         <nav class="navbar px-3 px-lg-0 navbar-expand-lg py-3 py-lg-3 col-md-9 logo-wrapper">
             <a class="navbar-brand pl-2" href="/">
                 <img src="https://www.accolite.com/assets/jpg/homebannerimages/accolite-logo.svg" class="navbar-image" alt="Accolite Digital Logo">
@@ -89,4 +90,37 @@
             </div>
         </nav>
     </div>
+    <div class="collapse navbar-collapse" id="navbarNav" *ngIf="isHeader">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#" id="industriesDropdown" role="button" aria-haspopup="true" aria-expanded="false">Calendar</a>
+        <span class="menu" (click)="onMenuChange('calendar')" [ngClass]="getSelectedClass('calendar')"></span>
+        </li>
+      </ul>
+    </div>
+    <div class="collapse navbar-collapse" id="navbarNav" dropdown placement="bottom left" *ngIf="isHeader">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+          <button button id="button-animated" dropdownToggle type="button" class="btn dropdown-toggle float-end"
+            aria-controls="dropdown-animated" style = "width: 60px;">
+            <img [src]="user.photoUrl" class="rounded-circle" style="height: 30px; width: 30px;" *ngIf="user">
+            <i class="fa fa-user-circle" aria-hidden="true" *ngIf="!user"></i>
+          </button>
+          <ul id="dropdown-animated" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-animated">
+            <li role="menuitem" style="cursor: pointer;">
+              <span class="dropdown-item" *ngIf="user" style="padding-left: 50px;">
+                <img [src]="user.photoUrl" class="rounded-circle" style="height: 30px;">
+                <p style="margin-left: -15px;">{{user.name}}</p>
+              </span>
+                <span class="dropdown-item" style="display: grid;">
+                  <button class="btn primary-btn" (click)="logout()">
+                    <i class="fa fa-sign-out" aria-hidden="true"></i>
+                    Logout
+                  </button>
+                </span>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
 

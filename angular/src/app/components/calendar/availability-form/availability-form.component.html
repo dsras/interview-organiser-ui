@@ -17,7 +17,7 @@
     </div>
   </div> -->
 
-  <div class="card" style="size: 1000px;">
+  <div class="card">
     <div class="container text-center text-black pt-4 mt-4">
       <!-- padding: 10%;  -->
       <div class="modal-header" style="width: 100%; color: black; background-color: orange;">
@@ -48,12 +48,12 @@
           placeholder="Select Date(s)"
           formControlName="dateRange"
           bsDaterangepicker
-          [bsConfig]="{ containerClass: 'theme-orange'}"
+          [bsConfig]="{ containerClass: 'theme-orange', adaptivePosition: true}"
           >
       </div>
     </div>
     <br>
-    <div class="col-12 col-md-12 mx-auto services">
+    <!-- <div class="col-12 col-md-12 mx-auto services">
       <div class="row text-center">
         <button type="submit" class="view-here-btn text-lefttext-black mx-auto"
           [disabled]="!createAvailabilityForm.valid"
@@ -64,9 +64,9 @@
         </button>
       </div>
     </div>
-  </div>
+  </div> -->
 
-  <!-- </div>
+  </div>
   <div class="modal-footer">
     <div class="col-12 col-md-12 mx-auto services">
       <div class="row text-center">
@@ -79,7 +79,7 @@
         </button>
       </div>
     </div>
-  </div> -->
+  </div>
 </div>
 </form>
 </ng-template>
