@@ -336,6 +336,10 @@ h4 small {
 	margin-right: -16px;
 }
 
+.view-here-btn:disabled {
+	display: none;
+}
+
 .orange-border {
 	/* border-top: 2px solid #ff8500; */
 	border: 1px solid transparent;
