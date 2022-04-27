@@ -44,7 +44,8 @@ export class FindInterviewComponent implements OnInit {
   findInterviewsForm: FormGroup = this.fb.group({
     startTime: ['', Validators.required],
     endTime: ['', Validators.required],
-    dateRange:['', Validators.required],
+    firstDate:['', Validators.required],
+    lastDate:['', Validators.required],
     skills: this.fb.group({
         skillType: ['', Validators.required],
         skillLevel: ['', Validators.required]
@@ -73,7 +74,7 @@ export class FindInterviewComponent implements OnInit {
 
 
   findInterview(f: FormGroup) {
-    // console.log("open button");
+    console.log("open button");
     // console.log(f);
     // console.log(f.value.skills);
 
@@ -91,8 +92,8 @@ export class FindInterviewComponent implements OnInit {
       }
     });
     this.rs.getAvailabilityByRange(
-      f.value.dateRange[0], 
-      f.value.dateRange[1], 
+      f.value.firstDate, 
+      f.value.lastDate, 
       f.value.startTime, 
       f.value.endTime, 
       idArr, 
