@@ -1,7 +1,6 @@
 import { Component, OnInit, TemplateRef, Output, EventEmitter, Input } from '@angular/core';
 import { CalendarEvent } from 'angular-calendar';
 import { Subject } from 'rxjs';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 
 @Component({

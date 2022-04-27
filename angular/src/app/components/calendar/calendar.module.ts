@@ -12,6 +12,8 @@ import { ViewAvailabilityComponent } from './view-availability-modal/view-availa
 import { ReactiveFormsModule } from '@angular/forms';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { TimePipe } from 'src/app/pipes/time.pipe';
+import { StringTimePipe } from './pipes/string-time.pipe';
 
 @NgModule({
   imports: [
@@ -32,7 +34,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     AvailabilityFormComponent,
     SkillsFormComponent, 
     ViewAvailabilityComponent,
-  ],
+    TimePipe,
+    StringTimePipe  ],
   exports: [CalendarComponent],
 })
 export class MyCalendarModule{}
