@@ -10,7 +10,8 @@ import {
   applicant,
   interviewRange,
   availabilityRange,
-  availabilityForInterviews
+  availabilityForInterviews,
+  statusUpdate
  }from '../../constants/types'
 import{ APPCONSTANTS }from '../../constants/app.constant'
 import { CalendarEvent, CalendarEventAction } from 'angular-calendar';
@@ -27,6 +28,18 @@ export class RequestCenterService {
   constructor(private requester: Requester ) { }
 
 
+  updateStatus(id:number, status:string, isStatus:boolean){
+    let url ="";
+    if(isStatus){
+      url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.STATUS_UPDATE;
+    }
+    else{
+      url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.OUTCOME_UPDATE;
+    }
+
+    let newStatus = new statusUpdate(id, status);
+    this.requester.postRequest<statusUpdate>(url, newStatus);
+  }
 
   addAvailability(first: string, last: string, start: string, end: string){
     const firstDate = new Date(first);

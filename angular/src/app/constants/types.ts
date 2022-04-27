@@ -7,6 +7,17 @@ export class skillIdOnly implements data{
     }
 }
 
+export class statusUpdate implements data{
+    interview_id : number;
+    update : string;
+    constructor(
+        interview_id: number,
+        update: string
+    ){
+        this.interview_id = interview_id;
+        this.update = update;
+    }
+}
 export class userData implements data {
     id: number;
     username: string;
