@@ -13,6 +13,9 @@ class API_CONSTANTS {
     AVAIL_ALL: string = 'availability/findAll'
     AVAIL_FILTER: string = 'users/findInterviewers'
 
+    STATUS_UPDATE: string = 'interviews/updateStatus'
+    OUTCOME_UPDATE: string = 'interviews/updateOutcome'
+
     APPLICANT_ADD: string = 'applicants/new';
     APPLICANT_ALL: string = 'applicants/findAll';
 
