@@ -4,8 +4,8 @@ import { CalendarEvent } from 'angular-calendar';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { TimepickerConfig } from 'ngx-bootstrap/timepicker';
 import { Observable } from 'rxjs';
-import { RequestCenterService } from '../../requester/request-center.service';
-import { availabilityForInterviews, skills } from '../../requester/requestBodyTypes/types';
+import { RequestCenterService } from 'src/app/services/requester/request-center.service';
+import { availabilityForInterviews, skills } from '../../../constants/types';
 
 @Component({
   selector: 'find-interview',

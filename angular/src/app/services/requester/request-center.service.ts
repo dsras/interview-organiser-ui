@@ -11,7 +11,7 @@ import {
   interviewRange,
   availabilityRange,
   availabilityForInterviews
- }from '../requester/requestBodyTypes/types'
+ }from '../../constants/types'
 import{ APPCONSTANTS }from '../../constants/app.constant'
 import { CalendarEvent, CalendarEventAction } from 'angular-calendar';
 import { COLOURS } from '../../constants/colours.constant';

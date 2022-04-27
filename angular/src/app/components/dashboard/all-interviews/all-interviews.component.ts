@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { RequestCenterService } from '../../requester/request-center.service';
-import { interview } from '../../requester/requestBodyTypes/types';
-
+import { RequestCenterService } from 'src/app/services/requester/request-center.service';
+import { interview } from 'src/app/constants/types';
 @Component({
   selector: 'all-interviews',
   templateUrl: './all-interviews.component.html',
