@@ -1,23 +1,15 @@
-<div class="container-fluid py-5 intro-section-color">
-  <h2 class="text-black font-weight-bold text-center">
-       Calendar
-  </h2>
+<div class="container-fluid section first-section-color">
+  <h4 class="text-black font-weight-bold text-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cone-striped" viewBox="0 0 16 16">
+      <path d="m9.97 4.88.953 3.811C10.159 8.878 9.14 9 8 9c-1.14 0-2.158-.122-2.923-.309L6.03 4.88C6.635 4.957 7.3 5 8 5s1.365-.043 1.97-.12zm-.245-.978L8.97.88C8.718-.13 7.282-.13 7.03.88L6.275 3.9C6.8 3.965 7.382 4 8 4c.618 0 1.2-.036 1.725-.098zm4.396 8.613a.5.5 0 0 1 .037.96l-6 2a.5.5 0 0 1-.316 0l-6-2a.5.5 0 0 1 .037-.96l2.391-.598.565-2.257c.862.212 1.964.339 3.165.339s2.303-.127 3.165-.339l.565 2.257 2.391.598z"/>
+    </svg>
+    Under Construction
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cone-striped" viewBox="0 0 16 16">
+      <path d="m9.97 4.88.953 3.811C10.159 8.878 9.14 9 8 9c-1.14 0-2.158-.122-2.923-.309L6.03 4.88C6.635 4.957 7.3 5 8 5s1.365-.043 1.97-.12zm-.245-.978L8.97.88C8.718-.13 7.282-.13 7.03.88L6.275 3.9C6.8 3.965 7.382 4 8 4c.618 0 1.2-.036 1.725-.098zm4.396 8.613a.5.5 0 0 1 .037.96l-6 2a.5.5 0 0 1-.316 0l-6-2a.5.5 0 0 1 .037-.96l2.391-.598.565-2.257c.862.212 1.964.339 3.165.339s2.303-.127 3.165-.339l.565 2.257 2.391.598z"/>
+    </svg>
+  </h4>
   <div class="col-1 mt-3 mx-auto orange-border"></div>
-  </div>
-<div>
-  <hr>
-  <div class="container-fluid py-5 intro-section-color">
-    <h4 class="text-black font-weight-bold text-center">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cone-striped" viewBox="0 0 16 16">
-        <path d="m9.97 4.88.953 3.811C10.159 8.878 9.14 9 8 9c-1.14 0-2.158-.122-2.923-.309L6.03 4.88C6.635 4.957 7.3 5 8 5s1.365-.043 1.97-.12zm-.245-.978L8.97.88C8.718-.13 7.282-.13 7.03.88L6.275 3.9C6.8 3.965 7.382 4 8 4c.618 0 1.2-.036 1.725-.098zm4.396 8.613a.5.5 0 0 1 .037.96l-6 2a.5.5 0 0 1-.316 0l-6-2a.5.5 0 0 1 .037-.96l2.391-.598.565-2.257c.862.212 1.964.339 3.165.339s2.303-.127 3.165-.339l.565 2.257 2.391.598z"/>
-      </svg>
-      Under Construction
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cone-striped" viewBox="0 0 16 16">
-        <path d="m9.97 4.88.953 3.811C10.159 8.878 9.14 9 8 9c-1.14 0-2.158-.122-2.923-.309L6.03 4.88C6.635 4.957 7.3 5 8 5s1.365-.043 1.97-.12zm-.245-.978L8.97.88C8.718-.13 7.282-.13 7.03.88L6.275 3.9C6.8 3.965 7.382 4 8 4c.618 0 1.2-.036 1.725-.098zm4.396 8.613a.5.5 0 0 1 .037.96l-6 2a.5.5 0 0 1-.316 0l-6-2a.5.5 0 0 1 .037-.96l2.391-.598.565-2.257c.862.212 1.964.339 3.165.339s2.303-.127 3.165-.339l.565 2.257 2.391.598z"/>
-      </svg>
-    </h4>
-    <div class="col-1 mt-3 mx-auto orange-border"></div>
-  </div>
+  <br>
   <button mdbBtn color="primary" (click)="checkConnection()">Check Connection</button>
   <button mdbBtn color="primary" (click)="populateCalendar()">Populate Calendar</button>
   <button mdbBtn color="primary" (click)="populateViaRecruiter()">Populate Recruiter Calendar</button>
@@ -27,18 +19,23 @@
   <button mdbBtn color="primary" (click)="getApplicants()">get appls</button>
   <button mdbBtn color="primary" (click)="getSkillsforUser()">getSkillsforUSer</button>
   <button mdbBtn color="primary" (click)="buttonRefresh()">refresh</button>
-  <div>
+  <div class="container-fluid p-0 banner-img text-white">
     <availability-form></availability-form>
     <skills-form></skills-form>
   </div>
-  <hr>
 </div>
 
-<br />
+<div class="container-fluid py-5 intro-section-color">
+  <h2 class="text-black font-weight-bold text-center">
+       Calendar
+  </h2>
+  <div class="col-1 mt-3 mx-auto orange-border"></div>
+</div>
+<br>
 <div>
-  <div class="row" >
+  <div class="row" style="width:100%" >
     <div class=" col-sm">
-      <div class="btn-group">
+      <div class="btn-group pl-3">
         <div
           class="btn btn-primary"
           mwlCalendarPreviousView
@@ -46,14 +43,14 @@
           [(viewDate)]="viewDate"
           (viewDateChange)="closeOpenMonthViewDay()"
         >
-          Previous
+         <h6 class="text-center">Previous</h6>
         </div>
         <div
           class="btn btn-outline-secondary"
           mwlCalendarToday
           [(viewDate)]="viewDate"
         >
-          Today
+        <h6 class="text-black text-center">Today</h6>
         </div>
         <div
           class="btn btn-primary"
@@ -62,7 +59,7 @@
           [(viewDate)]="viewDate"
           (viewDateChange)="closeOpenMonthViewDay()"
         >
-          Next
+        <h6 class="text-center">Next</h6>
         </div>
       </div>
     </div>
@@ -76,21 +73,21 @@
           (click)="setView(CalendarView.Month)"
           [class.active]="view === CalendarView.Month"
         >
-          Month
+        <h6 class="text-center">Month</h6>
         </div>
         <div
-          class="btn btn-primary"
+          class="btn btn-outline-secondary"
           (click)="setView(CalendarView.Week)"
           [class.active]="view === CalendarView.Week"
         >
-          Week
+        <h6 class="text-black text-center">Week</h6>
         </div>
         <div
           class="btn btn-primary"
           (click)="setView(CalendarView.Day)"
           [class.active]="view === CalendarView.Day"
         >
-          Day
+        <h6 class="text-center">Day</h6>
         </div>
       </div>
     </div>

@@ -15,6 +15,7 @@ import {
 import{ APPCONSTANTS }from '../../constants/app.constant'
 import { CalendarEvent, CalendarEventAction } from 'angular-calendar';
 import { COLOURS } from '../../constants/colours.constant';
+import { start } from 'repl';
 
 
 @Injectable({
@@ -107,11 +108,24 @@ export class RequestCenterService {
   //   })
   // }
 
-  addInterviewForm(formInput: string, additional: string){
+  addInterviewForm(formInput: string, additional: string, startTime: Date){
     const formDecomp = formInput.split(" ");
     const dateString = formDecomp[1];
-    const startTimeString = formDecomp[3];
-    const endTimeString = formDecomp[5];
+    let startTimeString ;
+    let endTimeString = "";
+    console.log(startTime.toString());
+    if(startTime.toString() != ""){
+      startTimeString = this.dateToStringTime(startTime);
+
+      startTime.setHours(startTime.getHours()+1);
+
+      endTimeString = this.dateToStringTime(startTime);
+    }
+    else{
+      startTimeString = formDecomp[3];
+
+      endTimeString = this.bufTimeString(((Number.parseInt(startTimeString.split(':')[0]))+1).toString()) + ':' + this.bufTimeString((Number.parseInt(startTimeString.split(':')[1])).toString())
+    }
     // const nameString = formDecomp[9] + " " + formDecomp[10];
     const id = [Number.parseInt(formDecomp[12])];
 
@@ -229,11 +243,13 @@ export class RequestCenterService {
   }
 
   getAllSkills(skills: skills[], skillNames: Set<string>, levels: Set<string>) {
+    console.log("skills call");
     const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.SKILLS_GET_ALL;
     let out;
     this.requester.getRequest<skills>(url).subscribe(returnData=>{
       out = <Array<skills>><unknown>returnData;
       out.forEach(element => {
+        console.log(element);
         skillNames.add(element.skillName);
         levels.add(element.skillLevel);
         skills.push({
@@ -306,15 +322,16 @@ export class RequestCenterService {
       skillsIDList:number[], 
       interviewsReturn: string[]){
 
-    const skillsList =  <Array<skills>>[];
-    const skillsNames = new Set<string>();
-    const skillsLevels = new Set<string>();
-    this.getAllSkills(skillsList, skillsNames, skillsLevels);
+
     const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_FILTER;
     const newStartDate= new Date(startDate);
     const newEndDate = new Date(endDate);
+    console.log(startTime);
     const newStartTime = new Date(startTime);
     const newEndTime = new Date(endTime);
+    newStartTime.setDate(newStartDate.getDate());
+    newEndTime.setDate(newStartDate.getDate());
+    console.log(newStartTime);
 
     const startDateString = newStartDate.getFullYear().toString() + "-" + this.bufTimeString((newStartDate.getUTCMonth() + 1).toString()) + "-" + this.bufTimeString(newStartDate.getDate().toString());
     const endDateString = newEndDate.getFullYear().toString() + "-" + this.bufTimeString((newEndDate.getUTCMonth() + 1).toString()) + "-" + this.bufTimeString(newEndDate.getDate().toString());
@@ -325,13 +342,37 @@ export class RequestCenterService {
     this.requester.postRequestNoType<availabilityForInterviews>(url, newRange).subscribe(returnData=>{
       let data = <Array<availabilityForInterviews>> returnData;
       data.forEach(ele => {
+        console.log(ele);
+        var refStart = new Date(newStartTime);
+        var refEnd = new Date(newStartTime);
+        refStart.setHours(Number.parseInt(ele.start_time.split(':')[0]),Number.parseInt(ele.start_time.split(':')[1]))
+        refEnd.setHours(Number.parseInt(ele.end_time.split(':')[0]),Number.parseInt(ele.end_time.split(':')[1]))
+
+        var startInput = "";
+        var endInput = "";
+        if(refStart.getTime() > newStartTime.getTime()){
+          startInput = this.dateToStringTime(refStart);
+        }
+        else{
+          startInput = this.dateToStringTime(newStartTime);
+        }
+        if(refEnd.getTime() < newEndTime.getTime()){
+          endInput = this.dateToStringTime(refEnd);
+        }
+        else{
+          endInput = this.dateToStringTime(newEndTime);
+        }
+
         interviewsReturn.push("On " + ele.date 
-        + " between " + startTime + " -> " + endTime 
+        + " between " + startInput + " -> " + endInput
         + " this is with: " + ele.interviewer + " id: " + ele.interviewer_id 
         );
       })
     })
 
+  }
+  dateToStringTime(date:Date){
+    return (this.bufTimeString(date.getHours().toString()) + ':' + this.bufTimeString(date.getMinutes().toString()));
   }
   // ? Not sure whether this is needed or just a test method
   addApplicant(){

@@ -38,13 +38,15 @@ export class FindInterviewComponent implements OnInit {
 
   createInterviewForm: FormGroup = this.fb.group({
     interviewSelected: ['', Validators.required],
-    additionalInformation: ['', Validators.maxLength(255)]
+    additionalInformation: ['', Validators.maxLength(255)],
+    startTime: ['']
   })
 
   findInterviewsForm: FormGroup = this.fb.group({
     startTime: ['', Validators.required],
     endTime: ['', Validators.required],
-    dateRange:['', Validators.required],
+    firstDate:['', Validators.required],
+    lastDate:['', Validators.required],
     skills: this.fb.group({
         skillType: ['', Validators.required],
         skillLevel: ['', Validators.required]
@@ -73,7 +75,7 @@ export class FindInterviewComponent implements OnInit {
 
 
   findInterview(f: FormGroup) {
-    // console.log("open button");
+    console.log("open button");
     // console.log(f);
     // console.log(f.value.skills);
 
@@ -91,8 +93,8 @@ export class FindInterviewComponent implements OnInit {
       }
     });
     this.rs.getAvailabilityByRange(
-      f.value.dateRange[0], 
-      f.value.dateRange[1], 
+      f.value.firstDate, 
+      f.value.lastDate, 
       f.value.startTime, 
       f.value.endTime, 
       idArr, 
@@ -118,7 +120,7 @@ export class FindInterviewComponent implements OnInit {
     console.log("sumbit button");
     console.log(f.value);
 
-    this.rs.addInterviewForm(f.value.interviewSelected, f.value.additionalInformation);
+    this.rs.addInterviewForm(f.value.interviewSelected, f.value.additionalInformation, f.value.startTime);
     this.createInterviewForm.reset();
     console.log(f.value);
 
