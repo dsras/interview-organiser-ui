@@ -76,25 +76,22 @@
             </select>
           </div>
           <br>
-        <!-- <button type="submit" class="view-here-btn text-lefttext-black mx-auto"
-              [disabled]="!findInterviewsForm.valid"
-              (click)="findInterview(findInterviewsForm)">
-              <h6 class="mt-4 font-weight-normal">
-                Find Interview
-              </h6>
-            </button> -->
+          <!-- <button type="submit" class="view-here-btn text-lefttext-black mx-auto"
+                [disabled]="!findInterviewsForm.valid"
+                (click)="findInterview(findInterviewsForm)">
+                <h6 class="mt-4 font-weight-normal">
+                  Find Interview
+                </h6>
+              </button> -->
         </div>
-      </div> -->
-
-
-
+      </div>
       <div class="modal-footer">
         <div class="col-12 col-md-12 mx-auto services">
           <div class="row text-center">
-            <button type="submit" class="view-here-btn text-lefttext-black mx-auto"
+            <button type="submit" class="view-here-btn text-lefttext-black mx-auto d-inline-block"
               [disabled]="!findInterviewsForm.valid"
               (click)="findInterview(findInterviewsForm)">
-              <h6 class="mt-4 font-weight-normal">
+              <h6 class="text-center">
                 Find Interview
               </h6>
             </button>
@@ -104,13 +101,17 @@
     </form>
   </div>
 
+
+
+
+
+
   <div id="confirm" style="display: none;">
     <form
     [formGroup]="createInterviewForm"
     (ngSubmit)="submitInterview(createInterviewForm)"
     class="md-form"
-    style="color: black;"
-  >
+    style="color: black;">
 
     <div class="modal-header modal-org" >
       <h3>
@@ -136,10 +137,17 @@
     <div class="container-padded">
 
     </div>
-    <div class="modal-footer bg-grey">
-      <button type="submit" [disabled]="!createInterviewForm.valid" (click)="this.modalRef?.hide()" class="btn btn-org">
-        Create Interview<i class="bi bi-calendar-plus logo-mini"></i>
-      </button>
+    <div class="modal-footer">
+      <div class="col-12 col-md-12 mx-auto services">
+        <div class="row text-center">
+          <button type="submit"
+          [disabled]="!createInterviewForm.valid"
+          (click)="this.modalRef?.hide()"
+          class="view-here-btn text-lefttext-black text-center mx-auto">
+            <h6 class="text-center">Create Interview</h6>
+          </button>
+        </div>
+      </div>
     </div>
   </form>
   </div>
