@@ -237,7 +237,7 @@
   </table>
 </div>
 
-<ng-template #modalContent let-close="close">
+<ng-template #eventClickedContent let-close="close">
   <div class="modal-header">
     <h5 class="modal-title">Event action occurred</h5>
     <button type="button" class="close" (click)="close()">
@@ -259,4 +259,8 @@
       OK
     </button>
   </div>
+</ng-template>
+
+<ng-template #dayContent>
+  <view-availability [availability]="dayAvailability" [interviews]="dayInterviews"></view-availability>
 </ng-template>

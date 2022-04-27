@@ -6,13 +6,13 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 export class ModalService {
 
   constructor(
-    public ref: BsModalRef,
-    public ms: BsModalService
+    public modalRef: BsModalRef,
+    public modalService: BsModalService
     ) {
   }
 
   openModal(template: TemplateRef<any>) {
-    this.ref = this.ms.show(template);
+    this.modalRef = this.modalService.show(template);
   }
 
   // openModal(component: any): void {

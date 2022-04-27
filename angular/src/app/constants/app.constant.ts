@@ -64,23 +64,7 @@ class CSS_CONSTANTS {
     BG_INFO: string = 'bg-info';
     BG_PRIMARY: string = 'bg-primary'
 }
-class STATUS_CONSTANTS {
-    INTERVIEW_IN_PROGRESS: string = 'Interview InProgress';
-    INTERVIEW_REJECTED: string = 'Interview Rejected';
-    INTERVIEW_READY: string = 'Interview Ready';
-    INTERVIEW_SELECTED: string = 'Interview Selected';
-    OFFER_REJECTED: string = 'Offer Rejected';
-    JOINED: string = 'Joined';
-    MAPPED: string = 'Mapped';
-    DROP_OUT: string = 'Drop Out';
-    OFFERED: string = 'Offered';
-    CLIENT_INTERVIEW_IN_PROGRESS: string = 'Client Interview InProgress';
-    AVAILABLE: string = 'Available';
-    YET_TO_BEGIN: string = 'Yet to Begin';
-    ONBOARDING: string = 'Onboarding';
-    STARTED: string = 'Started';
-    ONBOARDING_IN_PROGRESS: string = "Onboarding InProgress";
-}
+
 
 class SSOCONSTANTS {
     //61469011957-3mb05n2d9sgk20l4tqeu8crao3klq781.apps.googleusercontent.com
@@ -97,7 +81,6 @@ export class APPCONSTANTS {
     static readonly LOGIN_CONSTANTS = new LOGIN_CONSTANTS();
     static readonly COMMON_CONSTANTS = new COMMON_CONSTANTS();
     static readonly CSS_CONSTANTS = new CSS_CONSTANTS();
-    static readonly STATUS_CONSTANTS = new STATUS_CONSTANTS();
     static readonly SSO_CONSTANTS = new SSOCONSTANTS();
 }
 
