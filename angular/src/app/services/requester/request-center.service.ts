@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Requester } from '../requester/requester.service';
 import { 
-  data,
   userData,
   skills,
   availability,
   interview,
-  skillIdOnly,
   applicant,
   interviewRange,
   availabilityRange,
@@ -14,9 +12,8 @@ import {
   statusUpdate
  }from '../../constants/types'
 import{ APPCONSTANTS }from '../../constants/app.constant'
-import { CalendarEvent, CalendarEventAction } from 'angular-calendar';
+import { CalendarEvent } from 'angular-calendar';
 import { COLOURS } from '../../constants/colours.constant';
-import { start } from 'repl';
 
 
 @Injectable({
@@ -81,19 +78,21 @@ export class RequestCenterService {
       out.forEach(element => {
         const start = new Date(element.date);
         const end = new Date(element.date);
-
+        const id = element.availability_id
         const times1 = element.start_time.split(":");
         const times2 = element.end_time.split(":");
+        console.error(element.availability_id)
         
         start.setHours(parseInt(times1[0]),parseInt(times1[1]));
         end.setHours(parseInt(times2[0]),parseInt(times2[1]));
 
         
         events.push({
-            start: start,
-            end: end,
-            title: 'availability',
-            color: COLOURS.BLUE_DARK,
+          id: id,
+          start: start,
+          end: end,
+          title: 'availability',
+          color: COLOURS.BLUE_DARK,
           })
       });
     })
@@ -161,6 +160,7 @@ export class RequestCenterService {
       out.forEach(element =>{
         const start = new Date(element.date);
         const end = new Date(element.date);
+        const id = element.availability_id;
         const times1 = element.start_time.split(":");
         const times2 = element.end_time.split(":");
         
@@ -174,10 +174,11 @@ export class RequestCenterService {
     
 
         events.push({
-            start: start,
-            end: end,
-            title: 'interview',
-            color: COLOURS.RED_DARK,
+          id: id,
+          start: start,
+          end: end,
+          title: 'interview',
+          color: COLOURS.RED_DARK,
           })
       })
       return returnData;
@@ -192,6 +193,7 @@ export class RequestCenterService {
       out.forEach(element =>{
         const start = new Date(element.date);
         const end = new Date(element.date);
+        const id = element.availability_id
         const times1 = element.start_time.split(":");
         const times2 = element.end_time.split(":");
         
@@ -203,10 +205,11 @@ export class RequestCenterService {
         // var endString = this.bufTimeString(end.getHours().toString()) + ":" + this.bufTimeString(end.getMinutes().toString());
     
         events.push({
-            start: start,
-            end: end,
-            title: 'interview',
-            color: COLOURS.RED_DARK,
+          id: id,
+          start: start,
+          end: end,
+          title: 'interview',
+          color: COLOURS.RED_DARK,
           })
       })
       return returnData;
@@ -283,6 +286,7 @@ export class RequestCenterService {
       out.forEach(element => {
         const start = new Date(element.date);
         const end = new Date(element.date);
+        const id = element.availability_id
         const times1 = element.start_time.split(":");
         const times2 = element.end_time.split(":");
         
@@ -290,10 +294,11 @@ export class RequestCenterService {
         end.setHours(parseInt(times2[0]),parseInt(times2[1]));
         
         events.push({
-            start: start,
-            end: end,
-            title: 'An event made progmatically',
-            color: COLOURS.GREEN_LITE,
+          id: id,
+          start: start,
+          end: end,
+          title: 'An event made progmatically',
+          color: COLOURS.GREEN_LITE,
           })
       });
     })

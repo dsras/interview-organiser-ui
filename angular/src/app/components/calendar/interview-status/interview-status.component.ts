@@ -3,7 +3,6 @@ import { ModalControllerService } from 'src/app/services/modal-controller.servic
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CalendarEvent } from 'angular-calendar';
-import { interview } from 'src/app/constants/types';
 
 @Component({
   selector: 'interview-status',
@@ -12,7 +11,7 @@ import { interview } from 'src/app/constants/types';
 })
 export class InterviewStatusComponent implements OnInit {
 
-  @Input() slot?: interview
+  @Input() slot?: CalendarEvent
 
   statusForm = this.fb.group({
     status: ['']
@@ -53,18 +52,19 @@ export class InterviewStatusComponent implements OnInit {
   }
 
   onSubmit(f: FormGroup) {
-    let str = (f.status)
-    let num = (this.slot)
+    let str = f.value.status;
+    let num = -1
+
     console.warn(this.slot)
+    if (this.slot?.id) {
+      num = this.slot.id
+    }
 
     console.log(f.value);
     // this.rs.updateStatus(num, str, true)
-    console.warn(`${num}, ${str}, ${true}`);
+    console.warn(num);
+    console.warn(str);
     f.reset();
-  }
-
-  test() {
-    console.warn('button clicked')
   }
 
 }

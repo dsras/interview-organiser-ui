@@ -145,14 +145,17 @@ export class availabilityForInterviews implements data{
 }
 
 export class availability implements data{
+    availability_id: number;
     date: string;
     start_time: string;
     end_time: string;
     constructor(
+        availability_id: number,
         dateStart: string,
         start_time: string,
         end_time: string
     ){
+        this.availability_id = availability_id;
         this.date = dateStart;
         this.start_time = start_time;
         this.end_time = end_time;

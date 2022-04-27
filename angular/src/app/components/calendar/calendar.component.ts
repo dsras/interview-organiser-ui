@@ -5,9 +5,9 @@ import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, } from 'angular-calendar';
 import { MDBModalRef, MDBModalService } from 'ng-uikit-pro-standard';
-import { skills } from '../../constants/types';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { skills } from '../../constants/types';
 
 const colors: any = {
   red: {
@@ -246,23 +246,23 @@ export class CalendarComponent implements OnInit{
     this.modal.open(this.eventClickedContent, { size: 'lg' });
   }
 
-  // This is the default method that auto-generates an event for 'todays date'
-  addEvent(): void {
-    this.events = [
-      ...this.events,
-      {
-        title: 'New event',
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
-        color: colors.red,
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
-      },
-    ];
-  }
+  // * This is the default method that auto-generates an event for 'todays date'
+  // addEvent(): void {
+  //   this.events = [
+  //     ...this.events,
+  //     {
+  //       title: 'New event',
+  //       start: startOfDay(new Date()),
+  //       end: endOfDay(new Date()),
+  //       color: colors.red,
+  //       draggable: true,
+  //       resizable: {
+  //         beforeStart: true,
+  //         afterEnd: true,
+  //       },
+  //     },
+  //   ];
+  // }
 
 
   deleteEvent(eventToDelete: CalendarEvent) {
