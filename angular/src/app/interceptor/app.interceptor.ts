@@ -1,9 +1,8 @@
-import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from "@angular/common/http";
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { NgxSpinnerService } from "ngx-spinner";
 import { Observable, catchError } from "rxjs";
 import { finalize, map } from "rxjs/operators";
-import { DataSourceService } from "./../services/data-source.service";
 
 @Injectable()
 export class AppInterceptor implements HttpInterceptor {
