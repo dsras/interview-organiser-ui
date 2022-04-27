@@ -1,21 +1,16 @@
-import { Injectable, Type } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { 
-  data,
-  userData,
-
- } from './requestBodyTypes/types'
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
-
-
 
 @Injectable({
   providedIn: 'root'
 })
 export class Requester {
+
   constructor(private http: HttpClient) { }
+  
   getRequest<Type>(reqestURL: string): Observable<Type> {
     const opt = {
       headers: new HttpHeaders({
