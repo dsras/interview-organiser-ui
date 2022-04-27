@@ -3,8 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CalendarEvent } from 'angular-calendar';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
-import { RequestCenterService } from '../../requester/request-center.service';
-
+import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 @Component({
   selector: 'create-interview',
   templateUrl: './create-interview.component.html',

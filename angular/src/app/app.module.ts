@@ -49,7 +49,7 @@ import { MdbScrollspyModule } from 'mdb-angular-ui-kit/scrollspy';
 import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
 import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
-import { Requester } from './components/requester/requester.service';
+import { Requester } from './services/requester/requester.service';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { DataSourceService } from './services/data-source.service';
 

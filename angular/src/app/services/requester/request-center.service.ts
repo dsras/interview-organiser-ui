@@ -11,7 +11,7 @@ import {
   interviewRange,
   availabilityRange,
   availabilityForInterviews
- }from '../requester/requestBodyTypes/types'
+ }from '../../constants/types'
 import{ APPCONSTANTS }from '../../constants/app.constant'
 import { CalendarEvent, CalendarEventAction } from 'angular-calendar';
 import { COLOURS } from '../../constants/colours.constant';
@@ -45,7 +45,6 @@ export class RequestCenterService {
     let out;
 
     this.requester.postRequest<availabilityRange>(url, newAvail).subscribe(returnData=>{
-      console.log(returnData);
       out = <availabilityRange><unknown>returnData;
     })
     return out;
@@ -65,11 +64,8 @@ export class RequestCenterService {
     let out;
 
     this.requester.getRequest<availability>(url).subscribe(returnData=>{
-      console.log("ret" +returnData);
       out = <Array<availability>><unknown>returnData;
-      console.log(out);
       out.forEach(element => {
-        console.log(element);
         const start = new Date(element.date);
         const end = new Date(element.date);
 
@@ -86,7 +82,6 @@ export class RequestCenterService {
             title: 'availability',
             color: COLOURS.BLUE_DARK,
           })
-          console.log("length of events list: " + events.length);
       });
     })
     out = <Array<availability>><unknown>out;
@@ -102,7 +97,6 @@ export class RequestCenterService {
       started = true;
     })
     this.requester.getRequest<availability>(url).subscribe(returnData=>{
-      console.log(returnData);
       return returnData;
     })
   }
@@ -110,7 +104,6 @@ export class RequestCenterService {
   // getAllAvailability(){
   //   const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_BY_INT;
   //   this.requester.getRequest<interview>(url).subscribe(returnData=>{
-  //     console.log(returnData);
   //     return returnData;
   //   })
   // }
@@ -141,11 +134,9 @@ export class RequestCenterService {
   }
 
   addInterview(interviewerID: number[],  interviewDate: string, timeStart: string, timeEnd: string, additionalInfo: string ){
-    console.log("Interview send");
     const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ADD;
     const newInterview = new interview(interviewerID, interviewDate, timeStart, timeEnd, additionalInfo);
     this.requester.postRequest<interview>(url, newInterview).subscribe(returnData=>{
-      console.log(returnData);
     })
   }
 
@@ -181,17 +172,11 @@ export class RequestCenterService {
   }
   //! Only for use in calendar app
   getInterviewByRecruiter(events: CalendarEvent[]){
-    console.log("ints vis recuiter !!!!!!!")
     const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_BY_REC;
     let out;
     this.requester.getRequest<availability>(url).subscribe(returnData=>{
-      console.log("into the return !!!!!!");
-      console.log(returnData);
       out=<Array<availability>><unknown>returnData;
       out.forEach(element =>{
-        console.log(" in question!!!!!");
-        console.log(element);
-        console.log(element.start_time);
         const start = new Date(element.date);
         const end = new Date(element.date);
         const times1 = element.start_time.split(":");
@@ -210,7 +195,6 @@ export class RequestCenterService {
             title: 'interview',
             color: COLOURS.RED_DARK,
           })
-          console.log("length of events list: " + events.length);
       })
       return returnData;
     })
@@ -219,7 +203,6 @@ export class RequestCenterService {
   getInterviewAll(){
     const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ALL;
     this.requester.getRequest<interview>(url).subscribe(returnData=>{
-      console.log(returnData);
       return returnData;
     })
   }
@@ -238,7 +221,6 @@ export class RequestCenterService {
   getUser(){
     const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.USER_FIND;
     this.requester.getRequest<userData>(url).subscribe(returnData=>{
-      console.log(returnData);
       return returnData;
     })
   }
@@ -247,7 +229,6 @@ export class RequestCenterService {
     const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.SKILLS_GET;
     let out;
     this.requester.getRequest<skills>(url).subscribe(returnData=>{
-      console.log(returnData);
       out = returnData;
     })
     out = <Array<skills>><unknown> out;
@@ -267,7 +248,6 @@ export class RequestCenterService {
     let out;
     this.requester.getRequest<skills>(url).subscribe(returnData=>{
       out = <Array<skills>><unknown>returnData;
-      // console.log(out);
       out.forEach(element => {
         console.log(element);
         skillNames.add(element.skillName);
@@ -399,7 +379,6 @@ export class RequestCenterService {
     const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.APPLICANT_ADD;
     const newApplicant = new applicant("ted", "testerton", "ted@test.com", 100, 1);
     this.requester.postRequest<applicant>(url, newApplicant).subscribe(returnData=>{
-      console.log(returnData);
     })
   }
 
@@ -408,7 +387,6 @@ export class RequestCenterService {
     const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.APPLICANT_ALL;
     let out;
     this.requester.getRequest<applicant>(url).subscribe(returnData=>{
-      console.log(returnData);
       out = <Array<applicant>><unknown>returnData;
       out.forEach(ele=>{
         applicantList.push(ele.firstName +",");

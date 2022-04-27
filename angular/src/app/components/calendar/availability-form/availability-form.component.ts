@@ -2,8 +2,7 @@ import { Component, OnInit, Output, EventEmitter, TemplateRef } from '@angular/c
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { TimepickerConfig } from 'ngx-bootstrap/timepicker';
-import { RequestCenterService } from '../../requester/request-center.service';
-
+import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 @Component({
   selector: 'availability-form',
   templateUrl: './availability-form.component.html',

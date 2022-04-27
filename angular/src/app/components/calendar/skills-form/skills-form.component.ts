@@ -2,8 +2,9 @@ import { Component, OnInit, Output, EventEmitter, TemplateRef } from '@angular/c
 import { FormGroup, FormBuilder, Validators, } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
-import { RequestCenterService } from '../../requester/request-center.service';
-import { skills } from '../../requester/requestBodyTypes/types';
+import { RequestCenterService } from 'src/app/services/requester/request-center.service';
+import { skills } from 'src/app/constants/types';
+
 @Component({
   selector: 'skills-form',
   templateUrl: './skills-form.component.html',

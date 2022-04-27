@@ -1,9 +1,8 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { RequestCenterService } from '../../requester/request-center.service';
-import { skills } from '../../requester/requestBodyTypes/types';
-
+import { RequestCenterService } from 'src/app/services/requester/request-center.service';
+import { skills } from 'src/app/constants/types';
 @Component({
   selector: 'add-applicant',
   templateUrl: './add-applicant.component.html',

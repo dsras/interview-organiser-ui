@@ -5,9 +5,8 @@ import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, } from 'angular-calendar';
 import { MDBModalRef, MDBModalService } from 'ng-uikit-pro-standard';
-import { ViewAvailabilityComponent } from './view-availability-modal/view-availability.component';
-import { skills, } from '../requester/requestBodyTypes/types'
-import { RequestCenterService } from '../requester/request-center.service';
+import { skills } from '../../constants/types';
+import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 const colors: any = {
