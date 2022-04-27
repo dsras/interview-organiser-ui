@@ -1,7 +1,7 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { NgxSpinnerService } from "ngx-spinner";
-import { Observable, catchError } from "rxjs";
+import { Observable } from "rxjs";
 import { finalize, map } from "rxjs/operators";
 
 @Injectable()
