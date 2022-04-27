@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { TimepickerConfig } from 'ngx-bootstrap/timepicker';
+import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 @Component({
   selector: 'availability-form',
@@ -12,8 +12,6 @@ import { RequestCenterService } from 'src/app/services/requester/request-center.
 })
 
 export class AvailabilityFormComponent implements OnInit {
-
-  modalRef?: BsModalRef
 
   createAvailabilityForm: FormGroup = this.fb.group ({
     startTime: ['', Validators.required],
@@ -27,13 +25,17 @@ export class AvailabilityFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private rs: RequestCenterService,
-    private ms: BsModalService
+    private ms: ModalControllerService
     ) { }
 
   ngOnInit(): void {}
 
   openModal(template: TemplateRef<any>) {
-    this.modalRef = this.ms.show(template);
+    this.ms.openModal(template)
+  }
+
+  closeModal() {
+    this.ms.closeModal()
   }
 
   onSubmit(f: FormGroup) {

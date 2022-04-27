@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, TemplateRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, } from '@angular/forms';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import { Subject } from 'rxjs';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 import { skills } from 'src/app/constants/types';
@@ -14,30 +14,12 @@ export class SkillsFormComponent implements OnInit {
 
   
   skillsMap: Map<number, string[]> = new Map<number, string[]>();
-  // //? Should this be pulled from DB or better to store in frontend
-  // skills = [
-  //   'Java', 'Python', 'Spring', 'C', 'C++', 'C#',
-  //   'Haskell', 'Angular', 'JavaScript', 'VISUAL-BASIC',
-  // ]
 
-  // //? As above
-  // levels = [
-  //   'Level 1',
-  //   'Level 2',
-  //   'Level 3',
-  //   'Level 4',
-  //   'Level 5',
-  // ]  
-  //? Should this be pulled from DB or better to store in frontend
-  // TODO output from calendar later?
+  levels: Set<string> = new Set<string>();
+
   skillsAvailable: skills[] = [];
 
   skillNamesAvailable: Set<string> = new Set<string>();
-
-  //? As above
-  levels: Set<string> = new Set<string>();
-
-  modalRef?: BsModalRef;
 
   addSkillsForm: FormGroup = this.fb.group ({
     skill: ['', Validators.required],
@@ -48,11 +30,11 @@ export class SkillsFormComponent implements OnInit {
 
   action = new Subject<any>();
 
-  //todo add Thorfinn's Services here
   constructor(
     private fb: FormBuilder,
     private rs: RequestCenterService,
-    private ms: BsModalService    ) { 
+    private ms: ModalControllerService
+  ) { 
 
   }
 
@@ -63,47 +45,27 @@ export class SkillsFormComponent implements OnInit {
   }
 
   openModal(template: TemplateRef<any>) {
-    this.modalRef = this.ms.show(template);
-  }
-  //? anything to be saved
-  onSubmit2(f: FormGroup) {
-    this.skillFormSubmitted.emit(f);
+    this.ms.openModal(template);
   }
 
-
-  test(){
-    console.log("skillslist " + this.skillsAvailable.length);
+  closeModal() {
+    this.ms.closeModal()
   }
 
   onSubmit(f: FormGroup) {
-    this.addSkillsForm.setValue(f.value);
-    var skillName = JSON.stringify(f.value.skill);
-    var skillLevel = JSON.stringify(f.value.level);
+    let skillName = JSON.stringify(f.value.skill);
+    let skillLevel = JSON.stringify(f.value.level);
     skillName = skillName.slice(1,-1);
     skillLevel = skillLevel.slice(1,-1);
-    var id = 0;
+    let id = 0;
     this.skillsAvailable.forEach(element => {
       if(element.skillName === skillName && element.skillLevel === skillLevel){
         id = element.id;
-        console.log("found id: " + id); 
       }
     });
     this.rs.addSkills(id);
     this.skillFormSubmitted.emit(f);
-    this.addSkillsForm.reset();
-  }
-
-//* test methods
-  yell(): void {
-    console.log('Yell')
-  }
-
-  onYesClick() {
-    this.action.next('yes');
-  }
-
-  onNoClick() {
-    this.action.next('No');
+    f.reset();
   }
 
 }

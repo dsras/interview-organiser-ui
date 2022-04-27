@@ -1,22 +1,30 @@
 <div class="card-header info-color white-text text-center py-4" style="width: 100%; color: black; background-color: orange;">
   <h5>
-    This is your current availability offered.
+    {{ availability[0].start | date }} availability.
   </h5>
 </div>
-<div class="card" id="availabilityOutput" style="width: 500px; padding: 3%; white-space: pre-line">Length > {{ availability.length }}</div>
-<div class="card-header info-color white-text text-center py-4">
-  <h5>
-    This is your current interviews booked
-  </h5>
-</div>
-<div class="card" id="interviewOutput" style="width: 500px; padding: 3%; white-space: pre-line">Size > {{ interviews.length }}</div>
-<!-- <div class="card" id="dan-output" style="width: 500px; padding: 3%; white-space: pre-line">
+<div class="card" id="availabilityOutput" style="width: 500px; padding: 3%; white-space: pre-line">
   <ol class="interviews">
-    <li *ngFor="let interview of interviews">
-      {{ interview.start }}
+    <li *ngFor="let slot of availability">
+      {{ slot.start | time }} => {{ slot?.end?.getDate() | stringTime }}
     </li>
   </ol>
-</div> -->
+</div>
+<div *ngIf="interviews.length > 0">
+  <div class="card-header info-color white-text text-center py-4">
+    <h5>
+      {{ availability[0].start | date }} interviews.
+    </h5>
+  </div>
+  <div class="card" id="interviewOutput" style="width: 500px; padding: 3%; white-space: pre-line">
+    <ol class="interviews">
+      <li *ngFor="let slot of interviews">
+        {{ slot.start | time }} => {{ slot?.end?.getDate() | stringTime }}
+      </li>
+    </ol>
+  </div>
+</div>
+
 <div class="modal-footer">
   <div layout-align="start center">
     <availability-form></availability-form>
