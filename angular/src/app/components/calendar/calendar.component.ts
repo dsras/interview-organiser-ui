@@ -4,10 +4,9 @@ import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMo
 import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, } from 'angular-calendar';
-import { MDBModalRef, MDBModalService } from 'ng-uikit-pro-standard';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { skills } from '../../constants/types';
+import { ModalControllerService } from 'src/app/services/modal-controller.service';
 
 const colors: any = {
   red: {
@@ -44,9 +43,6 @@ const colors: any = {
 
 export class CalendarComponent implements OnInit{
 
-  modalRef: MDBModalRef | null = null;
-  modalRef2?: BsModalRef;
-
   //TODO Test data initialiser, needs removed after testing complete
   mockAvailability!: any;
 
@@ -63,8 +59,7 @@ export class CalendarComponent implements OnInit{
   constructor(
     private router: Router,
     private modal: NgbModal,
-    private modalService: MDBModalService,
-    private ms: BsModalService,
+    private ms: ModalControllerService,
     private rs: RequestCenterService
   ) {  }
 
@@ -206,7 +201,7 @@ export class CalendarComponent implements OnInit{
         }
       }
     }
-    this.modalRef = this.modalService.show(this.dayContent)
+    this.ms.openModalLg(this.dayContent)
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {

@@ -1,4 +1,5 @@
 <form [formGroup]="statusForm">
+<div class="row-sm">
   <select id="status" type="text" formControlName="status">
     <option value="" disabled selected hidden>Status</option>
     <option *ngFor="let state of interviewerOptions" [ngValue]="state">
@@ -6,4 +7,5 @@
     </option>  
   </select>
   <button class="btn btn-warning" (click)="onSubmit(statusForm)">Submit</button>
+</div>
 </form>
