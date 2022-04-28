@@ -19,7 +19,7 @@ export class ViewAvailabilityComponent implements OnInit {
   }
   action = new Subject<any>();
 
-  constructor( ) {
+  constructor() {
   }
 
 }

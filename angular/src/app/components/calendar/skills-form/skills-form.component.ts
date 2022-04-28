@@ -12,7 +12,7 @@ import { skills } from 'src/app/constants/types';
 })
 export class SkillsFormComponent implements OnInit {
 
-  
+
   skillsMap: Map<number, string[]> = new Map<number, string[]>();
 
   levels: Set<string> = new Set<string>();
@@ -21,7 +21,7 @@ export class SkillsFormComponent implements OnInit {
 
   skillNamesAvailable: Set<string> = new Set<string>();
 
-  addSkillsForm: FormGroup = this.fb.group ({
+  addSkillsForm: FormGroup = this.fb.group({
     skill: ['', Validators.required],
     level: ['', Validators.required],
   })
@@ -34,32 +34,32 @@ export class SkillsFormComponent implements OnInit {
     private fb: FormBuilder,
     private rs: RequestCenterService,
     private ms: ModalControllerService
-  ) { 
+  ) {
 
   }
 
   ngOnInit(): void {
-      // TODO maybe put in parent as an input/output relationship
-      this.rs.getAllSkills(this.skillsAvailable, this.skillNamesAvailable, this.levels );
-      console.log("skillslist " + this.skillsAvailable.length)
+    // TODO maybe put in parent as an input/output relationship
+    this.rs.getAllSkills(this.skillsAvailable, this.skillNamesAvailable, this.levels);
+    console.log("skillslist " + this.skillsAvailable.length)
   }
 
-  openModal(template: TemplateRef<any>) {
+  openModal(template: TemplateRef<any>): void {
     this.ms.openModal(template);
   }
 
-  closeModal() {
+  closeModal(): void {
     this.ms.closeModal()
   }
 
-  onSubmit(f: FormGroup) {
-    let skillName = JSON.stringify(f.value.skill);
-    let skillLevel = JSON.stringify(f.value.level);
-    skillName = skillName.slice(1,-1);
-    skillLevel = skillLevel.slice(1,-1);
-    let id = 0;
+  onSubmit(f: FormGroup): void {
+    let skillName: string = JSON.stringify(f.value.skill);
+    let skillLevel: string = JSON.stringify(f.value.level);
+    skillName = skillName.slice(1, -1);
+    skillLevel = skillLevel.slice(1, -1);
+    let id: number = 0;
     this.skillsAvailable.forEach(element => {
-      if(element.skillName === skillName && element.skillLevel === skillLevel){
+      if (element.skillName === skillName && element.skillLevel === skillLevel) {
         id = element.id;
       }
     });

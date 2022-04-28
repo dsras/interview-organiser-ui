@@ -10,7 +10,7 @@ import { ModalControllerService } from 'src/app/services/modal-controller.servic
 export class AllInterviewsComponent implements OnInit {
 
   //todo type any to appropriate type
-  interviews = <Array<interview>>[];
+  interviews: Array<interview> = [];
 
   constructor(
     private rs: RequestCenterService,
@@ -19,27 +19,18 @@ export class AllInterviewsComponent implements OnInit {
 
   ngOnInit(): void {
     this.rs.getInterviewsDashboard(this.interviews);
-    }
+  }
 
-  print(obj: any) {
+  print(obj: any): void {
     console.log(JSON.stringify(obj))
   }
 
-  openModal(template: TemplateRef<any>) {
+  openModal(template: TemplateRef<any>): void {
     this.ms.openModal(template)
   }
 
-  // createOL(array: any[]) {
-  //   let list = document.createElement('ol');
-    
-  //   for (let i = 0; i < array.length; i++) {
-  //     let item = document.createElement('li');
-  //     item.appendChild(document.createTextNode(array[i]));
-  //     list.appendChild(item);
-  //   }
-
-  //   return list
-
-  // }
+  closeModal(): void {
+    this.ms.closeModal()
+  }
 
 }

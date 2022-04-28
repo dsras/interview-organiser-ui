@@ -239,21 +239,21 @@ export class interview implements data{
 }
 
 export class interviewReturn implements data{
-    interviewer_id: number;
+    interview_id: number;
     interviewers: string[];
     date: string;
     start_time: string;
     end_time: string;
     additional_info: string;
     constructor(
-        interviewer_id: number,
+        interview_id: number,
         interviewers: string[],
         date: string,
         start_time: string,
         end_time: string,
         additional_info: string,
     ){
-        this.interviewer_id = interviewer_id;
+        this.interview_id = interview_id;
         this.interviewers = interviewers;
         this.date = date;
         this.start_time = start_time;

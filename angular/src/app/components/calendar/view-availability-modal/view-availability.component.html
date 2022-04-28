@@ -1,5 +1,6 @@
 <div *ngIf="availability.length > 0">
-  <div class="card-header  info-color white-text text-center py-4" style="width: 100%; color: black; background-color: orange;">
+  <div class="card-header  info-color white-text text-center py-4"
+    style="width: 100%; color: black; background-color: orange;">
     <h5>
       {{ availability[0].start | date }} availability.
     </h5>
@@ -7,18 +8,19 @@
   <div class="row padded">
     <div class="card" id="availabilityOutput">
       <div *ngFor="let slot of availability">
-        {{ slot.start | date:'shortTime' }} => {{ slot?.end | date:'shortTime' }}  
+        {{ slot.start | date:'shortTime' }} => {{ slot?.end | date:'shortTime' }}
       </div>
     </div>
   </div>
 </div>
 <div *ngIf="interviews.length > 0">
-  <div class="card-header  info-color white-text text-center py-4" style="width: 100%; color: black; background-color: orange;">
+  <div class="card-header  info-color white-text text-center py-4"
+    style="width: 100%; color: black; background-color: orange;">
     <h5>
       {{ interviews[0].start | date }} interviews.
     </h5>
   </div>
-  <div class="modal-body padded" id="interviewOutput" >
+  <div class="modal-body padded" id="interviewOutput">
     <div class="row" *ngFor="let slot of interviews">
       <div class="col-sm-3">
         {{ slot.start | date:'shortTime' }} => {{ slot?.end | date:'shortTime' }}
@@ -35,4 +37,3 @@
     <availability-form></availability-form>
   </div>
 </div>
-

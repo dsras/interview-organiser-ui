@@ -29,7 +29,7 @@ import { ModalControllerService } from 'src/app/services/modal-controller.servic
   styleUrls: ['./calendar.component.scss']
 })
 
-export class CalendarComponent implements OnInit{
+export class CalendarComponent implements OnInit {
 
   //TODO Test data initialiser, needs removed after testing complete
   mockAvailability!: any;
@@ -41,7 +41,7 @@ export class CalendarComponent implements OnInit{
 
 
   //* This is where the local calendar events are stored
-  skills: skills[]=[];
+  skills: skills[] = [];
   events: CalendarEvent[] = [];
 
   constructor(
@@ -49,91 +49,91 @@ export class CalendarComponent implements OnInit{
     private modal: NgbModal,
     private ms: ModalControllerService,
     private rs: RequestCenterService
-  ) {  }
+  ) { }
 
   ngOnInit(): void {
     this.populateCalendar();
   }
 
-  redirect(page: string) : void {
+  redirect(page: string): void {
     this.router.navigate([page]);
   }
 
-  sleep(ms: number) {
+  sleep(ms: number): Promise<any> {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  async delayedRefresh() {
-    await this.sleep(2500).then(() =>this.refresh.next()).catch();
+  async delayedRefresh(): Promise<void> {
+    await this.sleep(2500).then(() => this.refresh.next()).catch();
   }
 
-  getInterviewsByRec(){
+  getInterviewsByRec(): void {
     this.rs.getInterviewByRecruiter(this.events);
   }
 
-  getInterviewsByInter(){
+  getInterviewsByInter(): void {
     this.rs.getInterviewByInterviewer(this.events);
   }
 
-  getSkillsforUser(){
+  getSkillsforUser(): void {
     this.rs.getSkills();
   }
 
-  getApplicants(){
+  getApplicants(): void {
     // this.rs.getAllApplicants();
   }
 
-  getUser(){
+  getUser(): void {
     this.rs.getUser();
   }
 
-  populateViaRecruiter(){
-    this.events=[];
+  populateViaRecruiter(): void {
+    this.events = [];
     this.rs.getAllAvailability(this.events);
     this.delayedRefresh();
   }
 
-  populateCalendar()  {
+  populateCalendar(): void {
     this.events = [];
     this.rs.getMyAvailability(this.events);
     this.rs.getInterviewByInterviewer(this.events);
     this.delayedRefresh();
   }
 
-  buttonRefresh(){
+  buttonRefresh(): void {
     this.refresh.next();
   }
 
   // * Test method
   // checkConnection(){
-    // var skillsIDs = [1,2,3];
-    // this.rs.getAvailabilityOnSkill(skillsIDs);
-    //this.rs.addApplicant();
+  // var skillsIDs = [1,2,3];
+  // this.rs.getAvailabilityOnSkill(skillsIDs);
+  //this.rs.addApplicant();
 
-    // this.rs.addInterview([23], "2022-04-22","09:00", "10:00", "some additional info");
-    // var url = "http://localhost:8080/users/welcome";
-    // this.requester.getRequest<string>(url).subscribe(returnData =>{
-    //   console.log(returnData);
+  // this.rs.addInterview([23], "2022-04-22","09:00", "10:00", "some additional info");
+  // var url = "http://localhost:8080/users/welcome";
+  // this.requester.getRequest<string>(url).subscribe(returnData =>{
+  //   console.log(returnData);
 
-    // })
+  // })
 
-    // var url = "http://localhost:8080/users/user?username=test_user1";
-    // this.requester.getRequest<userData>(url).subscribe(returnData =>{
-    //   console.log(returnData);
+  // var url = "http://localhost:8080/users/user?username=test_user1";
+  // this.requester.getRequest<userData>(url).subscribe(returnData =>{
+  //   console.log(returnData);
 
-    // })
+  // })
 
-    // url = "http://localhost:8080/skills/skill?name=Java";
-    // this.requester.getRequest<skills>(url).subscribe(returnData =>{
-    //   console.log(returnData);
+  // url = "http://localhost:8080/skills/skill?name=Java";
+  // this.requester.getRequest<skills>(url).subscribe(returnData =>{
+  //   console.log(returnData);
 
-    // })
+  // })
 
-    // var newSkill = new skills(1,"running", "expert");
-    // url = "http://localhost:8080/skills/new";
-    // this.requester.postRequest<skills>(url, newSkill).subscribe(returnData=>{
-    //   console.log(returnData);
-    // })
+  // var newSkill = new skills(1,"running", "expert");
+  // url = "http://localhost:8080/skills/new";
+  // this.requester.postRequest<skills>(url, newSkill).subscribe(returnData=>{
+  //   console.log(returnData);
+  // })
 
   // }
 
@@ -180,12 +180,12 @@ export class CalendarComponent implements OnInit{
     this.dayInterviews = [];
 
     for (const element of this.events) {
-      if(isSameDay(element.start, dateSelected)){
-        if(element.title === 'availability'){
-            this.dayAvailability.push(element);
+      if (isSameDay(element.start, dateSelected)) {
+        if (element.title === 'availability') {
+          this.dayAvailability.push(element);
         }
-          else if(element.title === 'interview'){
-            this.dayInterviews.push(element);
+        else if (element.title === 'interview') {
+          this.dayInterviews.push(element);
         }
       }
     }
@@ -245,15 +245,15 @@ export class CalendarComponent implements OnInit{
   // }
 
 
-  deleteEvent(eventToDelete: CalendarEvent) {
+  deleteEvent(eventToDelete: CalendarEvent): void {
     this.events = this.events.filter((event) => event !== eventToDelete);
   }
 
-  setView(view: CalendarView) {
+  setView(view: CalendarView): void {
     this.view = view;
   }
 
-  closeOpenMonthViewDay() {
+  closeOpenMonthViewDay(): void {
     this.activeDayIsOpen = false;
   }
 
