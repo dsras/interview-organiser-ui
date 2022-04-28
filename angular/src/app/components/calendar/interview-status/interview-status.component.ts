@@ -53,16 +53,16 @@ export class InterviewStatusComponent implements OnInit {
 
   onSubmit(f: FormGroup) {
     let str = f.value.status;
-    let num = -1
+    let id: string | number | undefined
 
     console.warn(this.slot)
     if (this.slot?.id) {
-      num = this.slot.id
+      id = this.slot.id
     }
 
     console.log(f.value);
     // this.rs.updateStatus(num, str, true)
-    console.warn(num);
+    console.warn(id);
     console.warn(str);
     f.reset();
   }

@@ -8,37 +8,25 @@ import { RequestCenterService } from 'src/app/services/requester/request-center.
 import { skills } from '../../constants/types';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
 
-const colors: any = {
-  red: {
-    primary: '#ad2121',
-    secondary: '#FAE3E3',
-  },
-  blue: {
-    primary: '#1e90ff',
-    secondary: '#D1E8FF',
-  },
-  yellow: {
-    primary: '#e3bc08',
-    secondary: '#FDF1BA',
-  },
-};
+// const colors: any = {
+//   red: {
+//     primary: '#ad2121',
+//     secondary: '#FAE3E3',
+//   },
+//   blue: {
+//     primary: '#1e90ff',
+//     secondary: '#D1E8FF',
+//   },
+//   yellow: {
+//     primary: '#e3bc08',
+//     secondary: '#FDF1BA',
+//   },
+// };
 @Component({
   selector: 'calendar',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styles: [
-    `
-      h3 {
-        margin: 0 0 10px;
-      }
-
-      pre {
-        background-color: #f5f5f5;
-        padding: 15px;
-      }
-    `,
-  ],
   templateUrl: './calendar.component.html',
-  styleUrls: ['../../../styles.scss']
+  styleUrls: ['./calendar.component.scss']
 })
 
 export class CalendarComponent implements OnInit{
