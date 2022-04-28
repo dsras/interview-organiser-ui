@@ -124,7 +124,6 @@ export class RequestCenterService {
     const dateString = formDecomp[1];
     let startTimeString ;
     let endTimeString = "";
-    console.log(startTime.toString());
     if(startTime.toString() != ""){
       startTimeString = this.dateToStringTime(startTime);
 
@@ -258,13 +257,11 @@ export class RequestCenterService {
   }
 
   getAllSkills(skills: skills[], skillNames: Set<string>, levels: Set<string>) {
-    console.log("skills call");
     const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.SKILLS_GET_ALL;
     let out;
     this.requester.getRequest<skills>(url).subscribe(returnData=>{
       out = <Array<skills>><unknown>returnData;
       out.forEach(element => {
-        console.log(element);
         skillNames.add(element.skillName);
         levels.add(element.skillLevel);
         skills.push({
