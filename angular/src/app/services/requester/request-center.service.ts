@@ -1,22 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Requester } from '../requester/requester.service';
 import { 
-  data,
   userData,
   skills,
   availability,
   interview,
-  skillIdOnly,
   applicant,
   interviewRange,
   availabilityRange,
   availabilityForInterviews,
-  statusUpdate
+  statusUpdate,
+  interviewReturn
  }from '../../constants/types'
 import{ APPCONSTANTS }from '../../constants/app.constant'
-import { CalendarEvent, CalendarEventAction } from 'angular-calendar';
+import { CalendarEvent } from 'angular-calendar';
 import { COLOURS } from '../../constants/colours.constant';
-import { start } from 'repl';
 
 
 @Injectable({
@@ -81,7 +79,7 @@ export class RequestCenterService {
       out.forEach(element => {
         const start = new Date(element.date);
         const end = new Date(element.date);
-
+        const id = element.availability_id
         const times1 = element.start_time.split(":");
         const times2 = element.end_time.split(":");
         
@@ -90,10 +88,11 @@ export class RequestCenterService {
 
         
         events.push({
-            start: start,
-            end: end,
-            title: 'availability',
-            color: COLOURS.BLUE_DARK,
+          id: id,
+          start: start,
+          end: end,
+          title: 'availability',
+          color: COLOURS.BLUE_DARK,
           })
       });
     })
@@ -126,7 +125,6 @@ export class RequestCenterService {
     const dateString = formDecomp[1];
     let startTimeString ;
     let endTimeString = "";
-    console.log(startTime.toString());
     if(startTime.toString() != ""){
       startTimeString = this.dateToStringTime(startTime);
 
@@ -156,28 +154,30 @@ export class RequestCenterService {
   getInterviewByInterviewer(events: CalendarEvent[]){
     const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_BY_INT;
     let out;
-    this.requester.getRequest<availability>(url).subscribe(returnData=>{
-      out=<Array<availability>><unknown>returnData;
+    this.requester.getRequest<interviewReturn>(url).subscribe(returnData=>{
+      out=<Array<interviewReturn>><unknown>returnData;
       out.forEach(element =>{
         const start = new Date(element.date);
         const end = new Date(element.date);
+        const id = element.interviewer_id;
+        const interviewers = element.interviewers;
         const times1 = element.start_time.split(":");
         const times2 = element.end_time.split(":");
         
         start.setHours(parseInt(times1[0]),parseInt(times1[1]));
         end.setHours(parseInt(times2[0]),parseInt(times2[1]));
         
-
         // var dateString = start.getFullYear().toString() + "-" + this.bufTimeString((start.getUTCMonth() + 1).toString()) + "-" + start.getDate().toString();
         // var startString = this.bufTimeString(start.getHours().toString()) + ":" + this.bufTimeString(start.getMinutes().toString());
         // var endString = this.bufTimeString(end.getHours().toString()) + ":" + this.bufTimeString(end.getMinutes().toString());
     
-
         events.push({
-            start: start,
-            end: end,
-            title: 'interview',
-            color: COLOURS.RED_DARK,
+          id: id,
+          interviewers: interviewers,
+          start: start,
+          end: end,
+          title: 'interview',
+          color: COLOURS.RED_DARK,
           })
       })
       return returnData;
@@ -192,6 +192,7 @@ export class RequestCenterService {
       out.forEach(element =>{
         const start = new Date(element.date);
         const end = new Date(element.date);
+        const id = element.availability_id
         const times1 = element.start_time.split(":");
         const times2 = element.end_time.split(":");
         
@@ -203,10 +204,11 @@ export class RequestCenterService {
         // var endString = this.bufTimeString(end.getHours().toString()) + ":" + this.bufTimeString(end.getMinutes().toString());
     
         events.push({
-            start: start,
-            end: end,
-            title: 'interview',
-            color: COLOURS.RED_DARK,
+          id: id,
+          start: start,
+          end: end,
+          title: 'interview',
+          color: COLOURS.RED_DARK,
           })
       })
       return returnData;
@@ -256,13 +258,11 @@ export class RequestCenterService {
   }
 
   getAllSkills(skills: skills[], skillNames: Set<string>, levels: Set<string>) {
-    console.log("skills call");
     const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.SKILLS_GET_ALL;
     let out;
     this.requester.getRequest<skills>(url).subscribe(returnData=>{
       out = <Array<skills>><unknown>returnData;
       out.forEach(element => {
-        console.log(element);
         skillNames.add(element.skillName);
         levels.add(element.skillLevel);
         skills.push({
@@ -283,6 +283,7 @@ export class RequestCenterService {
       out.forEach(element => {
         const start = new Date(element.date);
         const end = new Date(element.date);
+        const id = element.availability_id
         const times1 = element.start_time.split(":");
         const times2 = element.end_time.split(":");
         
@@ -290,10 +291,11 @@ export class RequestCenterService {
         end.setHours(parseInt(times2[0]),parseInt(times2[1]));
         
         events.push({
-            start: start,
-            end: end,
-            title: 'An event made progmatically',
-            color: COLOURS.GREEN_LITE,
+          id: id,
+          start: start,
+          end: end,
+          title: 'An event made progmatically',
+          color: COLOURS.GREEN_LITE,
           })
       });
     })
@@ -329,7 +331,7 @@ export class RequestCenterService {
   // * in progress
   getAvailabilityByRange(
       startDate:string, 
-      endDate:string, 
+      endDate:string,  
       startTime: string, 
       endTime: string, 
       skillsIDList:number[], 
@@ -339,13 +341,10 @@ export class RequestCenterService {
     const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_FILTER;
     const newStartDate= new Date(startDate);
     const newEndDate = new Date(endDate);
-    console.log(startTime);
     const newStartTime = new Date(startTime);
     const newEndTime = new Date(endTime);
     newStartTime.setDate(newStartDate.getDate());
     newEndTime.setDate(newStartDate.getDate());
-    console.log(newStartTime);
-
     const startDateString = newStartDate.getFullYear().toString() + "-" + this.bufTimeString((newStartDate.getUTCMonth() + 1).toString()) + "-" + this.bufTimeString(newStartDate.getDate().toString());
     const endDateString = newEndDate.getFullYear().toString() + "-" + this.bufTimeString((newEndDate.getUTCMonth() + 1).toString()) + "-" + this.bufTimeString(newEndDate.getDate().toString());
     const startString = this.bufTimeString(newStartTime.getHours().toString()) + ":" + this.bufTimeString(newStartTime.getMinutes().toString());
@@ -355,7 +354,6 @@ export class RequestCenterService {
     this.requester.postRequestNoType<availabilityForInterviews>(url, newRange).subscribe(returnData=>{
       let data = <Array<availabilityForInterviews>> returnData;
       data.forEach(ele => {
-        console.log(ele);
         var refStart = new Date(newStartTime);
         var refEnd = new Date(newStartTime);
         refStart.setHours(Number.parseInt(ele.start_time.split(':')[0]),Number.parseInt(ele.start_time.split(':')[1]))

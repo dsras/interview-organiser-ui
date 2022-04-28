@@ -9,11 +9,10 @@ import { CalendarComponent } from './calendar.component';
 import { AvailabilityFormComponent } from './availability-form/availability-form.component';
 import { SkillsFormComponent } from './skills-form/skills-form.component';
 import { ViewAvailabilityComponent } from './view-availability-modal/view-availability.component';
-import { ReactiveFormsModule } from '@angular/forms';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { TimePipe } from 'src/app/pipes/time.pipe';
-import { StringTimePipe } from './pipes/string-time.pipe';
+import { InterviewStatusComponent } from './interview-status/interview-status.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -34,8 +33,7 @@ import { StringTimePipe } from './pipes/string-time.pipe';
     AvailabilityFormComponent,
     SkillsFormComponent, 
     ViewAvailabilityComponent,
-    TimePipe,
-    StringTimePipe  ],
+    InterviewStatusComponent  ],
   exports: [CalendarComponent],
 })
 export class MyCalendarModule{}

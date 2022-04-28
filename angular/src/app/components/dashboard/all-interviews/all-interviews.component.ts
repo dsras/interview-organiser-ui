@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 import { interview } from 'src/app/constants/types';
+import { ModalControllerService } from 'src/app/services/modal-controller.service';
 @Component({
   selector: 'all-interviews',
   templateUrl: './all-interviews.component.html',
@@ -12,7 +13,8 @@ export class AllInterviewsComponent implements OnInit {
   interviews = <Array<interview>>[];
 
   constructor(
-    private rs: RequestCenterService
+    private rs: RequestCenterService,
+    private ms: ModalControllerService,
   ) { }
 
   ngOnInit(): void {
@@ -20,12 +22,11 @@ export class AllInterviewsComponent implements OnInit {
     }
 
   print(obj: any) {
-    console.log('print')
-    console.warn(obj)
+    console.log(JSON.stringify(obj))
   }
 
-  logInterviews() {
-    console.log(this.interviews)
+  openModal(template: TemplateRef<any>) {
+    this.ms.openModal(template)
   }
 
   // createOL(array: any[]) {

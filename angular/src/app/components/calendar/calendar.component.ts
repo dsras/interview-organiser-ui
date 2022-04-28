@@ -5,9 +5,9 @@ import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, } from 'angular-calendar';
 import { MDBModalRef, MDBModalService } from 'ng-uikit-pro-standard';
-import { skills } from '../../constants/types';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { skills } from '../../constants/types';
 
 const colors: any = {
   red: {
@@ -81,9 +81,7 @@ export class CalendarComponent implements OnInit{
   }
 
   async delayedRefresh() {
-    console.log('Hello');
     await this.sleep(2500).then(() =>this.refresh.next()).catch();
-    console.log("World2");
   }
 
   getInterviewsByRec(){
@@ -109,7 +107,6 @@ export class CalendarComponent implements OnInit{
   populateViaRecruiter(){
     this.events=[];
     this.rs.getAllAvailability(this.events);
-    console.log("length of events list ext: " + this.events.length);   
     this.delayedRefresh();
   }
 
@@ -125,12 +122,12 @@ export class CalendarComponent implements OnInit{
   }
 
   // * Test method
-  checkConnection(){
+  // checkConnection(){
     // var skillsIDs = [1,2,3];
     // this.rs.getAvailabilityOnSkill(skillsIDs);
     //this.rs.addApplicant();
 
-    this.rs.addInterview([23], "2022-04-22","09:00", "10:00", "some additional info");
+    // this.rs.addInterview([23], "2022-04-22","09:00", "10:00", "some additional info");
     // var url = "http://localhost:8080/users/welcome";
     // this.requester.getRequest<string>(url).subscribe(returnData =>{
     //   console.log(returnData);
@@ -155,7 +152,7 @@ export class CalendarComponent implements OnInit{
     //   console.log(returnData);
     // })
 
-  }
+  // }
 
 
   /**
@@ -246,23 +243,23 @@ export class CalendarComponent implements OnInit{
     this.modal.open(this.eventClickedContent, { size: 'lg' });
   }
 
-  // This is the default method that auto-generates an event for 'todays date'
-  addEvent(): void {
-    this.events = [
-      ...this.events,
-      {
-        title: 'New event',
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
-        color: colors.red,
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
-      },
-    ];
-  }
+  // * This is the default method that auto-generates an event for 'todays date'
+  // addEvent(): void {
+  //   this.events = [
+  //     ...this.events,
+  //     {
+  //       title: 'New event',
+  //       start: startOfDay(new Date()),
+  //       end: endOfDay(new Date()),
+  //       color: colors.red,
+  //       draggable: true,
+  //       resizable: {
+  //         beforeStart: true,
+  //         afterEnd: true,
+  //       },
+  //     },
+  //   ];
+  // }
 
 
   deleteEvent(eventToDelete: CalendarEvent) {

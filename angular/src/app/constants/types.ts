@@ -145,14 +145,17 @@ export class availabilityForInterviews implements data{
 }
 
 export class availability implements data{
+    availability_id: number;
     date: string;
     start_time: string;
     end_time: string;
     constructor(
+        availability_id: number,
         dateStart: string,
         start_time: string,
         end_time: string
     ){
+        this.availability_id = availability_id;
         this.date = dateStart;
         this.start_time = start_time;
         this.end_time = end_time;
@@ -230,6 +233,31 @@ export class interview implements data{
         this.end_time = end_time;
         //this.confirmed =confirmed;
         // this.skillID = skillID;
+        this.additional_info = additional_info;
+    }
+
+}
+
+export class interviewReturn implements data{
+    interviewer_id: number;
+    interviewers: string[];
+    date: string;
+    start_time: string;
+    end_time: string;
+    additional_info: string;
+    constructor(
+        interviewer_id: number,
+        interviewers: string[],
+        date: string,
+        start_time: string,
+        end_time: string,
+        additional_info: string,
+    ){
+        this.interviewer_id = interviewer_id;
+        this.interviewers = interviewers;
+        this.date = date;
+        this.start_time = start_time;
+        this.end_time = end_time;
         this.additional_info = additional_info;
     }
 

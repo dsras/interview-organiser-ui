@@ -27,7 +27,6 @@ import { AllInterviewsComponent } from './components/dashboard/all-interviews/al
 // [application Services]
 import { AppInterceptor } from './interceptor/app.interceptor';
 import { SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider } from 'angularx-social-login';
-import { DatePipe } from './pipes/date.pipe';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { APPCONSTANTS, prodEnv } from './constants/app.constant';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
@@ -61,7 +60,6 @@ const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCON
         AppComponent,
         LoginComponent,
         HeaderComponent,
-        DatePipe,
         DashboardComponent,
         FindInterviewComponent,
         CreateInterviewComponent,
@@ -127,5 +125,6 @@ const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCON
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     bootstrap: [AppComponent],
+
 })
 export class AppModule { }
