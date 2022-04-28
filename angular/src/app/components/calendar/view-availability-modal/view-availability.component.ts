@@ -22,12 +22,4 @@ export class ViewAvailabilityComponent implements OnInit {
   constructor( ) {
   }
 
-
-//? What does this do @Sulkyoptimism?
-  public test!: string;
-
-  setFormData(data: any): void {
-    this.test = data;
-
-  }
 }

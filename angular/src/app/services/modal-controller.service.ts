@@ -16,6 +16,10 @@ export class ModalControllerService {
     this.modalRef = this.modalService.show(template)
   }
 
+  openModalLg(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template, {class: 'modal-lg'})
+  }
+
   closeModal() {
     this.modalRef?.hide()
   }}
