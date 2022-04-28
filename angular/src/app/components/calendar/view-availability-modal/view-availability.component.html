@@ -6,7 +6,7 @@
 <div class="card" id="availabilityOutput" style="width: 500px; padding: 3%; white-space: pre-line">
   <ol class="interviews">
     <li *ngFor="let slot of availability">
-      {{ slot.start | time }} => {{ slot?.end?.getDate() | stringTime }}  
+      {{ slot.start | date:'shortTime' }} => {{ slot?.end | date:'shortTime' }}  
     </li>
   </ol>
 </div>
@@ -19,7 +19,7 @@
   <div class="card" id="interviewOutput" style="width: 500px; padding: 3%; white-space: pre-line">
     <ol class="interviews">
       <li *ngFor="let slot of interviews">
-        {{ slot.start | time }} => {{ slot?.end?.getDate() | stringTime }}        <interview-status [slot]="slot"></interview-status>
+        {{ slot.start | date:'shortTime' }} => {{ slot?.end | date:'shortTime' }}        <interview-status [slot]="slot"></interview-status>
       </li>
     </ol>
   </div>

@@ -9,7 +9,8 @@ import {
   interviewRange,
   availabilityRange,
   availabilityForInterviews,
-  statusUpdate
+  statusUpdate,
+  interviewReturn
  }from '../../constants/types'
 import{ APPCONSTANTS }from '../../constants/app.constant'
 import { CalendarEvent } from 'angular-calendar';
@@ -153,26 +154,26 @@ export class RequestCenterService {
   getInterviewByInterviewer(events: CalendarEvent[]){
     const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_BY_INT;
     let out;
-    this.requester.getRequest<availability>(url).subscribe(returnData=>{
-      out=<Array<availability>><unknown>returnData;
+    this.requester.getRequest<interviewReturn>(url).subscribe(returnData=>{
+      out=<Array<interviewReturn>><unknown>returnData;
       out.forEach(element =>{
         const start = new Date(element.date);
         const end = new Date(element.date);
-        const id = element.availability_id;
+        const id = element.interviewer_id;
+        const interviewers = element.interviewers;
         const times1 = element.start_time.split(":");
         const times2 = element.end_time.split(":");
         
         start.setHours(parseInt(times1[0]),parseInt(times1[1]));
         end.setHours(parseInt(times2[0]),parseInt(times2[1]));
         
-
         // var dateString = start.getFullYear().toString() + "-" + this.bufTimeString((start.getUTCMonth() + 1).toString()) + "-" + start.getDate().toString();
         // var startString = this.bufTimeString(start.getHours().toString()) + ":" + this.bufTimeString(start.getMinutes().toString());
         // var endString = this.bufTimeString(end.getHours().toString()) + ":" + this.bufTimeString(end.getMinutes().toString());
     
-
         events.push({
           id: id,
+          interviewers: interviewers,
           start: start,
           end: end,
           title: 'interview',

@@ -11,8 +11,6 @@ import { SkillsFormComponent } from './skills-form/skills-form.component';
 import { ViewAvailabilityComponent } from './view-availability-modal/view-availability.component';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { TimePipe } from 'src/app/pipes/time.pipe';
-import { StringTimePipe } from './pipes/string-time.pipe';
 import { InterviewStatusComponent } from './interview-status/interview-status.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -35,8 +33,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     AvailabilityFormComponent,
     SkillsFormComponent, 
     ViewAvailabilityComponent,
-    TimePipe,
-    StringTimePipe,
     InterviewStatusComponent  ],
   exports: [CalendarComponent],
 })
