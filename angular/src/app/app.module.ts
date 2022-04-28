@@ -14,6 +14,7 @@ import { AppComponent } from './app.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { FlexLayoutModule} from '@angular/flex-layout';
 
 // [application components]
 import { LoginComponent } from './components/login/login.component';
@@ -103,6 +104,7 @@ const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCON
         MdbTooltipModule,
         MdbValidationModule,
         TimepickerModule,
+        FlexLayoutModule,
     ],
     providers: [
         MDBSpinningPreloader,
