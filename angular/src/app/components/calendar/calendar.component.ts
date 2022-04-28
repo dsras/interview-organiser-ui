@@ -81,9 +81,7 @@ export class CalendarComponent implements OnInit{
   }
 
   async delayedRefresh() {
-    console.log('Hello');
     await this.sleep(2500).then(() =>this.refresh.next()).catch();
-    console.log("World2");
   }
 
   getInterviewsByRec(){
@@ -109,7 +107,6 @@ export class CalendarComponent implements OnInit{
   populateViaRecruiter(){
     this.events=[];
     this.rs.getAllAvailability(this.events);
-    console.log("length of events list ext: " + this.events.length);   
     this.delayedRefresh();
   }
 
@@ -125,12 +122,12 @@ export class CalendarComponent implements OnInit{
   }
 
   // * Test method
-  checkConnection(){
+  // checkConnection(){
     // var skillsIDs = [1,2,3];
     // this.rs.getAvailabilityOnSkill(skillsIDs);
     //this.rs.addApplicant();
 
-    this.rs.addInterview([23], "2022-04-22","09:00", "10:00", "some additional info");
+    // this.rs.addInterview([23], "2022-04-22","09:00", "10:00", "some additional info");
     // var url = "http://localhost:8080/users/welcome";
     // this.requester.getRequest<string>(url).subscribe(returnData =>{
     //   console.log(returnData);
@@ -155,7 +152,7 @@ export class CalendarComponent implements OnInit{
     //   console.log(returnData);
     // })
 
-  }
+  // }
 
 
   /**

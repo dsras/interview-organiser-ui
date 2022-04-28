@@ -81,7 +81,6 @@ export class RequestCenterService {
         const id = element.availability_id
         const times1 = element.start_time.split(":");
         const times2 = element.end_time.split(":");
-        console.error(element.availability_id)
         
         start.setHours(parseInt(times1[0]),parseInt(times1[1]));
         end.setHours(parseInt(times2[0]),parseInt(times2[1]));
@@ -334,7 +333,7 @@ export class RequestCenterService {
   // * in progress
   getAvailabilityByRange(
       startDate:string, 
-      endDate:string, 
+      endDate:string,  
       startTime: string, 
       endTime: string, 
       skillsIDList:number[], 
@@ -344,13 +343,10 @@ export class RequestCenterService {
     const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_FILTER;
     const newStartDate= new Date(startDate);
     const newEndDate = new Date(endDate);
-    console.log(startTime);
     const newStartTime = new Date(startTime);
     const newEndTime = new Date(endTime);
     newStartTime.setDate(newStartDate.getDate());
     newEndTime.setDate(newStartDate.getDate());
-    console.log(newStartTime);
-
     const startDateString = newStartDate.getFullYear().toString() + "-" + this.bufTimeString((newStartDate.getUTCMonth() + 1).toString()) + "-" + this.bufTimeString(newStartDate.getDate().toString());
     const endDateString = newEndDate.getFullYear().toString() + "-" + this.bufTimeString((newEndDate.getUTCMonth() + 1).toString()) + "-" + this.bufTimeString(newEndDate.getDate().toString());
     const startString = this.bufTimeString(newStartTime.getHours().toString()) + ":" + this.bufTimeString(newStartTime.getMinutes().toString());
@@ -360,7 +356,6 @@ export class RequestCenterService {
     this.requester.postRequestNoType<availabilityForInterviews>(url, newRange).subscribe(returnData=>{
       let data = <Array<availabilityForInterviews>> returnData;
       data.forEach(ele => {
-        console.log(ele);
         var refStart = new Date(newStartTime);
         var refEnd = new Date(newStartTime);
         refStart.setHours(Number.parseInt(ele.start_time.split(':')[0]),Number.parseInt(ele.start_time.split(':')[1]))
