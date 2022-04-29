@@ -63,7 +63,7 @@ export class SkillsFormComponent implements OnInit {
         id = element.id;
       }
     });
-    this.rs.addSkills(id);
+    this.rs.addSkills(id, this.rs.getUsername());
     this.skillFormSubmitted.emit(f);
     f.reset();
   }

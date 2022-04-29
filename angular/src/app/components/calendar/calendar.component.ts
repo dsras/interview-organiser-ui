@@ -67,24 +67,28 @@ export class CalendarComponent implements OnInit {
     await this.sleep(2500).then(() => this.refresh.next()).catch();
   }
 
-  getInterviewsByRec(): void {
-    this.rs.getInterviewByRecruiter(this.events);
+  getInterviewsByRec(){
+    let username: string = "";
+    let inString = <string>localStorage.getItem('ssoUser');
+
+    let myObj = JSON.parse(inString);
+    username= myObj.email;
+    this.rs.getInterviewByRecruiter(this.events, this.rs.getUsername());
   }
 
-  getInterviewsByInter(): void {
-    this.rs.getInterviewByInterviewer(this.events);
+  getInterviewsByInter(){
+    this.rs.getInterviewByInterviewer(this.events, this.rs.getUsername());
   }
-
-  getSkillsforUser(): void {
-    this.rs.getSkills();
+  getSkillsforUser(){
+    this.rs.getSkills(this.rs.getUsername());
   }
 
   getApplicants(): void {
     // this.rs.getAllApplicants();
   }
 
-  getUser(): void {
-    this.rs.getUser();
+  getUser(){
+    this.rs.getUser(this.rs.getUsername());
   }
 
   populateViaRecruiter(): void {
@@ -95,8 +99,8 @@ export class CalendarComponent implements OnInit {
 
   populateCalendar(): void {
     this.events = [];
-    this.rs.getMyAvailability(this.events);
-    this.rs.getInterviewByInterviewer(this.events);
+    this.rs.getMyAvailability(this.events, this.rs.getUsername());
+    this.rs.getInterviewByInterviewer(this.events, this.rs.getUsername());
     this.delayedRefresh();
   }
 
