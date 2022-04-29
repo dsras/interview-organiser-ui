@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { Requester } from './requester.service';
 
-describe('ConfigService', () => {
+describe('RequesterService', () => {
   let service: Requester;
 
   beforeEach(() => {
