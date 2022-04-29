@@ -68,15 +68,19 @@ export class CalendarComponent implements OnInit{
   }
 
   getInterviewsByRec(){
-    this.rs.getInterviewByRecruiter(this.events);
+    let username: string = "";
+    let inString = <string>localStorage.getItem('ssoUser');
+
+    let myObj = JSON.parse(inString);
+    username= myObj.email;
+    this.rs.getInterviewByRecruiter(this.events, this.rs.getUsername());
   }
 
   getInterviewsByInter(){
-    this.rs.getInterviewByInterviewer(this.events);
+    this.rs.getInterviewByInterviewer(this.events, this.rs.getUsername());
   }
-
   getSkillsforUser(){
-    this.rs.getSkills();
+    this.rs.getSkills(this.rs.getUsername());
   }
 
   getApplicants(){
@@ -84,7 +88,7 @@ export class CalendarComponent implements OnInit{
   }
 
   getUser(){
-    this.rs.getUser();
+    this.rs.getUser(this.rs.getUsername());
   }
 
   populateViaRecruiter(){
@@ -95,8 +99,8 @@ export class CalendarComponent implements OnInit{
 
   populateCalendar()  {
     this.events = [];
-    this.rs.getMyAvailability(this.events);
-    this.rs.getInterviewByInterviewer(this.events);
+    this.rs.getMyAvailability(this.events, this.rs.getUsername());
+    this.rs.getInterviewByInterviewer(this.events, this.rs.getUsername());
     this.delayedRefresh();
   }
 

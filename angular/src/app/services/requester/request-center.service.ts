@@ -70,8 +70,8 @@ export class RequestCenterService {
     return input;  
   }
 
-  getMyAvailability(events: CalendarEvent[]){
-    const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_GET;
+  getMyAvailability(events: CalendarEvent[], username:string){
+    const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_GET + "?username=" + username;
     let out;
 
     this.requester.getRequest<availability>(url).subscribe(returnData=>{
@@ -86,7 +86,7 @@ export class RequestCenterService {
         start.setHours(parseInt(times1[0]),parseInt(times1[1]));
         end.setHours(parseInt(times2[0]),parseInt(times2[1]));
 
-        
+        console.log("Made it this far at least")
         events.push({
           id: id,
           start: start,
@@ -112,13 +112,7 @@ export class RequestCenterService {
       return returnData;
     })
   }
-  //! not ready yet
-  // getAllAvailability(){
-  //   const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_BY_INT;
-  //   this.requester.getRequest<interview>(url).subscribe(returnData=>{
-  //     return returnData;
-  //   })
-  // }
+
 
   addInterviewForm(formInput: string, additional: string, startTime: Date){
     const formDecomp = formInput.split(" ");
@@ -151,8 +145,9 @@ export class RequestCenterService {
     })
   }
 
-  getInterviewByInterviewer(events: CalendarEvent[]){
-    const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_BY_INT;
+  getInterviewByInterviewer(events: CalendarEvent[], username:string){
+    const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_BY_INT + "?username=" + username;
+    console.log(url);
     let out;
     this.requester.getRequest<interviewReturn>(url).subscribe(returnData=>{
       out=<Array<interviewReturn>><unknown>returnData;
@@ -184,8 +179,8 @@ export class RequestCenterService {
     })
   }
   //! Only for use in calendar app
-  getInterviewByRecruiter(events: CalendarEvent[]){
-    const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_BY_REC;
+  getInterviewByRecruiter(events: CalendarEvent[], username:string){
+    const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_BY_REC + "?username=" + username;
     let out;
     this.requester.getRequest<availability>(url).subscribe(returnData=>{
       out=<Array<availability>><unknown>returnData;
@@ -233,15 +228,30 @@ export class RequestCenterService {
     });
   }
   //*Tested
-  getUser(){
-    const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.USER_FIND;
+  getUser(username:string){
+    const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.USER_FIND + "?username=" + username;
     this.requester.getRequest<userData>(url).subscribe(returnData=>{
       return returnData;
     })
+    
+  }
+
+  getUsername(){
+    let username: string = "";
+    let inString = <string>localStorage.getItem('ssoUser');
+
+    if(inString != "" && inString != null ){
+      let myObj = JSON.parse(inString);
+      username= myObj.email;
+    }
+    else{
+      console.warn("No username was available");
+    }
+    return username;
   }
   //! not tested
-  getSkills() : Array<skills> {
-    const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.SKILLS_GET;
+  getSkills(username:string) : Array<skills> {
+    const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.SKILLS_GET + "?username="+username;
     let out;
     this.requester.getRequest<skills>(url).subscribe(returnData=>{
       out = returnData;
@@ -250,8 +260,8 @@ export class RequestCenterService {
     return out;
   }
 
-  addSkills(id: number){
-    const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.SKILLS_ADD;
+  addSkills(id: number, username: string){
+    const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.SKILLS_ADD + "?username=" + username;
     const newSkillID = id;
     this.requester.postRequest<number>(url, id).subscribe(returnData=>{
     })
