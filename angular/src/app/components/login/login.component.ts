@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SocialAuthService, GoogleLoginProvider, SocialUser } from 'angularx-social-login';
+import { SocialAuthService, GoogleLoginProvider, SocialUser, SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 
 // [APP_LEVEL Imports]
 import { BackendService } from '../../services/backend.service';
@@ -13,7 +13,8 @@ export interface ILoginComponent {
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss']
+    styleUrls: ['./login.component.scss'],
+    providers: [SocialLoginModule, SocialAuthService]
 })
 export class LoginComponent implements OnInit, ILoginComponent {
     socialUser: SocialUser = <any>null;
