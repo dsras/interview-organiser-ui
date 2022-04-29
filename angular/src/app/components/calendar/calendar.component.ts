@@ -68,11 +68,6 @@ export class CalendarComponent implements OnInit {
   }
 
   getInterviewsByRec(){
-    let username: string = "";
-    let inString = <string>localStorage.getItem('ssoUser');
-
-    let myObj = JSON.parse(inString);
-    username= myObj.email;
     this.rs.getInterviewByRecruiter(this.events, this.rs.getUsername());
   }
 
