@@ -11,49 +11,49 @@ import { CalendarEvent } from 'angular-calendar';
 })
 export class InterviewStatusComponent implements OnInit {
 
-  @Input() slot?: CalendarEvent
+  @Input() slot?: CalendarEvent;
 
-  statusForm = this.fb.group({
+  statusForm: FormGroup = this.fb.group({
     status: ['']
-  })
+  });
 
   myForm?: FormGroup;
 
   interviewStatusOptions: Array<string> = [];
 
-  interviewerOptions = [
+  interviewerOptions: string[] = [
     'Pending',
-    'Completed', 
+    'Completed',
     'Candidate no show',
     'Panel no show'
-  ]
+  ];
 
-  recruiterOptions = [
+  recruiterOptions: string[] = [
     'pending',
     'Panel no show'
-  ]
+  ];
 
-  interviewStatusForm?: FormGroup
+  interviewStatusForm?: FormGroup;
 
   constructor(
     private ms: ModalControllerService,
     private rs: RequestCenterService,
     private fb: FormBuilder,
-  ) { }
+  ) { };
 
-  ngOnInit() { }
+  ngOnInit() { };
 
-  openModal(template: TemplateRef<any>) {
+  openModal(template: TemplateRef<any>): void {
     this.ms.openModal(template)
-  }
+  };
 
-  closeModal() {
+  closeModal(): void {
     this.ms.closeModal()
-  }
+  };
 
-  onSubmit(f: FormGroup) {
+  onSubmit(f: FormGroup): void {
     let str = f.value.status;
-    let id: string | number | undefined
+    let id: string | number | undefined;
 
     console.warn(this.slot)
     if (this.slot?.id) {

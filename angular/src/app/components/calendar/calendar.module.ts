@@ -31,9 +31,9 @@ import { ReactiveFormsModule } from '@angular/forms';
   declarations: [
     CalendarComponent,
     AvailabilityFormComponent,
-    SkillsFormComponent, 
+    SkillsFormComponent,
     ViewAvailabilityComponent,
-    InterviewStatusComponent  ],
+    InterviewStatusComponent],
   exports: [CalendarComponent],
 })
-export class MyCalendarModule{}
+export class MyCalendarModule { }

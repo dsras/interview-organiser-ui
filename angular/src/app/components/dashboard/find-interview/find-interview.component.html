@@ -7,55 +7,64 @@
 </button> -->
 
 <!-- <div class="col-md-4 col-sm-6 my-3"> -->
-  <div class="blog-widget">
-    <div class="col-lg-12 thumbnail-img" data-aos="fade-left" data-aos-delay="100" style="background-image:url(../../../../assets/images/findInterviewBG.png); background-size:cover;background-position: center">
-    </div>
-    <div class="blog-content">
-      <button type="button" class="view-here-btn text-lefttext-black" (click)="openModal(form)">
-        <h5>
-          Find Interview <i class="fa fa-arrow-right" style="font-size: 18px; padding-top:8px; padding-right: 7px"></i>
-        </h5>
-      </button>
-    </div>
+<div class="blog-widget">
+  <div class="col-lg-12 thumbnail-img" data-aos="fade-left" data-aos-delay="100"
+    style="background-image:url(../../../../assets/images/findInterviewBG.png);
+    background-size:cover;background-position: center">
   </div>
+  <div class="blog-content">
+    <button type="button" class="view-here-btn text-lefttext-black"
+      (click)="openModal(form)">
+      <h5>
+        Find Interview <i class="fa fa-arrow-right" style="font-size: 18px;
+          padding-top:8px; padding-right: 7px"></i>
+      </h5>
+    </button>
+  </div>
+</div>
 <!-- </div> -->
 
-<ng-template  #form>
+<ng-template #form>
   <div id="find" style="display: block;">
-    <form
-      [formGroup]="findInterviewsForm"
-      (ngSubmit)="findInterview(findInterviewsForm)"
-      class="md-form"
-      style="color: black;"
-    >
+    <form [formGroup]="findInterviewsForm"
+      (ngSubmit)="findInterview(findInterviewsForm)" class="md-form"
+      style="color: black;">
 
       <div class="card" style="size: 1000px;">
         <!-- padding: 10%;  -->
         <div class="container text-center text-black pt-4 mt-4">
-          <div class="modal-header" style="width: 100%; color: black; background-color: orange;">
+          <div class="modal-header" style="width: 100%; color: black;
+            background-color: orange;">
             <div class="container-fluid py-2 intro-section-color">
               <h4 class="text-black font-weight-bold text-center">
-                  Find Interview
+                Find Interview
               </h4>
             </div>
           </div>
           <div class="row text-center">
             <div class="col-md-6">
               <label for="startTime">Start Time</label>
-              <timepicker   id="startTime" type="time" formControlName="startTime"></timepicker>
+              <timepicker id="startTime" type="time"
+                formControlName="startTime"></timepicker>
             </div>
             <div class="col-md-6">
               <label for="endTime">End Time</label>
-              <timepicker id="endTime"  type="time" formControlName="endTime"></timepicker>
+              <timepicker id="endTime" type="time" formControlName="endTime"></timepicker>
             </div>
           </div>
           <br>
           <div class="container-fluid">
             <label for="firstDate">First Date</label>
-            <input id="firstDate" type='datetime' formControlName="firstDate" bsDatepicker [bsConfig]="{ containerClass: 'theme-orange', adaptivePosition: true}">
+            <input id="firstDate" type='datetime' formControlName="firstDate"
+              bsDatepicker
+              [bsConfig]="{ containerClass: 'theme-orange', adaptivePosition:
+              true}">
             <br>
             <label for="lastDate">Last Date</label>
-            <input id="lastDate" type='datetime' formControlName="lastDate" bsDatepicker [bsConfig]="{ containerClass: 'theme-orange', adaptivePosition: true}">
+            <input id="lastDate" type='datetime' formControlName="lastDate"
+              bsDatepicker
+              [bsConfig]="{ containerClass: 'theme-orange', adaptivePosition:
+              true}">
           </div>
 
 
@@ -64,13 +73,15 @@
 
             <select id="skillType" formControlName="skillType">
               <option value="">Which skill is needed?</option>
-              <option *ngFor="let skillType of skillTypes" [ngValue]="skillType">
+              <option *ngFor="let skillType of skillTypes"
+                [ngValue]="skillType">
                 {{ skillType }}
               </option>
             </select>
             <select id="skillLevel" formControlName="skillLevel">
               <option value="">Which level is needed?</option>
-              <option *ngFor="let skillLevel of skillLevels" [ngValue]="skillLevel">
+              <option *ngFor="let skillLevel of skillLevels"
+                [ngValue]="skillLevel">
                 {{ skillLevel }}
               </option>
             </select>
@@ -88,7 +99,8 @@
       <div class="modal-footer">
         <div class="col-12 col-md-12 mx-auto services">
           <div class="row text-center">
-            <button type="submit" class="view-here-btn text-lefttext-black mx-auto d-inline-block"
+            <button type="submit" class="view-here-btn text-lefttext-black
+              mx-auto d-inline-block"
               [disabled]="!findInterviewsForm.valid"
               (click)="findInterview(findInterviewsForm)">
               <h6 class="text-center">
@@ -107,58 +119,58 @@
 
 
   <div id="confirm" style="display: none;">
-    <form
-    [formGroup]="createInterviewForm"
-    (ngSubmit)="submitInterview(createInterviewForm)"
-    class="md-form"
-    style="color: black;">
+    <form [formGroup]="createInterviewForm"
+      (ngSubmit)="submitInterview(createInterviewForm)" class="md-form"
+      style="color: black;">
 
-    <div class="modal-header modal-org" >
-      <h3>
-        <strong>Create Interview</strong>
-      </h3>
-    </div>
-
-    <div class="card padded">
-      <div class="row">
-        <select id="interviewSelected" formControlName="interviewSelected">
-          <option value="">Which interview slot?</option>
-          <option *ngFor="let interview of availableInterviews" [ngValue]="interview">
-            {{ interview }}
-          </option>
-        </select>
+      <div class="modal-header modal-org">
+        <h3>
+          <strong>Create Interview</strong>
+        </h3>
       </div>
-      <br>
-      <div class="row text-center">
-        <div class="col-md-6">
-          <p>This can be used to further specify a time within the above range if it is more than 1 hour, if left blank it will auto select the first hour.</p>
-          <label for="startTime">Start Time</label>
-          <timepicker   id="startTime" type="time" formControlName="startTime"></timepicker>
+
+      <div class="card padded">
+        <div class="row">
+          <select id="interviewSelected" formControlName="interviewSelected">
+            <option value="">Which interview slot?</option>
+            <option *ngFor="let interview of availableInterviews"
+              [ngValue]="interview">
+              {{ interview }}
+            </option>
+          </select>
         </div>
-      </div>
-      <br>
-      <div class="row">
-        <textarea placeholder="Additional information" formControlName="additionalInformation" ></textarea>
-
-      </div>
-    </div>
-    <div class="container-padded">
-
-    </div>
-    <div class="modal-footer">
-      <div class="col-12 col-md-12 mx-auto services">
+        <br>
         <div class="row text-center">
-          <button type="submit"
-          [disabled]="!createInterviewForm.valid"
-          (click)="this.modalRef?.hide()"
-          class="view-here-btn text-lefttext-black text-center mx-auto">
-            <h6 class="text-center">Create Interview</h6>
-          </button>
+          <div class="col-md-6">
+            <p>This can be used to further specify a time within the above range
+              if it is more than 1 hour, if left
+              blank it will auto select the first hour.</p>
+            <label for="startTime">Start Time</label>
+            <timepicker id="startTime" type="time" formControlName="startTime"></timepicker>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <textarea placeholder="Additional information"
+            formControlName="additionalInformation"></textarea>
+
         </div>
       </div>
-    </div>
-  </form>
+      <div class="container-padded">
+
+      </div>
+      <div class="modal-footer">
+        <div class="col-12 col-md-12 mx-auto services">
+          <div class="row text-center">
+            <button type="submit" [disabled]="!createInterviewForm.valid"
+              (click)="closeModal()"
+              class="view-here-btn text-lefttext-black text-center mx-auto">
+              <h6 class="text-center">Create Interview</h6>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
   </div>
 
 </ng-template>
-

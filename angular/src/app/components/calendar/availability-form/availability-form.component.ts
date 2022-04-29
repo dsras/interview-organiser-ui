@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TimepickerConfig } from 'ngx-bootstrap/timepicker';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
+
 @Component({
   selector: 'availability-form',
   templateUrl: './availability-form.component.html',
@@ -13,10 +14,10 @@ import { RequestCenterService } from 'src/app/services/requester/request-center.
 
 export class AvailabilityFormComponent implements OnInit {
 
-  createAvailabilityForm: FormGroup = this.fb.group ({
+  createAvailabilityForm: FormGroup = this.fb.group({
     startTime: ['', Validators.required],
     endTime: ['', Validators.required],
-    dateRange: ['', Validators.required],  
+    dateRange: ['', Validators.required],
   })
 
   @Output() availabilityFormSubmitted: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
@@ -26,23 +27,23 @@ export class AvailabilityFormComponent implements OnInit {
     private fb: FormBuilder,
     private rs: RequestCenterService,
     private ms: ModalControllerService
-    ) { }
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
-  openModal(template: TemplateRef<any>) {
+  openModal(template: TemplateRef<any>): void {
     this.ms.openModal(template)
   }
 
-  closeModal() {
+  closeModal(): void {
     this.ms.closeModal()
   }
 
-  onSubmit(f: FormGroup) {
+  onSubmit(f: FormGroup): void {
     this.rs.addAvailability(f.value.dateRange[0], f.value.dateRange[1], f.value.startTime, f.value.endTime);
     f.reset();
   }
-  
+
 }
 
 export function getTimepickerConfig(): TimepickerConfig {

@@ -53,6 +53,7 @@ import { Requester } from './services/requester/requester.service';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { DataSourceService } from './services/data-source.service';
 import { ViewInterviewsComponent } from './components/view-interviews/view-interviews.component';
+import { DatePipe } from '@angular/common';
 
 
 const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_DEV;
@@ -109,6 +110,7 @@ const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCON
     providers: [
         MDBSpinningPreloader,
         Requester,
+        DatePipe,
         { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true },
         {
             provide: 'SocialAuthServiceConfig',
