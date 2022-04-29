@@ -21,16 +21,30 @@ export class InterviewStatusComponent implements OnInit {
 
   interviewStatusOptions: Array<string> = [];
 
-  interviewerOptions: string[] = [
-    'Pending',
+  statusList: string[] = [
     'Completed',
-    'Candidate no show',
-    'Panel no show'
+    'Candidate No Show',
+    'Panel No Show'
+  ]
+
+  outcomeList: string[] = [
+    'Progressed',
+    'Didnt Progress',
+    'Hired'
+  ]
+
+
+  interviewerOptions: string[] = [
+    this.statusList[0],
+    this.statusList[1],
   ];
 
   recruiterOptions: string[] = [
-    'pending',
-    'Panel no show'
+    this.statusList[2],
+    this.outcomeList[0],
+    this.outcomeList[1],
+    this.outcomeList[2],
+
   ];
 
   interviewStatusForm?: FormGroup;
@@ -52,18 +66,39 @@ export class InterviewStatusComponent implements OnInit {
   };
 
   onSubmit(f: FormGroup): void {
-    let str = f.value.status;
-    let id: string | number | undefined;
+    let str:string = f.value.status;
+    let id: number = -1;
 
-    console.warn(this.slot)
     if (this.slot?.id) {
       id = this.slot.id
     }
 
-    console.log(f.value);
-    // this.rs.updateStatus(num, str, true)
-    console.warn(id);
-    console.warn(str);
+    let errCount: number=0;
+    let isOutcome: boolean = true;
+    for(let element of this.statusList){
+      if(str === element){
+        isOutcome = false;
+        break;
+      }
+      else{
+        errCount++;
+      }
+    }
+    for(let element of this.outcomeList){
+      if(str === element){
+        isOutcome = true;
+        break;
+      }
+      else{
+        errCount++;
+      }
+    }
+
+    if(errCount>=6 || id==-1){
+      console.warn("Probably nothing selected in the status menu before submission");
+      return;
+    }
+    this.rs.updateStatus(id, str, !isOutcome)
     f.reset();
   }
 
