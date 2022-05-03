@@ -4,6 +4,9 @@ import { TimepickerConfig } from 'ngx-bootstrap/timepicker';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 
+/**
+ * Form for collecting interviewer availability data and posting to DB
+ */
 @Component({
   selector: 'availability-form',
   templateUrl: './availability-form.component.html',
@@ -13,7 +16,10 @@ import { RequestCenterService } from 'src/app/services/requester/request-center.
 })
 
 export class AvailabilityFormComponent implements OnInit {
-
+  
+  /**
+   * Blank form to be populated by the user
+   */
   createAvailabilityForm: FormGroup = this.fb.group({
     startTime: ['', Validators.required],
     endTime: ['', Validators.required],

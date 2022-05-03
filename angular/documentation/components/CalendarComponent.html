@@ -1,0 +1,2428 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>raft-ui-demo documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">raft-ui-demo documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li
+  >
+  CalendarComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/components/calendar/calendar.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+            <tr>
+                <td class="col-md-3">changeDetection</td>
+                <td class="col-md-9"><code>ChangeDetectionStrategy.OnPush</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>calendar</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./calendar.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./calendar.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#actions" >actions</a>
+                            </li>
+                            <li>
+                                <a href="#activeDayIsOpen" >activeDayIsOpen</a>
+                            </li>
+                            <li>
+                                <a href="#CalendarView" >CalendarView</a>
+                            </li>
+                            <li>
+                                <a href="#dayAvailability" >dayAvailability</a>
+                            </li>
+                            <li>
+                                <a href="#dayContent" >dayContent</a>
+                            </li>
+                            <li>
+                                <a href="#dayInterviews" >dayInterviews</a>
+                            </li>
+                            <li>
+                                <a href="#eventClickedContent" >eventClickedContent</a>
+                            </li>
+                            <li>
+                                <a href="#events" >events</a>
+                            </li>
+                            <li>
+                                <a href="#mockAvailability" >mockAvailability</a>
+                            </li>
+                            <li>
+                                <a href="#modalData" >modalData</a>
+                            </li>
+                            <li>
+                                <a href="#refresh" >refresh</a>
+                            </li>
+                            <li>
+                                <a href="#skills" >skills</a>
+                            </li>
+                            <li>
+                                <a href="#view" >view</a>
+                            </li>
+                            <li>
+                                <a href="#viewDate" >viewDate</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#buttonRefresh" >buttonRefresh</a>
+                            </li>
+                            <li>
+                                <a href="#closeOpenMonthViewDay" >closeOpenMonthViewDay</a>
+                            </li>
+                            <li>
+                                <a href="#dayClicked" >dayClicked</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#delayedRefresh" >delayedRefresh</a>
+                            </li>
+                            <li>
+                                <a href="#deleteEvent" >deleteEvent</a>
+                            </li>
+                            <li>
+                                <a href="#eventTimesChanged" >eventTimesChanged</a>
+                            </li>
+                            <li>
+                                <a href="#getApplicants" >getApplicants</a>
+                            </li>
+                            <li>
+                                <a href="#getInterviewsByInter" >getInterviewsByInter</a>
+                            </li>
+                            <li>
+                                <a href="#getInterviewsByRec" >getInterviewsByRec</a>
+                            </li>
+                            <li>
+                                <a href="#getSkillsforUser" >getSkillsforUser</a>
+                            </li>
+                            <li>
+                                <a href="#getUser" >getUser</a>
+                            </li>
+                            <li>
+                                <a href="#handleEvent" >handleEvent</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#openDayModal" >openDayModal</a>
+                            </li>
+                            <li>
+                                <a href="#populateCalendar" >populateCalendar</a>
+                            </li>
+                            <li>
+                                <a href="#populateViaRecruiter" >populateViaRecruiter</a>
+                            </li>
+                            <li>
+                                <a href="#redirect" >redirect</a>
+                            </li>
+                            <li>
+                                <a href="#setView" >setView</a>
+                            </li>
+                            <li>
+                                <a href="#sleep" >sleep</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>, modal: NgbModal, ms: <a href="../injectables/ModalControllerService.html" target="_self">ModalControllerService</a>, rs: <a href="../injectables/RequestCenterService.html" target="_self">RequestCenterService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/components/calendar/calendar.component.ts:45</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/router/Router" target="_blank" >Router</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>modal</td>
+                                                  
+                                                        <td>
+                                                                    <code>NgbModal</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>ms</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ModalControllerService.html" target="_self" >ModalControllerService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>rs</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/RequestCenterService.html" target="_self" >RequestCenterService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="buttonRefresh"></a>
+                    <span class="name">
+                        <span ><b>buttonRefresh</b></span>
+                        <a href="#buttonRefresh"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>buttonRefresh()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="108"
+                            class="link-to-prism">src/app/components/calendar/calendar.component.ts:108</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="closeOpenMonthViewDay"></a>
+                    <span class="name">
+                        <span ><b>closeOpenMonthViewDay</b></span>
+                        <a href="#closeOpenMonthViewDay"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>closeOpenMonthViewDay()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="260"
+                            class="link-to-prism">src/app/components/calendar/calendar.component.ts:260</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dayClicked"></a>
+                    <span class="name">
+                        <span ><b>dayClicked</b></span>
+                        <a href="#dayClicked"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>dayClicked(undefined: literal type)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="199"
+                            class="link-to-prism">src/app/components/calendar/calendar.component.ts:199</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                            <code>literal type</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="delayedRefresh"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>delayedRefresh</b></span>
+                        <a href="#delayedRefresh"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>delayedRefresh()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="66"
+                            class="link-to-prism">src/app/components/calendar/calendar.component.ts:66</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteEvent"></a>
+                    <span class="name">
+                        <span ><b>deleteEvent</b></span>
+                        <a href="#deleteEvent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>deleteEvent(eventToDelete: CalendarEvent)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="252"
+                            class="link-to-prism">src/app/components/calendar/calendar.component.ts:252</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>eventToDelete</td>
+                                    <td>
+                                            <code>CalendarEvent</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="eventTimesChanged"></a>
+                    <span class="name">
+                        <span ><b>eventTimesChanged</b></span>
+                        <a href="#eventTimesChanged"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>eventTimesChanged(undefined: CalendarEventTimesChangedEvent)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="214"
+                            class="link-to-prism">src/app/components/calendar/calendar.component.ts:214</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                            <code>CalendarEventTimesChangedEvent</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getApplicants"></a>
+                    <span class="name">
+                        <span ><b>getApplicants</b></span>
+                        <a href="#getApplicants"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getApplicants()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="87"
+                            class="link-to-prism">src/app/components/calendar/calendar.component.ts:87</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getInterviewsByInter"></a>
+                    <span class="name">
+                        <span ><b>getInterviewsByInter</b></span>
+                        <a href="#getInterviewsByInter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getInterviewsByInter()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="80"
+                            class="link-to-prism">src/app/components/calendar/calendar.component.ts:80</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getInterviewsByRec"></a>
+                    <span class="name">
+                        <span ><b>getInterviewsByRec</b></span>
+                        <a href="#getInterviewsByRec"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getInterviewsByRec()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="70"
+                            class="link-to-prism">src/app/components/calendar/calendar.component.ts:70</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getSkillsforUser"></a>
+                    <span class="name">
+                        <span ><b>getSkillsforUser</b></span>
+                        <a href="#getSkillsforUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getSkillsforUser()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="83"
+                            class="link-to-prism">src/app/components/calendar/calendar.component.ts:83</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getUser"></a>
+                    <span class="name">
+                        <span ><b>getUser</b></span>
+                        <a href="#getUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getUser()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="91"
+                            class="link-to-prism">src/app/components/calendar/calendar.component.ts:91</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleEvent"></a>
+                    <span class="name">
+                        <span ><b>handleEvent</b></span>
+                        <a href="#handleEvent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>handleEvent(action: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, event: CalendarEvent)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="228"
+                            class="link-to-prism">src/app/components/calendar/calendar.component.ts:228</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>action</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>event</td>
+                                    <td>
+                                            <code>CalendarEvent</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="54"
+                            class="link-to-prism">src/app/components/calendar/calendar.component.ts:54</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openDayModal"></a>
+                    <span class="name">
+                        <span ><b>openDayModal</b></span>
+                        <a href="#openDayModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openDayModal(dateSelected: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank">Date</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="182"
+                            class="link-to-prism">src/app/components/calendar/calendar.component.ts:182</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>dateSelected</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank" >Date</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="populateCalendar"></a>
+                    <span class="name">
+                        <span ><b>populateCalendar</b></span>
+                        <a href="#populateCalendar"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>populateCalendar()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="101"
+                            class="link-to-prism">src/app/components/calendar/calendar.component.ts:101</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="populateViaRecruiter"></a>
+                    <span class="name">
+                        <span ><b>populateViaRecruiter</b></span>
+                        <a href="#populateViaRecruiter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>populateViaRecruiter()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="95"
+                            class="link-to-prism">src/app/components/calendar/calendar.component.ts:95</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="redirect"></a>
+                    <span class="name">
+                        <span ><b>redirect</b></span>
+                        <a href="#redirect"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>redirect(page: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="58"
+                            class="link-to-prism">src/app/components/calendar/calendar.component.ts:58</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>page</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setView"></a>
+                    <span class="name">
+                        <span ><b>setView</b></span>
+                        <a href="#setView"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setView(view: CalendarView)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="256"
+                            class="link-to-prism">src/app/components/calendar/calendar.component.ts:256</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>view</td>
+                                    <td>
+                                            <code>CalendarView</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sleep"></a>
+                    <span class="name">
+                        <span ><b>sleep</b></span>
+                        <a href="#sleep"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>sleep(ms: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="62"
+                            class="link-to-prism">src/app/components/calendar/calendar.component.ts:62</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ms</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;any&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="actions"></a>
+                    <span class="name">
+                        <span ><b>actions</b></span>
+                        <a href="#actions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>CalendarEventAction[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    {
+      label: &#x27;&lt;i class&#x3D;&quot;fas fa-fw fa-pencil-alt&quot;&gt;&lt;/i&gt;&#x27;,
+      a11yLabel: &#x27;Edit&#x27;,
+      onClick: ({ event }: { event: CalendarEvent }): void &#x3D;&gt; {
+        this.handleEvent(&#x27;Edited&#x27;, event);
+      },
+    },
+    {
+      label: &#x27;&lt;i class&#x3D;&quot;fas fa-fw fa-trash-alt&quot;&gt;&lt;/i&gt;&#x27;,
+      a11yLabel: &#x27;Delete&#x27;,
+      onClick: ({ event }: { event: CalendarEvent }): void &#x3D;&gt; {
+        this.events &#x3D; this.events.filter((iEvent) &#x3D;&gt; iEvent !&#x3D;&#x3D; event);
+        this.handleEvent(&#x27;Deleted&#x27;, event);
+      },
+    },
+  ]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="160" class="link-to-prism">src/app/components/calendar/calendar.component.ts:160</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="activeDayIsOpen"></a>
+                    <span class="name">
+                        <span ><b>activeDayIsOpen</b></span>
+                        <a href="#activeDayIsOpen"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="180" class="link-to-prism">src/app/components/calendar/calendar.component.ts:180</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="CalendarView"></a>
+                    <span class="name">
+                        <span ><b>CalendarView</b></span>
+                        <a href="#CalendarView"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>CalendarView</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="151" class="link-to-prism">src/app/components/calendar/calendar.component.ts:151</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dayAvailability"></a>
+                    <span class="name">
+                        <span ><b>dayAvailability</b></span>
+                        <a href="#dayAvailability"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>CalendarEvent[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/components/calendar/calendar.component.ts:39</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dayContent"></a>
+                    <span class="name">
+                        <span ><b>dayContent</b></span>
+                        <a href="#dayContent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>TemplateRef&lt;any&gt;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(&#x27;dayContent&#x27;, {static: true})<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/components/calendar/calendar.component.ts:37</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dayInterviews"></a>
+                    <span class="name">
+                        <span ><b>dayInterviews</b></span>
+                        <a href="#dayInterviews"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>CalendarEvent[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/components/calendar/calendar.component.ts:40</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="eventClickedContent"></a>
+                    <span class="name">
+                        <span ><b>eventClickedContent</b></span>
+                        <a href="#eventClickedContent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>TemplateRef&lt;any&gt;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(&#x27;eventClickedContent&#x27;, {static: true})<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/components/calendar/calendar.component.ts:38</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="events"></a>
+                    <span class="name">
+                        <span ><b>events</b></span>
+                        <a href="#events"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>CalendarEvent[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/components/calendar/calendar.component.ts:45</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="mockAvailability"></a>
+                    <span class="name">
+                        <span ><b>mockAvailability</b></span>
+                        <a href="#mockAvailability"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/components/calendar/calendar.component.ts:35</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="modalData"></a>
+                    <span class="name">
+                        <span ><b>modalData</b></span>
+                        <a href="#modalData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>literal type</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="155" class="link-to-prism">src/app/components/calendar/calendar.component.ts:155</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="refresh"></a>
+                    <span class="name">
+                        <span ><b>refresh</b></span>
+                        <a href="#refresh"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Subject&lt;void&gt;()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="178" class="link-to-prism">src/app/components/calendar/calendar.component.ts:178</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="skills"></a>
+                    <span class="name">
+                        <span ><b>skills</b></span>
+                        <a href="#skills"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/skills.html" target="_self" >skills[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/app/components/calendar/calendar.component.ts:44</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="view"></a>
+                    <span class="name">
+                        <span ><b>view</b></span>
+                        <a href="#view"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>CalendarView</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>CalendarView.Month</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="149" class="link-to-prism">src/app/components/calendar/calendar.component.ts:149</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="viewDate"></a>
+                    <span class="name">
+                        <span ><b>viewDate</b></span>
+                        <a href="#viewDate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank" >Date</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Date()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="153" class="link-to-prism">src/app/components/calendar/calendar.component.ts:153</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Router } from &#x27;@angular/router&#x27;;
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild, TemplateRef, } from &#x27;@angular/core&#x27;;
+import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours, } from &#x27;date-fns&#x27;;
+import { Subject } from &#x27;rxjs&#x27;;
+import { NgbModal } from &#x27;@ng-bootstrap/ng-bootstrap&#x27;;
+import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, } from &#x27;angular-calendar&#x27;;
+import { RequestCenterService } from &#x27;src/app/services/requester/request-center.service&#x27;;
+import { skills } from &#x27;../../models/types&#x27;;
+import { ModalControllerService } from &#x27;src/app/services/modal-controller.service&#x27;;
+
+// const colors: any &#x3D; {
+//   red: {
+//     primary: &#x27;#ad2121&#x27;,
+//     secondary: &#x27;#FAE3E3&#x27;,
+//   },
+//   blue: {
+//     primary: &#x27;#1e90ff&#x27;,
+//     secondary: &#x27;#D1E8FF&#x27;,
+//   },
+//   yellow: {
+//     primary: &#x27;#e3bc08&#x27;,
+//     secondary: &#x27;#FDF1BA&#x27;,
+//   },
+// };
+@Component({
+  selector: &#x27;calendar&#x27;,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  templateUrl: &#x27;./calendar.component.html&#x27;,
+  styleUrls: [&#x27;./calendar.component.scss&#x27;]
+})
+
+export class CalendarComponent implements OnInit {
+
+  //TODO Test data initialiser, needs removed after testing complete
+  mockAvailability!: any;
+
+  @ViewChild(&#x27;dayContent&#x27;, { static: true }) dayContent!: TemplateRef&lt;any&gt;;
+  @ViewChild(&#x27;eventClickedContent&#x27;, { static: true }) eventClickedContent!: TemplateRef&lt;any&gt;;
+  dayAvailability: CalendarEvent[] &#x3D; [];
+  dayInterviews: CalendarEvent[] &#x3D; [];
+
+
+  //* This is where the local calendar events are stored
+  skills: skills[] &#x3D; [];
+  events: CalendarEvent[] &#x3D; [];
+
+  constructor(
+    private router: Router,
+    private modal: NgbModal,
+    private ms: ModalControllerService,
+    private rs: RequestCenterService
+  ) { }
+
+  ngOnInit(): void {
+    this.populateCalendar();
+  }
+
+  redirect(page: string): void {
+    this.router.navigate([page]);
+  }
+
+  sleep(ms: number): Promise&lt;any&gt; {
+    return new Promise(resolve &#x3D;&gt; setTimeout(resolve, ms));
+  }
+
+  async delayedRefresh(): Promise&lt;void&gt; {
+    await this.sleep(2500).then(() &#x3D;&gt; this.refresh.next()).catch();
+  }
+
+  getInterviewsByRec(){
+    // ? Is this code ever used or is it duplicating work ing this.rs.getUsername() ??
+    let username: string &#x3D; &quot;&quot;;
+    let inString &#x3D; &lt;string&gt;localStorage.getItem(&#x27;ssoUser&#x27;);
+    let myObj &#x3D; JSON.parse(inString);
+    username&#x3D; myObj.email;
+    // ???????????????????????????????????????????????????????????????????????????????
+    this.rs.getInterviewByRecruiter(this.events, this.rs.getUsername());
+  }
+
+  getInterviewsByInter(){
+    this.rs.getInterviewByInterviewer(this.events, this.rs.getUsername());
+  }
+  getSkillsforUser(){
+    this.rs.getSkills(this.rs.getUsername());
+  }
+
+  getApplicants(): void {
+    // this.rs.getAllApplicants();
+  }
+
+  getUser(){
+    this.rs.getUser(this.rs.getUsername());
+  }
+
+  populateViaRecruiter(): void {
+    this.events &#x3D; [];
+    this.rs.getAllAvailability(this.events);
+    this.delayedRefresh();
+  }
+
+  populateCalendar(): void {
+    this.events &#x3D; [];
+    this.rs.getMyAvailability(this.events, this.rs.getUsername());
+    this.rs.getInterviewByInterviewer(this.events, this.rs.getUsername());
+    this.delayedRefresh();
+  }
+
+  buttonRefresh(): void {
+    this.refresh.next();
+  }
+
+  // * Test method
+  // checkConnection(){
+  // var skillsIDs &#x3D; [1,2,3];
+  // this.rs.getAvailabilityOnSkill(skillsIDs);
+  //this.rs.addApplicant();
+
+  // this.rs.addInterview([23], &quot;2022-04-22&quot;,&quot;09:00&quot;, &quot;10:00&quot;, &quot;some additional info&quot;);
+  // var url &#x3D; &quot;http://localhost:8080/users/welcome&quot;;
+  // this.requester.getRequest&lt;string&gt;(url).subscribe(returnData &#x3D;&gt;{
+  //   console.log(returnData);
+
+  // })
+
+  // var url &#x3D; &quot;http://localhost:8080/users/user?username&#x3D;test_user1&quot;;
+  // this.requester.getRequest&lt;userData&gt;(url).subscribe(returnData &#x3D;&gt;{
+  //   console.log(returnData);
+
+  // })
+
+  // url &#x3D; &quot;http://localhost:8080/skills/skill?name&#x3D;Java&quot;;
+  // this.requester.getRequest&lt;skills&gt;(url).subscribe(returnData &#x3D;&gt;{
+  //   console.log(returnData);
+
+  // })
+
+  // var newSkill &#x3D; new skills(1,&quot;running&quot;, &quot;expert&quot;);
+  // url &#x3D; &quot;http://localhost:8080/skills/new&quot;;
+  // this.requester.postRequest&lt;skills&gt;(url, newSkill).subscribe(returnData&#x3D;&gt;{
+  //   console.log(returnData);
+  // })
+
+  // }
+
+
+  // ! Calendar core functionality contained here, shouldn&#x27;t need to touch it!
+  // TODO openDayModal() may need corrected down the line.
+  
+  view: CalendarView &#x3D; CalendarView.Month;
+
+  CalendarView &#x3D; CalendarView;
+
+  viewDate: Date &#x3D; new Date();
+
+  modalData!: {
+    action: string;
+    event: CalendarEvent;
+  };
+
+  actions: CalendarEventAction[] &#x3D; [
+    {
+      label: &#x27;&lt;i class&#x3D;&quot;fas fa-fw fa-pencil-alt&quot;&gt;&lt;/i&gt;&#x27;,
+      a11yLabel: &#x27;Edit&#x27;,
+      onClick: ({ event }: { event: CalendarEvent }): void &#x3D;&gt; {
+        this.handleEvent(&#x27;Edited&#x27;, event);
+      },
+    },
+    {
+      label: &#x27;&lt;i class&#x3D;&quot;fas fa-fw fa-trash-alt&quot;&gt;&lt;/i&gt;&#x27;,
+      a11yLabel: &#x27;Delete&#x27;,
+      onClick: ({ event }: { event: CalendarEvent }): void &#x3D;&gt; {
+        this.events &#x3D; this.events.filter((iEvent) &#x3D;&gt; iEvent !&#x3D;&#x3D; event);
+        this.handleEvent(&#x27;Deleted&#x27;, event);
+      },
+    },
+  ];
+
+  refresh &#x3D; new Subject&lt;void&gt;();
+
+  activeDayIsOpen: boolean &#x3D; false;
+
+  openDayModal(dateSelected: Date, /*useDate: boolean*/) {
+    this.dayAvailability &#x3D; [];
+    this.dayInterviews &#x3D; [];
+
+    for (const element of this.events) {
+      if (isSameDay(element.start, dateSelected)) {
+        if (element.title &#x3D;&#x3D;&#x3D; &#x27;availability&#x27;) {
+          this.dayAvailability.push(element);
+        }
+        else if (element.title &#x3D;&#x3D;&#x3D; &#x27;interview&#x27;) {
+          this.dayInterviews.push(element);
+        }
+      }
+    }
+    this.ms.openModalLg(this.dayContent)
+  }
+
+  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+    if (isSameMonth(date, this.viewDate)) {
+      // if (
+      //   (isSameDay(this.viewDate, date) &amp;&amp; this.activeDayIsOpen &#x3D;&#x3D;&#x3D; true) ||
+      //   events.length &#x3D;&#x3D;&#x3D; 0
+      // ) {
+      //   this.activeDayIsOpen &#x3D; false;
+      // } else {
+      //   this.activeDayIsOpen &#x3D; true;
+      // }
+      // this.viewDate &#x3D; date;
+      this.openDayModal(date);
+    }
+  }
+
+  eventTimesChanged({ event, newStart, newEnd, }: CalendarEventTimesChangedEvent): void {
+    this.events &#x3D; this.events.map((iEvent) &#x3D;&gt; {
+      if (iEvent &#x3D;&#x3D;&#x3D; event) {
+        return {
+          ...event,
+          start: newStart,
+          end: newEnd,
+        };
+      }
+      return iEvent;
+    });
+    this.handleEvent(&#x27;Dropped or resized&#x27;, event);
+  }
+
+  handleEvent(action: string, event: CalendarEvent): void {
+    this.modalData &#x3D; { event, action };
+    this.modal.open(this.eventClickedContent, { size: &#x27;lg&#x27; });
+  }
+
+  // * This is the default method that auto-generates an event for &#x27;todays date&#x27;
+  // addEvent(): void {
+  //   this.events &#x3D; [
+  //     ...this.events,
+  //     {
+  //       title: &#x27;New event&#x27;,
+  //       start: startOfDay(new Date()),
+  //       end: endOfDay(new Date()),
+  //       color: colors.red,
+  //       draggable: true,
+  //       resizable: {
+  //         beforeStart: true,
+  //         afterEnd: true,
+  //       },
+  //     },
+  //   ];
+  // }
+
+
+  deleteEvent(eventToDelete: CalendarEvent): void {
+    this.events &#x3D; this.events.filter((event) &#x3D;&gt; event !&#x3D;&#x3D; eventToDelete);
+  }
+
+  setView(view: CalendarView): void {
+    this.view &#x3D; view;
+  }
+
+  closeOpenMonthViewDay(): void {
+    this.activeDayIsOpen &#x3D; false;
+  }
+
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;container-fluid section first-section-color&quot;&gt;
+  &lt;!-- &lt;h4 class&#x3D;&quot;text-black font-weight-bold text-center&quot;&gt;
+    &lt;svg xmlns&#x3D;&quot;http://www.w3.org/2000/svg&quot; width&#x3D;&quot;16&quot; height&#x3D;&quot;16&quot; fill&#x3D;&quot;currentColor&quot; class&#x3D;&quot;bi bi-cone-striped&quot; viewBox&#x3D;&quot;0 0 16 16&quot;&gt;
+      &lt;path d&#x3D;&quot;m9.97 4.88.953 3.811C10.159 8.878 9.14 9 8 9c-1.14 0-2.158-.122-2.923-.309L6.03 4.88C6.635 4.957 7.3 5 8 5s1.365-.043 1.97-.12zm-.245-.978L8.97.88C8.718-.13 7.282-.13 7.03.88L6.275 3.9C6.8 3.965 7.382 4 8 4c.618 0 1.2-.036 1.725-.098zm4.396 8.613a.5.5 0 0 1 .037.96l-6 2a.5.5 0 0 1-.316 0l-6-2a.5.5 0 0 1 .037-.96l2.391-.598.565-2.257c.862.212 1.964.339 3.165.339s2.303-.127 3.165-.339l.565 2.257 2.391.598z&quot;/&gt;
+    &lt;/svg&gt;
+    Under Construction
+    &lt;svg xmlns&#x3D;&quot;http://www.w3.org/2000/svg&quot; width&#x3D;&quot;16&quot; height&#x3D;&quot;16&quot; fill&#x3D;&quot;currentColor&quot; class&#x3D;&quot;bi bi-cone-striped&quot; viewBox&#x3D;&quot;0 0 16 16&quot;&gt;
+      &lt;path d&#x3D;&quot;m9.97 4.88.953 3.811C10.159 8.878 9.14 9 8 9c-1.14 0-2.158-.122-2.923-.309L6.03 4.88C6.635 4.957 7.3 5 8 5s1.365-.043 1.97-.12zm-.245-.978L8.97.88C8.718-.13 7.282-.13 7.03.88L6.275 3.9C6.8 3.965 7.382 4 8 4c.618 0 1.2-.036 1.725-.098zm4.396 8.613a.5.5 0 0 1 .037.96l-6 2a.5.5 0 0 1-.316 0l-6-2a.5.5 0 0 1 .037-.96l2.391-.598.565-2.257c.862.212 1.964.339 3.165.339s2.303-.127 3.165-.339l.565 2.257 2.391.598z&quot;/&gt;
+    &lt;/svg&gt;
+  &lt;/h4&gt;
+  &lt;div class&#x3D;&quot;col-1 mt-3 mx-auto orange-border&quot;&gt;&lt;/div&gt;
+  &lt;br&gt; --&gt;
+  &lt;!-- &lt;button mdbBtn color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;checkConnection()&quot;&gt;Check Connection&lt;/button&gt;
+  &lt;button mdbBtn color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;populateCalendar()&quot;&gt;Populate Calendar&lt;/button&gt;
+  &lt;button mdbBtn color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;populateViaRecruiter()&quot;&gt;Populate Recruiter Calendar&lt;/button&gt;
+  &lt;button mdbBtn color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;getUser()&quot;&gt;get user data&lt;/button&gt;
+  --&gt;&lt;button mdbBtn color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;getInterviewsByRec()&quot;&gt;get rec ints&lt;/button&gt;
+  &lt;button mdbBtn color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;getInterviewsByInter()&quot;&gt;get inter ints&lt;/button&gt;&lt;!--
+  &lt;button mdbBtn color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;getApplicants()&quot;&gt;get appls&lt;/button&gt;
+  &lt;button mdbBtn color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;getSkillsforUser()&quot;&gt;getSkillsforUSer&lt;/button&gt;--&gt;
+  &lt;button mdbBtn color&#x3D;&quot;primary&quot; (click)&#x3D;&quot;buttonRefresh()&quot;&gt;refresh&lt;/button&gt;
+  &lt;!-- &lt;div class&#x3D;&quot;container-fluid p-0 banner-img text-white&quot;&gt; --&gt;
+  &lt;div class&#x3D;&quot;row&quot;&gt;
+    &lt;availability-form&gt;&lt;/availability-form&gt;
+    &lt;skills-form&gt;&lt;/skills-form&gt;
+  &lt;/div&gt;
+  &lt;!-- &lt;/div&gt; --&gt;
+&lt;/div&gt;
+
+&lt;div class&#x3D;&quot;container-fluid py-5 intro-section-color&quot;&gt;
+  &lt;h2 class&#x3D;&quot;text-black font-weight-bold text-center&quot;&gt;
+    Calendar
+  &lt;/h2&gt;
+  &lt;div class&#x3D;&quot;col-1 mt-3 mx-auto orange-border&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;br&gt;
+&lt;div&gt;
+  &lt;div class&#x3D;&quot;row&quot; style&#x3D;&quot;width:100%&quot;&gt;
+    &lt;div class&#x3D;&quot; col-sm&quot;&gt;
+      &lt;div class&#x3D;&quot;btn-group pl-3&quot;&gt;
+        &lt;div class&#x3D;&quot;btn btn-warning&quot; mwlCalendarPreviousView [view]&#x3D;&quot;view&quot; [(viewDate)]&#x3D;&quot;viewDate&quot;
+          (viewDateChange)&#x3D;&quot;closeOpenMonthViewDay()&quot;&gt;
+          &lt;h6 class&#x3D;&quot;text-center&quot;&gt;Previous&lt;/h6&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;btn btn-outline-warning&quot; mwlCalendarToday [(viewDate)]&#x3D;&quot;viewDate&quot;&gt;
+          &lt;h6 class&#x3D;&quot;text-black text-center&quot;&gt;Today&lt;/h6&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;btn btn-warning&quot; mwlCalendarNextView [view]&#x3D;&quot;view&quot; [(viewDate)]&#x3D;&quot;viewDate&quot;
+          (viewDateChange)&#x3D;&quot;closeOpenMonthViewDay()&quot;&gt;
+          &lt;h6 class&#x3D;&quot;text-center&quot;&gt;Next&lt;/h6&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot; text-center col-sm&quot;&gt;
+      &lt;h3 class&#x3D;&quot;text-black font-weight-bold text-center&quot;&gt;{{ viewDate | calendarDate:(view + &#x27;ViewTitle&#x27;):&#x27;en&#x27; }}&lt;/h3&gt;
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot; col-sm&quot; style&#x3D;&quot;position:relative; text-align: end;&quot;&gt;
+      &lt;div class&#x3D;&quot;btn-group&quot;&gt;
+        &lt;div class&#x3D;&quot;btn btn-warning&quot; (click)&#x3D;&quot;setView(CalendarView.Month)&quot; [class.active]&#x3D;&quot;view &#x3D;&#x3D;&#x3D; CalendarView.Month&quot;&gt;
+          &lt;h6 class&#x3D;&quot;text-center&quot;&gt;Month&lt;/h6&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;btn btn-outline-warning&quot; (click)&#x3D;&quot;setView(CalendarView.Week)&quot;
+          [class.active]&#x3D;&quot;view &#x3D;&#x3D;&#x3D; CalendarView.Week&quot;&gt;
+          &lt;h6 class&#x3D;&quot;text-black text-center&quot;&gt;Week&lt;/h6&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;btn btn-warning&quot; (click)&#x3D;&quot;setView(CalendarView.Day)&quot; [class.active]&#x3D;&quot;view &#x3D;&#x3D;&#x3D; CalendarView.Day&quot;&gt;
+          &lt;h6 class&#x3D;&quot;text-center&quot;&gt;Day&lt;/h6&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;br /&gt;
+  &lt;div [ngSwitch]&#x3D;&quot;view&quot;&gt;
+    &lt;mwl-calendar-month-view *ngSwitchCase&#x3D;&quot;CalendarView.Month&quot; [viewDate]&#x3D;&quot;viewDate&quot; [events]&#x3D;&quot;events&quot;
+      [refresh]&#x3D;&quot;refresh&quot; [activeDayIsOpen]&#x3D;&quot;activeDayIsOpen&quot; (dayClicked)&#x3D;&quot;dayClicked($event.day)&quot;
+      (eventClicked)&#x3D;&quot;handleEvent(&#x27;Clicked&#x27;, $event.event)&quot; (eventTimesChanged)&#x3D;&quot;eventTimesChanged($event)&quot;&gt;
+    &lt;/mwl-calendar-month-view&gt;
+    &lt;mwl-calendar-week-view *ngSwitchCase&#x3D;&quot;CalendarView.Week&quot; [viewDate]&#x3D;&quot;viewDate&quot; [events]&#x3D;&quot;events&quot;
+      [refresh]&#x3D;&quot;refresh&quot; (eventClicked)&#x3D;&quot;handleEvent(&#x27;Clicked&#x27;, $event.event)&quot;
+      (eventTimesChanged)&#x3D;&quot;eventTimesChanged($event)&quot;&gt;
+    &lt;/mwl-calendar-week-view&gt;
+    &lt;mwl-calendar-day-view *ngSwitchCase&#x3D;&quot;CalendarView.Day&quot; [viewDate]&#x3D;&quot;viewDate&quot; [events]&#x3D;&quot;events&quot; [refresh]&#x3D;&quot;refresh&quot;
+      (eventClicked)&#x3D;&quot;handleEvent(&#x27;Clicked&#x27;, $event.event)&quot; (eventTimesChanged)&#x3D;&quot;eventTimesChanged($event)&quot;&gt;
+    &lt;/mwl-calendar-day-view&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Everything you see below is just for the demo, you don&#x27;t need to include it in your app --&gt;
+
+&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;
+
+&lt;!-- &lt;div class&#x3D;&quot;container-fluid py-5 intro-section-color&quot;&gt;
+  &lt;h2 class&#x3D;&quot;text-black font-weight-bold text-center&quot;&gt;
+       Edit Events
+  &lt;/h2&gt;
+  &lt;div class&#x3D;&quot;col-1 mt-3 mx-auto orange-border&quot;&gt;&lt;/div&gt;
+&lt;div&gt;
+  &lt;br&gt;
+  &lt;div class&#x3D;&quot;row text-center&quot;&gt;
+    &lt;div class&#x3D;&quot;col-md-4&quot;&gt;
+      &lt;div class&#x3D;&quot;btn-group&quot;&gt;
+        &lt;button class&#x3D;&quot;btn btn-primary&quot; (click)&#x3D;&quot;addEvent()&quot;&gt;
+          Add new
+        &lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;br&gt; --&gt;
+
+&lt;!-- &lt;h3&gt;
+  Edit events
+  &lt;button class&#x3D;&quot;btn btn-primary float-right&quot; (click)&#x3D;&quot;addEvent()&quot;&gt;
+    Add new
+  &lt;/button&gt;
+  &lt;div class&#x3D;&quot;clearfix&quot;&gt;&lt;/div&gt;
+&lt;/h3&gt; --&gt;
+
+&lt;!-- &lt;div class&#x3D;&quot;table-responsive&quot;&gt;
+  &lt;table class&#x3D;&quot;table table-bordered&quot;&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th&gt;Title&lt;/th&gt;
+        &lt;th&gt;Primary color&lt;/th&gt;
+        &lt;th&gt;Secondary color&lt;/th&gt;
+        &lt;th&gt;Starts at&lt;/th&gt;
+        &lt;th&gt;Ends at&lt;/th&gt;
+        &lt;th&gt;Remove&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+
+    &lt;tbody&gt;
+      &lt;tr *ngFor&#x3D;&quot;let event of events&quot;&gt;
+        &lt;td&gt;
+          &lt;input
+            type&#x3D;&quot;text&quot;
+            class&#x3D;&quot;form-control&quot;
+            [(ngModel)]&#x3D;&quot;event.title&quot;
+            (keyup)&#x3D;&quot;refresh.next()&quot;
+          /&gt;
+        &lt;/td&gt;
+        &lt;td&gt;
+          &lt;input
+            type&#x3D;&quot;color&quot;
+            [(ngModel)]&#x3D;&quot;event.color&quot;
+            (change)&#x3D;&quot;refresh.next()&quot;
+          /&gt;
+        &lt;/td&gt;
+        &lt;td&gt;
+          &lt;input
+            type&#x3D;&quot;color&quot;
+            [(ngModel)]&#x3D;&quot;event.color&quot;
+            (change)&#x3D;&quot;refresh.next()&quot;
+          /&gt;
+        &lt;/td&gt;
+        &lt;td&gt;
+          &lt;input
+            class&#x3D;&quot;form-control&quot;
+            type&#x3D;&quot;text&quot;
+            mwlFlatpickr
+            [(ngModel)]&#x3D;&quot;event.start&quot;
+            (ngModelChange)&#x3D;&quot;refresh.next()&quot;
+            [altInput]&#x3D;&quot;true&quot;
+            [convertModelValue]&#x3D;&quot;true&quot;
+            [enableTime]&#x3D;&quot;true&quot;
+            dateFormat&#x3D;&quot;Y-m-dTH:i&quot;
+            altFormat&#x3D;&quot;F j, Y H:i&quot;
+            placeholder&#x3D;&quot;Not set&quot;
+          /&gt;
+        &lt;/td&gt;
+        &lt;td&gt;
+          &lt;input
+            class&#x3D;&quot;form-control&quot;
+            type&#x3D;&quot;text&quot;
+            mwlFlatpickr
+            [(ngModel)]&#x3D;&quot;event.end&quot;
+            (ngModelChange)&#x3D;&quot;refresh.next()&quot;
+            [altInput]&#x3D;&quot;true&quot;
+            [convertModelValue]&#x3D;&quot;true&quot;
+            [enableTime]&#x3D;&quot;true&quot;
+            dateFormat&#x3D;&quot;Y-m-dTH:i&quot;
+            altFormat&#x3D;&quot;F j, Y H:i&quot;
+            placeholder&#x3D;&quot;Not set&quot;
+          /&gt;
+        &lt;/td&gt;
+        &lt;td&gt;
+          &lt;button class&#x3D;&quot;btn btn-danger&quot; (click)&#x3D;&quot;deleteEvent(event)&quot;&gt;
+            Delete
+          &lt;/button&gt;
+        &lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt; --&gt;
+
+&lt;!-- &lt;ng-template #eventClickedContent let-close&#x3D;&quot;close&quot;&gt;
+  &lt;div class&#x3D;&quot;modal-header&quot;&gt;
+    &lt;h5 class&#x3D;&quot;modal-title&quot;&gt;Event action occurred&lt;/h5&gt;
+    &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;close&quot; (click)&#x3D;&quot;close()&quot;&gt;
+      &lt;span aria-hidden&#x3D;&quot;true&quot;&gt;&amp;times;&lt;/span&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class&#x3D;&quot;modal-body&quot;&gt;
+    &lt;div&gt;
+      Action:
+      &lt;pre&gt;{{ modalData?.action }}&lt;/pre&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      Event:
+      &lt;pre&gt;{{ modalData?.event | json }}&lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class&#x3D;&quot;modal-footer&quot;&gt;
+    &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-outline-secondary&quot; (click)&#x3D;&quot;close()&quot;&gt;
+      OK
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/ng-template&gt; --&gt;
+
+&lt;ng-template #dayContent&gt;
+  &lt;view-availability [availability]&#x3D;&quot;dayAvailability&quot; [interviews]&#x3D;&quot;dayInterviews&quot;&gt;&lt;/view-availability&gt;
+&lt;/ng-template&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./calendar.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">h3 {
+  margin: 0 0 10px;
+}
+
+pre {
+  background-color: #f5f5f5;
+  padding: 15px;
+}
+
+.jumbotron {
+  background-color: #ff9800; /* Orange */
+  color: #000000;
+  padding: 25px 25px;
+}
+
+.bg-grey {
+  background-color: #D8D8D8;
+}
+
+.btn-org {
+  color: #000000;
+  background-color: #ff9800 ;
+}
+
+.container-fluid {
+  padding: 30px 50px;
+}
+
+.logo {
+  font-size: 200px;
+}
+
+.logo-med {
+  font-size: 80px;
+}
+
+.logo-small {
+  font-size: 40px;
+}
+
+@media screen and (max-width: 768px) {
+  .col-sm-4 {
+    text-align: center;
+    margin: 25px 0;
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="container-fluid section first-section-color">  <!-- <h4 class="text-black font-weight-bold text-center">    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cone-striped" viewBox="0 0 16 16">      <path d="m9.97 4.88.953 3.811C10.159 8.878 9.14 9 8 9c-1.14 0-2.158-.122-2.923-.309L6.03 4.88C6.635 4.957 7.3 5 8 5s1.365-.043 1.97-.12zm-.245-.978L8.97.88C8.718-.13 7.282-.13 7.03.88L6.275 3.9C6.8 3.965 7.382 4 8 4c.618 0 1.2-.036 1.725-.098zm4.396 8.613a.5.5 0 0 1 .037.96l-6 2a.5.5 0 0 1-.316 0l-6-2a.5.5 0 0 1 .037-.96l2.391-.598.565-2.257c.862.212 1.964.339 3.165.339s2.303-.127 3.165-.339l.565 2.257 2.391.598z"/>    </svg>    Under Construction    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cone-striped" viewBox="0 0 16 16">      <path d="m9.97 4.88.953 3.811C10.159 8.878 9.14 9 8 9c-1.14 0-2.158-.122-2.923-.309L6.03 4.88C6.635 4.957 7.3 5 8 5s1.365-.043 1.97-.12zm-.245-.978L8.97.88C8.718-.13 7.282-.13 7.03.88L6.275 3.9C6.8 3.965 7.382 4 8 4c.618 0 1.2-.036 1.725-.098zm4.396 8.613a.5.5 0 0 1 .037.96l-6 2a.5.5 0 0 1-.316 0l-6-2a.5.5 0 0 1 .037-.96l2.391-.598.565-2.257c.862.212 1.964.339 3.165.339s2.303-.127 3.165-.339l.565 2.257 2.391.598z"/>    </svg>  </h4>  <div class="col-1 mt-3 mx-auto orange-border"></div>  <br> -->  <!-- <button mdbBtn color="primary" (click)="checkConnection()">Check Connection</button>  <button mdbBtn color="primary" (click)="populateCalendar()">Populate Calendar</button>  <button mdbBtn color="primary" (click)="populateViaRecruiter()">Populate Recruiter Calendar</button>  <button mdbBtn color="primary" (click)="getUser()">get user data</button>  --><button mdbBtn color="primary" (click)="getInterviewsByRec()">get rec ints</button>  <button mdbBtn color="primary" (click)="getInterviewsByInter()">get inter ints</button><!--  <button mdbBtn color="primary" (click)="getApplicants()">get appls</button>  <button mdbBtn color="primary" (click)="getSkillsforUser()">getSkillsforUSer</button>-->  <button mdbBtn color="primary" (click)="buttonRefresh()">refresh</button>  <!-- <div class="container-fluid p-0 banner-img text-white"> -->  <div class="row">    <availability-form></availability-form>    <skills-form></skills-form>  </div>  <!-- </div> --></div><div class="container-fluid py-5 intro-section-color">  <h2 class="text-black font-weight-bold text-center">    Calendar  </h2>  <div class="col-1 mt-3 mx-auto orange-border"></div></div><br><div>  <div class="row" style="width:100%">    <div class=" col-sm">      <div class="btn-group pl-3">        <div class="btn btn-warning" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"          (viewDateChange)="closeOpenMonthViewDay()">          <h6 class="text-center">Previous</h6>        </div>        <div class="btn btn-outline-warning" mwlCalendarToday [(viewDate)]="viewDate">          <h6 class="text-black text-center">Today</h6>        </div>        <div class="btn btn-warning" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"          (viewDateChange)="closeOpenMonthViewDay()">          <h6 class="text-center">Next</h6>        </div>      </div>    </div>    <div class=" text-center col-sm">      <h3 class="text-black font-weight-bold text-center">{{ viewDate | calendarDate:(view + \'ViewTitle\'):\'en\' }}</h3>    </div>    <div class=" col-sm" style="position:relative; text-align: end;">      <div class="btn-group">        <div class="btn btn-warning" (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month">          <h6 class="text-center">Month</h6>        </div>        <div class="btn btn-outline-warning" (click)="setView(CalendarView.Week)"          [class.active]="view === CalendarView.Week">          <h6 class="text-black text-center">Week</h6>        </div>        <div class="btn btn-warning" (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">          <h6 class="text-center">Day</h6>        </div>      </div>    </div>  </div>  <br />  <div [ngSwitch]="view">    <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events"      [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"      (eventClicked)="handleEvent(\'Clicked\', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">    </mwl-calendar-month-view>    <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events"      [refresh]="refresh" (eventClicked)="handleEvent(\'Clicked\', $event.event)"      (eventTimesChanged)="eventTimesChanged($event)">    </mwl-calendar-week-view>    <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events" [refresh]="refresh"      (eventClicked)="handleEvent(\'Clicked\', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">    </mwl-calendar-day-view>  </div></div><!-- Everything you see below is just for the demo, you don\'t need to include it in your app --><br /><br /><br /><!-- <div class="container-fluid py-5 intro-section-color">  <h2 class="text-black font-weight-bold text-center">       Edit Events  </h2>  <div class="col-1 mt-3 mx-auto orange-border"></div><div>  <br>  <div class="row text-center">    <div class="col-md-4">      <div class="btn-group">        <button class="btn btn-primary" (click)="addEvent()">          Add new        </button>        </div>      </div>  </div></div><br> --><!-- <h3>  Edit events  <button class="btn btn-primary float-right" (click)="addEvent()">    Add new  </button>  <div class="clearfix"></div></h3> --><!-- <div class="table-responsive">  <table class="table table-bordered">    <thead>      <tr>        <th>Title</th>        <th>Primary color</th>        <th>Secondary color</th>        <th>Starts at</th>        <th>Ends at</th>        <th>Remove</th>      </tr>    </thead>    <tbody>      <tr *ngFor="let event of events">        <td>          <input            type="text"            class="form-control"            [(ngModel)]="event.title"            (keyup)="refresh.next()"          />        </td>        <td>          <input            type="color"            [(ngModel)]="event.color"            (change)="refresh.next()"          />        </td>        <td>          <input            type="color"            [(ngModel)]="event.color"            (change)="refresh.next()"          />        </td>        <td>          <input            class="form-control"            type="text"            mwlFlatpickr            [(ngModel)]="event.start"            (ngModelChange)="refresh.next()"            [altInput]="true"            [convertModelValue]="true"            [enableTime]="true"            dateFormat="Y-m-dTH:i"            altFormat="F j, Y H:i"            placeholder="Not set"          />        </td>        <td>          <input            class="form-control"            type="text"            mwlFlatpickr            [(ngModel)]="event.end"            (ngModelChange)="refresh.next()"            [altInput]="true"            [convertModelValue]="true"            [enableTime]="true"            dateFormat="Y-m-dTH:i"            altFormat="F j, Y H:i"            placeholder="Not set"          />        </td>        <td>          <button class="btn btn-danger" (click)="deleteEvent(event)">            Delete          </button>        </td>      </tr>    </tbody>  </table></div> --><!-- <ng-template #eventClickedContent let-close="close">  <div class="modal-header">    <h5 class="modal-title">Event action occurred</h5>    <button type="button" class="close" (click)="close()">      <span aria-hidden="true">&times;</span>    </button>  </div>  <div class="modal-body">    <div>      Action:      <pre>{{ modalData?.action }}</pre>    </div>    <div>      Event:      <pre>{{ modalData?.event | json }}</pre>    </div>  </div>  <div class="modal-footer">    <button type="button" class="btn btn-outline-secondary" (click)="close()">      OK    </button>  </div></ng-template> --><ng-template #dayContent>  <view-availability [availability]="dayAvailability" [interviews]="dayInterviews"></view-availability></ng-template></div>'
+    var COMPONENTS = [{'name': 'AddApplicantComponent', 'selector': 'add-applicant'},{'name': 'AllInterviewsComponent', 'selector': 'all-interviews'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AvailabilityFormComponent', 'selector': 'availability-form'},{'name': 'CalendarComponent', 'selector': 'calendar'},{'name': 'CalendarHeaderComponent', 'selector': 'components-calendar-header'},{'name': 'CreateInterviewComponent', 'selector': 'create-interview'},{'name': 'DashboardComponent', 'selector': 'dashboard'},{'name': 'FindInterviewComponent', 'selector': 'find-interview'},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'InterviewStatusComponent', 'selector': 'interview-status'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'SkillsFormComponent', 'selector': 'skills-form'},{'name': 'ViewAvailabilityComponent', 'selector': 'view-availability'},{'name': 'ViewInterviewsComponent', 'selector': 'app-view-interviews'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'CalendarComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'CalendarComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

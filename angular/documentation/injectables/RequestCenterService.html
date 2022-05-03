@@ -1,0 +1,2517 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>raft-ui-demo documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">raft-ui-demo documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Injectables</li>
+  <li >RequestCenterService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/services/requester/request-center.service.ts</code>
+        </p>
+
+
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#addApplicant" >addApplicant</a>
+                            </li>
+                            <li>
+                                <a href="#addAvailability" >addAvailability</a>
+                            </li>
+                            <li>
+                                <a href="#addInterview" >addInterview</a>
+                            </li>
+                            <li>
+                                <a href="#addInterviewForm" >addInterviewForm</a>
+                            </li>
+                            <li>
+                                <a href="#addSkills" >addSkills</a>
+                            </li>
+                            <li>
+                                <a href="#dateToStringDate" >dateToStringDate</a>
+                            </li>
+                            <li>
+                                <a href="#dateToStringTime" >dateToStringTime</a>
+                            </li>
+                            <li>
+                                <a href="#getAllApplicants" >getAllApplicants</a>
+                            </li>
+                            <li>
+                                <a href="#getAllAvailability" >getAllAvailability</a>
+                            </li>
+                            <li>
+                                <a href="#getAllAvailabilityUI" >getAllAvailabilityUI</a>
+                            </li>
+                            <li>
+                                <a href="#getAllSkills" >getAllSkills</a>
+                            </li>
+                            <li>
+                                <a href="#getAvailabilityByRange" >getAvailabilityByRange</a>
+                            </li>
+                            <li>
+                                <a href="#getAvailabilityOnSkill" >getAvailabilityOnSkill</a>
+                            </li>
+                            <li>
+                                <a href="#getInterviewAll" >getInterviewAll</a>
+                            </li>
+                            <li>
+                                <a href="#getInterviewByInterviewer" >getInterviewByInterviewer</a>
+                            </li>
+                            <li>
+                                <a href="#getInterviewByRecruiter" >getInterviewByRecruiter</a>
+                            </li>
+                            <li>
+                                <a href="#getInterviewsDashboard" >getInterviewsDashboard</a>
+                            </li>
+                            <li>
+                                <a href="#getMyAvailability" >getMyAvailability</a>
+                            </li>
+                            <li>
+                                <a href="#getSkills" >getSkills</a>
+                            </li>
+                            <li>
+                                <a href="#getUser" >getUser</a>
+                            </li>
+                            <li>
+                                <a href="#getUsername" >getUsername</a>
+                            </li>
+                            <li>
+                                <a href="#updateStatus" >updateStatus</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(requester: <a href="../injectables/Requester.html" target="_self">Requester</a>, pipe: <a href="https://angular.io/api/common/DatePipe" target="_blank">DatePipe</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/services/requester/request-center.service.ts:23</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>requester</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/Requester.html" target="_self" >Requester</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>pipe</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/common/DatePipe" target="_blank" >DatePipe</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addApplicant"></a>
+                    <span class="name">
+                        <span ><b>addApplicant</b></span>
+                        <a href="#addApplicant"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addApplicant()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="466"
+                            class="link-to-prism">src/app/services/requester/request-center.service.ts:466</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addAvailability"></a>
+                    <span class="name">
+                        <span ><b>addAvailability</b></span>
+                        <a href="#addAvailability"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addAvailability(first: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, last: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, start: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, end: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="42"
+                            class="link-to-prism">src/app/services/requester/request-center.service.ts:42</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>first</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>last</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>start</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>end</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addInterview"></a>
+                    <span class="name">
+                        <span ><b>addInterview</b></span>
+                        <a href="#addInterview"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addInterview(interviewerID: number[], interviewDate: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, timeStart: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, timeEnd: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, additionalInfo: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="157"
+                            class="link-to-prism">src/app/services/requester/request-center.service.ts:157</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>interviewerID</td>
+                                    <td>
+                                            <code>number[]</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>interviewDate</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>timeStart</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>timeEnd</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>additionalInfo</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addInterviewForm"></a>
+                    <span class="name">
+                        <span ><b>addInterviewForm</b></span>
+                        <a href="#addInterviewForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addInterviewForm(formInput: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, additional: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, startTime: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank">Date</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="131"
+                            class="link-to-prism">src/app/services/requester/request-center.service.ts:131</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>formInput</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>additional</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>startTime</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank" >Date</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addSkills"></a>
+                    <span class="name">
+                        <span ><b>addSkills</b></span>
+                        <a href="#addSkills"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addSkills(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, username: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="303"
+                            class="link-to-prism">src/app/services/requester/request-center.service.ts:303</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>username</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dateToStringDate"></a>
+                    <span class="name">
+                        <span ><b>dateToStringDate</b></span>
+                        <a href="#dateToStringDate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>dateToStringDate(date: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank">Date</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="502"
+                            class="link-to-prism">src/app/services/requester/request-center.service.ts:502</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>date</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank" >Date</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dateToStringTime"></a>
+                    <span class="name">
+                        <span ><b>dateToStringTime</b></span>
+                        <a href="#dateToStringTime"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>dateToStringTime(date: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank">Date</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="498"
+                            class="link-to-prism">src/app/services/requester/request-center.service.ts:498</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>date</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank" >Date</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllApplicants"></a>
+                    <span class="name">
+                        <span ><b>getAllApplicants</b></span>
+                        <a href="#getAllApplicants"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getAllApplicants(applicantList: string[])</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="482"
+                            class="link-to-prism">src/app/services/requester/request-center.service.ts:482</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>applicantList</td>
+                                    <td>
+                                            <code>string[]</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllAvailability"></a>
+                    <span class="name">
+                        <span ><b>getAllAvailability</b></span>
+                        <a href="#getAllAvailability"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getAllAvailability(events: CalendarEvent[])</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="332"
+                            class="link-to-prism">src/app/services/requester/request-center.service.ts:332</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>events</td>
+                                    <td>
+                                            <code>CalendarEvent[]</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllAvailabilityUI"></a>
+                    <span class="name">
+                        <span ><b>getAllAvailabilityUI</b></span>
+                        <a href="#getAllAvailabilityUI"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getAllAvailabilityUI(events: string[])</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="362"
+                            class="link-to-prism">src/app/services/requester/request-center.service.ts:362</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>events</td>
+                                    <td>
+                                            <code>string[]</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllSkills"></a>
+                    <span class="name">
+                        <span ><b>getAllSkills</b></span>
+                        <a href="#getAllSkills"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getAllSkills(skills: <a href="../classes/skills.html" target="_self">skills[]</a>, skillNames: Set<string>, levels: Set<string>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="313"
+                            class="link-to-prism">src/app/services/requester/request-center.service.ts:313</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>skills</td>
+                                    <td>
+                                                <code><a href="../classes/skills.html" target="_self" >skills[]</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>skillNames</td>
+                                    <td>
+                                            <code>Set&lt;string&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>levels</td>
+                                    <td>
+                                            <code>Set&lt;string&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAvailabilityByRange"></a>
+                    <span class="name">
+                        <span ><b>getAvailabilityByRange</b></span>
+                        <a href="#getAvailabilityByRange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getAvailabilityByRange(startDate: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, endDate: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, startTime: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, endTime: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, skillsIDList: number[], interviewsReturn: string[])</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="389"
+                            class="link-to-prism">src/app/services/requester/request-center.service.ts:389</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>startDate</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>endDate</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>startTime</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>endTime</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>skillsIDList</td>
+                                    <td>
+                                            <code>number[]</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>interviewsReturn</td>
+                                    <td>
+                                            <code>string[]</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAvailabilityOnSkill"></a>
+                    <span class="name">
+                        <span ><b>getAvailabilityOnSkill</b></span>
+                        <a href="#getAvailabilityOnSkill"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getAvailabilityOnSkill(input: Array<number>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="116"
+                            class="link-to-prism">src/app/services/requester/request-center.service.ts:116</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>input</td>
+                                    <td>
+                                            <code>Array&lt;number&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getInterviewAll"></a>
+                    <span class="name">
+                        <span ><b>getInterviewAll</b></span>
+                        <a href="#getInterviewAll"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getInterviewAll()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="245"
+                            class="link-to-prism">src/app/services/requester/request-center.service.ts:245</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getInterviewByInterviewer"></a>
+                    <span class="name">
+                        <span ><b>getInterviewByInterviewer</b></span>
+                        <a href="#getInterviewByInterviewer"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getInterviewByInterviewer(events: CalendarEvent[], username: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="178"
+                            class="link-to-prism">src/app/services/requester/request-center.service.ts:178</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>events</td>
+                                    <td>
+                                            <code>CalendarEvent[]</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>username</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getInterviewByRecruiter"></a>
+                    <span class="name">
+                        <span ><b>getInterviewByRecruiter</b></span>
+                        <a href="#getInterviewByRecruiter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getInterviewByRecruiter(events: CalendarEvent[], username: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="212"
+                            class="link-to-prism">src/app/services/requester/request-center.service.ts:212</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>events</td>
+                                    <td>
+                                            <code>CalendarEvent[]</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>username</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getInterviewsDashboard"></a>
+                    <span class="name">
+                        <span ><b>getInterviewsDashboard</b></span>
+                        <a href="#getInterviewsDashboard"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getInterviewsDashboard(interviews: <a href="../classes/interview.html" target="_self">Array&lt;interview&gt;</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="253"
+                            class="link-to-prism">src/app/services/requester/request-center.service.ts:253</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>interviews</td>
+                                    <td>
+                                                <code><a href="../classes/interview.html" target="_self" >Array&lt;interview&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getMyAvailability"></a>
+                    <span class="name">
+                        <span ><b>getMyAvailability</b></span>
+                        <a href="#getMyAvailability"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getMyAvailability(events: CalendarEvent[], username: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="80"
+                            class="link-to-prism">src/app/services/requester/request-center.service.ts:80</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>events</td>
+                                    <td>
+                                            <code>CalendarEvent[]</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>username</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getSkills"></a>
+                    <span class="name">
+                        <span ><b>getSkills</b></span>
+                        <a href="#getSkills"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getSkills(username: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="289"
+                            class="link-to-prism">src/app/services/requester/request-center.service.ts:289</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>username</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/skills.html" target="_self" >Array&lt;skills&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getUser"></a>
+                    <span class="name">
+                        <span ><b>getUser</b></span>
+                        <a href="#getUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getUser(username: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="265"
+                            class="link-to-prism">src/app/services/requester/request-center.service.ts:265</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>username</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getUsername"></a>
+                    <span class="name">
+                        <span ><b>getUsername</b></span>
+                        <a href="#getUsername"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getUsername()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="276"
+                            class="link-to-prism">src/app/services/requester/request-center.service.ts:276</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateStatus"></a>
+                    <span class="name">
+                        <span ><b>updateStatus</b></span>
+                        <a href="#updateStatus"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>updateStatus(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, status: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, isStatus: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="26"
+                            class="link-to-prism">src/app/services/requester/request-center.service.ts:26</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>status</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>isStatus</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
+import { Requester } from &#x27;../requester/requester.service&#x27;;
+import {
+  userData,
+  skills,
+  availability,
+  interview,
+  applicant,
+  interviewRange,
+  availabilityRange,
+  availabilityForInterviews,
+  statusUpdate,
+  interviewReturn,
+} from &#x27;../../models/types&#x27;;
+import { APPCONSTANTS } from &#x27;../../constants/app.constant&#x27;;
+import { CalendarEvent } from &#x27;angular-calendar&#x27;;
+import { COLOURS } from &#x27;../../constants/colours.constant&#x27;;
+import { DatePipe } from &#x27;@angular/common&#x27;;
+
+@Injectable({
+  providedIn: &#x27;root&#x27;,
+})
+export class RequestCenterService {
+  constructor(private requester: Requester, private pipe: DatePipe) {}
+
+  updateStatus(id: number, status: string, isStatus: boolean) {
+    let url: string &#x3D; &#x27;&#x27;;
+    if (isStatus) {
+      url &#x3D;
+        APPCONSTANTS.APICONSTANTS.BASE_URL +
+        APPCONSTANTS.APICONSTANTS.STATUS_UPDATE;
+    } else {
+      url &#x3D;
+        APPCONSTANTS.APICONSTANTS.BASE_URL +
+        APPCONSTANTS.APICONSTANTS.OUTCOME_UPDATE;
+    }
+
+    let newStatus &#x3D; new statusUpdate(id, status);
+    this.requester.postRequest&lt;statusUpdate&gt;(url, newStatus);
+  }
+
+  addAvailability(first: string, last: string, start: string, end: string) {
+    const firstDate: Date &#x3D; new Date(first);
+    const lastDate: Date &#x3D; new Date(last);
+    const newStart: Date &#x3D; new Date(start);
+    const newEnd: Date &#x3D; new Date(end);
+
+    const firstDateString: string &#x3D; this.dateToStringDate(firstDate);
+    const lastDateString: string &#x3D; this.dateToStringDate(lastDate);
+
+    const startString: string &#x3D; this.dateToStringTime(newStart);
+    const endString: string &#x3D; this.dateToStringTime(newEnd);
+
+    const newAvail: availabilityRange &#x3D; new availabilityRange(
+      firstDateString,
+      lastDateString,
+      startString,
+      endString
+    );
+    const url: string &#x3D;
+      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_ADD;
+    let out: availabilityRange;
+
+    this.requester
+      .postRequest&lt;availabilityRange&gt;(url, newAvail)
+      .subscribe((returnData) &#x3D;&gt; {
+        out &#x3D; &lt;availabilityRange&gt;(&lt;unknown&gt;returnData);
+      });
+  }
+
+  // bufTimeString(input: string) {
+  //   let out &#x3D; &quot;&quot;;
+  //   if (input.length &lt; 2) {
+  //     out +&#x3D; &quot;0&quot; + input;
+  //     return out;
+  //   }
+  //   return input;
+  // }
+
+  getMyAvailability(events: CalendarEvent[], username: string) {
+    const url &#x3D;
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.AVAIL_GET +
+      &#x27;?username&#x3D;&#x27; +
+      username;
+    let out;
+
+    this.requester.getRequest&lt;availability&gt;(url).subscribe((returnData) &#x3D;&gt; {
+      out &#x3D; &lt;Array&lt;availability&gt;&gt;(&lt;unknown&gt;returnData);
+      out.forEach((element) &#x3D;&gt; {
+        const start &#x3D; new Date(element.date);
+        const end &#x3D; new Date(element.date);
+        const id &#x3D; element.availability_id;
+        const times1 &#x3D; element.start_time.split(&#x27;:&#x27;);
+        const times2 &#x3D; element.end_time.split(&#x27;:&#x27;);
+
+        start.setHours(parseInt(times1[0]), parseInt(times1[1]));
+        end.setHours(parseInt(times2[0]), parseInt(times2[1]));
+
+        console.log(&#x27;Made it this far at least&#x27;);
+        events.push({
+          id: id,
+          start: start,
+          end: end,
+          title: &#x27;availability&#x27;,
+          color: COLOURS.BLUE_DARK,
+        });
+      });
+      return out;
+    });
+    // ? this line didn&#x27;t seem to do anything
+    // out &#x3D; &lt;Array&lt;availability&gt;&gt;&lt;unknown&gt;out;
+    //return out
+  }
+
+  getAvailabilityOnSkill(input: Array&lt;number&gt;) {
+    let url: string &#x3D;
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.AVAIL_SKILL;
+    let started: boolean &#x3D; false;
+    input.forEach((element) &#x3D;&gt; {
+      url +&#x3D; (started ? &#x27;,&#x27; : &#x27;&#x27;) + element.toString();
+      started &#x3D; true;
+    });
+    this.requester.getRequest&lt;availability&gt;(url).subscribe((returnData) &#x3D;&gt; {
+      return returnData;
+    });
+  }
+
+  // ? Is the formDecomp an array of the form values?
+  addInterviewForm(formInput: string, additional: string, startTime: Date) {
+    const formDecomp: string[] &#x3D; formInput.split(&#x27; &#x27;);
+    const dateString: string &#x3D; formDecomp[1];
+    let startTimeString: string;
+    let endTimeString &#x3D; &#x27;&#x27;;
+    if (startTime.toString() !&#x3D; &#x27;&#x27;) {
+      startTimeString &#x3D; this.dateToStringTime(startTime);
+
+      startTime.setHours(startTime.getHours() + 1);
+
+      endTimeString &#x3D; this.dateToStringTime(startTime);
+    } else {
+      startTimeString &#x3D; formDecomp[3];
+      endTimeString &#x3D; this.dateToStringTime(new Date(startTimeString));
+    }
+    const id &#x3D; [Number.parseInt(formDecomp[12])];
+
+    this.addInterview(
+      id,
+      dateString,
+      startTimeString,
+      endTimeString,
+      additional
+    );
+  }
+
+  addInterview(
+    interviewerID: number[],
+    interviewDate: string,
+    timeStart: string,
+    timeEnd: string,
+    additionalInfo: string
+  ) {
+    const url: string &#x3D;
+      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ADD;
+    const newInterview: interview &#x3D; new interview(
+      interviewerID,
+      interviewDate,
+      timeStart,
+      timeEnd,
+      additionalInfo
+    );
+    this.requester
+      .postRequest&lt;interview&gt;(url, newInterview)
+      .subscribe((returnData) &#x3D;&gt; {});
+  }
+
+  getInterviewByInterviewer(events: CalendarEvent[], username: string) {
+    const url &#x3D;
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.INTER_BY_INT +
+      &#x27;?username&#x3D;&#x27; +
+      username;
+    console.log(url);
+    let out;
+    this.requester.getRequest&lt;interviewReturn&gt;(url).subscribe((returnData) &#x3D;&gt; {
+      out &#x3D; &lt;Array&lt;interviewReturn&gt;&gt;(&lt;unknown&gt;returnData);
+      out.forEach((element) &#x3D;&gt; {
+        const start &#x3D; new Date(element.date);
+        const end &#x3D; new Date(element.date);
+        const int_id &#x3D; element.interview_id;
+        const interviewers &#x3D; element.interviewers;
+        const times1 &#x3D; element.start_time.split(&#x27;:&#x27;);
+        const times2 &#x3D; element.end_time.split(&#x27;:&#x27;);
+
+        start.setHours(parseInt(times1[0]), parseInt(times1[1]));
+        end.setHours(parseInt(times2[0]), parseInt(times2[1]));
+
+        events.push({
+          id: int_id,
+          meta: interviewers,
+          start: start,
+          end: end,
+          title: &#x27;interview&#x27;,
+          color: COLOURS.RED_DARK,
+        });
+      });
+      return returnData;
+    });
+  }
+  //! Only for use in calendar app
+  getInterviewByRecruiter(events: CalendarEvent[], username: string) {
+    const url &#x3D;
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.INTER_BY_REC +
+      &#x27;?username&#x3D;&#x27; +
+      username;
+    let out;
+    this.requester.getRequest&lt;interviewReturn&gt;(url).subscribe((returnData) &#x3D;&gt; {
+      out &#x3D; &lt;Array&lt;interviewReturn&gt;&gt;(&lt;unknown&gt;returnData);
+      out.forEach((element) &#x3D;&gt; {
+        const start: Date &#x3D; new Date(element.date);
+        const end: Date &#x3D; new Date(element.date);
+        const id: number &#x3D; element.interview_id;
+        const panel: string[] &#x3D; element.interviewers;
+        const times1: string[] &#x3D; element.start_time.split(&#x27;:&#x27;);
+        const times2: string[] &#x3D; element.end_time.split(&#x27;:&#x27;);
+
+        start.setHours(parseInt(times1[0]), parseInt(times1[1]));
+        end.setHours(parseInt(times2[0]), parseInt(times2[1]));
+
+        events.push({
+          id: id,
+          meta: panel,
+          start: start,
+          end: end,
+          title: &#x27;interview&#x27;,
+          color: COLOURS.RED_DARK,
+        });
+      });
+      return returnData;
+    });
+  }
+  //? Currently not referenced
+  getInterviewAll() {
+    const url &#x3D;
+      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ALL;
+    this.requester.getRequest&lt;interview&gt;(url).subscribe((returnData) &#x3D;&gt; {
+      return returnData;
+    });
+  }
+
+  getInterviewsDashboard(interviews: Array&lt;interview&gt;) {
+    const url &#x3D;
+      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ALL;
+    this.requester.getRequest&lt;interview&gt;(url).subscribe((returnData) &#x3D;&gt; {
+      let dataArray &#x3D; &lt;Array&lt;interview&gt;&gt;(&lt;unknown&gt;returnData);
+      dataArray.forEach((element) &#x3D;&gt; {
+        interviews.push(element);
+      });
+      return interviews;
+    });
+  }
+  //*Tested
+  getUser(username: string) {
+    const url &#x3D;
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.USER_FIND +
+      &#x27;?username&#x3D;&#x27; +
+      username;
+    this.requester.getRequest&lt;userData&gt;(url).subscribe((returnData) &#x3D;&gt; {
+      return returnData;
+    });
+  }
+
+  getUsername() {
+    let username: string &#x3D; &#x27;&#x27;;
+    let inString &#x3D; &lt;string&gt;localStorage.getItem(&#x27;ssoUser&#x27;);
+
+    if (inString !&#x3D; &#x27;&#x27; &amp;&amp; inString !&#x3D; null) {
+      let myObj &#x3D; JSON.parse(inString);
+      username &#x3D; myObj.email;
+    } else {
+      console.warn(&#x27;No username was available&#x27;);
+    }
+    return username;
+  }
+  //! not tested
+  getSkills(username: string): Array&lt;skills&gt; {
+    const url &#x3D;
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.SKILLS_GET +
+      &#x27;?username&#x3D;&#x27; +
+      username;
+    let out;
+    this.requester.getRequest&lt;skills&gt;(url).subscribe((returnData) &#x3D;&gt; {
+      out &#x3D; returnData;
+    });
+    out &#x3D; &lt;Array&lt;skills&gt;&gt;(&lt;unknown&gt;out);
+    return out;
+  }
+
+  addSkills(id: number, username: string) {
+    const url &#x3D;
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.SKILLS_ADD +
+      &#x27;?username&#x3D;&#x27; +
+      username;
+    const newSkillID &#x3D; id;
+    this.requester.postRequest&lt;number&gt;(url, id).subscribe((returnData) &#x3D;&gt; {});
+  }
+
+  getAllSkills(skills: skills[], skillNames: Set&lt;string&gt;, levels: Set&lt;string&gt;) {
+    const url &#x3D;
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.SKILLS_GET_ALL;
+    let out;
+    this.requester.getRequest&lt;skills&gt;(url).subscribe((returnData) &#x3D;&gt; {
+      out &#x3D; &lt;Array&lt;skills&gt;&gt;(&lt;unknown&gt;returnData);
+      out.forEach((element) &#x3D;&gt; {
+        skillNames.add(element.skillName);
+        levels.add(element.skillLevel);
+        skills.push({
+          id: element.id,
+          skillName: element.skillName,
+          skillLevel: element.skillLevel,
+        });
+      });
+    });
+  }
+  //* Tested
+  getAllAvailability(events: CalendarEvent[]) {
+    const url &#x3D;
+      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_ALL;
+    let out;
+
+    this.requester.getRequest&lt;availability&gt;(url).subscribe((returnData) &#x3D;&gt; {
+      out &#x3D; &lt;Array&lt;availability&gt;&gt;(&lt;unknown&gt;returnData);
+      out.forEach((element) &#x3D;&gt; {
+        const start &#x3D; new Date(element.date);
+        const end &#x3D; new Date(element.date);
+        const id &#x3D; element.availability_id;
+        const times1 &#x3D; element.start_time.split(&#x27;:&#x27;);
+        const times2 &#x3D; element.end_time.split(&#x27;:&#x27;);
+
+        start.setHours(parseInt(times1[0]), parseInt(times1[1]));
+        end.setHours(parseInt(times2[0]), parseInt(times2[1]));
+
+        events.push({
+          id: id,
+          start: start,
+          end: end,
+          title: &#x27;An event made progmatically&#x27;,
+          color: COLOURS.GREEN_LITE,
+        });
+      });
+    });
+    out &#x3D; &lt;Array&lt;availability&gt;&gt;(&lt;unknown&gt;out);
+    return out;
+  }
+
+  getAllAvailabilityUI(events: string[]) {
+    const url: string &#x3D;
+      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_ALL;
+    let out: Array&lt;availability&gt;;
+
+    this.requester.getRequest&lt;availability&gt;(url).subscribe((returnData) &#x3D;&gt; {
+      out &#x3D; &lt;Array&lt;availability&gt;&gt;(&lt;unknown&gt;returnData);
+      out.forEach((element) &#x3D;&gt; {
+        const start: Date &#x3D; new Date(element.date);
+        const end: Date &#x3D; new Date(element.date);
+        const times1: string[] &#x3D; element.start_time.split(&#x27;:&#x27;);
+        const times2: string[] &#x3D; element.end_time.split(&#x27;:&#x27;);
+
+        start.setHours(parseInt(times1[0]), parseInt(times1[1]));
+        end.setHours(parseInt(times2[0]), parseInt(times2[1]));
+
+        const startTime: string &#x3D; this.dateToStringTime(start);
+        const endTime: string &#x3D; this.dateToStringTime(end);
+
+        events.push(startTime + &#x27; -&gt; &#x27; + endTime + &#x27;\n&#x27;);
+      });
+      return out;
+    });
+    // out &#x3D; &lt;Array&lt;availability&gt;&gt;&lt;unknown&gt;out;
+    // return out;
+  }
+  // * in progress
+  getAvailabilityByRange(
+    startDate: string,
+    endDate: string,
+    startTime: string,
+    endTime: string,
+    skillsIDList: number[],
+    interviewsReturn: string[]
+  ) {
+    const url: string &#x3D;
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.AVAIL_FILTER;
+    const newStartDate: Date &#x3D; new Date(startDate);
+    const newEndDate: Date &#x3D; new Date(endDate);
+    const newStartTime: Date &#x3D; new Date(startTime);
+    const newEndTime: Date &#x3D; new Date(endTime);
+
+    newStartTime.setDate(newStartDate.getDate());
+    newEndTime.setDate(newStartDate.getDate());
+
+    const startDateString: string &#x3D; this.dateToStringDate(newStartDate);
+    const endDateString: string &#x3D; this.dateToStringDate(newEndDate);
+    const startString: string &#x3D; this.dateToStringTime(newStartTime);
+    const endString: string &#x3D; this.dateToStringTime(newEndTime);
+
+    const newRange: interviewRange &#x3D; new interviewRange(
+      startDateString,
+      endDateString,
+      startString,
+      endString,
+      skillsIDList
+    );
+    this.requester
+      .postRequestNoType&lt;availabilityForInterviews&gt;(url, newRange)
+      .subscribe((returnData) &#x3D;&gt; {
+        let data &#x3D; &lt;Array&lt;availabilityForInterviews&gt;&gt;returnData;
+        data.forEach((ele) &#x3D;&gt; {
+          let refStart: Date &#x3D; new Date(newStartTime);
+          let refEnd: Date &#x3D; new Date(newStartTime);
+          refStart.setHours(
+            Number.parseInt(ele.start_time.split(&#x27;:&#x27;)[0]),
+            Number.parseInt(ele.start_time.split(&#x27;:&#x27;)[1])
+          );
+          refEnd.setHours(
+            Number.parseInt(ele.end_time.split(&#x27;:&#x27;)[0]),
+            Number.parseInt(ele.end_time.split(&#x27;:&#x27;)[1])
+          );
+
+          let startInput: string &#x3D; &#x27;&#x27;;
+          let endInput: string &#x3D; &#x27;&#x27;;
+          if (refStart.getTime() &gt; newStartTime.getTime()) {
+            startInput &#x3D; this.dateToStringTime(refStart);
+          } else {
+            startInput &#x3D; this.dateToStringTime(newStartTime);
+          }
+          if (refEnd.getTime() &lt; newEndTime.getTime()) {
+            endInput &#x3D; this.dateToStringTime(refEnd);
+          } else {
+            endInput &#x3D; this.dateToStringTime(newEndTime);
+          }
+
+          interviewsReturn.push(
+            &#x27;On &#x27; +
+              ele.date +
+              &#x27; between &#x27; +
+              startInput +
+              &#x27; -&gt; &#x27; +
+              endInput +
+              &#x27; this is with: &#x27; +
+              ele.interviewer +
+              &#x27; id: &#x27; +
+              ele.interviewer_id
+          );
+        });
+      });
+  }
+
+  // ? Not sure whether this is needed or just a test method
+  addApplicant() {
+    const url &#x3D;
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.APPLICANT_ADD;
+    const newApplicant &#x3D; new applicant(
+      &#x27;ted&#x27;,
+      &#x27;testerton&#x27;,
+      &#x27;ted@test.com&#x27;,
+      100,
+      1
+    );
+    this.requester
+      .postRequest&lt;applicant&gt;(url, newApplicant)
+      .subscribe((returnData) &#x3D;&gt; {});
+  }
+
+  getAllApplicants(applicantList: string[]) {
+    const url &#x3D;
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.APPLICANT_ALL;
+    let out;
+    this.requester.getRequest&lt;applicant&gt;(url).subscribe((returnData) &#x3D;&gt; {
+      out &#x3D; &lt;Array&lt;applicant&gt;&gt;(&lt;unknown&gt;returnData);
+      out.forEach((ele) &#x3D;&gt; {
+        applicantList.push(ele.firstName + &#x27;,&#x27;);
+      });
+    });
+
+    out &#x3D; &lt;Array&lt;applicant&gt;&gt;(&lt;unknown&gt;out);
+    return out;
+  }
+
+  dateToStringTime(date: Date): string {
+    return &#x27;&#x27; + this.pipe.transform(date, &#x27;HH:mm&#x27;);
+  }
+
+  dateToStringDate(date: Date): string {
+    return &#x27;&#x27; + this.pipe.transform(date, &#x27;yyyy-MM-dd&#x27;);
+  }
+  // ? to be removed?
+  // demo(){
+
+  //   let url &#x3D; &quot;http://localhost:8080/users/user?username&#x3D;test_user1&quot;;
+  //   this.requester.getRequest&lt;userData&gt;(url).subscribe(returnData &#x3D;&gt;{
+  //     console.log(returnData);
+  //   })
+
+  //   url &#x3D; &quot;http://localhost:8080/skills/skill?name&#x3D;running&quot;;
+  //   this.requester.getRequest&lt;skills&gt;(url).subscribe(returnData &#x3D;&gt;{
+  //     console.log(returnData);
+  //   })
+
+  //   const newSkill &#x3D; new skills(1,&quot;running&quot;, &quot;expert&quot;);
+  //   url &#x3D; &quot;http://localhost:8080/skills/new&quot;;
+  //   this.requester.postRequest&lt;skills&gt;(url, newSkill).subscribe(returnData&#x3D;&gt;{
+  //     console.log(returnData);
+  //   })
+
+  // }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'RequestCenterService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
