@@ -10,6 +10,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DatePipe } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 describe('CreateInterviewComponent', () => {
   let component: CreateInterviewComponent;
@@ -17,18 +19,16 @@ describe('CreateInterviewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        BrowserModule,
-        HttpClientTestingModule,
-        RouterTestingModule,
+      imports:[
         ReactiveFormsModule,
         HttpClientTestingModule,
-
+        RouterTestingModule,
+        CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
       ],
-      providers:[
-          BsModalService,
-          DatePipe,
-          FormBuilder
+      providers: [
+        BsModalService,
+        DatePipe,
+        FormBuilder,             
       ],
       declarations: [ 
         CreateInterviewComponent
