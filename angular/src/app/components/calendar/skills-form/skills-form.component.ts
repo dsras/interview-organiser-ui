@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators, } from '@angular/forms';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import { Subject } from 'rxjs';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
-import { skills } from 'src/app/constants/types';
+import { skills } from 'src/app/models/types';
 
 @Component({
   selector: 'skills-form',
