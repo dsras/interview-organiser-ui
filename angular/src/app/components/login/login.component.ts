@@ -19,7 +19,11 @@ export interface ILoginComponent {
 export class LoginComponent implements OnInit, ILoginComponent {
     socialUser: SocialUser = <any>null;
     isLoggedin: boolean = false;
-    constructor(private router: Router, private _dataSourceService: DataSourceService, private _backEndService: BackendService, private socialAuthService: SocialAuthService) {
+    constructor(
+        private router: Router, 
+        private _dataSourceService: DataSourceService, 
+        private _backEndService: BackendService, 
+        private socialAuthService: SocialAuthService) {
     }
     ngOnInit(): void {
         this._dataSourceService.updateDataSource(APPCONSTANTS.DATA_SOURCE_CONSTANTS.ROUTE, 'login');
