@@ -1,6 +1,7 @@
 import { CalendarEvent } from "angular-calendar";
 import { EventColor, EventAction } from "calendar-utils";
 
+// This class can be used to fix problems later if you need calendar events to carry additional information
 export class CalendarEventDetail implements CalendarEvent{
     id?: string | number | undefined;
     start: Date;
