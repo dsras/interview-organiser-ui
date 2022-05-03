@@ -70,7 +70,7 @@ export class InterviewStatusComponent implements OnInit {
     let id: number = -1;
 
     if (this.slot?.id) {
-      id = this.slot.id
+      id = Number(this.slot.id)
     }
 
     let errCount: number=0;

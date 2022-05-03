@@ -11,7 +11,7 @@ import {
   availabilityForInterviews,
   statusUpdate,
   interviewReturn,
-} from '../../constants/types';
+} from '../../models/types';
 import { APPCONSTANTS } from '../../constants/app.constant';
 import { CalendarEvent } from 'angular-calendar';
 import { COLOURS } from '../../constants/colours.constant';
@@ -77,24 +77,27 @@ export class RequestCenterService {
   //   return input;
   // }
 
-
-  getMyAvailability(events: CalendarEvent[], username:string){
-    const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_GET + "?username=" + username;
+  getMyAvailability(events: CalendarEvent[], username: string) {
+    const url =
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.AVAIL_GET +
+      '?username=' +
+      username;
     let out;
 
-    this.requester.getRequest<availability>(url).subscribe(returnData=>{
-      out = <Array<availability>><unknown>returnData;
-      out.forEach(element => {
+    this.requester.getRequest<availability>(url).subscribe((returnData) => {
+      out = <Array<availability>>(<unknown>returnData);
+      out.forEach((element) => {
         const start = new Date(element.date);
         const end = new Date(element.date);
-        const id = element.availability_id
-        const times1 = element.start_time.split(":");
-        const times2 = element.end_time.split(":");
-        
-        start.setHours(parseInt(times1[0]),parseInt(times1[1]));
-        end.setHours(parseInt(times2[0]),parseInt(times2[1]));
+        const id = element.availability_id;
+        const times1 = element.start_time.split(':');
+        const times2 = element.end_time.split(':');
 
-        console.log("Made it this far at least")
+        start.setHours(parseInt(times1[0]), parseInt(times1[1]));
+        end.setHours(parseInt(times2[0]), parseInt(times2[1]));
+
+        console.log('Made it this far at least');
         events.push({
           id: id,
           start: start,
@@ -123,7 +126,6 @@ export class RequestCenterService {
       return returnData;
     });
   }
-
 
   // ? Is the formDecomp an array of the form values?
   addInterviewForm(formInput: string, additional: string, startTime: Date) {
@@ -173,13 +175,17 @@ export class RequestCenterService {
       .subscribe((returnData) => {});
   }
 
-  getInterviewByInterviewer(events: CalendarEvent[], username:string){
-    const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_BY_INT + "?username=" + username;
+  getInterviewByInterviewer(events: CalendarEvent[], username: string) {
+    const url =
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.INTER_BY_INT +
+      '?username=' +
+      username;
     console.log(url);
     let out;
-    this.requester.getRequest<interviewReturn>(url).subscribe(returnData=>{
-      out=<Array<interviewReturn>><unknown>returnData;
-      out.forEach(element =>{
+    this.requester.getRequest<interviewReturn>(url).subscribe((returnData) => {
+      out = <Array<interviewReturn>>(<unknown>returnData);
+      out.forEach((element) => {
         const start = new Date(element.date);
         const end = new Date(element.date);
         const int_id = element.interview_id;
@@ -192,7 +198,7 @@ export class RequestCenterService {
 
         events.push({
           id: int_id,
-          interviewers: interviewers,
+          meta: interviewers,
           start: start,
           end: end,
           title: 'interview',
@@ -203,8 +209,12 @@ export class RequestCenterService {
     });
   }
   //! Only for use in calendar app
-  getInterviewByRecruiter(events: CalendarEvent[], username:string){
-    const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_BY_REC + "?username=" + username;
+  getInterviewByRecruiter(events: CalendarEvent[], username: string) {
+    const url =
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.INTER_BY_REC +
+      '?username=' +
+      username;
     let out;
     this.requester.getRequest<interviewReturn>(url).subscribe((returnData) => {
       out = <Array<interviewReturn>>(<unknown>returnData);
@@ -221,7 +231,7 @@ export class RequestCenterService {
 
         events.push({
           id: id,
-          interviewers: panel,
+          meta: panel,
           start: start,
           end: end,
           title: 'interview',
@@ -252,30 +262,36 @@ export class RequestCenterService {
     });
   }
   //*Tested
-  getUser(username:string){
-    const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.USER_FIND + "?username=" + username;
-    this.requester.getRequest<userData>(url).subscribe(returnData=>{
+  getUser(username: string) {
+    const url =
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.USER_FIND +
+      '?username=' +
+      username;
+    this.requester.getRequest<userData>(url).subscribe((returnData) => {
       return returnData;
-    })
-    
+    });
   }
 
-  getUsername(){
-    let username: string = "";
+  getUsername() {
+    let username: string = '';
     let inString = <string>localStorage.getItem('ssoUser');
 
-    if(inString != "" && inString != null ){
+    if (inString != '' && inString != null) {
       let myObj = JSON.parse(inString);
-      username= myObj.email;
-    }
-    else{
-      console.warn("No username was available");
+      username = myObj.email;
+    } else {
+      console.warn('No username was available');
     }
     return username;
   }
   //! not tested
-  getSkills(username:string) : Array<skills> {
-    const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.SKILLS_GET + "?username="+username;
+  getSkills(username: string): Array<skills> {
+    const url =
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.SKILLS_GET +
+      '?username=' +
+      username;
     let out;
     this.requester.getRequest<skills>(url).subscribe((returnData) => {
       out = returnData;
@@ -284,8 +300,12 @@ export class RequestCenterService {
     return out;
   }
 
-  addSkills(id: number, username: string){
-    const url = APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.SKILLS_ADD + "?username=" + username;
+  addSkills(id: number, username: string) {
+    const url =
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.SKILLS_ADD +
+      '?username=' +
+      username;
     const newSkillID = id;
     this.requester.postRequest<number>(url, id).subscribe((returnData) => {});
   }

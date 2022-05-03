@@ -8,7 +8,7 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarComponent } from './calendar.component';
 import { AvailabilityFormComponent } from './availability-form/availability-form.component';
 import { SkillsFormComponent } from './skills-form/skills-form.component';
-import { ViewAvailabilityComponent } from './view-availability-modal/view-availability.component';
+import { ViewAvailabilityComponent } from './view-availability/view-availability.component';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { InterviewStatusComponent } from './interview-status/interview-status.component';

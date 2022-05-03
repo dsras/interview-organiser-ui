@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, } from 'angular-calendar';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
-import { skills } from '../../constants/types';
+import { skills } from '../../models/types';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
 
 // const colors: any = {
@@ -68,6 +68,12 @@ export class CalendarComponent implements OnInit {
   }
 
   getInterviewsByRec(){
+    // ? Is this code ever used or is it duplicating work ing this.rs.getUsername() ??
+    let username: string = "";
+    let inString = <string>localStorage.getItem('ssoUser');
+    let myObj = JSON.parse(inString);
+    username= myObj.email;
+    // ???????????????????????????????????????????????????????????????????????????????
     this.rs.getInterviewByRecruiter(this.events, this.rs.getUsername());
   }
 
@@ -137,10 +143,9 @@ export class CalendarComponent implements OnInit {
   // }
 
 
-  /**
-   * ! Calendar core functionality contained here, shouldn't need to touch it!
-   * TODO openDayModal() may need corrected down the line.
-   */
+  // ! Calendar core functionality contained here, shouldn't need to touch it!
+  // TODO openDayModal() may need corrected down the line.
+  
   view: CalendarView = CalendarView.Month;
 
   CalendarView = CalendarView;

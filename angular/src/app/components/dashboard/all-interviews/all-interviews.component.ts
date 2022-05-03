@@ -1,6 +1,6 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
-import { interview } from 'src/app/constants/types';
+import { interview } from 'src/app/models/types';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
 @Component({
   selector: 'all-interviews',

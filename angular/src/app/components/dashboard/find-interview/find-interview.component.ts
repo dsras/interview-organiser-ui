@@ -1,17 +1,11 @@
-import {
-  Component,
-  OnInit,
-  Output,
-  EventEmitter,
-  TemplateRef,
-} from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { CalendarEvent } from 'angular-calendar';
 import { TimepickerConfig } from 'ngx-bootstrap/timepicker';
 import { Observable } from 'rxjs';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
-import { availabilityForInterviews, skills } from '../../../constants/types';
+import { availabilityForInterviews, skills } from '../../../models/types';
 
 @Component({
   selector: 'find-interview',
