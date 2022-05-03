@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { CalendarEvent } from 'angular-calendar';
 import { TimepickerConfig } from 'ngx-bootstrap/timepicker';
 import { Observable } from 'rxjs';
+import { getTimepickerConfig } from 'src/app/common/functions/get-timepicker-config';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 import { availabilityForInterviews, skills } from '../../../models/types';
@@ -119,19 +120,4 @@ export class FindInterviewComponent implements OnInit {
     this.createInterviewForm.reset();
     console.log(f.value);
   }
-}
-
-export function getTimepickerConfig(): TimepickerConfig {
-  return Object.assign(new TimepickerConfig(), {
-    hourStep: 1,
-    minuteStep: 15,
-    showMeridian: false,
-    readonlyInput: false,
-    mousewheel: true,
-    showMinutes: true,
-    showSeconds: false,
-    labelHours: 'Hrs',
-    labelMinutes: 'Mins',
-    labelSeconds: 'Seconds',
-  });
 }

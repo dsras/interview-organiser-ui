@@ -101,7 +101,7 @@
             <tr>
                 <td class="col-md-3">providers</td>
                 <td class="col-md-9">
-                            <code>{ provide: TimepickerConfig, useFactory: getTimepickerConfig }</code>
+                                <code><a href="../miscellaneous/functions.html#getTimepickerConfig" target="_self" >{ provide: TimepickerConfig, useFactory: getTimepickerConfig }</a></code>
                 </td>
             </tr>
 
@@ -210,7 +210,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/components/calendar/availability-form/availability-form.component.ts:30</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/components/calendar/availability-form/availability-form.component.ts:34</a></div>
                             </td>
                         </tr>
 
@@ -291,7 +291,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/components/calendar/availability-form/availability-form.component.ts:30</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/components/calendar/availability-form/availability-form.component.ts:33</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -324,8 +324,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="45"
-                            class="link-to-prism">src/app/components/calendar/availability-form/availability-form.component.ts:45</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="48"
+                            class="link-to-prism">src/app/components/calendar/availability-form/availability-form.component.ts:48</a></div>
                 </td>
             </tr>
 
@@ -361,8 +361,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="39"
-                            class="link-to-prism">src/app/components/calendar/availability-form/availability-form.component.ts:39</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="42"
+                            class="link-to-prism">src/app/components/calendar/availability-form/availability-form.component.ts:42</a></div>
                 </td>
             </tr>
 
@@ -398,8 +398,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="49"
-                            class="link-to-prism">src/app/components/calendar/availability-form/availability-form.component.ts:49</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="52"
+                            class="link-to-prism">src/app/components/calendar/availability-form/availability-form.component.ts:52</a></div>
                 </td>
             </tr>
 
@@ -467,8 +467,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="41"
-                            class="link-to-prism">src/app/components/calendar/availability-form/availability-form.component.ts:41</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="44"
+                            class="link-to-prism">src/app/components/calendar/availability-form/availability-form.component.ts:44</a></div>
                 </td>
             </tr>
 
@@ -550,7 +550,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/components/calendar/availability-form/availability-form.component.ts:24</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/components/calendar/availability-form/availability-form.component.ts:27</a></div>
                         </td>
                     </tr>
 
@@ -569,26 +569,29 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, Output, EventEmitter, TemplateRef } from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  TemplateRef,
+} from &#x27;@angular/core&#x27;;
 import { FormBuilder, FormGroup, Validators } from &#x27;@angular/forms&#x27;;
 import { TimepickerConfig } from &#x27;ngx-bootstrap/timepicker&#x27;;
+import { getTimepickerConfig } from &#x27;src/app/common/functions/get-timepicker-config&#x27;;
 import { ModalControllerService } from &#x27;src/app/services/modal-controller.service&#x27;;
 import { RequestCenterService } from &#x27;src/app/services/requester/request-center.service&#x27;;
 
 /**
  * Form for collecting interviewer availability data and posting to DB
- *
  */
 @Component({
   selector: &#x27;availability-form&#x27;,
   templateUrl: &#x27;./availability-form.component.html&#x27;,
   styleUrls: [&#x27;./availability-form.component.scss&#x27;],
-  providers: [{ provide: TimepickerConfig, useFactory: getTimepickerConfig }]
-
+  providers: [{ provide: TimepickerConfig, useFactory: getTimepickerConfig }],
 })
-
 export class AvailabilityFormComponent implements OnInit {
-  
   /**
    * Blank form to be populated by the user
    */
@@ -596,49 +599,37 @@ export class AvailabilityFormComponent implements OnInit {
     startTime: [&#x27;&#x27;, Validators.required],
     endTime: [&#x27;&#x27;, Validators.required],
     dateRange: [&#x27;&#x27;, Validators.required],
-  })
+  });
 
-  @Output() availabilityFormSubmitted: EventEmitter&lt;FormGroup&gt; &#x3D; new EventEmitter&lt;FormGroup&gt;();
-
+  @Output() availabilityFormSubmitted: EventEmitter&lt;FormGroup&gt; &#x3D;
+    new EventEmitter&lt;FormGroup&gt;();
 
   constructor(
     private fb: FormBuilder,
     private rs: RequestCenterService,
     private ms: ModalControllerService
-  ) { }
+  ) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   openModal(template: TemplateRef&lt;any&gt;): void {
-    this.ms.openModal(template)
+    this.ms.openModal(template);
   }
 
   closeModal(): void {
-    this.ms.closeModal()
+    this.ms.closeModal();
   }
 
   onSubmit(f: FormGroup): void {
-    this.rs.addAvailability(f.value.dateRange[0], f.value.dateRange[1], f.value.startTime, f.value.endTime);
+    this.rs.addAvailability(
+      f.value.dateRange[0],
+      f.value.dateRange[1],
+      f.value.startTime,
+      f.value.endTime
+    );
     f.reset();
   }
-
 }
-
-export function getTimepickerConfig(): TimepickerConfig {
-  return Object.assign(new TimepickerConfig(), {
-    hourStep: 1,
-    minuteStep: 15,
-    showMeridian: false,
-    readonlyInput: false,
-    mousewheel: true,
-    showMinutes: true,
-    showSeconds: false,
-    labelHours: &#x27;Hours&#x27;,
-    labelMinutes: &#x27;Minutes&#x27;,
-    labelSeconds: &#x27;Seconds&#x27;
-  });
-}
-
 </code></pre>
     </div>
 
