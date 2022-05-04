@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "compodoc": "compodoc -p tsconfig.json"
+    "compodoc": "compodoc -p tsconfig.json",
+    "install": "npm install --legacy-peer-deps"
   },
   "private": true,
   "dependencies": {
