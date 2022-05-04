@@ -1,5 +1,5 @@
-export class EventMetaData {
-  type?: string;
+export class InterviewMetaData {
+  type: string;
   interviewPanel?: Array<string>;
   interviewStatus?: string;
   interviewOutcome?: string;
@@ -9,14 +9,18 @@ export class EventMetaData {
     interviewPanel?: Array<string>;
     interviewStatus?: string;
     interviewOutcome?: string;
-    // * Addtional params here as needed
   }) {
+    this.type = 'warning'
     this.interviewPanel = metaData.interviewPanel;
     this.interviewStatus = metaData.interviewStatus;
     this.interviewOutcome = metaData.interviewOutcome;
-    if (this.interviewPanel) {
-      this.type = 'warning'
-    }
-    // * Additional params here as needed
+  }
+}
+
+export class AvailabilityMetaData {
+  type: string;
+  // * Additional params here as needed
+  constructor() {
+    this.type = 'info'
   }
 }
