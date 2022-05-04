@@ -1,13 +1,14 @@
 import { CalendarEvent } from 'angular-calendar';
 import { EventColor, EventAction } from 'calendar-utils';
+import { EventMetaData } from './event-meta-data';
 
 /**
  * This class can be used to store additional data inside events that can be typed 
- * instead of overloading the default CalendarEvent meta property which has type (any | null)
+ * instead of using the default CalendarEvent meta property which has type (any | null).
+ * Additional parameters can be stroed within the meta object.
  * 
- * @author Daniel Jones
  */
-export class CalendarEventDetail implements CalendarEvent {
+export class CalendarEventInterview implements CalendarEvent {
   /** Maybe change this to only be of type number */
   id?: string | number | undefined;
   start: Date;
@@ -22,32 +23,29 @@ export class CalendarEventDetail implements CalendarEvent {
     | { beforeStart?: boolean | undefined; afterEnd?: boolean | undefined }
     | undefined;
   draggable?: boolean | undefined;
-  meta?: any;
+  meta: EventMetaData;
 
   /**
-   * Creates a detailed event from a CalendarEvent with potential additional params
+   * Currently the constructor for a CalendarEventDetail object takes an existing Calendarevent
+   * and appends meta data to as a typed object described seperately. 
+   * this can be modified and expanded as appropriate.
    * 
-   * TODO add further params that may be required as properties of events in a calendar
+   * ? should a CalendarEvent be required to create an event or can it just be constructed instead ?
    * 
-   * @param  {CalendarEvent} event
-   * * the CalendarEvent to inherit properties from 
-   * 
-   * @param  {['']} panel
-   * *  the interview panel for the CalendarEvent
-   * 
+   * @param event the CalendarEvent to base the detailed event on
+   * @param meta the metadata object containing additional typed attributes
    */
-  constructor(event: CalendarEvent, panel?: ['']) {
+  constructor(event: CalendarEvent, meta: EventMetaData) {
     this.id = event.id;
     this.start = event.start;
     this.end = event.end;
     this.title = event.title;
-    this.interviewPanel = panel;
     this.color = event.color;
     this.actions = event.actions;
     this.allDay = event.allDay;
     this.cssClass = event.cssClass;
     this.resizable = event.resizable;
     this.draggable = event.draggable;
-    this.meta = event.meta;
+    this.meta = meta;
   }
 }

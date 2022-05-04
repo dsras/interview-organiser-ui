@@ -1,0 +1,9 @@
+{
+  "output": {
+    "$id": "/properties/output",
+    "type": "string",
+    "title": "Where to store the generated documentation",
+    "default": "documentation/compodoc",
+    "examples": [""]
+  }
+}
