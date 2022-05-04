@@ -55,13 +55,11 @@ import { ViewInterviewsComponent } from './components/view-interviews/view-inter
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { SocialAuthService, SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider, SocialUser } from 'angularx-social-login';
-import { CalendarDatePipe } from 'angular-calendar/modules/common/calendar-date.pipe';
 
 
 const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_DEV;
 @NgModule({
     declarations: [
-        CalendarDatePipe,
         AppComponent,
         LoginComponent,
         HeaderComponent,
