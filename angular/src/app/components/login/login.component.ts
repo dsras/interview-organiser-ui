@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SocialAuthService, GoogleLoginProvider, SocialUser } from 'angularx-social-login';
+import { SocialAuthService, GoogleLoginProvider, SocialUser, SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 
 // [APP_LEVEL Imports]
 import { BackendService } from '../../services/backend.service';
@@ -13,12 +13,17 @@ export interface ILoginComponent {
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss']
+    styleUrls: ['./login.component.scss'],
+    providers: [SocialLoginModule, SocialAuthService]
 })
 export class LoginComponent implements OnInit, ILoginComponent {
     socialUser: SocialUser = <any>null;
     isLoggedin: boolean = false;
-    constructor(private router: Router, private _dataSourceService: DataSourceService, private _backEndService: BackendService, private socialAuthService: SocialAuthService) {
+    constructor(
+        private router: Router, 
+        private _dataSourceService: DataSourceService, 
+        private _backEndService: BackendService, 
+        private socialAuthService: SocialAuthService) {
     }
     ngOnInit(): void {
         this._dataSourceService.updateDataSource(APPCONSTANTS.DATA_SOURCE_CONSTANTS.ROUTE, 'login');
