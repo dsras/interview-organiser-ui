@@ -31,6 +31,8 @@ import {
   CalendarEventAvailability,
   CalendarEventInterview,
 } from 'src/app/models/calendar-event-detail';
+import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
+import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 
 // const colors: any = {
 //   red: {
@@ -67,15 +69,17 @@ export class CalendarComponent implements OnInit {
 
   //* This is where the local calendar events are stored
   skills: skills[] = [];
-  events: Array</*CalendarEvent |*/ CalendarEventAvailability | CalendarEventInterview> = [];
-  availability: CalendarEventAvailability[] = [];
-  interviews: CalendarEventInterview[] = [];
+  events: Array<CalendarEventAvailability | CalendarEventInterview> = [];
+  availability: Array<CalendarEventAvailability> = [];
+  interviews: Array<CalendarEventInterview> = [];
 
   constructor(
     private router: Router,
     private modal: NgbModal,
     private ms: ModalControllerService,
-    private rs: RequestCenterService
+    private rs: RequestCenterService,
+    private iRequester: InterviewRequesterService,
+    private aRequester: AvailabilityRequesterService,
   ) {}
 
   ngOnInit(): void {
@@ -103,18 +107,18 @@ export class CalendarComponent implements OnInit {
   }
 
   getInterviewsByRec() {
-    // ? Is this code ever used or is it duplicating work ing this.rs.getUsername() ??
-    let username: string = '';
-    let inString = <string>localStorage.getItem('ssoUser');
-    let myObj = JSON.parse(inString);
-    username = myObj.email;
-    // ???????????????????????????????????????????????????????????????????????????????
-    this.rs.getInterviewByRecruiter(this.events, this.rs.getUsername());
+    // // ? Is this code ever used or is it duplicating work ing this.rs.getUsername() ??
+    // let username: string = '';
+    // let inString = <string>localStorage.getItem('ssoUser');
+    // let myObj = JSON.parse(inString);
+    // username = myObj.email;
+    // // ???????????????????????????????????????????????????????????????????????????????
+    this.iRequester.getInterviewByRecruiter(this.events, this.rs.getUsername());
   }
 
   getInterviewsByInter(): void {
-    this.rs.getInterviewByInterviewer(this.events, this.rs.getUsername());
-    this.rs.getInterviewByInterviewer(this.interviews, this.rs.getUsername());
+    this.iRequester.getInterviewByInterviewer(this.events, this.rs.getUsername());
+    this.iRequester.getInterviewByInterviewer(this.interviews, this.rs.getUsername());
   }
   getSkillsforUser(): void {
     this.rs.getSkills(this.rs.getUsername());
@@ -137,10 +141,10 @@ export class CalendarComponent implements OnInit {
 
   populateCalendar(): void {
     this.resetEvents();
-    this.rs.getMyAvailability(this.events, this.rs.getUsername());
-    this.rs.getMyAvailability(this.availability, this.rs.getUsername());
-    this.rs.getInterviewByInterviewer(this.events, this.rs.getUsername());
-    this.rs.getInterviewByInterviewer(this.interviews, this.rs.getUsername());
+    this.aRequester.getMyAvailability(this.events, this.rs.getUsername());
+    this.aRequester.getMyAvailability(this.availability, this.rs.getUsername());
+    this.iRequester.getInterviewByInterviewer(this.events, this.rs.getUsername());
+    this.iRequester.getInterviewByInterviewer(this.interviews, this.rs.getUsername());
     this.delayedRefresh();
   }
 

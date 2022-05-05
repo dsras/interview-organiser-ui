@@ -1,8 +1,8 @@
 import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
-import { RequestCenterService } from 'src/app/services/requester/request-center.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { CalendarEvent } from 'angular-calendar';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
+import { CalendarEventInterview } from 'src/app/models/calendar-event-detail';
 
 @Component({
   selector: 'interview-status',
@@ -11,7 +11,7 @@ import { CalendarEvent } from 'angular-calendar';
 })
 export class InterviewStatusComponent implements OnInit {
 
-  @Input() slot?: CalendarEvent;
+  @Input() slot?: CalendarEventInterview;
 
   statusForm: FormGroup = this.fb.group({
     status: ['']
@@ -21,25 +21,25 @@ export class InterviewStatusComponent implements OnInit {
 
   interviewStatusOptions: Array<string> = [];
 
-  statusList: string[] = [
+  statusList: Array<string> = [
     'Completed',
     'Candidate No Show',
     'Panel No Show'
   ]
 
-  outcomeList: string[] = [
+  outcomeList: Array<string> = [
     'Progressed',
     'Didnt Progress',
     'Hired'
   ]
 
 
-  interviewerOptions: string[] = [
+  interviewerOptions: Array<string> = [
     this.statusList[0],
     this.statusList[1],
   ];
 
-  recruiterOptions: string[] = [
+  recruiterOptions: Array<string> = [
     this.statusList[2],
     this.outcomeList[0],
     this.outcomeList[1],
@@ -51,7 +51,7 @@ export class InterviewStatusComponent implements OnInit {
 
   constructor(
     private ms: ModalControllerService,
-    private rs: RequestCenterService,
+    private iRequester: InterviewRequesterService,
     private fb: FormBuilder,
   ) { };
 
@@ -66,13 +66,15 @@ export class InterviewStatusComponent implements OnInit {
   };
 
   onSubmit(f: FormGroup): void {
-    let str:string = f.value.status;
+    console.log(this.slot)
+    const str:string = f.value.status;
     let id: number = -1;
 
     if (this.slot?.id) {
       id = Number(this.slot.id)
     }
 
+    // TODO streamline this?
     let errCount: number=0;
     let isOutcome: boolean = true;
     for(let element of this.statusList){
@@ -94,11 +96,11 @@ export class InterviewStatusComponent implements OnInit {
       }
     }
 
-    if(errCount>=6 || id==-1){
+    if(errCount >= 6 || id == -1){
       console.warn("Probably nothing selected in the status menu before submission");
       return;
     }
-    this.rs.updateStatus(id, str, !isOutcome)
+    this.iRequester.updateInterviewStatus(id, str, !isOutcome)
     f.reset();
   }
 

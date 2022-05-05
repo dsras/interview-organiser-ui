@@ -9,7 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TimepickerConfig } from 'ngx-bootstrap/timepicker';
 import { getTimepickerConfig } from 'src/app/common/functions/get-timepicker-config';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
-import { RequestCenterService } from 'src/app/services/requester/request-center.service';
+import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 
 /**
  * Form for collecting interviewer availability data and posting to DB
@@ -35,8 +35,8 @@ export class AvailabilityFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private rs: RequestCenterService,
-    private ms: ModalControllerService
+    private ms: ModalControllerService,
+    private aRequester: AvailabilityRequesterService
   ) {}
 
   ngOnInit(): void {}
@@ -50,7 +50,7 @@ export class AvailabilityFormComponent implements OnInit {
   }
 
   onSubmit(f: FormGroup): void {
-    this.rs.addAvailability(
+    this.aRequester.addAvailability(
       f.value.dateRange[0],
       f.value.dateRange[1],
       f.value.startTime,

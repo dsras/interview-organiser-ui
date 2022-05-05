@@ -245,6 +245,8 @@ export class interviewReturn implements data{
     start_time: string;
     end_time: string;
     additional_info: string;
+    status: string;
+    outcome: string;
     constructor(
         interview_id: number,
         interviewers: string[],
@@ -252,6 +254,8 @@ export class interviewReturn implements data{
         start_time: string,
         end_time: string,
         additional_info: string,
+        status: string,
+        outcome: string,
     ){
         this.interview_id = interview_id;
         this.interviewers = interviewers;
@@ -259,6 +263,8 @@ export class interviewReturn implements data{
         this.start_time = start_time;
         this.end_time = end_time;
         this.additional_info = additional_info;
+        this.status = status;
+        this.outcome = outcome;
     }
 
 }

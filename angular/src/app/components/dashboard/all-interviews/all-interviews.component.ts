@@ -1,7 +1,7 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 import { interview } from 'src/app/models/types';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
+import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 @Component({
   selector: 'all-interviews',
   templateUrl: './all-interviews.component.html',
@@ -13,12 +13,12 @@ export class AllInterviewsComponent implements OnInit {
   interviews: Array<interview> = [];
 
   constructor(
-    private rs: RequestCenterService,
     private ms: ModalControllerService,
+    private iRequester: InterviewRequesterService
   ) { }
 
   ngOnInit(): void {
-    this.rs.getInterviewsDashboard(this.interviews);
+    this.iRequester.getInterviewsDashboard(this.interviews);
   }
 
   print(obj: any): void {

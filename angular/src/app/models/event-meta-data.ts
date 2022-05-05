@@ -1,19 +1,21 @@
 export class InterviewMetaData {
   type: string;
-  interviewPanel?: Array<string>;
-  interviewStatus?: string;
-  interviewOutcome?: string;
+  interviewPanel: Array<string>;
+  interviewStatus: string;
+  interviewOutcome: string;
+  additional: string
   // * Additional params here as needed
   constructor(metaData: {
-    type?: string;
-    interviewPanel?: Array<string>;
-    interviewStatus?: string;
-    interviewOutcome?: string;
+    interviewPanel: Array<string>;
+    interviewStatus: string;
+    interviewOutcome: string;
+    additional: string
   }) {
     this.type = 'warning'
     this.interviewPanel = metaData.interviewPanel;
     this.interviewStatus = metaData.interviewStatus;
     this.interviewOutcome = metaData.interviewOutcome;
+    this.additional = metaData.additional
   }
 }
 
