@@ -1,7 +1,12 @@
+import { Injectable } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
-// ! This should probably be refactored into a service
-export class DateToString {
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DateToStringService {
+
   constructor(private pipe: DatePipe) {}
 
   dateToStringTime(date: Date): string {
@@ -10,5 +15,4 @@ export class DateToString {
 
   dateToStringDate(date: Date): string {
     return '' + this.pipe.transform(date, 'yyyy-MM-dd');
-  }
-}
+  }}

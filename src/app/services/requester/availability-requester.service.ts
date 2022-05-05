@@ -9,9 +9,9 @@ import {
 import { APPCONSTANTS } from '../../common/constants/app.constant';
 import { CalendarEvent } from 'angular-calendar';
 import { CalendarColors } from '../../common/constants/colours.constant';
-import { DateToString } from '../../common/functions/date-to-string';
 import { CalendarEventAvailability } from 'src/app/common/models/calendar-event-detail';
 import { AvailabilityMetaData } from 'src/app/common/models/event-meta-data';
+import { DateToStringService } from '../date-to-string.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +19,7 @@ import { AvailabilityMetaData } from 'src/app/common/models/event-meta-data';
 export class AvailabilityRequesterService {
   constructor(
     private requester: Requester,
-    private dateFormatter: DateToString
+    private dateFormatter: DateToStringService
   ) {}
 
   dateToStringTime(date: Date): string {

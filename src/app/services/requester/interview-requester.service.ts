@@ -6,7 +6,7 @@ import { CalendarEvent } from 'angular-calendar';
 import { CalendarEventInterview } from 'src/app/common/models/calendar-event-detail';
 import { InterviewMetaData } from 'src/app/common/models/event-meta-data';
 import { CalendarColors } from 'src/app/common/constants/colours.constant';
-import { DateToString } from 'src/app/common/functions/date-to-string';
+import { DateToStringService } from '../date-to-string.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +14,7 @@ import { DateToString } from 'src/app/common/functions/date-to-string';
 export class InterviewRequesterService {
   constructor(
     private requester: Requester,
-    private dateFormatter: DateToString
+    private dateFormatter: DateToStringService
   ) {}
 
   dateToStringTime(date: Date): string {
