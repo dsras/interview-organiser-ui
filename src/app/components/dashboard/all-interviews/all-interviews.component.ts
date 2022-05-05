@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { interview } from 'src/app/models/types';
+import { interview } from 'src/app/common/models/types';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 @Component({

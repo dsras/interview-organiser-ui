@@ -26,9 +26,9 @@ import { AddApplicantComponent } from './components/dashboard/add-applicant/add-
 import { AllInterviewsComponent } from './components/dashboard/all-interviews/all-interviews.component';
 
 // [application Services]
-import { AppInterceptor } from './interceptor/app.interceptor';
+import { AppInterceptor } from './components/interceptor/app.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { APPCONSTANTS, prodEnv } from './constants/app.constant';
+import { APPCONSTANTS, prodEnv } from './common/constants/app.constant';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { FindInterviewComponent } from './components/dashboard/find-interview/find-interview.component';
 import { MDBBootstrapModulesPro } from 'ng-uikit-pro-standard';

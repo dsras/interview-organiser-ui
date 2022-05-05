@@ -2,7 +2,7 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
-import { skills } from 'src/app/models/types';
+import { skills } from 'src/app/common/models/types';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
 @Component({
   selector: 'add-applicant',

@@ -25,12 +25,12 @@ import {
   CalendarView,
 } from 'angular-calendar';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
-import { skills } from '../../models/types';
+import { skills } from '../../common/models/types';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import {
   CalendarEventAvailability,
   CalendarEventInterview,
-} from 'src/app/models/calendar-event-detail';
+} from 'src/app/common/models/calendar-event-detail';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 

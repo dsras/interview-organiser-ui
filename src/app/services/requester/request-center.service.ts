@@ -11,10 +11,10 @@ import {
   availabilityForInterviews,
   statusUpdate,
   interviewReturn,
-} from '../../models/types';
-import { APPCONSTANTS } from '../../constants/app.constant';
+} from '../../common/models/types';
+import { APPCONSTANTS } from '../../common/constants/app.constant';
 import { CalendarEvent } from 'angular-calendar';
-import { COLOURS } from '../../constants/colours.constant';
+import { COLOURS } from '../../common/constants/colours.constant';
 import { DatePipe } from '@angular/common';
 import { InterviewRequesterService } from './interview-requester.service';
 import { AvailabilityRequesterService } from './availability-requester.service';

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { getTimepickerConfig } from 'src/app/common/functions/get-timepicker-config';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
-import { skills } from '../../../models/types';
+import { skills } from '../../../common/models/types';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 
 @Component({
