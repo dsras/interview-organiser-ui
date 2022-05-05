@@ -14,7 +14,7 @@ import { AppComponent } from './app.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { FlexLayoutModule} from '@angular/flex-layout';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 // [application components]
 import { LoginComponent } from './components/login/login.component';
@@ -51,90 +51,90 @@ import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { Requester } from './services/requester/requester.service';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { DataSourceService } from './services/data-source.service';
-import { ViewInterviewsComponent } from './components/view-interviews/view-interviews.component';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
-import { SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider, SocialUser } from 'angularx-social-login';
+import {
+  SocialLoginModule,
+  SocialAuthServiceConfig,
+  GoogleLoginProvider,
+  SocialUser,
+} from 'angularx-social-login';
 
-
-const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_DEV;
+const CLIENT_ID = prodEnv
+  ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD
+  : APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_DEV;
 @NgModule({
-    declarations: [
-        AppComponent,
-        LoginComponent,
-        HeaderComponent,
-        DashboardComponent,
-        FindInterviewComponent,
-        CreateInterviewComponent,
-        AddApplicantComponent,
-        AllInterviewsComponent,
-        ViewInterviewsComponent,
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    HeaderComponent,
+    DashboardComponent,
+    FindInterviewComponent,
+    CreateInterviewComponent,
+    AddApplicantComponent,
+    AllInterviewsComponent,
+  ],
+  imports: [
+    BrowserModule,
+    MDBBootstrapModulesPro.forRoot(),
+    AppRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    AgGridModule.withComponents([]),
+    ModalModule.forRoot(),
+    StoreModule.forRoot({}),
+    BsDatepickerModule.forRoot(),
+    BrowserAnimationsModule,
+    TypeaheadModule.forRoot(),
+    ButtonsModule.forRoot(),
+    SocialLoginModule,
+    BsDropdownModule.forRoot(),
+    PopoverModule.forRoot(),
+    NgxSpinnerModule,
+    TooltipModule.forRoot(),
+    NgMultiSelectDropDownModule.forRoot(),
+    MyCalendarModule,
+    MdbAccordionModule,
+    MdbCarouselModule,
+    MdbCheckboxModule,
+    MdbCollapseModule,
+    MdbDropdownModule,
+    MdbFormsModule,
+    MdbModalModule,
+    MdbPopoverModule,
+    MdbRadioModule,
+    MdbRangeModule,
+    MdbRippleModule,
+    MdbScrollspyModule,
+    MdbTabsModule,
+    MdbTooltipModule,
+    MdbValidationModule,
+    TimepickerModule,
+    FlexLayoutModule,
 
-    ],
-    imports: [
-        BrowserModule,  
-        MDBBootstrapModulesPro.forRoot(),
-        AppRoutingModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-        AgGridModule.withComponents([]),
-        ModalModule.forRoot(),
-        StoreModule.forRoot({}),
-        BsDatepickerModule.forRoot(),
-        BrowserAnimationsModule,
-        TypeaheadModule.forRoot(),
-        ButtonsModule.forRoot(),
-        SocialLoginModule,
-        BsDropdownModule.forRoot(),
-        PopoverModule.forRoot(),
-        NgxSpinnerModule,
-        TooltipModule.forRoot(),
-        NgMultiSelectDropDownModule.forRoot(),
-        MyCalendarModule,
-        MdbAccordionModule,
-        MdbCarouselModule,
-        MdbCheckboxModule,
-        MdbCollapseModule,
-        MdbDropdownModule,
-        MdbFormsModule,
-        MdbModalModule,
-        MdbPopoverModule,
-        MdbRadioModule,
-        MdbRangeModule,
-        MdbRippleModule,
-        MdbScrollspyModule,
-        MdbTabsModule,
-        MdbTooltipModule,
-        MdbValidationModule,
-        TimepickerModule,
-        FlexLayoutModule,
-        
-
-        // GoogleLoginProvider, 
-        // SocialUser
-    ],
-    providers: [
-        MDBSpinningPreloader,
-        Requester,
-        DatePipe,
-        { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true },
-        {
-            provide: 'SocialAuthServiceConfig',
-            useValue: {
-                autoLogin: false,
-                providers: [
-                    {
-                        id: GoogleLoginProvider.PROVIDER_ID,
-                        provider: new GoogleLoginProvider(CLIENT_ID)
-                        //provider: new GoogleLoginProvider('61469011957-etn1feijdcp2ap3af8sh6ri9pkf9v444.apps.googleusercontent.com')
-                            
-                    }
-                ]
-            } as SocialAuthServiceConfig,
-        }
-    ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    bootstrap: [AppComponent],
-
+    // GoogleLoginProvider,
+    // SocialUser
+  ],
+  providers: [
+    MDBSpinningPreloader,
+    Requester,
+    DatePipe,
+    { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true },
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(CLIENT_ID),
+            //provider: new GoogleLoginProvider('61469011957-etn1feijdcp2ap3af8sh6ri9pkf9v444.apps.googleusercontent.com')
+          },
+        ],
+      } as SocialAuthServiceConfig,
+    },
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
