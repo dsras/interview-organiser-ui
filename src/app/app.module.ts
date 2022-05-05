@@ -22,7 +22,6 @@ import { HeaderComponent } from './components/header/header.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MyCalendarModule } from './components/calendar/calendar.module';
 import { CreateInterviewComponent } from './components/dashboard/create-interview/create-interview.component';
-import { AddApplicantComponent } from './components/dashboard/add-applicant/add-applicant.component';
 import { AllInterviewsComponent } from './components/dashboard/all-interviews/all-interviews.component';
 
 // [application Services]
@@ -59,6 +58,7 @@ import {
   GoogleLoginProvider,
   SocialUser,
 } from 'angularx-social-login';
+import { DashboardModule } from './components/dashboard/dashboard.module';
 
 const CLIENT_ID = prodEnv
   ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD
@@ -68,14 +68,10 @@ const CLIENT_ID = prodEnv
     AppComponent,
     LoginComponent,
     HeaderComponent,
-    DashboardComponent,
-    FindInterviewComponent,
-    CreateInterviewComponent,
-    AddApplicantComponent,
-    AllInterviewsComponent,
   ],
   imports: [
     BrowserModule,
+    DashboardModule,
     MDBBootstrapModulesPro.forRoot(),
     AppRoutingModule,
     HttpClientModule,
