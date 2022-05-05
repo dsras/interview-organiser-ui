@@ -7,15 +7,27 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { SocialAuthService, GoogleLoginProvider, SocialAuthServiceConfig } from 'angularx-social-login';
 import { BsModalService } from 'ngx-bootstrap/modal';
+import { of } from 'rxjs';
+import { Observable } from 'rxjs/internal/Observable';
 import { prodEnv, APPCONSTANTS } from 'src/app/constants/app.constant';
 import { DataSourceService } from 'src/app/services/data-source.service';
 
 import { HeaderComponent } from './header.component';
 
+
+const FakeDataSource: Pick<DataSourceService, 'getDataSource'> = {
+  getDataSource(source: string): Observable<any> {
+    return of("login");
+  },
+}
+
+
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
   const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_DEV;
+
+  
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -31,6 +43,9 @@ describe('HeaderComponent', () => {
         DatePipe,
         FormBuilder, 
         SocialAuthService,
+        //DataSourceService,
+        {provide: DataSourceService, useValue: FakeDataSource},
+
         {
           provide: 'SocialAuthServiceConfig',
           useValue: {
