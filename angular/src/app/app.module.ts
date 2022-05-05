@@ -1,9 +1,9 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AgGridModule } from 'ag-grid-angular';
-import { ModalModule } from 'ngx-bootstrap/modal';
+import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
 import { StoreModule } from '@ngrx/store';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -27,7 +27,6 @@ import { AllInterviewsComponent } from './components/dashboard/all-interviews/al
 
 // [application Services]
 import { AppInterceptor } from './interceptor/app.interceptor';
-import { SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider } from 'angularx-social-login';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { APPCONSTANTS, prodEnv } from './constants/app.constant';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
@@ -54,6 +53,8 @@ import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { DataSourceService } from './services/data-source.service';
 import { ViewInterviewsComponent } from './components/view-interviews/view-interviews.component';
 import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
+import { SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider, SocialUser } from 'angularx-social-login';
 
 
 const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_DEV;
@@ -68,6 +69,7 @@ const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCON
         AddApplicantComponent,
         AllInterviewsComponent,
         ViewInterviewsComponent,
+
     ],
     imports: [
         BrowserModule,  
@@ -106,6 +108,10 @@ const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCON
         MdbValidationModule,
         TimepickerModule,
         FlexLayoutModule,
+        
+
+        // GoogleLoginProvider, 
+        // SocialUser
     ],
     providers: [
         MDBSpinningPreloader,

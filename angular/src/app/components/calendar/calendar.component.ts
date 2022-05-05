@@ -1,12 +1,38 @@
 import { Router } from '@angular/router';
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, TemplateRef, } from '@angular/core';
-import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours, } from 'date-fns';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  ViewChild,
+  TemplateRef,
+} from '@angular/core';
+import {
+  startOfDay,
+  endOfDay,
+  subDays,
+  addDays,
+  endOfMonth,
+  isSameDay,
+  isSameMonth,
+  addHours,
+} from 'date-fns';
 import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, } from 'angular-calendar';
+import {
+  CalendarEvent,
+  CalendarEventAction,
+  CalendarEventTimesChangedEvent,
+  CalendarView,
+} from 'angular-calendar';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 import { skills } from '../../models/types';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
+import {
+  CalendarEventAvailability,
+  CalendarEventInterview,
+} from 'src/app/models/calendar-event-detail';
+import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
+import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 
 // const colors: any = {
 //   red: {
@@ -26,30 +52,35 @@ import { ModalControllerService } from 'src/app/services/modal-controller.servic
   selector: 'calendar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.scss']
+  styleUrls: ['./calendar.component.scss'],
 })
-
 export class CalendarComponent implements OnInit {
-
   //TODO Test data initialiser, needs removed after testing complete
   mockAvailability!: any;
 
   @ViewChild('dayContent', { static: true }) dayContent!: TemplateRef<any>;
-  @ViewChild('eventClickedContent', { static: true }) eventClickedContent!: TemplateRef<any>;
-  dayAvailability: CalendarEvent[] = [];
-  dayInterviews: CalendarEvent[] = [];
+  @ViewChild('eventClickedContent', { static: true })
+  eventClickedContent!: TemplateRef<any>;
 
+  // * Events taking place on day clicked
+  // TODO do we need these
+  dayAvailability:Array<CalendarEventAvailability> = [];
+  dayInterviews: Array<CalendarEventInterview> = [];
 
   //* This is where the local calendar events are stored
   skills: skills[] = [];
-  events: CalendarEvent[] = [];
+  events: Array<CalendarEventAvailability | CalendarEventInterview> = [];
+  availability: Array<CalendarEventAvailability> = [];
+  interviews: Array<CalendarEventInterview> = [];
 
   constructor(
     private router: Router,
     private modal: NgbModal,
     private ms: ModalControllerService,
-    private rs: RequestCenterService
-  ) { }
+    private rs: RequestCenterService,
+    private iRequester: InterviewRequesterService,
+    private aRequester: AvailabilityRequesterService,
+  ) {}
 
   ngOnInit(): void {
     this.populateCalendar();
@@ -60,27 +91,36 @@ export class CalendarComponent implements OnInit {
   }
 
   sleep(ms: number): Promise<any> {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  resetEvents(): void {
+    this.events = [];
+    this.availability = [];
+    this.interviews = [];
   }
 
   async delayedRefresh(): Promise<void> {
-    await this.sleep(2500).then(() => this.refresh.next()).catch();
+    await this.sleep(2500)
+      .then(() => this.refresh.next())
+      .catch();
   }
 
-  getInterviewsByRec(){
-    // ? Is this code ever used or is it duplicating work ing this.rs.getUsername() ??
-    let username: string = "";
-    let inString = <string>localStorage.getItem('ssoUser');
-    let myObj = JSON.parse(inString);
-    username= myObj.email;
-    // ???????????????????????????????????????????????????????????????????????????????
-    this.rs.getInterviewByRecruiter(this.events, this.rs.getUsername());
+  getInterviewsByRec() {
+    // // ? Is this code ever used or is it duplicating work ing this.rs.getUsername() ??
+    // let username: string = '';
+    // let inString = <string>localStorage.getItem('ssoUser');
+    // let myObj = JSON.parse(inString);
+    // username = myObj.email;
+    // // ???????????????????????????????????????????????????????????????????????????????
+    this.iRequester.getInterviewByRecruiter(this.events, this.rs.getUsername());
   }
 
-  getInterviewsByInter(){
-    this.rs.getInterviewByInterviewer(this.events, this.rs.getUsername());
+  getInterviewsByInter(): void {
+    this.iRequester.getInterviewByInterviewer(this.events, this.rs.getUsername());
+    this.iRequester.getInterviewByInterviewer(this.interviews, this.rs.getUsername());
   }
-  getSkillsforUser(){
+  getSkillsforUser(): void {
     this.rs.getSkills(this.rs.getUsername());
   }
 
@@ -88,20 +128,23 @@ export class CalendarComponent implements OnInit {
     // this.rs.getAllApplicants();
   }
 
-  getUser(){
+  getUser(): void {
     this.rs.getUser(this.rs.getUsername());
   }
 
   populateViaRecruiter(): void {
-    this.events = [];
+    this.resetEvents();
     this.rs.getAllAvailability(this.events);
+    this.rs.getAllAvailability(this.availability);
     this.delayedRefresh();
   }
 
   populateCalendar(): void {
-    this.events = [];
-    this.rs.getMyAvailability(this.events, this.rs.getUsername());
-    this.rs.getInterviewByInterviewer(this.events, this.rs.getUsername());
+    this.resetEvents();
+    this.aRequester.getMyAvailability(this.events, this.rs.getUsername());
+    this.aRequester.getMyAvailability(this.availability, this.rs.getUsername());
+    this.iRequester.getInterviewByInterviewer(this.events, this.rs.getUsername());
+    this.iRequester.getInterviewByInterviewer(this.interviews, this.rs.getUsername());
     this.delayedRefresh();
   }
 
@@ -142,10 +185,9 @@ export class CalendarComponent implements OnInit {
 
   // }
 
-
   // ! Calendar core functionality contained here, shouldn't need to touch it!
   // TODO openDayModal() may need corrected down the line.
-  
+
   view: CalendarView = CalendarView.Month;
 
   CalendarView = CalendarView;
@@ -179,21 +221,23 @@ export class CalendarComponent implements OnInit {
 
   activeDayIsOpen: boolean = false;
 
-  openDayModal(dateSelected: Date, /*useDate: boolean*/) {
+  openDayModal(dateSelected: Date /*useDate: boolean*/) {
     this.dayAvailability = [];
     this.dayInterviews = [];
 
-    for (const element of this.events) {
+    for (const element of this.availability) {
       if (isSameDay(element.start, dateSelected)) {
-        if (element.title === 'availability') {
-          this.dayAvailability.push(element);
-        }
-        else if (element.title === 'interview') {
-          this.dayInterviews.push(element);
-        }
+        this.dayAvailability.push(element);
       }
     }
-    this.ms.openModalLg(this.dayContent)
+
+    for (const element of this.interviews) {
+      if (isSameDay(element.start, dateSelected)) {
+        this.dayInterviews.push(element);
+      }
+    }
+
+    this.ms.openModalLg(this.dayContent);
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -211,7 +255,11 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  eventTimesChanged({ event, newStart, newEnd, }: CalendarEventTimesChangedEvent): void {
+  eventTimesChanged({
+    event,
+    newStart,
+    newEnd,
+  }: CalendarEventTimesChangedEvent): void {
     this.events = this.events.map((iEvent) => {
       if (iEvent === event) {
         return {
@@ -248,7 +296,6 @@ export class CalendarComponent implements OnInit {
   //   ];
   // }
 
-
   deleteEvent(eventToDelete: CalendarEvent): void {
     this.events = this.events.filter((event) => event !== eventToDelete);
   }
@@ -260,5 +307,4 @@ export class CalendarComponent implements OnInit {
   closeOpenMonthViewDay(): void {
     this.activeDayIsOpen = false;
   }
-
 }

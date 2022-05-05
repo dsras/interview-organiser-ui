@@ -1,6 +1,6 @@
-import { Component, OnInit, TemplateRef, Output, EventEmitter, Input } from '@angular/core';
-import { CalendarEvent } from 'angular-calendar';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Subject } from 'rxjs';
+import { CalendarEventAvailability, CalendarEventInterview } from 'src/app/models/calendar-event-detail';
 
 
 @Component({
@@ -11,8 +11,8 @@ import { Subject } from 'rxjs';
 export class ViewAvailabilityComponent implements OnInit {
 
   @Output() closeClicked: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Input() availability: CalendarEvent[] = []
-  @Input() interviews: CalendarEvent[] = []
+  @Input() availability: Array<CalendarEventAvailability> = []
+  @Input() interviews: Array<CalendarEventInterview> = []
 
 
   ngOnInit(): void {

@@ -16,252 +16,101 @@ import { APPCONSTANTS } from '../../constants/app.constant';
 import { CalendarEvent } from 'angular-calendar';
 import { COLOURS } from '../../constants/colours.constant';
 import { DatePipe } from '@angular/common';
+import { InterviewRequesterService } from './interview-requester.service';
+import { AvailabilityRequesterService } from './availability-requester.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RequestCenterService {
-  constructor(private requester: Requester, private pipe: DatePipe) {}
+  constructor(
+    private requester: Requester,
+    private pipe: DatePipe,
+    private iRequester: InterviewRequesterService,
+    private aRequester: AvailabilityRequesterService
+  ) {}
 
-  updateStatus(id: number, status: string, isStatus: boolean) {
-    let url: string = '';
-    if (isStatus) {
-      url =
-        APPCONSTANTS.APICONSTANTS.BASE_URL +
-        APPCONSTANTS.APICONSTANTS.STATUS_UPDATE;
-    } else {
-      url =
-        APPCONSTANTS.APICONSTANTS.BASE_URL +
-        APPCONSTANTS.APICONSTANTS.OUTCOME_UPDATE;
-    }
+  // addAvailability(first: string, last: string, start: string, end: string): void {
+  //   const firstDate: Date = new Date(first);
+  //   const lastDate: Date = new Date(last);
+  //   const newStart: Date = new Date(start);
+  //   const newEnd: Date = new Date(end);
 
-    let newStatus = new statusUpdate(id, status);
-    this.requester.postRequest<statusUpdate>(url, newStatus);
-  }
+  //   const firstDateString: string = this.dateToStringDate(firstDate);
+  //   const lastDateString: string = this.dateToStringDate(lastDate);
 
-  addAvailability(first: string, last: string, start: string, end: string) {
-    const firstDate: Date = new Date(first);
-    const lastDate: Date = new Date(last);
-    const newStart: Date = new Date(start);
-    const newEnd: Date = new Date(end);
+  //   const startString: string = this.dateToStringTime(newStart);
+  //   const endString: string = this.dateToStringTime(newEnd);
 
-    const firstDateString: string = this.dateToStringDate(firstDate);
-    const lastDateString: string = this.dateToStringDate(lastDate);
+  //   const newAvail: availabilityRange = new availabilityRange(
+  //     firstDateString,
+  //     lastDateString,
+  //     startString,
+  //     endString
+  //   );
+  //   const url: string =
+  //     APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_ADD;
+  //   let out: availabilityRange;
 
-    const startString: string = this.dateToStringTime(newStart);
-    const endString: string = this.dateToStringTime(newEnd);
-
-    const newAvail: availabilityRange = new availabilityRange(
-      firstDateString,
-      lastDateString,
-      startString,
-      endString
-    );
-    const url: string =
-      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_ADD;
-    let out: availabilityRange;
-
-    this.requester
-      .postRequest<availabilityRange>(url, newAvail)
-      .subscribe((returnData) => {
-        out = <availabilityRange>(<unknown>returnData);
-      });
-  }
-
-  // bufTimeString(input: string) {
-  //   let out = "";
-  //   if (input.length < 2) {
-  //     out += "0" + input;
-  //     return out;
-  //   }
-  //   return input;
+  //   this.requester
+  //     .postRequest<availabilityRange>(url, newAvail)
+  //     .subscribe((returnData) => {
+  //       out = <availabilityRange>(<unknown>returnData);
+  //     });
   // }
 
-  getMyAvailability(events: CalendarEvent[], username: string) {
-    const url =
-      APPCONSTANTS.APICONSTANTS.BASE_URL +
-      APPCONSTANTS.APICONSTANTS.AVAIL_GET +
-      '?username=' +
-      username;
-    let out;
+  // getMyAvailability(events: CalendarEvent[], username: string) {
+  //   const url =
+  //     APPCONSTANTS.APICONSTANTS.BASE_URL +
+  //     APPCONSTANTS.APICONSTANTS.AVAIL_GET +
+  //     '?username=' +
+  //     username;
+  //   let out;
 
-    this.requester.getRequest<availability>(url).subscribe((returnData) => {
-      out = <Array<availability>>(<unknown>returnData);
-      out.forEach((element) => {
-        const start = new Date(element.date);
-        const end = new Date(element.date);
-        const id = element.availability_id;
-        const times1 = element.start_time.split(':');
-        const times2 = element.end_time.split(':');
+  //   this.requester.getRequest<availability>(url).subscribe((returnData) => {
+  //     out = <Array<availability>>(<unknown>returnData);
+  //     out.forEach((element) => {
+  //       const start = new Date(element.date);
+  //       const end = new Date(element.date);
+  //       const id = element.availability_id;
+  //       const times1 = element.start_time.split(':');
+  //       const times2 = element.end_time.split(':');
 
-        start.setHours(parseInt(times1[0]), parseInt(times1[1]));
-        end.setHours(parseInt(times2[0]), parseInt(times2[1]));
+  //       start.setHours(parseInt(times1[0]), parseInt(times1[1]));
+  //       end.setHours(parseInt(times2[0]), parseInt(times2[1]));
 
-        console.log('Made it this far at least');
-        events.push({
-          id: id,
-          start: start,
-          end: end,
-          title: 'availability',
-          color: COLOURS.BLUE_DARK,
-        });
-      });
-      return out;
-    });
-    // ? this line didn't seem to do anything
-    // out = <Array<availability>><unknown>out;
-    //return out
-  }
+  //       console.log('Made it this far at least');
+  //       events.push({
+  //         id: id,
+  //         start: start,
+  //         end: end,
+  //         title: 'availability',
+  //         color: COLOURS.BLUE_DARK,
+  //       });
+  //     });
+  //     return out;
+  //   });
+  //   // ? this line didn't seem to do anything
+  //   // out = <Array<availability>><unknown>out;
+  //   //return out
+  // }
 
-  getAvailabilityOnSkill(input: Array<number>) {
-    let url: string =
-      APPCONSTANTS.APICONSTANTS.BASE_URL +
-      APPCONSTANTS.APICONSTANTS.AVAIL_SKILL;
-    let started: boolean = false;
-    input.forEach((element) => {
-      url += (started ? ',' : '') + element.toString();
-      started = true;
-    });
-    this.requester.getRequest<availability>(url).subscribe((returnData) => {
-      return returnData;
-    });
-  }
+  // getAvailabilityOnSkill(input: Array<number>) {
+  //   let url: string =
+  //     APPCONSTANTS.APICONSTANTS.BASE_URL +
+  //     APPCONSTANTS.APICONSTANTS.AVAIL_SKILL;
+  //   let started: boolean = false;
+  //   input.forEach((element) => {
+  //     url += (started ? ',' : '') + element.toString();
+  //     started = true;
+  //   });
+  //   this.requester.getRequest<availability>(url).subscribe((returnData) => {
+  //     return returnData;
+  //   });
+  // }
 
-  // ? Is the formDecomp an array of the form values?
-  addInterviewForm(formInput: string, additional: string, startTime: Date) {
-    const formDecomp: string[] = formInput.split(' ');
-    const dateString: string = formDecomp[1];
-    let startTimeString: string;
-    let endTimeString = '';
-    if (startTime.toString() != '') {
-      startTimeString = this.dateToStringTime(startTime);
-
-      startTime.setHours(startTime.getHours() + 1);
-
-      endTimeString = this.dateToStringTime(startTime);
-    } else {
-      startTimeString = formDecomp[3];
-      endTimeString = this.dateToStringTime(new Date(startTimeString));
-    }
-    const id = [Number.parseInt(formDecomp[12])];
-
-    this.addInterview(
-      id,
-      dateString,
-      startTimeString,
-      endTimeString,
-      additional
-    );
-  }
-
-  addInterview(
-    interviewerID: number[],
-    interviewDate: string,
-    timeStart: string,
-    timeEnd: string,
-    additionalInfo: string
-  ) {
-    const url: string =
-      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ADD;
-    const newInterview: interview = new interview(
-      interviewerID,
-      interviewDate,
-      timeStart,
-      timeEnd,
-      additionalInfo
-    );
-    this.requester
-      .postRequest<interview>(url, newInterview)
-      .subscribe((returnData) => {});
-  }
-
-  getInterviewByInterviewer(events: CalendarEvent[], username: string) {
-    const url =
-      APPCONSTANTS.APICONSTANTS.BASE_URL +
-      APPCONSTANTS.APICONSTANTS.INTER_BY_INT +
-      '?username=' +
-      username;
-    console.log(url);
-    let out;
-    this.requester.getRequest<interviewReturn>(url).subscribe((returnData) => {
-      out = <Array<interviewReturn>>(<unknown>returnData);
-      out.forEach((element) => {
-        const start = new Date(element.date);
-        const end = new Date(element.date);
-        const int_id = element.interview_id;
-        const interviewers = element.interviewers;
-        const times1 = element.start_time.split(':');
-        const times2 = element.end_time.split(':');
-
-        start.setHours(parseInt(times1[0]), parseInt(times1[1]));
-        end.setHours(parseInt(times2[0]), parseInt(times2[1]));
-
-        events.push({
-          id: int_id,
-          meta: interviewers,
-          start: start,
-          end: end,
-          title: 'interview',
-          color: COLOURS.RED_DARK,
-        });
-      });
-      return returnData;
-    });
-  }
-  //! Only for use in calendar app
-  getInterviewByRecruiter(events: CalendarEvent[], username: string) {
-    const url =
-      APPCONSTANTS.APICONSTANTS.BASE_URL +
-      APPCONSTANTS.APICONSTANTS.INTER_BY_REC +
-      '?username=' +
-      username;
-    let out;
-    this.requester.getRequest<interviewReturn>(url).subscribe((returnData) => {
-      out = <Array<interviewReturn>>(<unknown>returnData);
-      out.forEach((element) => {
-        const start: Date = new Date(element.date);
-        const end: Date = new Date(element.date);
-        const id: number = element.interview_id;
-        const panel: string[] = element.interviewers;
-        const times1: string[] = element.start_time.split(':');
-        const times2: string[] = element.end_time.split(':');
-
-        start.setHours(parseInt(times1[0]), parseInt(times1[1]));
-        end.setHours(parseInt(times2[0]), parseInt(times2[1]));
-
-        events.push({
-          id: id,
-          meta: panel,
-          start: start,
-          end: end,
-          title: 'interview',
-          color: COLOURS.RED_DARK,
-        });
-      });
-      return returnData;
-    });
-  }
-  //? Currently not referenced
-  getInterviewAll() {
-    const url =
-      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ALL;
-    this.requester.getRequest<interview>(url).subscribe((returnData) => {
-      return returnData;
-    });
-  }
-
-  getInterviewsDashboard(interviews: Array<interview>) {
-    const url =
-      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ALL;
-    this.requester.getRequest<interview>(url).subscribe((returnData) => {
-      let dataArray = <Array<interview>>(<unknown>returnData);
-      dataArray.forEach((element) => {
-        interviews.push(element);
-      });
-      return interviews;
-    });
-  }
-  //*Tested
+  // //*Tested
+  
   getUser(username: string) {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
@@ -273,6 +122,7 @@ export class RequestCenterService {
     });
   }
 
+  // ? Does this replace getUser() when deployed ?
   getUsername() {
     let username: string = '';
     let inString = <string>localStorage.getItem('ssoUser');
@@ -285,7 +135,7 @@ export class RequestCenterService {
     }
     return username;
   }
-  //! not tested
+  // ! not tested
   getSkills(username: string): Array<skills> {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +

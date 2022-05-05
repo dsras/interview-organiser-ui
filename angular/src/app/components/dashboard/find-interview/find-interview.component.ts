@@ -3,9 +3,11 @@ import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { CalendarEvent } from 'angular-calendar';
 import { TimepickerConfig } from 'ngx-bootstrap/timepicker';
 import { Observable } from 'rxjs';
+import { getTimepickerConfig } from 'src/app/common/functions/get-timepicker-config';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
-import { availabilityForInterviews, skills } from '../../../models/types';
+import { skills } from '../../../models/types';
+import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 
 @Component({
   selector: 'find-interview',
@@ -46,7 +48,8 @@ export class FindInterviewComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private ms: ModalControllerService,
-    private rs: RequestCenterService
+    private rs: RequestCenterService,
+    private iRequester: InterviewRequesterService,
   ) {}
 
   ngOnInit(): void {
@@ -111,7 +114,7 @@ export class FindInterviewComponent implements OnInit {
     console.log('sumbit button');
     console.log(f.value);
     // todo make sure this lines up with correct functionality
-    this.rs.addInterviewForm(
+    this.iRequester.addInterviewForm(
       f.value.interviewSelected,
       f.value.additionalInformation,
       f.value.startTime
@@ -119,19 +122,4 @@ export class FindInterviewComponent implements OnInit {
     this.createInterviewForm.reset();
     console.log(f.value);
   }
-}
-
-export function getTimepickerConfig(): TimepickerConfig {
-  return Object.assign(new TimepickerConfig(), {
-    hourStep: 1,
-    minuteStep: 15,
-    showMeridian: false,
-    readonlyInput: false,
-    mousewheel: true,
-    showMinutes: true,
-    showSeconds: false,
-    labelHours: 'Hrs',
-    labelMinutes: 'Mins',
-    labelSeconds: 'Seconds',
-  });
 }
