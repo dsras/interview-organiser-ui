@@ -8,7 +8,7 @@ import {
 } from '../../common/models/types';
 import { APPCONSTANTS } from '../../common/constants/app.constant';
 import { CalendarEvent } from 'angular-calendar';
-import { COLOURS } from '../../common/constants/colours.constant';
+import { CalendarColors } from '../../common/constants/colours.constant';
 import { DateToString } from '../../common/functions/date-to-string';
 import { CalendarEventAvailability } from 'src/app/common/models/calendar-event-detail';
 import { AvailabilityMetaData } from 'src/app/common/models/event-meta-data';
@@ -46,7 +46,7 @@ export class AvailabilityRequesterService {
       start: start,
       end: end,
       title: 'interview',
-      color: COLOURS.BLUE_DARK,
+      color: CalendarColors.blue,
       meta: data,
     };
     return newInterview;

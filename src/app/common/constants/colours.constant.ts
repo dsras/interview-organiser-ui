@@ -1,17 +1,6 @@
-export class COLOURS {
-  static RED_DARK: any = '#ad2121';
-  static RED_LITE: any = '#FAE3E3';
-
-  static BLUE_DARK: any = '#1e90ff';
-  static BLUE_LITE: any = '#D1E8FF';
-
-  static YELLOW_DARK: any = '#e3bc08';
-  static YELLOW_LITE: any = '#FDF1BA';
-
-  static GREEN_DARK: any = '#12872d';
-  static GREEN_LITE: any = '#0ad138';
-}
-
+/**
+ * Colours for use in calendar events
+ */
 export const CalendarColors: any = {
   red: {
     primary: '#ad2121',
@@ -25,4 +14,8 @@ export const CalendarColors: any = {
     primary: '#e3bc08',
     secondary: '#FDF1BA',
   },
+  green: {
+    primary: '#12872d',
+    secondary: '#0ad138',
+  }
 };

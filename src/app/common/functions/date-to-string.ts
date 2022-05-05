@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 
+// ! This should probably be refactored into a service
 export class DateToString {
   constructor(private pipe: DatePipe) {}
 
