@@ -48,7 +48,7 @@ export class InterviewStatusComponent implements OnInit {
   ngOnInit() {}
 
   openModal(template: TemplateRef<any>): void {
-    this.ms.openModal(template);
+    this.ms.openModalLg(template);
   }
 
   closeModal(): void {

@@ -34,20 +34,7 @@ import {
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 
-// const colors: any = {
-//   red: {
-//     primary: '#ad2121',
-//     secondary: '#FAE3E3',
-//   },
-//   blue: {
-//     primary: '#1e90ff',
-//     secondary: '#D1E8FF',
-//   },
-//   yellow: {
-//     primary: '#e3bc08',
-//     secondary: '#FDF1BA',
-//   },
-// };
+
 @Component({
   selector: 'calendar',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -107,12 +94,6 @@ export class CalendarComponent implements OnInit {
   }
 
   getInterviewsByRec() {
-    // // ? Is this code ever used or is it duplicating work ing this.rs.getUsername() ??
-    // let username: string = '';
-    // let inString = <string>localStorage.getItem('ssoUser');
-    // let myObj = JSON.parse(inString);
-    // username = myObj.email;
-    // // ???????????????????????????????????????????????????????????????????????????????
     this.iRequester.getInterviewByRecruiter(this.events, this.rs.getUsername());
   }
 
@@ -124,9 +105,7 @@ export class CalendarComponent implements OnInit {
     this.rs.getSkills(this.rs.getUsername());
   }
 
-  getApplicants(): void {
-    // this.rs.getAllApplicants();
-  }
+  getApplicants(): void {}
 
   getUser(): void {
     this.rs.getUser(this.rs.getUsername());
@@ -251,7 +230,9 @@ export class CalendarComponent implements OnInit {
       //   this.activeDayIsOpen = true;
       // }
       // this.viewDate = date;
-      this.openDayModal(date);
+      if (events.length != 0) {
+        this.openDayModal(date);
+      }
     }
   }
 
@@ -277,24 +258,6 @@ export class CalendarComponent implements OnInit {
     this.modalData = { event, action };
     this.modal.open(this.eventClickedContent, { size: 'lg' });
   }
-
-  // * This is the default method that auto-generates an event for 'todays date'
-  // addEvent(): void {
-  //   this.events = [
-  //     ...this.events,
-  //     {
-  //       title: 'New event',
-  //       start: startOfDay(new Date()),
-  //       end: endOfDay(new Date()),
-  //       color: colors.red,
-  //       draggable: true,
-  //       resizable: {
-  //         beforeStart: true,
-  //         afterEnd: true,
-  //       },
-  //     },
-  //   ];
-  // }
 
   deleteEvent(eventToDelete: CalendarEvent): void {
     this.events = this.events.filter((event) => event !== eventToDelete);
