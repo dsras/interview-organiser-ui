@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Subject } from 'rxjs';
-import { CalendarEventAvailability, CalendarEventInterview } from 'src/app/models/calendar-event-detail';
+import { CalendarEventAvailability, CalendarEventInterview } from 'src/app/common/models/calendar-event-detail';
 
 
 @Component({

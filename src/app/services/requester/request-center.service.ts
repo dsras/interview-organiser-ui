@@ -11,13 +11,13 @@ import {
   availabilityForInterviews,
   statusUpdate,
   interviewReturn,
-} from '../../models/types';
-import { APPCONSTANTS } from '../../constants/app.constant';
+} from '../../common/models/types';
+import { APPCONSTANTS } from '../../common/constants/app.constant';
 import { CalendarEvent } from 'angular-calendar';
-import { COLOURS } from '../../constants/colours.constant';
 import { DatePipe } from '@angular/common';
 import { InterviewRequesterService } from './interview-requester.service';
 import { AvailabilityRequesterService } from './availability-requester.service';
+import { CalendarColors } from 'src/app/common/constants/colours.constant';
 
 @Injectable({
   providedIn: 'root',
@@ -201,7 +201,7 @@ export class RequestCenterService {
           start: start,
           end: end,
           title: 'An event made progmatically',
-          color: COLOURS.GREEN_LITE,
+          color: CalendarColors.green,
         });
       });
     });

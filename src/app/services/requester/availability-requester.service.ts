@@ -5,26 +5,29 @@ import {
   interviewRange,
   availabilityRange,
   availabilityForInterviews,
-} from '../../models/types';
-import { APPCONSTANTS } from '../../constants/app.constant';
+} from '../../common/models/types';
+import { APPCONSTANTS } from '../../common/constants/app.constant';
 import { CalendarEvent } from 'angular-calendar';
-import { COLOURS } from '../../constants/colours.constant';
-import { DatePipe } from '@angular/common';
-import { CalendarEventAvailability } from 'src/app/models/calendar-event-detail';
-import { AvailabilityMetaData } from 'src/app/models/event-meta-data';
+import { CalendarColors } from '../../common/constants/colours.constant';
+import { DateToString } from '../../common/functions/date-to-string';
+import { CalendarEventAvailability } from 'src/app/common/models/calendar-event-detail';
+import { AvailabilityMetaData } from 'src/app/common/models/event-meta-data';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AvailabilityRequesterService {
-  constructor(private requester: Requester, private pipe: DatePipe) {}
+  constructor(
+    private requester: Requester,
+    private dateFormatter: DateToString
+  ) {}
 
   dateToStringTime(date: Date): string {
-    return '' + this.pipe.transform(date, 'HH:mm');
+    return this.dateFormatter.dateToStringTime(date);
   }
 
   dateToStringDate(date: Date): string {
-    return '' + this.pipe.transform(date, 'yyyy-MM-dd');
+    return this.dateFormatter.dateToStringDate(date);
   }
 
   outputAvailabilityEvent(element: availability): CalendarEventAvailability {
@@ -43,7 +46,7 @@ export class AvailabilityRequesterService {
       start: start,
       end: end,
       title: 'interview',
-      color: COLOURS.BLUE_DARK,
+      color: CalendarColors.blue,
       meta: data,
     };
     return newInterview;
@@ -55,7 +58,6 @@ export class AvailabilityRequesterService {
     start: string,
     end: string
   ): void {
-
     const firstDate: Date = new Date(first);
     const lastDate: Date = new Date(last);
     const newStart: Date = new Date(start);
@@ -165,7 +167,6 @@ export class AvailabilityRequesterService {
     skillsIDList: number[],
     interviewsReturn: string[]
   ): void {
-    
     const url: string =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.AVAIL_FILTER;
