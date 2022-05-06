@@ -101,7 +101,7 @@ export class InterviewRequesterService {
       .subscribe((returnData) => {});
   }
 
-  getInterviewByInterviewer(events: CalendarEvent[], username: string) {
+  getInterviewByInterviewer(events: CalendarEvent[], username: string): any {
     console.log(`getInterviewByInterviewer() called`)
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
