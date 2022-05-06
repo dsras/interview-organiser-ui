@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CanActivateRouteGuard } from './can-activate-route.guard';
+import { AuthGuard } from './auth.guard';
 
 describe('CanActivateRouteGuard', () => {
-  let guard: CanActivateRouteGuard;
+  let guard: AuthGuard;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    guard = TestBed.inject(CanActivateRouteGuard);
+    guard = TestBed.inject(AuthGuard);
   });
 
   it('should be created', () => {

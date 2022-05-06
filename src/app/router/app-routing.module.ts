@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CalendarComponent } from '../components/calendar/calendar.component';
 import { DashboardComponent } from '../components/dashboard/dashboard.component';
 import { LoginComponent } from '../components/login/login.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -14,11 +15,13 @@ const routes: Routes = [
     path: 'dashboard',
     component: DashboardComponent,
     pathMatch: 'full',
+    canActivate: [AuthGuard],
   },
   {
     path: 'calendar',
     component: CalendarComponent,
-    pathMatch: 'full'
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
   },
   {
     path: '',
