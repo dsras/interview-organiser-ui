@@ -13,14 +13,13 @@ import { BackendService } from '../../services/backend.service';
 import { DataSourceService } from '../../services/data-source.service';
 import { APPCONSTANTS } from '../../shared/constants/app.constant';
 
-export interface ILoginComponent {}
 @Component({
-  selector: 'app-login',
+  selector: 'login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   providers: [SocialLoginModule, SocialAuthService],
 })
-export class LoginComponent implements OnInit, ILoginComponent {
+export class LoginComponent implements OnInit {
   socialUser: SocialUser = <any>null;
   isLoggedin: boolean = false;
   constructor(

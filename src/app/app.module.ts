@@ -49,7 +49,7 @@ import { AppComponent } from './app.component';
 // [application modules]
 import { MyCalendarModule } from './components/calendar/calendar.module';
 import { DashboardModule } from './components/dashboard/dashboard.module';
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './router/app-routing.module';
 
 // [application Services]
 import { AppInterceptor } from './components/interceptor/app.interceptor';
