@@ -3,7 +3,7 @@ import { Subject } from 'rxjs';
 import {
   CalendarEventAvailability,
   CalendarEventInterview,
-} from 'src/app/common/models/calendar-event-detail';
+} from 'src/app/shared/models/calendar-event-detail';
 
 @Component({
   selector: 'view-availability',

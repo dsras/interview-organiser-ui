@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IDataSourceService } from '../common/models/data-source-service';
-import { DataSource } from '../common/models/data-service';
+import { IDataSourceService } from '../shared/models/data-source-service';
+import { DataSource } from '../shared/models/data-service';
 
 @Injectable({
   providedIn: 'root',

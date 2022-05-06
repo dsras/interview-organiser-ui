@@ -5,12 +5,12 @@ import {
   interviewRange,
   availabilityRange,
   availabilityForInterviews,
-} from '../../common/models/types';
-import { APPCONSTANTS } from '../../common/constants/app.constant';
+} from '../../shared/models/types';
+import { APPCONSTANTS } from '../../shared/constants/app.constant';
 import { CalendarEvent } from 'angular-calendar';
-import { CalendarColors } from '../../common/constants/colours.constant';
-import { CalendarEventAvailability } from 'src/app/common/models/calendar-event-detail';
-import { AvailabilityMetaData } from 'src/app/common/models/event-meta-data';
+import { CalendarColors } from '../../shared/constants/colours.constant';
+import { CalendarEventAvailability } from 'src/app/shared/models/calendar-event-detail';
+import { AvailabilityMetaData } from 'src/app/shared/models/event-meta-data';
 import { DateToStringService } from '../date-to-string.service';
 
 @Injectable({

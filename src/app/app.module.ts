@@ -54,7 +54,7 @@ import { AppRoutingModule } from './app-routing.module';
 // [application Services]
 import { AppInterceptor } from './components/interceptor/app.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { APPCONSTANTS, prodEnv } from './common/constants/app.constant';
+import { APPCONSTANTS, prodEnv } from './shared/constants/app.constant';
 import { Requester } from './services/requester/requester.service';
 
 const CLIENT_ID = prodEnv

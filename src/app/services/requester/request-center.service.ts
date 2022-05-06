@@ -1,23 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Requester } from '../requester/requester.service';
-import {
-  userData,
-  skills,
-  availability,
-  interview,
-  applicant,
-  interviewRange,
-  availabilityRange,
-  availabilityForInterviews,
-  statusUpdate,
-  interviewReturn,
-} from '../../common/models/types';
-import { APPCONSTANTS } from '../../common/constants/app.constant';
-import { CalendarEvent } from 'angular-calendar';
+import { userData, skills, applicant } from '../../shared/models/types';
+import { APPCONSTANTS } from '../../shared/constants/app.constant';
 import { DatePipe } from '@angular/common';
-import { InterviewRequesterService } from './interview-requester.service';
-import { AvailabilityRequesterService } from './availability-requester.service';
-import { CalendarColors } from 'src/app/common/constants/colours.constant';
 
 @Injectable({
   providedIn: 'root',
@@ -26,10 +11,8 @@ export class RequestCenterService {
   constructor(
     private requester: Requester,
     private pipe: DatePipe,
-    private iRequester: InterviewRequesterService,
-    private aRequester: AvailabilityRequesterService
   ) {}
-  
+
   getUser(username: string) {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +

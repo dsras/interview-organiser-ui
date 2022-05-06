@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, TemplateRef } from '@angular/core';
-import { CalendarEventInterview } from 'src/app/common/models/calendar-event-detail';
+import { CalendarEventInterview } from '../../models/calendar-event-detail';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
 
 @Component({

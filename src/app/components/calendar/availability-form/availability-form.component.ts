@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TimepickerConfig } from 'ngx-bootstrap/timepicker';
-import { getTimepickerConfig } from 'src/app/common/functions/get-timepicker-config';
+// import { getTimepickerConfig } from 'src/app/common/functions/get-timepicker-config';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 
@@ -18,7 +18,7 @@ import { AvailabilityRequesterService } from 'src/app/services/requester/availab
   selector: 'availability-form',
   templateUrl: './availability-form.component.html',
   styleUrls: ['./availability-form.component.scss'],
-  providers: [{ provide: TimepickerConfig, useFactory: getTimepickerConfig }],
+  // providers: [{ provide: TimepickerConfig, useFactory: getTimepickerConfig }],
 })
 export class AvailabilityFormComponent implements OnInit {
   /** 

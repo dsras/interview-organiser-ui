@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IUser } from '../common/models/user-model';
-import { APPCONSTANTS } from '../common/constants/app.constant';
+import { IUser } from '../shared/models/user-model';
+import { APPCONSTANTS } from '../shared/constants/app.constant';
 
 export interface IBackendService {
   login(user: IUser): Observable<any>;

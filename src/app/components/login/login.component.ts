@@ -11,7 +11,7 @@ import {
 // [APP_LEVEL Imports]
 import { BackendService } from '../../services/backend.service';
 import { DataSourceService } from '../../services/data-source.service';
-import { APPCONSTANTS } from '../../common/constants/app.constant';
+import { APPCONSTANTS } from '../../shared/constants/app.constant';
 
 export interface ILoginComponent {}
 @Component({

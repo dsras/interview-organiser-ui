@@ -2,7 +2,7 @@ import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
-import { CalendarEventInterview } from 'src/app/common/models/calendar-event-detail';
+import { CalendarEventInterview } from 'src/app/shared/models/calendar-event-detail';
 
 @Component({
   selector: 'interview-status',
