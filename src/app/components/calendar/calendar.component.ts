@@ -113,8 +113,8 @@ export class CalendarComponent implements OnInit {
 
   populateViaRecruiter(): void {
     this.resetEvents();
-    this.rs.getAllAvailability(this.events);
-    this.rs.getAllAvailability(this.availability);
+    this.aRequester.getAllAvailability(this.events);
+    this.aRequester.getAllAvailability(this.availability);
     this.delayedRefresh();
   }
 
