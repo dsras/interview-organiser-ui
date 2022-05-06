@@ -11,11 +11,6 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: '',
-    redirectTo: '/login',
-    pathMatch: 'full',
-  },
-  {
     path: 'dashboard',
     component: DashboardComponent,
     pathMatch: 'full',
@@ -23,6 +18,11 @@ const routes: Routes = [
   {
     path: 'calendar',
     component: CalendarComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: '',
+    redirectTo: '/login',
     pathMatch: 'full',
   },
 ];

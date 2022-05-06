@@ -6,7 +6,9 @@ import { CreateInterviewComponent } from './create-interview/create-interview.co
 import { AllInterviewsComponent } from './all-interviews/all-interviews.component';
 import { SharedModule } from '../shared/shared-module.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { AppRoutingModule } from 'src/app/app-routing.module';
+
+
 
 @NgModule({
   declarations: [
@@ -19,7 +21,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     CommonModule,
     SharedModule,
     ReactiveFormsModule,
-    BsDatepickerModule,
+    AppRoutingModule,
   ],
   exports: [DashboardComponent],
 })

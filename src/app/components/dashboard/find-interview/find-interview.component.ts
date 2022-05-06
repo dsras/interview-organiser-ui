@@ -8,6 +8,7 @@ import { ModalControllerService } from 'src/app/services/modal-controller.servic
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 import { skills } from '../../../common/models/types';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
+import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 
 @Component({
   selector: 'find-interview',
@@ -49,6 +50,7 @@ export class FindInterviewComponent implements OnInit {
     private fb: FormBuilder,
     private ms: ModalControllerService,
     private rs: RequestCenterService,
+    private aRequester: AvailabilityRequesterService,
     private iRequester: InterviewRequesterService,
   ) {}
 
@@ -89,7 +91,7 @@ export class FindInterviewComponent implements OnInit {
       }
     });
 
-    this.rs.getAvailabilityByRange(
+    this.aRequester.getAvailabilityByRange(
       f.value.firstDate,
       f.value.lastDate,
       f.value.startTime,

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CalendarEvent } from 'angular-calendar';
 import { Observable } from 'rxjs';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
+import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 
 @Component({
@@ -29,12 +30,11 @@ export class CreateInterviewComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private ms: ModalControllerService,
-    private rs: RequestCenterService,
+    private aRequester: AvailabilityRequesterService,
   ) { }
 
   ngOnInit(): void {
-    this.rs.getAllAvailabilityUI(this.availableInterviews);
-    this.rs.getAllApplicants(this.availableApplicants);
+    this.aRequester.getAllAvailabilityUI(this.availableInterviews);
   }
 
   openModal(template: TemplateRef<any>): void {

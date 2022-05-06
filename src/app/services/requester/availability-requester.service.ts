@@ -131,33 +131,33 @@ export class AvailabilityRequesterService {
     });
   }
 
-  // Currently not used
-  // getAllAvailabilityUI(events: string[]): void {
-  //   const url: string =
-  //     APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_ALL;
-  //   let out: Array<availability>;
+  // Currently only used by CreateInterviewComponent
+  getAllAvailabilityUI(events: string[]): void {
+    const url: string =
+      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_ALL;
+    let out: Array<availability>;
 
-  //   this.requester.getRequest<availability>(url).subscribe((returnData) => {
-  //     out = <Array<availability>>(<unknown>returnData);
-  //     out.forEach((element) => {
-  //       const start: Date = new Date(element.date);
-  //       const end: Date = new Date(element.date);
-  //       const times1: string[] = element.start_time.split(':');
-  //       const times2: string[] = element.end_time.split(':');
+    this.requester.getRequest<availability>(url).subscribe((returnData) => {
+      out = <Array<availability>>(<unknown>returnData);
+      out.forEach((element) => {
+        const start: Date = new Date(element.date);
+        const end: Date = new Date(element.date);
+        const times1: string[] = element.start_time.split(':');
+        const times2: string[] = element.end_time.split(':');
 
-  //       start.setHours(parseInt(times1[0]), parseInt(times1[1]));
-  //       end.setHours(parseInt(times2[0]), parseInt(times2[1]));
+        start.setHours(parseInt(times1[0]), parseInt(times1[1]));
+        end.setHours(parseInt(times2[0]), parseInt(times2[1]));
 
-  //       const startTime: string = this.dateToStringTime(start);
-  //       const endTime: string = this.dateToStringTime(end);
+        const startTime: string = this.dateToStringTime(start);
+        const endTime: string = this.dateToStringTime(end);
 
-  //       events.push(startTime + ' -> ' + endTime + '\n');
-  //     });
-  //     return out;
-  //   });
-  //   // out = <Array<availability>><unknown>out;
-  //   // return out;
-  // }
+        events.push(startTime + ' -> ' + endTime + '\n');
+      });
+      return out;
+    });
+    // out = <Array<availability>><unknown>out;
+    // return out;
+  }
 
   getAvailabilityByRange(
     startDate: string,
