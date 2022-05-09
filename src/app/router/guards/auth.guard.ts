@@ -7,17 +7,12 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { LoginComponent } from 'src/app/components/login/login.component';
-// import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-
-  constructor (
-    public auth: LoginComponent,
-    public router: Router
-  ) {}
+  constructor(public auth: LoginComponent, public router: Router) {}
 
   canActivate():
     | Observable<boolean | UrlTree>
@@ -25,11 +20,10 @@ export class AuthGuard implements CanActivate {
     | boolean
     | UrlTree {
     if (!this.auth.isLoggedin) {
-      this.router.navigate(['login']);
-      return false;
+      this.router.navigate(['login'])
+      return false
     }
     return true;
   }
 
-  // constructor(private auth: AuthService) {}
 }

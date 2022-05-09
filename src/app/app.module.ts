@@ -108,6 +108,7 @@ const CLIENT_ID = prodEnv
     MDBSpinningPreloader,
     Requester,
     DatePipe,
+    LoginComponent,
     { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true },
     {
       provide: 'SocialAuthServiceConfig',
@@ -123,6 +124,7 @@ const CLIENT_ID = prodEnv
       } as SocialAuthServiceConfig,
     },
   ],
+  exports: [LoginComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
 })
