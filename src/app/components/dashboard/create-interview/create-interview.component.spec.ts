@@ -16,7 +16,6 @@ describe('CreateInterviewComponent', () => {
   let component: CreateInterviewComponent;
   let fixture: ComponentFixture<CreateInterviewComponent>;
 
-  class FakeFormBuilder {};
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports:[
@@ -30,7 +29,7 @@ describe('CreateInterviewComponent', () => {
       providers: [
         BsModalService,
         RequestCenterService,
-        //{provide: FormBuilder, useValue:FakeFormBuilder},
+        FormBuilder,
         DatePipe
       ],
       declarations: [ 
@@ -43,7 +42,7 @@ describe('CreateInterviewComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CreateInterviewComponent);
     component = fixture.componentInstance;
-    //fixture.detectChanges();
+    fixture.detectChanges();
   });
 
   it('should create', () => {
