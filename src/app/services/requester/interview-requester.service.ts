@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Requester } from '../requester/requester.service';
-import { interview, interviewReturn, statusUpdate } from '../../common/models/types';
-import { APPCONSTANTS } from '../../common/constants/app.constant';
+import { interview, interviewReturn, statusUpdate } from '../../shared/models/types';
+import { APPCONSTANTS } from '../../shared/constants/app.constant';
 import { CalendarEvent } from 'angular-calendar';
-import { CalendarEventInterview } from 'src/app/common/models/calendar-event-detail';
-import { InterviewMetaData } from 'src/app/common/models/event-meta-data';
-import { CalendarColors } from 'src/app/common/constants/colours.constant';
+import { CalendarEventInterview } from 'src/app/shared/models/calendar-event-detail';
+import { InterviewMetaData } from 'src/app/shared/models/event-meta-data';
+import { CalendarColors } from 'src/app/shared/constants/colours.constant';
 import { DateToStringService } from '../date-to-string.service';
 
 @Injectable({
