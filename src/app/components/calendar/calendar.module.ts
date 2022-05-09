@@ -12,7 +12,7 @@ import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { InterviewStatusComponent } from './interview-status/interview-status.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { SharedModule } from '../../shared/shared-module.module';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   declarations: [
