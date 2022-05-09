@@ -7,7 +7,6 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { LoginComponent } from 'src/app/components/login/login.component';
-// import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -27,5 +26,4 @@ export class AuthGuard implements CanActivate {
     return true;
   }
 
-  // constructor(private auth: AuthService) {}
 }
