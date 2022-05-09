@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Requester } from '../requester/requester.service';
-import { interview, interviewReturn, statusUpdate } from '../../shared/models/types';
+import {
+  interview,
+  interviewReturn,
+  statusUpdate,
+} from '../../shared/models/types';
 import { APPCONSTANTS } from '../../shared/constants/app.constant';
 import { CalendarEvent } from 'angular-calendar';
 import { CalendarEventInterview } from 'src/app/shared/models/calendar-event-detail';
@@ -26,7 +30,6 @@ export class InterviewRequesterService {
   }
 
   outputInterviewEvent(element: interviewReturn): CalendarEventInterview {
-    console.log('outputInterviewEvent() called');
     const start = new Date(element.date);
     const end = new Date(element.date);
     const int_id = element.interview_id;
@@ -51,8 +54,6 @@ export class InterviewRequesterService {
       color: CalendarColors.yellow,
       meta: newInterviewData,
     };
-    console.log(`newInterview: status`);
-    console.warn(newInterview.meta.interviewStatus);
     return newInterview;
   }
 
@@ -105,13 +106,11 @@ export class InterviewRequesterService {
   }
 
   getInterviewByInterviewer(events: CalendarEvent[], username: string) {
-    console.log(`getInterviewByInterviewer() called`);
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.INTER_BY_INT +
       '?username=' +
       username;
-    console.log(url);
     let out;
     this.requester.getRequest<interviewReturn>(url).subscribe((returnData) => {
       out = <Array<interviewReturn>>(<unknown>returnData);
