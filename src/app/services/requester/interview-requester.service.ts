@@ -1,29 +1,32 @@
 import { Injectable } from '@angular/core';
 import { Requester } from '../requester/requester.service';
-import { interview, interviewReturn, statusUpdate } from '../../models/types';
-import { APPCONSTANTS } from '../../constants/app.constant';
+import { interview, interviewReturn, statusUpdate } from '../../shared/models/types';
+import { APPCONSTANTS } from '../../shared/constants/app.constant';
 import { CalendarEvent } from 'angular-calendar';
-import { DatePipe } from '@angular/common';
-import { CalendarEventInterview } from 'src/app/models/calendar-event-detail';
-import { InterviewMetaData } from 'src/app/models/event-meta-data';
-import { CalendarColors } from 'src/app/constants/colours.constant';
+import { CalendarEventInterview } from 'src/app/shared/models/calendar-event-detail';
+import { InterviewMetaData } from 'src/app/shared/models/event-meta-data';
+import { CalendarColors } from 'src/app/shared/constants/colours.constant';
+import { DateToStringService } from '../date-to-string.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class InterviewRequesterService {
-  constructor(private requester: Requester, private pipe: DatePipe) {}
+  constructor(
+    private requester: Requester,
+    private dateFormatter: DateToStringService
+  ) {}
 
   dateToStringTime(date: Date): string {
-    return '' + this.pipe.transform(date, 'HH:mm');
+    return this.dateFormatter.dateToStringTime(date);
   }
 
   dateToStringDate(date: Date): string {
-    return '' + this.pipe.transform(date, 'yyyy-MM-dd');
+    return this.dateFormatter.dateToStringDate(date);
   }
 
   outputInterviewEvent(element: interviewReturn): CalendarEventInterview {
-    console.log('outputInterviewEvent() called')
+    console.log('outputInterviewEvent() called');
     const start = new Date(element.date);
     const end = new Date(element.date);
     const int_id = element.interview_id;
@@ -37,7 +40,7 @@ export class InterviewRequesterService {
       interviewPanel: element.interviewers,
       interviewOutcome: element.outcome,
       interviewStatus: element.status,
-      additional: element.additional_info
+      additional: element.additional_info,
     });
 
     const newInterview: CalendarEventInterview = {
@@ -48,8 +51,8 @@ export class InterviewRequesterService {
       color: CalendarColors.yellow,
       meta: newInterviewData,
     };
-    console.log(`newInterview: status`)
-    console.warn(newInterview.meta.interviewStatus)
+    console.log(`newInterview: status`);
+    console.warn(newInterview.meta.interviewStatus);
     return newInterview;
   }
 
@@ -101,8 +104,8 @@ export class InterviewRequesterService {
       .subscribe((returnData) => {});
   }
 
-  getInterviewByInterviewer(events: CalendarEvent[], username: string): any {
-    console.log(`getInterviewByInterviewer() called`)
+  getInterviewByInterviewer(events: CalendarEvent[], username: string) {
+    console.log(`getInterviewByInterviewer() called`);
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.INTER_BY_INT +
@@ -121,7 +124,7 @@ export class InterviewRequesterService {
 
   //! Only for use in calendar app
   getInterviewByRecruiter(events: CalendarEvent[], username: string) {
-    console.log(`getInterviewByRecruiter() called`)
+    console.log(`getInterviewByRecruiter() called`);
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.INTER_BY_REC +
@@ -139,7 +142,7 @@ export class InterviewRequesterService {
 
   //? Currently not referenced
   getInterviewAll() {
-    console.log(`getInterviewAll() called`)
+    console.log(`getInterviewAll() called`);
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ALL;
     this.requester.getRequest<interview>(url).subscribe((returnData) => {
@@ -148,7 +151,7 @@ export class InterviewRequesterService {
   }
 
   getInterviewsDashboard(interviews: Array<interview>) {
-    console.log(`getInterviewsDashboard() called`)
+    console.log(`getInterviewsDashboard() called`);
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ALL;
     this.requester.getRequest<interview>(url).subscribe((returnData) => {
@@ -161,7 +164,7 @@ export class InterviewRequesterService {
   }
 
   updateInterviewStatus(id: number, status: string, isStatus: boolean) {
-    console.log(`updateInterviewStatus() called`)
+    console.log(`updateInterviewStatus() called`);
     let url: string = '';
     if (isStatus) {
       url =

@@ -3,17 +3,18 @@ import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { CalendarEvent } from 'angular-calendar';
 import { TimepickerConfig } from 'ngx-bootstrap/timepicker';
 import { Observable } from 'rxjs';
-import { getTimepickerConfig } from 'src/app/common/functions/get-timepicker-config';
+// import { getTimepickerConfig } from 'src/app/common/functions/get-timepicker-config';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
-import { skills } from '../../../models/types';
+import { skills } from '../../../shared/models/types';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
+import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 
 @Component({
   selector: 'find-interview',
   templateUrl: './find-interview.component.html',
   styleUrls: ['./find-interview.component.scss'],
-  providers: [{ provide: TimepickerConfig, useFactory: getTimepickerConfig }],
+  // providers: [{ provide: TimepickerConfig, useFactory: getTimepickerConfig }],
 })
 export class FindInterviewComponent implements OnInit {
   skillsAvailable: skills[] = [];
@@ -49,6 +50,7 @@ export class FindInterviewComponent implements OnInit {
     private fb: FormBuilder,
     private ms: ModalControllerService,
     private rs: RequestCenterService,
+    private aRequester: AvailabilityRequesterService,
     private iRequester: InterviewRequesterService,
   ) {}
 
@@ -89,7 +91,7 @@ export class FindInterviewComponent implements OnInit {
       }
     });
 
-    this.rs.getAvailabilityByRange(
+    this.aRequester.getAvailabilityByRange(
       f.value.firstDate,
       f.value.lastDate,
       f.value.startTime,

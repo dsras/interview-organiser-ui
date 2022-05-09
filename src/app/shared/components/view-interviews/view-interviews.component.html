@@ -1,0 +1,26 @@
+<button type="button" class="btn btn-org" (click)="openModal(list)">
+  interviews
+</button>
+
+<ng-template #list>
+  <table>
+    <thead>
+      <tr>
+        <td>ID</td>
+        <td>Date</td>
+        <td>Time</td>
+        <td>Status</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let interview of interviews">
+        <td>{{ interview.id }}</td>
+        <td>{{ interview.start | date: "dd/mm/yy" }}</td>
+        <td>{{ interview.start| date: 'HH:mm' }} =>
+          {{ interview.end | date: 'HH:mm'}}
+        </td>
+        <td>{{ interview.meta.interviewStatus }}</td>
+      </tr>
+    </tbody>
+  </table>
+</ng-template>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SocialAuthService } from 'angularx-social-login';
-import { APPCONSTANTS } from 'src/app/constants/app.constant';
+import { APPCONSTANTS } from 'src/app/shared/constants/app.constant';
 import { DataSourceService } from 'src/app/services/data-source.service';
 
 @Component({
