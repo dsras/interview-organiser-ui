@@ -10,7 +10,6 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { Router } from '@angular/router';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
-import { compileNgModuleDeclarationExpression } from '@angular/compiler/src/render3/r3_module_compiler';
 
 describe('CalendarComponent', () => {
   let component: CalendarComponent;
@@ -27,7 +26,7 @@ describe('CalendarComponent', () => {
       imports:[
         HttpClientTestingModule,
         ReactiveFormsModule,
-        //RouterTestingModule,
+        RouterTestingModule,
         CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
         RouterTestingModule.withRoutes(
           [
@@ -87,18 +86,20 @@ describe('CalendarComponent', () => {
 
   // //! not working yet, maybe requires a specific router component to do this type of route testing.
   // it('navigate to "input" redirects you to /input', fakeAsync(() => { 
-  //   console.log("::::::::::::: nav stuff :::::::::::::::::")
-  //   console.log("Location init: " + location.path().toString());
-  //   console.log(location.path().toString());
-  //   component.redirect("dashboard")
-  //   tick();
-  //   expect(location.path()).toBe('/dashboard');
-  //   console.log("Location 2: " + location.path().toString());
+  //   console.log("Location 1: " + router.url.toString());
+  //   console.log("Location 1: " + location.path());
 
-  //   component.redirect("calendar")
-  //   tick();
-  //   expect(location.path()).toBe('/calendar');
-  //   console.log("Location 3: " + location.path().toString());
+  //   router.config.forEach(ele =>
+  //     console.log(ele)
+  //   );
+  //   console.log(router.config[0].component?.name);
+  //   component.redirect('dashboard');
+  //   console.log(router.config[0].component?.name)
+  //   console.log("Location 2: " + router.url.toString());
+  //   console.log("Location 2: " + location.path());
+
+  //   //expect(location.path()).toBe('/dashboard');
+
 
   // }));
 

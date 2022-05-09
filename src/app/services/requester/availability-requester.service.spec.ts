@@ -6,7 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CalendarEvent, CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { availability } from 'src/app/models/types';
+import { availability } from '../../shared/models/types';
 
 import { AvailabilityRequesterService } from './availability-requester.service';
 

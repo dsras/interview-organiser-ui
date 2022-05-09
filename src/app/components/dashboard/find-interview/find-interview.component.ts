@@ -76,6 +76,8 @@ export class FindInterviewComponent implements OnInit {
   }
 
   findInterview(f: FormGroup): void {
+    console.log('find button');
+    console.log(f.value);
     let idArr: number[] = <Array<number>>[];
     let skillReq = {
       skillType: f.value.skills.skillType,

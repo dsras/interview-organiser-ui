@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient,HttpErrorResponse } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { Data } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -47,7 +47,7 @@ describe('RequesterService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('get should be called', () => {
+  it('get should be called', fakeAsync(() => {
     let url = "https://webhook.site/a87ad00e-b0e3-4f81-9673-261fc569a531";
     service.getRequest<string>(url).subscribe(returnData => {
       console.log(returnData);
@@ -56,7 +56,7 @@ describe('RequesterService', () => {
     const req = httpTestingController.expectOne({
       method: 'GET',  // find open Http request that is a get request.
    });
-  });
+  }));
   
   it('post should be called', () => {
     let url = "https://eosajx3tbq8buv5.m.pipedream.net";
