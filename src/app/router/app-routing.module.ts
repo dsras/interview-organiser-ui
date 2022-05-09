@@ -3,7 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { CalendarComponent } from '../components/calendar/calendar.component';
 import { DashboardComponent } from '../components/dashboard/dashboard.component';
 import { LoginComponent } from '../components/login/login.component';
-import { AuthGuard } from './guards/auth.guard';
+import { LoginGuard } from './guards/login.guard';
+import { RoleGuard } from './guards/role.guard';
+
 
 const routes: Routes = [
   {
@@ -15,13 +17,13 @@ const routes: Routes = [
     path: 'dashboard',
     component: DashboardComponent,
     pathMatch: 'full',
-    canActivate: [AuthGuard],
+    canActivate: [LoginGuard],
   },
   {
     path: 'calendar',
     component: CalendarComponent,
     pathMatch: 'full',
-    canActivate: [AuthGuard],
+    canActivate: [LoginGuard],
   },
   {
     path: '',
@@ -37,7 +39,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  providers: [AuthGuard],
+  providers: [LoginGuard, RoleGuard],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
