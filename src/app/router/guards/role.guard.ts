@@ -1,29 +1,31 @@
 import { Injectable } from '@angular/core';
 import {
+  ActivatedRouteSnapshot,
   CanActivate,
-  Router,
+  CanLoad,
+  Route,
   RouterStateSnapshot,
+  UrlSegment,
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { LoginComponent } from 'src/app/components/login/login.component';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate {
-  constructor(public auth: LoginComponent, public router: Router) {}
-
+export class RoleGuard implements CanActivate, CanLoad {
   canActivate():
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (!this.auth.isLoggedin) {
-      this.router.navigate(['login'])
-      return false
-    }
     return true;
   }
-
+  canLoad():
+    | Observable<boolean | UrlTree>
+    | Promise<boolean | UrlTree>
+    | boolean
+    | UrlTree {
+    return true;
+  }
 }
