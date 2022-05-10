@@ -13,10 +13,10 @@ import { FindInterviewComponent } from './find-interview.component';
 
 const dummyFindForm = {
   value: {
+    firstDate: new Date(),
+    lastDate: new Date(),
     startTime: new Date(),
     endTime: new Date(),
-    firstTime: new Date(),
-    lastTime: new Date(),
     skills: {
       skillType: 'Java',
       skillLevel: 'Junior'
