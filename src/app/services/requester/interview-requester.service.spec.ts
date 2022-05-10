@@ -8,7 +8,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { fn } from 'moment';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { of } from 'rxjs';
-import { interviewReturn } from 'src/app/shared/models/types';
+import { interviewReturn } from '../../shared/models/types';
 
 import { InterviewRequesterService } from './interview-requester.service';
 

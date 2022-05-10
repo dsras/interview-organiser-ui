@@ -81,12 +81,14 @@ export class CalendarComponent implements OnInit {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
+  //* in test
   resetEvents(): void {
     this.events = [];
     this.availability = [];
     this.interviews = [];
   }
-
+  
+  //* in test
   async delayedRefresh(): Promise<void> {
     await this.sleep(2500)
       .then(() => this.refresh.next())
@@ -118,6 +120,7 @@ export class CalendarComponent implements OnInit {
     this.delayedRefresh();
   }
 
+  //* in test
   populateCalendar(): void {
     this.resetEvents();
     this.aRequester.getMyAvailability(this.events, this.rs.getUsername());

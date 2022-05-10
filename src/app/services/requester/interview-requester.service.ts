@@ -21,6 +21,17 @@ export class InterviewRequesterService {
     private dateFormatter: DateToStringService
   ) {}
 
+  stringTimeAdd(input: string, add: number){
+    let splits = input.split(':');
+    let hour = Number.parseInt(splits[0]);
+    hour = hour+add;
+    let newStringHour = hour.toString();
+    if(newStringHour.length < 2){
+      newStringHour = '0'+newStringHour;
+    }
+    return (newStringHour+':'+splits[1]);
+  }
+
   dateToStringTime(date: Date): string {
     return this.dateFormatter.dateToStringTime(date);
   }
@@ -71,7 +82,7 @@ export class InterviewRequesterService {
       endTimeString = this.dateToStringTime(startTime);
     } else {
       startTimeString = formDecomp[3];
-      endTimeString = this.dateToStringTime(new Date(startTimeString));
+      endTimeString = this.stringTimeAdd(startTimeString, 1);
     }
     const id = [Number.parseInt(formDecomp[12])];
 
