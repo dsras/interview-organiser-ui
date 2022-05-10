@@ -4,7 +4,7 @@ import { CalendarEvent } from 'angular-calendar';
 import { Observable } from 'rxjs';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
-import { RequestCenterService } from 'src/app/services/requester/request-center.service';
+import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 
 @Component({
   selector: 'create-interview',
@@ -31,6 +31,7 @@ export class CreateInterviewComponent implements OnInit {
     private fb: FormBuilder,
     private ms: ModalControllerService,
     private aRequester: AvailabilityRequesterService,
+    private iRequester: InterviewRequesterService
   ) { }
 
   ngOnInit(): void {
@@ -47,6 +48,7 @@ export class CreateInterviewComponent implements OnInit {
 
   onSubmit(f: FormGroup): void {
     this.createInterviewForm.setValue(f.value);
+    // this.iRequester.addInterviewForm()
     this.formSubmitted.emit(f);
     this.createInterviewForm.reset();
   }

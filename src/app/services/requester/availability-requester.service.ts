@@ -13,6 +13,7 @@ import { CalendarEventAvailability } from 'src/app/shared/models/calendar-event-
 import { AvailabilityMetaData } from 'src/app/shared/models/event-meta-data';
 import { DateToStringService } from '../date-to-string.service';
 
+/** A service to handle any requests made to the database regarding availability. */
 @Injectable({
   providedIn: 'root',
 })
@@ -22,36 +23,19 @@ export class AvailabilityRequesterService {
     private dateFormatter: DateToStringService
   ) {}
 
-  dateToStringTime(date: Date): string {
-    return this.dateFormatter.dateToStringTime(date);
-  }
-
-  dateToStringDate(date: Date): string {
-    return this.dateFormatter.dateToStringDate(date);
-  }
-
-  outputAvailabilityEvent(element: availability): CalendarEventAvailability {
-    const start = new Date(element.date);
-    const end = new Date(element.date);
-    const times1 = element.start_time.split(':');
-    const times2 = element.end_time.split(':');
-
-    start.setHours(parseInt(times1[0]), parseInt(times1[1]));
-    end.setHours(parseInt(times2[0]), parseInt(times2[1]));
-
-    const data = new AvailabilityMetaData();
-
-    const newInterview: CalendarEventAvailability = {
-      id: element.availability_id,
-      start: start,
-      end: end,
-      title: 'interview',
-      color: CalendarColors.blue,
-      meta: data,
-    };
-    return newInterview;
-  }
-
+  /**
+   * Submit new availability slot(s) to database
+   * Slots are created on each day in the range from first date to last date,
+   * with each slot having the same start and end time for each day.
+   * If first and last are the same, one slot is created.
+   *
+   *
+   * @param  {string} first - First date of the slot(s)
+   * @param  {string} last - Last date of the slot(s)
+   * @param  {string} start - The start time of each slot
+   * @param  {string} end - The end time of each slot.
+   * @returns void - The new range of availability is sent as a POST to database.
+   */
   addAvailability(
     first: string,
     last: string,
@@ -85,7 +69,15 @@ export class AvailabilityRequesterService {
         out = <availabilityRange>(<unknown>returnData);
       });
   }
-
+  /** 
+   * Takes the user's username and an array of {@link CalendarEvent} and appends
+   * all current availability of that user to the array.
+   * // This implementation returns nothing however it may be better to return 
+   * // a new array instead of taking one as a parameter.
+   * 
+   * @param  {CalendarEvent[]} events - The array to push availability to
+   * @param  {string} username - The name of the owner of the availability
+   */
   getMyAvailability(events: CalendarEvent[], username: string): void {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
@@ -97,12 +89,19 @@ export class AvailabilityRequesterService {
     this.requester.getRequest<availability>(url).subscribe((returnData) => {
       out = <Array<availability>>(<unknown>returnData);
       out.forEach((element) => {
-        events.push(this.outputAvailabilityEvent(element));
+        events.push(this.parseAvailabilityEvent(element));
       });
       return out;
     });
   }
-
+  
+  /**
+   * Return all available times for an interview with a particular skill(s)
+   * @deprecated
+   * 
+   * @param  {Array<number>} input - the array of skill id's required
+   * @returns 
+   */
   getAvailabilityOnSkill(input: Array<number>): void {
     let url: string =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
@@ -116,7 +115,15 @@ export class AvailabilityRequesterService {
       return returnData;
     });
   }
-
+  /**
+   * Returns all availability currently stored in DB,
+   * called by {@link CalendarComponent}
+   * 
+   * TODO should a limit be set on this, say from todays date to 3 months from now?
+   * 
+   * @param  {CalendarEvent[]} events
+   * @returns Array passed to function has been modified to conatain all availability.
+   */
   getAllAvailability(events: CalendarEvent[]): void {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_ALL;
@@ -125,13 +132,16 @@ export class AvailabilityRequesterService {
     this.requester.getRequest<availability>(url).subscribe((returnData) => {
       out = <Array<availability>>(<unknown>returnData);
       out.forEach((element) => {
-        events.push(this.outputAvailabilityEvent(element));
+        events.push(this.parseAvailabilityEvent(element));
       });
       return out;
     });
   }
 
-  // Currently only used by CreateInterviewComponent
+  /**
+   * 
+   * @param events 
+   */
   getAllAvailabilityUI(events: string[]): void {
     const url: string =
       APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_ALL;
@@ -233,5 +243,37 @@ export class AvailabilityRequesterService {
           );
         });
       });
+  }
+
+  dateToStringTime(date: Date): string {
+    return this.dateFormatter.dateToStringTime(date);
+  }
+
+  dateToStringDate(date: Date): string {
+    return this.dateFormatter.dateToStringDate(date);
+  }
+
+  parseAvailabilityEvent(
+    element: availability
+  ): CalendarEventAvailability {
+    const start = new Date(element.date);
+    const end = new Date(element.date);
+    const times1 = element.start_time.split(':');
+    const times2 = element.end_time.split(':');
+
+    start.setHours(parseInt(times1[0]), parseInt(times1[1]));
+    end.setHours(parseInt(times2[0]), parseInt(times2[1]));
+
+    const data = new AvailabilityMetaData();
+
+    const newInterview: CalendarEventAvailability = {
+      id: element.availability_id,
+      start: start,
+      end: end,
+      title: 'interview',
+      color: CalendarColors.blue,
+      meta: data,
+    };
+    return newInterview;
   }
 }

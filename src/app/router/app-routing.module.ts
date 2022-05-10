@@ -27,12 +27,12 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/login',
+    redirectTo: '/calendar',
     pathMatch: 'full'
   },
   {
     path: '**',
-    redirectTo: '/login',
+    redirectTo: '/calendar',
     pathMatch: 'full'
   }
 ];
