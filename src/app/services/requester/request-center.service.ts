@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Requester } from '../requester/requester.service';
-import { userData, skills, applicant, SkillOptions } from '../../shared/models/types';
+import {
+  userData,
+  skills,
+  applicant,
+  SkillOptions,
+} from '../../shared/models/types';
 import { APPCONSTANTS } from '../../shared/constants/app.constant';
 import { DatePipe } from '@angular/common';
 
@@ -8,10 +13,7 @@ import { DatePipe } from '@angular/common';
   providedIn: 'root',
 })
 export class RequestCenterService {
-  constructor(
-    private requester: Requester,
-    private pipe: DatePipe,
-  ) {}
+  constructor(private requester: Requester, private pipe: DatePipe) {}
 
   getUser(username: string) {
     const url =

@@ -37,9 +37,7 @@ export class SkillsFormComponent implements OnInit {
 
   /** @ignore */
   ngOnInit(): void {
-    this.rs.getAllSkills(
-      this.skillsAvailable,
-      this.formOptions    );
+    this.rs.getAllSkills(this.skillsAvailable, this.formOptions);
   }
 
   // ? should this be private ?
