@@ -75,7 +75,7 @@ export class FindInterviewComponent implements OnInit {
     this.ms.closeModal();
   }
 
-  findInterview(f: FormGroup): void {
+  findInterview(f: FormGroup | any): void {
     console.log('find button');
     console.log(f.value);
     let idArr: number[] = <Array<number>>[];
@@ -114,9 +114,9 @@ export class FindInterviewComponent implements OnInit {
     console.log(this.findInterviewsForm);
   }
 
-  submitInterview(f: FormGroup): void {
+  submitInterview(f: FormGroup | any): void {
     console.log('sumbit button');
-    console.log(f.value);
+    console.log(f);
     // todo make sure this lines up with correct functionality
     this.iRequester.addInterviewForm(
       f.value.interviewSelected,

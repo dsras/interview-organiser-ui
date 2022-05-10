@@ -11,7 +11,27 @@ import { InterviewRequesterService } from 'src/app/services/requester/interview-
 
 import { FindInterviewComponent } from './find-interview.component';
 
-describe('CreateInterviewComponent', () => {
+const dummyFindForm = {
+  value: {
+    startTime: new Date(),
+    endTime: new Date(),
+    firstTime: new Date(),
+    lastTime: new Date(),
+    skills: {
+      skillType: 'Java',
+      skillLevel: 'Junior'
+    }
+  }
+}
+
+const dummySubmitForm = {
+  value: {
+    startTime: new Date(),
+    interviewSelected: "an interview",
+    additional: "Additional",
+  }
+}
+describe('FindInterviewComponent', () => {
   let component: FindInterviewComponent;
   let fixture: ComponentFixture<FindInterviewComponent>;
   let aService: AvailabilityRequesterService;
@@ -52,14 +72,14 @@ describe('CreateInterviewComponent', () => {
 
   it('find interview makes service calls', () =>{
     aSpy = spyOn(aService, 'getAvailabilityByRange').and.callThrough();
-    let formG = new FormGroup({});
+    let formG = dummyFindForm;
     component.findInterview(formG);
     expect(aService.getAvailabilityByRange).toHaveBeenCalled();
   });
   
   it('submit interview makes service calls', () =>{
     iSpy = spyOn(iService, 'addInterviewForm').and.callThrough();
-    let formG = new FormGroup({});
+    let formG = dummySubmitForm;
     component.submitInterview(formG);
     expect(iService.addInterviewForm).toHaveBeenCalled();
   });
