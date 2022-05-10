@@ -261,13 +261,15 @@ export class interviewReturn implements data {
   }
 }
 
-export class role implements data {
-  roleID: number;
-  roleName: string;
-  description: string;
-  constructor(roleID: number, roleName: string, description: string) {
-    this.roleID = roleID;
-    this.roleName = roleName;
-    this.description = description;
+export class SkillOptions implements data {
+  names: Set<string>;  
+  levels: Set<string>;
+
+  constructor(
+    names: Set<string>,
+    levels: Set<string>,
+  ) {
+    this.names = names;
+    this.levels = levels;
   }
 }

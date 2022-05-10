@@ -1,84 +1,77 @@
-<!-- <button type="button" class="btn btn-org" (click)="openModal(form)">Add Skill</button> -->
-
 <div class="row justify-content-center">
-  <button type="button" class="view-here-btn text-center" (click)="openModal(form)">Add Skill
-    <i class="fa fa-arrow-right" style="font-size: 18px; padding-top:8px; padding-right: 7px"></i>
+  <button
+    type="button"
+    class="view-here-btn text-center"
+    (click)="openModal(form)"
+  >
+    Add Skill
+    <i
+      class="fa fa-arrow-right"
+      style="font-size: 18px; padding-top: 8px; padding-right: 7px"
+    ></i>
   </button>
 </div>
 
 <ng-template #form>
-  <form [formGroup]="addSkillsForm" (ngSubmit)="onSubmit(addSkillsForm)" class="md-form" style="color: black;">
-
-    <!-- <div class="container text-center text-black pt-4 mt-4">
-  <div class="modal-header" style="padding: 10%; width: 100%; color: black; background-color: orange;">
-    <div class="container-fluid py-2 intro-section-color">
-      <h4 class="text-black font-weight-bold text-center">
-          Add Skill
-      </h4>
-    </div>
-  </div>
-</div> -->
-
-    <div class="card" style="size: 1000px;">
+  <form
+    [formGroup]="addSkillsForm"
+    (ngSubmit)="onSubmit(addSkillsForm)"
+    class="md-form"
+    style="color: black"
+  >
+    <div class="card" style="size: 1000px">
       <div class="container text-center text-black pt-4 mt-4">
-        <div class="modal-header" style="padding: 10%; width: 100%; color: black; background-color: orange;">
+        <div
+          class="modal-header"
+          style="
+            padding: 10%;
+            width: 100%;
+            color: black;
+            background-color: orange;
+          "
+        >
           <div class="container-fluid py-2 intro-section-color">
-            <h4 class="text-black font-weight-bold text-center">
-              Add Skill
-            </h4>
+            <h4 class="text-black font-weight-bold text-center">Add Skill</h4>
           </div>
         </div>
       </div>
       <div class="row text-center">
         <div>
           <label for="skill">Skill: </label>
-          <br>
+          <br />
           <select id="skill" formControlName="skill">
             <option value="">Please select skill</option>
-            <option *ngFor="let skill of skillNamesAvailable" [ngValue]="skill">
+            <option *ngFor="let skill of formOptions.names" [ngValue]="skill">
               {{ skill }}
             </option>
           </select>
-          <br>
+          <br />
           <label for="level">Level: </label>
-          <br>
+          <br />
           <select id="level" formControlName="level">
             <option value="">Please select level</option>
-            <option *ngFor="let level of levels" [ngValue]="level">
+            <option *ngFor="let level of formOptions.levels" [ngValue]="level">
               {{ level }}
             </option>
           </select>
         </div>
       </div>
-      <br>
-      <!-- <div class="col-12 col-md-12 mx-auto services">
-    <div class="row text-center">
-    <button
-      class="view-here-btn text-lefttext-black mx-auto"
-      type="submit"
-      id="submit"
-      [disabled]="!addSkillsForm.valid"
-      (click)="this.modalRef?.hide()">
-      <h6 class="mt-4 font-weight-normal">
-        Submit
-      </h6>
-    </button>
-    </div>
-  </div> -->
-
+      <br />
       <div class="modal-footer">
         <div class="col-12 col-md-12 mx-auto services">
           <div class="row text-center">
-            <button class="view-here-btn text-lefttext-black mx-auto d-inline-block" type="submit" id="submit"
-              [disabled]="!addSkillsForm.valid" (click)="closeModal()">
-              <h6 class="mt-4 font-weight-normal">
-                Submit
-              </h6>
+            <button
+              class="view-here-btn text-lefttext-black mx-auto d-inline-block"
+              type="submit"
+              id="submit"
+              [disabled]="!addSkillsForm.valid"
+              (click)="closeModal()"
+            >
+              <h6 class="mt-4 font-weight-normal">Submit</h6>
             </button>
           </div>
         </div>
       </div>
     </div>
   </form>
-
 </ng-template>
