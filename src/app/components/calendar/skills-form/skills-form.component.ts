@@ -46,7 +46,6 @@ export class SkillsFormComponent implements OnInit {
       this.skillNamesAvailable,
       this.levels
     );
-    console.log('skillslist ' + this.skillsAvailable.length);
   }
 
   openModal(template: TemplateRef<any>): void {
