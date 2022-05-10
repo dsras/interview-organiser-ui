@@ -45,11 +45,11 @@ describe('AvailabilityRequesterService', () => {
     expect(service.dateToStringTime(tempDate) === "03:24").toBeTruthy();
   });
 
-  it('outputAvailabilityEvent gets called', () => {
+  it('parseAvailabilityEvent gets called', () => {
     let interviewerID: availability= new availability(0,"","","");
-    spy = spyOn(service, 'outputAvailabilityEvent').and.callThrough();
-    service.outputAvailabilityEvent(interviewerID);
-    expect(service.outputAvailabilityEvent).toHaveBeenCalled();
+    spy = spyOn(service, 'parseAvailabilityEvent').and.callThrough();
+    service.parseAvailabilityEvent(interviewerID);
+    expect(service.parseAvailabilityEvent).toHaveBeenCalled();
   });
 
   it('addAvailability gets called', () => {

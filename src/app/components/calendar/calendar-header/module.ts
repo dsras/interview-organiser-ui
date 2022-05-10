@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CalendarModule } from 'angular-calendar';
 import { CalendarHeaderComponent } from './calHead.component';
 
+/** @ignore */
 @NgModule({
   imports: [CommonModule, FormsModule, CalendarModule],
   declarations: [CalendarHeaderComponent],
