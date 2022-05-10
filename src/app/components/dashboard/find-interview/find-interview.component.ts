@@ -76,8 +76,6 @@ export class FindInterviewComponent implements OnInit {
   }
 
   findInterview(f: FormGroup | any): void {
-    console.log('find button');
-    console.log(f.value);
     let idArr: number[] = <Array<number>>[];
     let skillReq = {
       skillType: f.value.skills.skillType,
@@ -92,6 +90,8 @@ export class FindInterviewComponent implements OnInit {
         idArr.push(skillStore.id);
       }
     });
+
+
 
     this.aRequester.getAvailabilityByRange(
       f.value.firstDate,
@@ -111,12 +111,9 @@ export class FindInterviewComponent implements OnInit {
       find.style.display = 'none';
       confirm.style.display = 'block';
     }
-    console.log(this.findInterviewsForm);
   }
 
   submitInterview(f: FormGroup | any): void {
-    console.log('sumbit button');
-    console.log(f);
     // todo make sure this lines up with correct functionality
     this.iRequester.addInterviewForm(
       f.value.interviewSelected,
@@ -124,6 +121,5 @@ export class FindInterviewComponent implements OnInit {
       f.value.startTime
     );
     this.createInterviewForm.reset();
-    console.log(f.value);
   }
 }

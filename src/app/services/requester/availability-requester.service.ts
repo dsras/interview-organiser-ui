@@ -170,6 +170,7 @@ export class AvailabilityRequesterService {
     const url: string =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.AVAIL_FILTER;
+
     const newStartDate: Date = new Date(startDate);
     const newEndDate: Date = new Date(endDate);
     const newStartTime: Date = new Date(startTime);
