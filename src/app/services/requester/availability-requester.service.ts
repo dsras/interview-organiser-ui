@@ -169,6 +169,17 @@ export class AvailabilityRequesterService {
     // return out;
   }
 
+  /**
+   * Populates an input array with interview availability in a given range of 
+   * times and dates
+   * 
+   * @param startDate 
+   * @param endDate 
+   * @param startTime 
+   * @param endTime 
+   * @param skillsIDList 
+   * @param interviewsReturn 
+   */
   getAvailabilityByRange(
     startDate: string,
     endDate: string,

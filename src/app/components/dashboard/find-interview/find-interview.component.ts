@@ -1,11 +1,10 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CalendarEvent } from 'angular-calendar';
 import { Observable } from 'rxjs';
-// import { getTimepickerConfig } from 'src/app/common/functions/get-timepicker-config';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
-import { skills } from '../../../shared/models/types';
+import { SkillOptions, skills } from '../../../shared/models/types';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 
@@ -17,8 +16,11 @@ import { AvailabilityRequesterService } from 'src/app/services/requester/availab
 export class FindInterviewComponent implements OnInit {
   skillsAvailable: skills[] = [];
   trueData: string[] = [];
-  skillTypes: Set<string> = new Set<string>();
-  skillLevels: Set<string> = new Set<string>();
+
+  skillOptions: SkillOptions = {
+    names: new Set<string>(),
+    levels: new Set<string>(),
+  };
 
   availableInterviewObjects: Array<CalendarEvent> = [];
   availableInterviews: Array<string> = [];
@@ -49,15 +51,11 @@ export class FindInterviewComponent implements OnInit {
     private ms: ModalControllerService,
     private rs: RequestCenterService,
     private aRequester: AvailabilityRequesterService,
-    private iRequester: InterviewRequesterService,
+    private iRequester: InterviewRequesterService
   ) {}
 
   ngOnInit(): void {
-    this.rs.getAllSkills(
-      this.skillsAvailable,
-      this.skillTypes,
-      this.skillLevels
-    );
+    this.rs.getAllSkills(this.skillsAvailable, this.skillOptions);
     //this.rs.getAllAvailabilityUI(this.availableInterviews);
     // this.availableInterviewObjects.forEach(ele =>{
     //   this.availableInterviews.push(ele.start.getTime().toString());
@@ -73,11 +71,11 @@ export class FindInterviewComponent implements OnInit {
     this.ms.closeModal();
   }
 
-  findInterview(f: FormGroup | any): void {
+  findInterview(form: FormGroup | any): void {
     let idArr: number[] = <Array<number>>[];
     let skillReq = {
-      skillType: f.value.skills.skillType,
-      skillLevel: f.value.skills.skillLevel,
+      skillType: form.value.skills.skillType,
+      skillLevel: form.value.skills.skillLevel,
     };
 
     this.skillsAvailable.forEach((skillStore) => {
@@ -89,19 +87,17 @@ export class FindInterviewComponent implements OnInit {
       }
     });
 
-
-
     this.aRequester.getAvailabilityByRange(
-      f.value.firstDate,
-      f.value.lastDate,
-      f.value.startTime,
-      f.value.endTime,
+      form.value.firstDate,
+      form.value.lastDate,
+      form.value.startTime,
+      form.value.endTime,
       idArr,
       this.availableInterviews
     );
 
-    this.trueData.push(f.value.startTime);
-    this.trueData.push(f.value.endTime);
+    this.trueData.push(form.value.startTime);
+    this.trueData.push(form.value.endTime);
 
     let find: HTMLElement | null = document.getElementById('find');
     let confirm: HTMLElement | null = document.getElementById('confirm');
@@ -111,12 +107,12 @@ export class FindInterviewComponent implements OnInit {
     }
   }
 
-  submitInterview(f: FormGroup | any): void {
+  submitInterview(form: FormGroup | any): void {
     // todo make sure this lines up with correct functionality
     this.iRequester.addInterviewForm(
-      f.value.interviewSelected,
-      f.value.additionalInformation,
-      f.value.startTime
+      form.value.interviewSelected,
+      form.value.additionalInformation,
+      form.value.startTime
     );
     this.createInterviewForm.reset();
   }

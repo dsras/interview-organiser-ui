@@ -6,6 +6,9 @@ import { ModalControllerService } from 'src/app/services/modal-controller.servic
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 
+/**
+ * Second stage of interview creation forms, 
+ */
 @Component({
   selector: 'create-interview',
   templateUrl: './create-interview.component.html',

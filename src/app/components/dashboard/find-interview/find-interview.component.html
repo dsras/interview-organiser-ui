@@ -107,16 +107,16 @@
             <select id="skillType" formControlName="skillType">
               <option value="">Which skill is needed?</option>
               <option
-                *ngFor="let skillType of skillTypes"
-                [ngValue]="skillType"
+                *ngFor="let skillName of skillOptions.names"
+                [ngValue]="skillName"
               >
-                {{ skillType }}
+                {{ skillName }}
               </option>
             </select>
             <select id="skillLevel" formControlName="skillLevel">
               <option value="">Which level is needed?</option>
               <option
-                *ngFor="let skillLevel of skillLevels"
+                *ngFor="let skillLevel of skillOptions.levels"
                 [ngValue]="skillLevel"
               >
                 {{ skillLevel }}

@@ -6,16 +6,7 @@ import {
   ViewChild,
   TemplateRef,
 } from '@angular/core';
-import {
-  startOfDay,
-  endOfDay,
-  subDays,
-  addDays,
-  endOfMonth,
-  isSameDay,
-  isSameMonth,
-  addHours,
-} from 'date-fns';
+import { isSameDay, isSameMonth } from 'date-fns';
 import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
@@ -34,7 +25,12 @@ import {
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 
-
+/**
+ * The main component of the calendar, an implementation of angular-calendar
+ * {@link https://mattlewis92.github.io/angular-calendar/docs/ | angular-calendar}.
+ *
+ *
+ */
 @Component({
   selector: 'calendar',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -42,77 +38,99 @@ import { AvailabilityRequesterService } from 'src/app/services/requester/availab
   styleUrls: ['./calendar.component.scss'],
 })
 export class CalendarComponent implements OnInit {
-  //TODO Test data initialiser, needs removed after testing complete
-  mockAvailability!: any;
-
+  /** 
+   * Passes information to {@link ViewAvailabilityComponent} 
+   * when the day is clicked on the calendar 
+   */
   @ViewChild('dayContent', { static: true }) dayContent!: TemplateRef<any>;
-  @ViewChild('eventClickedContent', { static: true })
-  eventClickedContent!: TemplateRef<any>;
 
-  // * Events taking place on day clicked
-  // TODO do we need these
-  dayAvailability:Array<CalendarEventAvailability> = [];
+  /* 
+  TODO implement this later to view/edit individual events on the calendar
+  TODO See handleEvent() below
+  */
+  // @ViewChild('eventClickedContent', { static: true })
+  // eventClickedContent!: TemplateRef<any>;
+
+  /** Empty array to be populated on dayClicked() */
+  dayAvailability: Array<CalendarEventAvailability> = [];
+  /** Empty array to be populated on dayClicked() */
   dayInterviews: Array<CalendarEventInterview> = [];
 
-  //* This is where the local calendar events are stored
-  skills: skills[] = [];
+  /** This is where the local calendar events are stored */
   events: Array<CalendarEventAvailability | CalendarEventInterview> = [];
+  /**
+   * Array of all availability.
+   * 
+   * TODO implement using just events and filtering
+   */
   availability: Array<CalendarEventAvailability> = [];
+   /**
+   * Array of all interviews.
+   * 
+   * TODO implement using just events and filtering
+   */
   interviews: Array<CalendarEventInterview> = [];
 
+  /** @ignore */
   constructor(
-    private router: Router,
-    private modal: NgbModal,
     private ms: ModalControllerService,
     private rs: RequestCenterService,
     private iRequester: InterviewRequesterService,
-    private aRequester: AvailabilityRequesterService,
+    private aRequester: AvailabilityRequesterService
   ) {}
 
+  /** @ignore */
   ngOnInit(): void {
     this.populateCalendar();
   }
 
-  redirect(page: string): void {
-    this.router.navigate([page]);
-  }
-
+  /** @ignore private? */
   sleep(ms: number): Promise<any> {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   //* in test
+  /** Resets component properties */
   resetEvents(): void {
     this.events = [];
     this.availability = [];
     this.interviews = [];
   }
-  
+
   //* in test
+  /** @ignore needed for implementation? */
   async delayedRefresh(): Promise<void> {
     await this.sleep(2500)
       .then(() => this.refresh.next())
       .catch();
   }
 
-  getInterviewsByRec() {
-    this.iRequester.getInterviewByRecruiter(this.events, this.rs.getUsername());
+
+  /**
+   * Populates events and interviews arrays with interviews
+   */
+  getInterviewsByInter(): void {
+    this.iRequester.getInterviewByInterviewer(
+      this.events,
+      this.rs.getUsername()
+    );
+    this.iRequester.getInterviewByInterviewer(
+      this.interviews,
+      this.rs.getUsername()
+    );
   }
 
-  getInterviewsByInter(): void {
-    this.iRequester.getInterviewByInterviewer(this.events, this.rs.getUsername());
-    this.iRequester.getInterviewByInterviewer(this.interviews, this.rs.getUsername());
-  }
+  /** @ignore does nothing for now */
   getSkillsforUser(): void {
     this.rs.getSkills(this.rs.getUsername());
   }
 
-  getApplicants(): void {}
-
+  /** @ignore HUH? */
   getUser(): void {
     this.rs.getUser(this.rs.getUsername());
   }
 
+  /** Called only on button press for now */
   populateViaRecruiter(): void {
     this.resetEvents();
     this.aRequester.getAllAvailability(this.events);
@@ -121,66 +139,44 @@ export class CalendarComponent implements OnInit {
   }
 
   //* in test
+  /**
+   *  Populate the calendar with an interviewers events and availability.
+   * 
+   * todo stremline by removing availability and interviews and using filtering of events
+   */
   populateCalendar(): void {
     this.resetEvents();
     this.aRequester.getMyAvailability(this.events, this.rs.getUsername());
     this.aRequester.getMyAvailability(this.availability, this.rs.getUsername());
-    this.iRequester.getInterviewByInterviewer(this.events, this.rs.getUsername());
-    this.iRequester.getInterviewByInterviewer(this.interviews, this.rs.getUsername());
+    this.iRequester.getInterviewByInterviewer(
+      this.events,
+      this.rs.getUsername()
+    );
+    this.iRequester.getInterviewByInterviewer(
+      this.interviews,
+      this.rs.getUsername()
+    );
     this.delayedRefresh();
   }
-
+  /** @ignore */
   buttonRefresh(): void {
     this.refresh.next();
   }
 
-  // * Test method
-  // checkConnection(){
-  // var skillsIDs = [1,2,3];
-  // this.rs.getAvailabilityOnSkill(skillsIDs);
-  //this.rs.addApplicant();
-
-  // this.rs.addInterview([23], "2022-04-22","09:00", "10:00", "some additional info");
-  // var url = "http://localhost:8080/users/welcome";
-  // this.requester.getRequest<string>(url).subscribe(returnData =>{
-  //   console.log(returnData);
-
-  // })
-
-  // var url = "http://localhost:8080/users/user?username=test_user1";
-  // this.requester.getRequest<userData>(url).subscribe(returnData =>{
-  //   console.log(returnData);
-
-  // })
-
-  // url = "http://localhost:8080/skills/skill?name=Java";
-  // this.requester.getRequest<skills>(url).subscribe(returnData =>{
-  //   console.log(returnData);
-
-  // })
-
-  // var newSkill = new skills(1,"running", "expert");
-  // url = "http://localhost:8080/skills/new";
-  // this.requester.postRequest<skills>(url, newSkill).subscribe(returnData=>{
-  //   console.log(returnData);
-  // })
-
-  // }
-
   // ! Calendar core functionality contained here, shouldn't need to touch it!
   // TODO openDayModal() may need corrected down the line.
-
+  /** @ignore */
   view: CalendarView = CalendarView.Month;
-
+  /** @ignore */
   CalendarView = CalendarView;
-
+  /** @ignore */
   viewDate: Date = new Date();
-
+  /** @ignore */
   modalData!: {
     action: string;
     event: CalendarEvent;
   };
-
+  /** @ignore */
   actions: CalendarEventAction[] = [
     {
       label: '<i class="fas fa-fw fa-pencil-alt"></i>',
@@ -198,11 +194,11 @@ export class CalendarComponent implements OnInit {
       },
     },
   ];
-
+  /** @ignore */
   refresh = new Subject<void>();
-
+  /** @ignore */
   activeDayIsOpen: boolean = false;
-
+  /** @ignore */
   openDayModal(dateSelected: Date /*useDate: boolean*/) {
     this.dayAvailability = [];
     this.dayInterviews = [];
@@ -221,7 +217,7 @@ export class CalendarComponent implements OnInit {
 
     this.ms.openModalLg(this.dayContent);
   }
-
+  /** @ignore */
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
       // if (
@@ -238,7 +234,7 @@ export class CalendarComponent implements OnInit {
       }
     }
   }
-
+  /** @ignore */
   eventTimesChanged({
     event,
     newStart,
@@ -256,20 +252,20 @@ export class CalendarComponent implements OnInit {
     });
     this.handleEvent('Dropped or resized', event);
   }
-
+  /** @ignore */
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
-    this.modal.open(this.eventClickedContent, { size: 'lg' });
+    // this.modal.open(this.eventClickedContent, { size: 'lg' });
   }
-
+  /** @ignore */
   deleteEvent(eventToDelete: CalendarEvent): void {
     this.events = this.events.filter((event) => event !== eventToDelete);
   }
-
+  /** @ignore */
   setView(view: CalendarView): void {
     this.view = view;
   }
-
+  /** @ignore */
   closeOpenMonthViewDay(): void {
     this.activeDayIsOpen = false;
   }
