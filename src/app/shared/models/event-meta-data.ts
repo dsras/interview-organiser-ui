@@ -3,19 +3,19 @@ export class InterviewMetaData {
   interviewPanel: Array<string>;
   interviewStatus: string;
   interviewOutcome: string;
-  additional: string
+  additional: string;
   // * Additional params here as needed
   constructor(metaData: {
     interviewPanel: Array<string>;
     interviewStatus: string;
     interviewOutcome: string;
-    additional: string
+    additional: string;
   }) {
-    this.type = 'warning'
+    this.type = 'interview';
     this.interviewPanel = metaData.interviewPanel;
     this.interviewStatus = metaData.interviewStatus;
     this.interviewOutcome = metaData.interviewOutcome;
-    this.additional = metaData.additional
+    this.additional = metaData.additional;
   }
 }
 
@@ -23,6 +23,6 @@ export class AvailabilityMetaData {
   type: string;
   // * Additional params here as needed
   constructor() {
-    this.type = 'info'
+    this.type = 'availability';
   }
 }

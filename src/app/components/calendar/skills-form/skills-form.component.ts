@@ -1,18 +1,22 @@
-import { Component, OnInit, Output, EventEmitter, TemplateRef } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, } from '@angular/forms';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  TemplateRef,
+} from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import { Subject } from 'rxjs';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
-import { skills } from 'src/app/models/types';
+import { skills } from 'src/app/shared/models/types';
 
 @Component({
   selector: 'skills-form',
   templateUrl: './skills-form.component.html',
-  styleUrls: ['./skills-form.component.scss']
+  styleUrls: ['./skills-form.component.scss'],
 })
 export class SkillsFormComponent implements OnInit {
-
-
   skillsMap: Map<number, string[]> = new Map<number, string[]>();
 
   levels: Set<string> = new Set<string>();
@@ -24,24 +28,24 @@ export class SkillsFormComponent implements OnInit {
   addSkillsForm: FormGroup = this.fb.group({
     skill: ['', Validators.required],
     level: ['', Validators.required],
-  })
+  });
 
-  @Output() skillFormSubmitted: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
-
-  action = new Subject<any>();
+  @Output() skillFormSubmitted: EventEmitter<FormGroup> =
+    new EventEmitter<FormGroup>();
 
   constructor(
     private fb: FormBuilder,
     private rs: RequestCenterService,
     private ms: ModalControllerService
-  ) {
-
-  }
+  ) {}
 
   ngOnInit(): void {
     // TODO maybe put in parent as an input/output relationship
-    this.rs.getAllSkills(this.skillsAvailable, this.skillNamesAvailable, this.levels);
-    console.log("skillslist " + this.skillsAvailable.length)
+    this.rs.getAllSkills(
+      this.skillsAvailable,
+      this.skillNamesAvailable,
+      this.levels
+    );
   }
 
   openModal(template: TemplateRef<any>): void {
@@ -49,7 +53,7 @@ export class SkillsFormComponent implements OnInit {
   }
 
   closeModal(): void {
-    this.ms.closeModal()
+    this.ms.closeModal();
   }
 
   onSubmit(f: FormGroup): void {
@@ -58,8 +62,11 @@ export class SkillsFormComponent implements OnInit {
     skillName = skillName.slice(1, -1);
     skillLevel = skillLevel.slice(1, -1);
     let id: number = 0;
-    this.skillsAvailable.forEach(element => {
-      if (element.skillName === skillName && element.skillLevel === skillLevel) {
+    this.skillsAvailable.forEach((element) => {
+      if (
+        element.skillName === skillName &&
+        element.skillLevel === skillLevel
+      ) {
         id = element.id;
       }
     });
@@ -67,5 +74,4 @@ export class SkillsFormComponent implements OnInit {
     this.skillFormSubmitted.emit(f);
     f.reset();
   }
-
 }

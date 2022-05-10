@@ -5,26 +5,29 @@ import {
   interviewRange,
   availabilityRange,
   availabilityForInterviews,
-} from '../../models/types';
-import { APPCONSTANTS } from '../../constants/app.constant';
+} from '../../shared/models/types';
+import { APPCONSTANTS } from '../../shared/constants/app.constant';
 import { CalendarEvent } from 'angular-calendar';
-import { COLOURS } from '../../constants/colours.constant';
-import { DatePipe } from '@angular/common';
-import { CalendarEventAvailability } from 'src/app/models/calendar-event-detail';
-import { AvailabilityMetaData } from 'src/app/models/event-meta-data';
+import { CalendarColors } from '../../shared/constants/colours.constant';
+import { CalendarEventAvailability } from 'src/app/shared/models/calendar-event-detail';
+import { AvailabilityMetaData } from 'src/app/shared/models/event-meta-data';
+import { DateToStringService } from '../date-to-string.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AvailabilityRequesterService {
-  constructor(private requester: Requester, private pipe: DatePipe) {}
+  constructor(
+    private requester: Requester,
+    private dateFormatter: DateToStringService
+  ) {}
 
   dateToStringTime(date: Date): string {
-    return '' + this.pipe.transform(date, 'HH:mm');
+    return this.dateFormatter.dateToStringTime(date);
   }
 
   dateToStringDate(date: Date): string {
-    return '' + this.pipe.transform(date, 'yyyy-MM-dd');
+    return this.dateFormatter.dateToStringDate(date);
   }
 
   outputAvailabilityEvent(element: availability): CalendarEventAvailability {
@@ -43,7 +46,7 @@ export class AvailabilityRequesterService {
       start: start,
       end: end,
       title: 'interview',
-      color: COLOURS.BLUE_DARK,
+      color: CalendarColors.blue,
       meta: data,
     };
     return newInterview;
@@ -55,7 +58,6 @@ export class AvailabilityRequesterService {
     start: string,
     end: string
   ): void {
-
     const firstDate: Date = new Date(first);
     const lastDate: Date = new Date(last);
     const newStart: Date = new Date(start);
@@ -129,33 +131,33 @@ export class AvailabilityRequesterService {
     });
   }
 
-  // Currently not used
-  // getAllAvailabilityUI(events: string[]): void {
-  //   const url: string =
-  //     APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_ALL;
-  //   let out: Array<availability>;
+  // Currently only used by CreateInterviewComponent
+  getAllAvailabilityUI(events: string[]): void {
+    const url: string =
+      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_ALL;
+    let out: Array<availability>;
 
-  //   this.requester.getRequest<availability>(url).subscribe((returnData) => {
-  //     out = <Array<availability>>(<unknown>returnData);
-  //     out.forEach((element) => {
-  //       const start: Date = new Date(element.date);
-  //       const end: Date = new Date(element.date);
-  //       const times1: string[] = element.start_time.split(':');
-  //       const times2: string[] = element.end_time.split(':');
+    this.requester.getRequest<availability>(url).subscribe((returnData) => {
+      out = <Array<availability>>(<unknown>returnData);
+      out.forEach((element) => {
+        const start: Date = new Date(element.date);
+        const end: Date = new Date(element.date);
+        const times1: string[] = element.start_time.split(':');
+        const times2: string[] = element.end_time.split(':');
 
-  //       start.setHours(parseInt(times1[0]), parseInt(times1[1]));
-  //       end.setHours(parseInt(times2[0]), parseInt(times2[1]));
+        start.setHours(parseInt(times1[0]), parseInt(times1[1]));
+        end.setHours(parseInt(times2[0]), parseInt(times2[1]));
 
-  //       const startTime: string = this.dateToStringTime(start);
-  //       const endTime: string = this.dateToStringTime(end);
+        const startTime: string = this.dateToStringTime(start);
+        const endTime: string = this.dateToStringTime(end);
 
-  //       events.push(startTime + ' -> ' + endTime + '\n');
-  //     });
-  //     return out;
-  //   });
-  //   // out = <Array<availability>><unknown>out;
-  //   // return out;
-  // }
+        events.push(startTime + ' -> ' + endTime + '\n');
+      });
+      return out;
+    });
+    // out = <Array<availability>><unknown>out;
+    // return out;
+  }
 
   getAvailabilityByRange(
     startDate: string,
@@ -165,10 +167,10 @@ export class AvailabilityRequesterService {
     skillsIDList: number[],
     interviewsReturn: string[]
   ): void {
-    
     const url: string =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.AVAIL_FILTER;
+
     const newStartDate: Date = new Date(startDate);
     const newEndDate: Date = new Date(endDate);
     const newStartTime: Date = new Date(startTime);

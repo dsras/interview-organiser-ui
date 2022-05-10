@@ -12,41 +12,26 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 
-describe('CreateInterviewComponent', () => {
-  let component: CreateInterviewComponent;
-  let fixture: ComponentFixture<CreateInterviewComponent>;
+// describe('CreateInterviewComponent', () => {
+//   let component: CreateInterviewComponent;
+//   let fixture: ComponentFixture<CreateInterviewComponent>;
 
-  class FakeFormBuilder {};
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports:[
-        BrowserModule,
-        ReactiveFormsModule,
-        FormsModule,
-        HttpClientTestingModule,
-        RouterTestingModule,
-        CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
-      ],
-      providers: [
-        BsModalService,
-        RequestCenterService,
-        //{provide: FormBuilder, useValue:FakeFormBuilder},
-        DatePipe
-      ],
-      declarations: [ 
-        CreateInterviewComponent,
-      ]
-    })
-    .compileComponents();
-  });
+//   beforeEach(async () => {
+//     await TestBed.configureTestingModule({
+//       declarations: [ 
+//         CreateInterviewComponent,
+//       ]
+//     })
+//     .compileComponents();
+//   });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(CreateInterviewComponent);
-    component = fixture.componentInstance;
-    //fixture.detectChanges();
-  });
+//   beforeEach(() => {
+//     fixture = TestBed.createComponent(CreateInterviewComponent);
+//     component = fixture.componentInstance;
+//     fixture.detectChanges();
+//   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+//   it('should create', () => {
+//     expect(component).toBeTruthy();
+//   });
+// });

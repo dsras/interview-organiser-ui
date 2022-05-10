@@ -9,7 +9,7 @@ import { SocialAuthService, GoogleLoginProvider, SocialAuthServiceConfig } from 
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { of } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
-import { prodEnv, APPCONSTANTS } from 'src/app/constants/app.constant';
+import { prodEnv, APPCONSTANTS } from 'src/app/shared/constants/app.constant';
 import { DataSourceService } from 'src/app/services/data-source.service';
 
 import { HeaderComponent } from './header.component';
