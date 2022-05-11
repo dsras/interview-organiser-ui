@@ -4,6 +4,11 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { CalendarEventInterview } from 'src/app/shared/models/calendar-event-detail';
 
+/**
+ * Component to view and modify interview status
+ *
+ * TODO wiring in this function is diconnected and requires construction
+ */
 @Component({
   selector: 'interview-status',
   templateUrl: './interview-status.component.html',
@@ -12,13 +17,10 @@ import { CalendarEventInterview } from 'src/app/shared/models/calendar-event-det
 export class InterviewStatusComponent implements OnInit {
   @Input() slot?: CalendarEventInterview;
 
+  /** Form for updating interview status */
   statusForm: FormGroup = this.fb.group({
     status: [''],
   });
-
-  myForm?: FormGroup;
-
-  interviewStatusOptions: Array<string> = [];
 
   statusList: Array<string> = [
     'Completed',
@@ -41,8 +43,8 @@ export class InterviewStatusComponent implements OnInit {
 
   constructor(
     private ms: ModalControllerService,
-    private iRequester: InterviewRequesterService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private iRequester: InterviewRequesterService
   ) {}
 
   ngOnInit() {}

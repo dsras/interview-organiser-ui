@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
       if (response && response.token) {
         //console.log(response.token);
         localStorage.setItem('apiKey', response.token);
-        this.router.navigate(['dashboard']);
+        this.router.navigate(['calendar']);
       }
     });
   }
