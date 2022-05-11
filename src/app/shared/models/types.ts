@@ -262,13 +262,10 @@ export class interviewReturn implements data {
 }
 
 export class SkillOptions implements data {
-  skillNames: Set<string>;  
+  skillNames: Set<string>;
   skillLevels: Set<string>;
 
-  constructor(
-    names: Set<string>,
-    levels: Set<string>,
-  ) {
+  constructor(names: Set<string>, levels: Set<string>) {
     this.skillNames = names;
     this.skillLevels = levels;
   }

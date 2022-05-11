@@ -69,12 +69,10 @@ export class AvailabilityRequesterService {
         out = <availabilityRange>(<unknown>returnData);
       });
   }
-  /** 
-   * Takes the user's username and an array of {@link CalendarEvent} and appends
+  /**
+   * Takes the user's username and an array of calendar events and appends
    * all current availability of that user to the array.
-   * // This implementation returns nothing however it may be better to return 
-   * // a new array instead of taking one as a parameter.
-   * 
+   *
    * @param  {CalendarEvent[]} events - The array to push availability to
    * @param  {string} username - The name of the owner of the availability
    */
@@ -94,13 +92,13 @@ export class AvailabilityRequesterService {
       return out;
     });
   }
-  
+
   /**
    * Return all available times for an interview with a particular skill(s)
    * @deprecated
-   * 
+   *
    * @param  {Array<number>} input - the array of skill id's required
-   * @returns 
+   * @returns
    */
   getAvailabilityOnSkill(input: Array<number>): void {
     let url: string =
@@ -118,9 +116,9 @@ export class AvailabilityRequesterService {
   /**
    * Returns all availability currently stored in DB,
    * called by {@link CalendarComponent}
-   * 
+   *
    * TODO should a limit be set on this, say from todays date to 3 months from now?
-   * 
+   *
    * @param  {CalendarEvent[]} events
    * @returns Array passed to function has been modified to conatain all availability.
    */
@@ -139,8 +137,8 @@ export class AvailabilityRequesterService {
   }
 
   /**
-   * 
-   * @param events 
+   *
+   * @param events
    */
   getAllAvailabilityUI(events: string[]): void {
     const url: string =
@@ -165,20 +163,19 @@ export class AvailabilityRequesterService {
       });
       return out;
     });
-    // out = <Array<availability>><unknown>out;
-    // return out;
   }
 
   /**
-   * Populates an input array with interview availability in a given range of 
-   * times and dates
-   * 
-   * @param startDate 
-   * @param endDate 
-   * @param startTime 
-   * @param endTime 
-   * @param skillsIDList 
-   * @param interviewsReturn 
+   * Populates an input array with availability in a specified range that can
+   * be used to create interviews.
+   *
+   * @param startDate
+   * @param endDate
+   * @param startTime
+   * @param endTime
+   * @param skillsIDList
+   * @param interviewsReturn
+   * @returns Modified interviewsReturn with all relevant availability
    */
   getAvailabilityByRange(
     startDate: string,
@@ -265,9 +262,7 @@ export class AvailabilityRequesterService {
     return this.dateFormatter.dateToStringDate(date);
   }
 
-  parseAvailabilityEvent(
-    element: availability
-  ): CalendarEventAvailability {
+  parseAvailabilityEvent(element: availability): CalendarEventAvailability {
     const start = new Date(element.date);
     const end = new Date(element.date);
     const times1 = element.start_time.split(':');

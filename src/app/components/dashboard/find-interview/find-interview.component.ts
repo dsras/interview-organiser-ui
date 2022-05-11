@@ -1,7 +1,5 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CalendarEvent } from 'angular-calendar';
-import { Observable } from 'rxjs';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 import { SkillOptions, Skills } from '../../../shared/models/types';
@@ -16,38 +14,34 @@ import { AvailabilityRequesterService } from 'src/app/services/requester/availab
 export class FindInterviewComponent implements OnInit {
   /** Array of skills */
   skillsAvailable: Skills[] = [];
-  // TODO
-  trueData: string[] = [];
   /** Options for filtering by skill */
   skillOptions: SkillOptions = {
     skillNames: new Set<string>(),
     skillLevels: new Set<string>(),
   };
 
-  availableInterviewObjects: Array<CalendarEvent> = [];
+  /** Array of availability as strings to be used in form selection */
   availableInterviews: Array<string> = [];
-  availableInterviews$!: Observable<Array<CalendarEvent>>;
 
-  availableApplicants: Array<string> = [];
-  availableApplicants$!: Observable<Array<CalendarEvent>>;
-
+  /** Iterview creation from selected attributes form */
   createInterviewForm: FormGroup = this.fb.group({
     interviewSelected: ['', Validators.required],
     additionalInformation: ['', Validators.maxLength(255)],
     startTime: [''],
   });
 
+  /** Search for availability for selected criteria form  */
   findInterviewsForm: FormGroup = this.fb.group({
     startTime: ['', Validators.required],
     endTime: ['', Validators.required],
-    firstDate: ['', Validators.required],
-    lastDate: ['', Validators.required],
+    dateRange:['', Validators.required],
     skills: this.fb.group({
       skillType: ['', Validators.required],
       skillLevel: ['', Validators.required],
     }),
   });
 
+  /** @ignore */
   constructor(
     private fb: FormBuilder,
     private ms: ModalControllerService,
@@ -56,23 +50,27 @@ export class FindInterviewComponent implements OnInit {
     private iRequester: InterviewRequesterService
   ) {}
 
+  /** @ignore */
   ngOnInit(): void {
     this.rs.getAllSkills(this.skillsAvailable, this.skillOptions);
-    //this.rs.getAllAvailabilityUI(this.availableInterviews);
-    // this.availableInterviewObjects.forEach(ele =>{
-    //   this.availableInterviews.push(ele.start.getTime().toString());
-    // })
-    //this.rs.getAllApplicants(this.availableApplicants);
   }
 
+  /** @ignore */
   openModal(template: TemplateRef<any>): void {
     this.ms.openModal(template);
   }
 
+  /** @ignore */
   closeModal(): void {
     this.ms.closeModal();
   }
 
+  /**
+   * Takes search criteria for creating an interview and populates the create
+   * interview form with appropriate data
+   *
+   * @param form completed search criteria form
+   */
   findInterview(form: FormGroup | any): void {
     let idArr: Array<number> = [];
     let skillReq = {
@@ -90,32 +88,44 @@ export class FindInterviewComponent implements OnInit {
     });
 
     this.aRequester.getAvailabilityByRange(
-      form.value.firstDate,
-      form.value.lastDate,
+      form.value.dateRange[0],
+      form.value.dateRange[1],
       form.value.startTime,
       form.value.endTime,
       idArr,
       this.availableInterviews
     );
-
-    this.trueData.push(form.value.startTime);
-    this.trueData.push(form.value.endTime);
-
-    let find: HTMLElement | null = document.getElementById('find');
-    let confirm: HTMLElement | null = document.getElementById('confirm');
-    if (find?.style.display === 'block' && confirm?.style.display === 'none') {
-      find.style.display = 'none';
-      confirm.style.display = 'block';
-    }
+    form.reset();
+    this.switchView();
   }
 
+  /**
+   * Submit the interview attributes to {@link iRequester.addInterviewForm}
+   *
+   * @param form completed form of interview attributes
+   */
   submitInterview(form: FormGroup | any): void {
-    // todo make sure this lines up with correct functionality
     this.iRequester.addInterviewForm(
       form.value.interviewSelected,
       form.value.additionalInformation,
       form.value.startTime
     );
-    this.createInterviewForm.reset();
+    form.reset();
+  }
+
+  /** Switches which form is being viewed */
+  switchView(): void {
+    const find: HTMLElement = document.getElementById('find')!;
+    const confirm: HTMLElement = document.getElementById('confirm')!;
+    switch (find.style.display) {
+      case 'none':
+        find.style.display = 'block';
+        confirm.style.display = 'none';
+        break;
+      case 'block':
+        find.style.display = 'none';
+        confirm.style.display = 'block';
+        break;
+    }
   }
 }
