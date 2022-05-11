@@ -41,8 +41,8 @@
           <br />
           <select id="skill" formControlName="skill">
             <option value="">Please select skill</option>
-            <option *ngFor="let skill of formOptions.names" [ngValue]="skill">
-              {{ skill }}
+            <option *ngFor="let name of formOptions.skillNames" [ngValue]="name">
+              {{ name }}
             </option>
           </select>
           <br />
@@ -50,7 +50,7 @@
           <br />
           <select id="level" formControlName="level">
             <option value="">Please select level</option>
-            <option *ngFor="let level of formOptions.levels" [ngValue]="level">
+            <option *ngFor="let level of formOptions.skillLevels" [ngValue]="level">
               {{ level }}
             </option>
           </select>

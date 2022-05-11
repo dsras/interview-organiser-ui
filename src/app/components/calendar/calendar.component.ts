@@ -1,4 +1,3 @@
-import { Router } from '@angular/router';
 import {
   Component,
   OnInit,
@@ -8,7 +7,6 @@ import {
 } from '@angular/core';
 import { isSameDay, isSameMonth } from 'date-fns';
 import { Subject } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   CalendarEvent,
   CalendarEventAction,
@@ -16,7 +14,6 @@ import {
   CalendarView,
 } from 'angular-calendar';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
-import { skills } from '../../shared/models/types';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import {
   CalendarEventAvailability,

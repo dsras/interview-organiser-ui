@@ -1,12 +1,3 @@
-<!-- <button type="button" class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx-auto d-inline-block" (click)="openModal(form)">
-  <img width="auto" height="70px" src="../../../assets/images/findInterview.png">
-              <h6 class="mt-4 font-weight-normal">
-                Find Interviews
-              </h6>
-              <i class="fa fa-arrow-right" style="font-size: 18px; padding-top:8px; padding-right: 7px"></i>
-</button> -->
-
-<!-- <div class="col-md-4 col-sm-6 my-3"> -->
 <div class="blog-widget">
   <div
     class="col-lg-12 thumbnail-img"
@@ -100,14 +91,12 @@
               }"
             />
           </div>
-
           <div formArrayName="skills">
             <h2>Skills</h2>
-
             <select id="skillType" formControlName="skillType">
               <option value="">Which skill is needed?</option>
               <option
-                *ngFor="let skillName of skillOptions.names"
+                *ngFor="let skillName of skillOptions.skillNames"
                 [ngValue]="skillName"
               >
                 {{ skillName }}
@@ -116,7 +105,7 @@
             <select id="skillLevel" formControlName="skillLevel">
               <option value="">Which level is needed?</option>
               <option
-                *ngFor="let skillLevel of skillOptions.levels"
+                *ngFor="let skillLevel of skillOptions.skillLevels"
                 [ngValue]="skillLevel"
               >
                 {{ skillLevel }}
@@ -142,7 +131,6 @@
       </div>
     </form>
   </div>
-
   <div id="confirm" style="display: none">
     <form
       [formGroup]="createInterviewForm"
@@ -155,7 +143,6 @@
           <strong>Create Interview</strong>
         </h3>
       </div>
-
       <div class="card padded">
         <div class="row">
           <select id="interviewSelected" formControlName="interviewSelected">

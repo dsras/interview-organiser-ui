@@ -2,7 +2,7 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
-import { SkillOptions, skills } from 'src/app/shared/models/types';
+import { SkillOptions, Skills } from 'src/app/shared/models/types';
 
 /**
  * Component for submiting new skills to users skill set
@@ -14,12 +14,13 @@ import { SkillOptions, skills } from 'src/app/shared/models/types';
 })
 export class SkillsFormComponent implements OnInit {
   /** Empty array to be populated with skill id's and information */
-  skillsAvailable: Array<skills> = [];
+  skillsAvailable: Array<Skills> = [];
 
   /** Empty sets to be populated and used as options for skill form */
   formOptions: SkillOptions = {
-    levels: new Set<string>(),
-    names: new Set<string>(),
+    skillNames: new Set<string>(),
+    skillLevels: new Set<string>(),
+    
   };
 
   /** Empty skills form to be populated by user */

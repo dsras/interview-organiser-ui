@@ -4,7 +4,7 @@ import { CalendarEvent } from 'angular-calendar';
 import { Observable } from 'rxjs';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
-import { SkillOptions, skills } from '../../../shared/models/types';
+import { SkillOptions, Skills } from '../../../shared/models/types';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 
@@ -14,12 +14,14 @@ import { AvailabilityRequesterService } from 'src/app/services/requester/availab
   styleUrls: ['./find-interview.component.scss'],
 })
 export class FindInterviewComponent implements OnInit {
-  skillsAvailable: skills[] = [];
+  /** Array of skills */
+  skillsAvailable: Skills[] = [];
+  // TODO
   trueData: string[] = [];
-
+  /** Options for filtering by skill */
   skillOptions: SkillOptions = {
-    names: new Set<string>(),
-    levels: new Set<string>(),
+    skillNames: new Set<string>(),
+    skillLevels: new Set<string>(),
   };
 
   availableInterviewObjects: Array<CalendarEvent> = [];
@@ -72,7 +74,7 @@ export class FindInterviewComponent implements OnInit {
   }
 
   findInterview(form: FormGroup | any): void {
-    let idArr: number[] = <Array<number>>[];
+    let idArr: Array<number> = [];
     let skillReq = {
       skillType: form.value.skills.skillType,
       skillLevel: form.value.skills.skillLevel,
