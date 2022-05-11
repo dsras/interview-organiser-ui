@@ -188,6 +188,8 @@ export class InterviewRequesterService {
 
     let newStatus = new statusUpdate(id, status);
     console.log(newStatus);
-    this.requester.postRequest<statusUpdate>(url, newStatus);
+    this.requester.postRequest<statusUpdate>(url, newStatus).subscribe((returnData) => {
+      return returnData;
+    });
   }
 }
