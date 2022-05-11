@@ -1,11 +1,8 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-import { CalendarEvent } from 'angular-calendar';
-import { Observable } from 'rxjs';
-// import { getTimepickerConfig } from 'src/app/common/functions/get-timepicker-config';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
-import { skills } from '../../../shared/models/types';
+import { SkillOptions, Skills } from '../../../shared/models/types';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 
@@ -15,69 +12,70 @@ import { AvailabilityRequesterService } from 'src/app/services/requester/availab
   styleUrls: ['./find-interview.component.scss'],
 })
 export class FindInterviewComponent implements OnInit {
-  skillsAvailable: skills[] = [];
-  trueData: string[] = [];
-  skillTypes: Set<string> = new Set<string>();
-  skillLevels: Set<string> = new Set<string>();
+  /** Array of skills */
+  skillsAvailable: Skills[] = [];
+  /** Options for filtering by skill */
+  skillOptions: SkillOptions = {
+    skillNames: new Set<string>(),
+    skillLevels: new Set<string>(),
+  };
 
-  availableInterviewObjects: Array<CalendarEvent> = [];
+  /** Array of availability as strings to be used in form selection */
   availableInterviews: Array<string> = [];
-  availableInterviews$!: Observable<Array<CalendarEvent>>;
 
-  availableApplicants: Array<string> = [];
-  availableApplicants$!: Observable<Array<CalendarEvent>>;
-
+  /** Iterview creation from selected attributes form */
   createInterviewForm: FormGroup = this.fb.group({
     interviewSelected: ['', Validators.required],
     additionalInformation: ['', Validators.maxLength(255)],
     startTime: [''],
   });
 
+  /** Search for availability for selected criteria form  */
   findInterviewsForm: FormGroup = this.fb.group({
     startTime: ['', Validators.required],
     endTime: ['', Validators.required],
-    firstDate: ['', Validators.required],
-    lastDate: ['', Validators.required],
+    dateRange:['', Validators.required],
     skills: this.fb.group({
       skillType: ['', Validators.required],
       skillLevel: ['', Validators.required],
     }),
   });
 
+  /** @ignore */
   constructor(
     private fb: FormBuilder,
     private ms: ModalControllerService,
     private rs: RequestCenterService,
     private aRequester: AvailabilityRequesterService,
-    private iRequester: InterviewRequesterService,
+    private iRequester: InterviewRequesterService
   ) {}
 
+  /** @ignore */
   ngOnInit(): void {
-    this.rs.getAllSkills(
-      this.skillsAvailable,
-      this.skillTypes,
-      this.skillLevels
-    );
-    //this.rs.getAllAvailabilityUI(this.availableInterviews);
-    // this.availableInterviewObjects.forEach(ele =>{
-    //   this.availableInterviews.push(ele.start.getTime().toString());
-    // })
-    //this.rs.getAllApplicants(this.availableApplicants);
+    this.rs.getAllSkills(this.skillsAvailable, this.skillOptions);
   }
 
+  /** @ignore */
   openModal(template: TemplateRef<any>): void {
     this.ms.openModal(template);
   }
 
+  /** @ignore */
   closeModal(): void {
     this.ms.closeModal();
   }
 
-  findInterview(f: FormGroup | any): void {
-    let idArr: number[] = <Array<number>>[];
+  /**
+   * Takes search criteria for creating an interview and populates the create
+   * interview form with appropriate data
+   *
+   * @param form completed search criteria form
+   */
+  findInterview(form: FormGroup | any): void {
+    let idArr: Array<number> = [];
     let skillReq = {
-      skillType: f.value.skills.skillType,
-      skillLevel: f.value.skills.skillLevel,
+      skillType: form.value.skills.skillType,
+      skillLevel: form.value.skills.skillLevel,
     };
 
     this.skillsAvailable.forEach((skillStore) => {
@@ -89,35 +87,45 @@ export class FindInterviewComponent implements OnInit {
       }
     });
 
-
-
     this.aRequester.getAvailabilityByRange(
-      f.value.firstDate,
-      f.value.lastDate,
-      f.value.startTime,
-      f.value.endTime,
+      form.value.dateRange[0],
+      form.value.dateRange[1],
+      form.value.startTime,
+      form.value.endTime,
       idArr,
       this.availableInterviews
     );
-
-    this.trueData.push(f.value.startTime);
-    this.trueData.push(f.value.endTime);
-
-    let find: HTMLElement | null = document.getElementById('find');
-    let confirm: HTMLElement | null = document.getElementById('confirm');
-    if (find?.style.display === 'block' && confirm?.style.display === 'none') {
-      find.style.display = 'none';
-      confirm.style.display = 'block';
-    }
+    form.reset();
+    this.switchView();
   }
 
-  submitInterview(f: FormGroup | any): void {
-    // todo make sure this lines up with correct functionality
+  /**
+   * Submit the interview attributes to {@link iRequester.addInterviewForm}
+   *
+   * @param form completed form of interview attributes
+   */
+  submitInterview(form: FormGroup | any): void {
     this.iRequester.addInterviewForm(
-      f.value.interviewSelected,
-      f.value.additionalInformation,
-      f.value.startTime
+      form.value.interviewSelected,
+      form.value.additionalInformation,
+      form.value.startTime
     );
-    this.createInterviewForm.reset();
+    form.reset();
+  }
+
+  /** Switches which form is being viewed */
+  switchView(): void {
+    const find: HTMLElement = document.getElementById('find')!;
+    const confirm: HTMLElement = document.getElementById('confirm')!;
+    switch (find.style.display) {
+      case 'none':
+        find.style.display = 'block';
+        confirm.style.display = 'none';
+        break;
+      case 'block':
+        find.style.display = 'none';
+        confirm.style.display = 'block';
+        break;
+    }
   }
 }

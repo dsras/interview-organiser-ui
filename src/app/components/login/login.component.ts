@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
     });
   }
   validate(type: string, loginObj?: any): void {
-    let user: any = null;
+    let user: any = {};
     if (loginObj) {
       user = loginObj;
     }
@@ -62,7 +62,6 @@ export class LoginComponent implements OnInit {
     this._dataSourceService.updateDataSource('loginType', type);
     this._backEndService.login(user).subscribe((response: any) => {
       if (response && response.token) {
-        //console.log(response.token);
         localStorage.setItem('apiKey', response.token);
         this.router.navigate(['calendar']);
       }

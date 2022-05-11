@@ -60,7 +60,7 @@ export class userData implements data {
   }
 }
 
-export class skills implements data {
+export class Skills implements data {
   id: number;
   skillName: string;
   skillLevel: string;
@@ -261,13 +261,12 @@ export class interviewReturn implements data {
   }
 }
 
-export class role implements data {
-  roleID: number;
-  roleName: string;
-  description: string;
-  constructor(roleID: number, roleName: string, description: string) {
-    this.roleID = roleID;
-    this.roleName = roleName;
-    this.description = description;
+export class SkillOptions implements data {
+  skillNames: Set<string>;
+  skillLevels: Set<string>;
+
+  constructor(names: Set<string>, levels: Set<string>) {
+    this.skillNames = names;
+    this.skillLevels = levels;
   }
 }

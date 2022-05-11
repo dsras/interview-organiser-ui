@@ -20,20 +20,18 @@ export class AvailabilityFormComponent implements OnInit {
     endTime: ['', Validators.required],
     dateRange: ['', Validators.required],
   });
-
+  /** @ignore */
   constructor(
     private fb: FormBuilder,
     private ms: ModalControllerService,
     private aRequester: AvailabilityRequesterService
   ) {}
-
+  /** @ignore */
   ngOnInit(): void {}
-
   /** @ignore */
   openModal(template: TemplateRef<any>): void {
     this.ms.openModal(template);
   }
-
   /** @ignore */
   closeModal(): void {
     this.ms.closeModal();
