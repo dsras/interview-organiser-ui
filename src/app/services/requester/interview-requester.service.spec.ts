@@ -99,6 +99,12 @@ describe('InterviewRequesterService', () => {
     expect(service.dateToStringTime(tempDate) === "03:24").toBeTruthy();
   });
 
+  it('time add function should add to time', () => {
+    let time = "09:00";
+    expect(service.stringTimeAdd(time, 1) == "10:00").toBeTruthy();
+    time = "08:00";
+    expect(service.stringTimeAdd(time, 1) == "09:00").toBeTruthy();
+  })
   
   afterEach(() => {
     // After every test, assert that there are no more pending requests.
