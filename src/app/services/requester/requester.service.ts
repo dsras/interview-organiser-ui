@@ -35,14 +35,12 @@ export class Requester {
       .pipe(catchError(this.handleError));
   }
   postRequest<Type>(link: string, obj: Type): Observable<Type> {
-    console.log(link);
     const opt = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: 'Bearer' + <string>localStorage.getItem('apiKey'),
       }),
     };
-    console.log("got here");
     return this.http
       .post<Type>(link, obj, opt)
       .pipe(

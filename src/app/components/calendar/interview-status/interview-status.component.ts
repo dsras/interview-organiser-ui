@@ -57,7 +57,8 @@ export class InterviewStatusComponent implements OnInit {
     this.ms.closeModal();
   }
 
-  onSubmit(f: FormGroup): void {
+  onSubmit(f: FormGroup | any): void {
+    console.log(f.value);
     console.log(this.slot);
     const str: string = f.value.status;
     let id: number = -1;
@@ -65,33 +66,19 @@ export class InterviewStatusComponent implements OnInit {
     if (this.slot?.id) {
       id = Number(this.slot.id);
     }
-
+    console.log("made it to the error check");
+    console.log(str);
+    console.log(this.statusList);
+    console.log(this.outcomeList);
     // TODO streamline this?
     let errCount: number = 0;
     let isOutcome: boolean = true;
-    for (let element of this.statusList) {
-      if (str === element) {
-        isOutcome = false;
-        break;
-      } else {
-        errCount++;
-      }
-    }
-    for (let element of this.outcomeList) {
-      if (str === element) {
-        isOutcome = true;
-        break;
-      } else {
-        errCount++;
-      }
-    }
-
-    if (errCount >= 6 || id == -1) {
-      console.warn(
-        'Probably nothing selected in the status menu before submission'
-      );
+    if(!this.statusList.includes(str) && !this.outcomeList.includes(str)){
+      console.warn("no valid status given");
       return;
     }
+    
+    console.log("made it to the requester");
     this.iRequester.updateInterviewStatus(id, str, !isOutcome);
     f.reset();
   }
