@@ -174,7 +174,6 @@ export class InterviewRequesterService {
   }
 
   updateInterviewStatus(id: number, status: string, isStatus: boolean) {
-    console.log(`updateInterviewStatus() called`);
     let url: string = '';
     if (isStatus) {
       url =
@@ -187,7 +186,6 @@ export class InterviewRequesterService {
     }
 
     let newStatus = new statusUpdate(id, status);
-    console.log(newStatus);
     this.requester.postRequest<statusUpdate>(url, newStatus).subscribe((returnData) => {
       return returnData;
     });
