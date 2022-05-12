@@ -1,13 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Requester } from '../requester/requester.service';
-import {
-  userData,
-  Skills,
-  applicant,
-  SkillOptions,
-} from '../../shared/models/types';
+import { userData, Skills, SkillOptions } from '../../shared/models/types';
 import { APPCONSTANTS } from '../../shared/constants/app.constant';
 import { DatePipe } from '@angular/common';
+import 'rxjs/add/'
+import { Observable, Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +22,17 @@ export class RequestCenterService {
       return returnData;
     });
   }
+
+  // getUserRole(email: string, user: userData): void {
+  //   const url =
+  //     APPCONSTANTS.APICONSTANTS.BASE_URL +
+  //     APPCONSTANTS.APICONSTANTS.USER_FIND +
+  //     '?username=' +
+  //     email;  
+  //   this.requester.getRequest<userData>(url).subscribe((returnData) => {
+  //     user = returnData
+  //   })
+  //   }
 
   // ? Does this replace getUser() when deployed ?
   getUsername() {
@@ -81,46 +89,5 @@ export class RequestCenterService {
         });
       });
     });
-  }
-
-  // ? Not sure whether this is needed or just a test method
-  addApplicant() {
-    const url =
-      APPCONSTANTS.APICONSTANTS.BASE_URL +
-      APPCONSTANTS.APICONSTANTS.APPLICANT_ADD;
-    const newApplicant = new applicant(
-      'ted',
-      'testerton',
-      'ted@test.com',
-      100,
-      1
-    );
-    this.requester
-      .postRequest<applicant>(url, newApplicant)
-      .subscribe((returnData) => {});
-  }
-
-  getAllApplicants(applicantList: string[]) {
-    const url =
-      APPCONSTANTS.APICONSTANTS.BASE_URL +
-      APPCONSTANTS.APICONSTANTS.APPLICANT_ALL;
-    let out;
-    this.requester.getRequest<applicant>(url).subscribe((returnData) => {
-      out = <Array<applicant>>(<unknown>returnData);
-      out.forEach((ele) => {
-        applicantList.push(ele.firstName + ',');
-      });
-    });
-
-    out = <Array<applicant>>(<unknown>out);
-    return out;
-  }
-
-  dateToStringTime(date: Date): string {
-    return '' + this.pipe.transform(date, 'HH:mm');
-  }
-
-  dateToStringDate(date: Date): string {
-    return '' + this.pipe.transform(date, 'yyyy-MM-dd');
   }
 }
