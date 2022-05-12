@@ -1,39 +1,28 @@
-<!-- <button type="button" class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx-auto d-inline-block" (click)="openModal(form)">
-  <img width="auto" height="70px" src="../../../assets/images/findInterview.png">
-              <h6 class="mt-4 font-weight-normal">
-                Find Interviews
-              </h6>
-              <i class="fa fa-arrow-right" style="font-size: 18px; padding-top:8px; padding-right: 7px"></i>
-</button> -->
-
-<!-- <div class="col-md-4 col-sm-6 my-3"> -->
-<div class="blog-widget">
-  <div
-    class="col-lg-12 thumbnail-img"
-    data-aos="fade-left"
-    data-aos-delay="100"
-    style="
-      background-image: url(../../../../assets/images/findInterviewBG.png);
-      background-size: cover;
-      background-position: center;
-    "
-  ></div>
-  <div class="blog-content">
-    <button
-      type="button"
-      class="view-here-btn text-lefttext-black"
-      (click)="openModal(form)"
-    >
-      <h5>
+  <button
+    type="button"
+    class="blog-widget"
+    (click)="openModal(form)"
+  >
+    <div
+      class="col-lg-12 thumbnail-img"
+      data-aos="fade-left"
+      data-aos-delay="100"
+      style="
+        background-image: url(../../../../assets/images/findInterviewBG.png);
+        background-size: cover;
+        background-position: center;
+      "
+    ></div>
+    <div class="blog-content">
+      <h5 class="view-here-btn text-lefttext-black">
         Find Interview
         <i
           class="fa fa-arrow-right"
           style="font-size: 18px; padding-top: 8px; padding-right: 7px"
         ></i>
       </h5>
-    </button>
-  </div>
-</div>
+    </div>
+  </button>
 
 <ng-template #form>
   <div id="find" style="display: block">
@@ -76,47 +65,34 @@
           </div>
           <br />
           <div class="container-fluid">
-            <label for="firstDate">First Date</label>
+            <label for="dateRange">Date range</label>
             <input
-              id="firstDate"
-              type="datetime"
-              formControlName="firstDate"
-              bsDatepicker
-              [bsConfig]="{
-                containerClass: 'theme-orange',
-                adaptivePosition: true
-              }"
-            />
-            <br />
-            <label for="lastDate">Last Date</label>
-            <input
-              id="lastDate"
-              type="datetime"
-              formControlName="lastDate"
-              bsDatepicker
+              id="dateRange"
+              #dp
+              placeholder="Select Date(s)"
+              formControlName="dateRange"
+              bsDaterangepicker
               [bsConfig]="{
                 containerClass: 'theme-orange',
                 adaptivePosition: true
               }"
             />
           </div>
-
           <div formArrayName="skills">
             <h2>Skills</h2>
-
             <select id="skillType" formControlName="skillType">
               <option value="">Which skill is needed?</option>
               <option
-                *ngFor="let skillType of skillTypes"
-                [ngValue]="skillType"
+                *ngFor="let skillName of skillOptions.skillNames"
+                [ngValue]="skillName"
               >
-                {{ skillType }}
+                {{ skillName }}
               </option>
             </select>
             <select id="skillLevel" formControlName="skillLevel">
               <option value="">Which level is needed?</option>
               <option
-                *ngFor="let skillLevel of skillLevels"
+                *ngFor="let skillLevel of skillOptions.skillLevels"
                 [ngValue]="skillLevel"
               >
                 {{ skillLevel }}
@@ -133,7 +109,6 @@
               type="submit"
               class="view-here-btn text-lefttext-black mx-auto d-inline-block"
               [disabled]="!findInterviewsForm.valid"
-              (click)="findInterview(findInterviewsForm)"
             >
               <h6 class="text-center">Find Interview</h6>
             </button>
@@ -142,7 +117,6 @@
       </div>
     </form>
   </div>
-
   <div id="confirm" style="display: none">
     <form
       [formGroup]="createInterviewForm"
@@ -155,7 +129,6 @@
           <strong>Create Interview</strong>
         </h3>
       </div>
-
       <div class="card padded">
         <div class="row">
           <select id="interviewSelected" formControlName="interviewSelected">
@@ -196,6 +169,13 @@
       <div class="modal-footer">
         <div class="col-12 col-md-12 mx-auto services">
           <div class="row text-center">
+            <button
+              type="button"
+              (click)="switchView()"
+              class="view-here-btn text-lefttext-black text-center mx-auto"
+            >
+              <h6 class="text-center">Reset Criteria</h6>
+            </button>
             <button
               type="submit"
               [disabled]="!createInterviewForm.valid"
