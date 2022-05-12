@@ -41,4 +41,6 @@ describe('ViewAvailabilityModalComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('no other tests available');
 });

@@ -9,6 +9,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { DashboardComponent } from './dashboard.component';
 
+//! Dashboard doesnt have anything that is testable
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
   let fixture: ComponentFixture<DashboardComponent>;
@@ -40,4 +41,5 @@ describe('DashboardComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('no other tests available');
 });

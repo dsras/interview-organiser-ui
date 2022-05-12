@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing' 
 import { LoginComponent } from './login.component';
@@ -14,6 +14,9 @@ describe('LoginComponent', () => {
   let fixture: ComponentFixture<LoginComponent>;
   let bService: BackendService;
   let dService: DataSourceService;
+  let sService: SocialAuthService;
+  let localStore: any;
+  let googleUser: any;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -52,6 +55,8 @@ describe('LoginComponent', () => {
     component = fixture.componentInstance;
     bService = TestBed.inject(BackendService);
     dService = TestBed.inject(DataSourceService);
+    sService = TestBed.inject(SocialAuthService);
+    googleUser = GoogleLoginProvider.PROVIDER_ID;
     fixture.detectChanges();
   });
 
@@ -67,4 +72,14 @@ describe('LoginComponent', () => {
     expect(dService.updateDataSource).toHaveBeenCalled();
     expect(bService.login).toHaveBeenCalled();
   });
+
+  //! still trying to get the signIn function to call
+  // it('SSO should call service methods', fakeAsync(() => {
+  //   let sSpy = spyOn(sService, 'signIn').and.returnValue(Promise.resolve(googleUser));    
+  //   let lSpy = spyOn(localStorage, "setItem")
+  //   tick(3);
+  //   component.sso();
+  //   expect(localStorage.setItem).toHaveBeenCalled();
+  //   expect(sService.signIn).toHaveBeenCalled();
+  // }));
 });
