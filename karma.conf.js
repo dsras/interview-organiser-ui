@@ -25,13 +25,14 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/raft-ui-demo'),
+      dir: require('path').join(__dirname, './coverage/angular-testing-basics'),
       subdir: '.',
       reporters: [
-        { type: 'html' },
-        { type: 'text-summary' }
+      { type: 'text-summary' },
+      { type: 'html', subdir: 'html-report' },
+      { type: 'lcov', subdir: 'lcov-report' }
       ]
-    },
+      },
     reporters: ['progress', 'kjhtml'],
     port: 9876,
     colors: true,
