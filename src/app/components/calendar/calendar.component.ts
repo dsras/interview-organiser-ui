@@ -175,24 +175,6 @@ export class CalendarComponent implements OnInit {
     event: CalendarEvent;
   };
   /** @ignore */
-  // actions: CalendarEventAction[] = [
-  //   {
-  //     label: '<i class="fas fa-fw fa-pencil-alt"></i>',
-  //     a11yLabel: 'Edit',
-  //     onClick: ({ event }: { event: CalendarEvent }): void => {
-  //       this.handleEvent('Edited', event);
-  //     },
-  //   },
-  //   {
-  //     label: '<i class="fas fa-fw fa-trash-alt"></i>',
-  //     a11yLabel: 'Delete',
-  //     onClick: ({ event }: { event: CalendarEvent }): void => {
-  //       this.events = this.events.filter((iEvent) => iEvent !== event);
-  //       this.handleEvent('Deleted', event);
-  //     },
-  //   },
-  // ];
-  /** @ignore */
   refresh = new Subject<void>();
   /** @ignore */
   activeDayIsOpen: boolean = false;
@@ -218,55 +200,17 @@ export class CalendarComponent implements OnInit {
   /** @ignore */
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
-      // if (
-      //   (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-      //   events.length === 0
-      // ) {
-      //   this.activeDayIsOpen = false;
-      // } else {
-      //   this.activeDayIsOpen = true;
-      // }
-      // this.viewDate = date;
       if (events.length != 0) {
         this.openDayModal(date);
       }
     }
   }
   /** @ignore */
-  // eventTimesChanged({
-  //   event,
-  //   newStart,
-  //   newEnd,
-  // }: CalendarEventTimesChangedEvent): void {
-  //   this.events = this.events.map((iEvent) => {
-  //     if (iEvent === event) {
-  //       return {
-  //         ...event,
-  //         start: newStart,
-  //         end: newEnd,
-  //       };
-  //     }
-  //     return iEvent;
-  //   });
-  //   this.handleEvent('Dropped or resized', event);
-  // }
-  /** @ignore */
-  // handleEvent(action: string, event: CalendarEvent): void {
-  //   this.modalData = { event, action };
-  //   // this.modal.open(this.eventClickedContent, { size: 'lg' });
-  // }
-  /** @ignore */
-  // deleteEvent(eventToDelete: CalendarEvent): void {
-  //   this.events = this.events.filter((event) => event !== eventToDelete);
-  // }
-  /** @ignore */
   setView(view: CalendarView): void {
-    console.log("set view called");
     this.view = view;
   }
   /** @ignore */
   closeOpenMonthViewDay(): void {
-    console.log("close open month view");
     this.activeDayIsOpen = false;
   }
 }

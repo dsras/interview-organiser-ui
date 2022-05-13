@@ -4,7 +4,7 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { CalendarDateFormatter, CalendarEvent, CalendarModule, DateAdapter } from 'angular-calendar';
+import { CalendarDateFormatter, CalendarEvent, CalendarModule, CalendarView, DateAdapter } from 'angular-calendar';
 import { CalendarComponent } from './calendar.component';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { Router } from '@angular/router';
@@ -123,7 +123,22 @@ describe('CalendarComponent', () => {
     expect(component.openDayModal).toHaveBeenCalled();
   });
 
-  it('eventTimesChanged should update event with relevent info')
+  it('setView should update the view', () => {
+    let newView = CalendarView.Month;
+    component.setView(newView);
+    expect(component.view == newView).toBeTruthy();
+    newView = CalendarView.Week;
+    component.setView(newView);
+    expect(component.view == newView).toBeTruthy();
+    newView = CalendarView.Day;
+    component.setView(newView);
+    expect(component.view == newView).toBeTruthy();
+  });
+
+  it('closeDayModal should make isopen false', () => {
+    component.closeOpenMonthViewDay();
+    expect(component.activeDayIsOpen == false).toBeTruthy();
+  });
 
   // //! not working yet, maybe requires a specific router component to do this type of route testing.
   // it('navigate to "input" redirects you to /input', fakeAsync(() => { 
