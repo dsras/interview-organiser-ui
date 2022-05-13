@@ -117,7 +117,9 @@ export class FindInterviewComponent implements OnInit {
   switchView(): void {
     const find: HTMLElement = document.getElementById('find')!;
     const confirm: HTMLElement = document.getElementById('confirm')!;
-    switch (find.style.display) {
+    let disp: string = "";
+    try { disp = find.style.display; } catch (error) {}
+    switch (disp) {
       case 'none':
         find.style.display = 'block';
         confirm.style.display = 'none';
@@ -125,6 +127,8 @@ export class FindInterviewComponent implements OnInit {
       case 'block':
         find.style.display = 'none';
         confirm.style.display = 'block';
+        break;
+      default:
         break;
     }
   }
