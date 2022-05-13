@@ -4,12 +4,14 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { CalendarDateFormatter, CalendarModule, DateAdapter } from 'angular-calendar';
+import { CalendarDateFormatter, CalendarEvent, CalendarModule, DateAdapter } from 'angular-calendar';
 import { CalendarComponent } from './calendar.component';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { Router } from '@angular/router';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
+import { ModalControllerService } from 'src/app/services/modal-controller.service';
+import { CalendarEventAvailability, CalendarEventInterview } from 'src/app/shared/models/calendar-event-detail';
 
 describe('CalendarComponent', () => {
   let component: CalendarComponent;
@@ -18,6 +20,7 @@ describe('CalendarComponent', () => {
   let router: Router;
   let aService: AvailabilityRequesterService;
   let iService: InterviewRequesterService;
+  let mService: ModalControllerService;
   let iSpy: any;
   let aSpy: any;
 
@@ -41,7 +44,8 @@ describe('CalendarComponent', () => {
         FormBuilder,     
         Location,
         InterviewRequesterService,
-        AvailabilityRequesterService
+        AvailabilityRequesterService,
+        ModalControllerService
       ],
       declarations: [ CalendarComponent ]
     })
@@ -52,6 +56,7 @@ describe('CalendarComponent', () => {
     fixture = TestBed.createComponent(CalendarComponent);
     aService = TestBed.inject(AvailabilityRequesterService);
     iService = TestBed.inject(InterviewRequesterService);
+    mService = TestBed.inject(ModalControllerService);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -73,16 +78,52 @@ describe('CalendarComponent', () => {
     iSpy = spyOn(iService, 'getInterviewByInterviewer').and.callThrough();
     aSpy = spyOn(aService, 'getMyAvailability').and.callThrough();
     component.populateCalendar();
-    expect(iService.getInterviewByInterviewer).toHaveBeenCalled();
-    expect(aService.getMyAvailability).toHaveBeenCalled();
-    expect(component.resetEvents).toHaveBeenCalled();
+    expect(iSpy).toHaveBeenCalled();
+    expect(aSpy).toHaveBeenCalled();
+    expect(spy).toHaveBeenCalled();
   });
 
-  it('delayed refresh should sleep', () => {
+  it('delayed refresh should sleep and refresh', fakeAsync(() => {
     let spy = spyOn(component, 'sleep').and.callThrough();
+    let rSpy = spyOn(component.refresh, 'next').and.callThrough();
     component.delayedRefresh();
-    expect(component.sleep).toHaveBeenCalled();
+    tick(3000);
+    expect(spy).toHaveBeenCalled();
+    expect(rSpy).toHaveBeenCalled();
+  }));
+
+
+  it('open day modal should open the correct date', () => {
+    aSpy = spyOn(component.dayAvailability, 'push').and.callThrough();
+    let bSpy = spyOn(component.dayInterviews, 'push').and.callThrough();
+    let cSpy = spyOn(mService, 'openModalLg').and.callThrough();
+    let myDate = new Date();
+    let myEvent = <CalendarEvent> {
+      start: myDate,
+      title: "title",
+    }
+    component.availability.push(new CalendarEventAvailability(myEvent));
+    component.interviews.push(new CalendarEventInterview(myEvent, {}));
+    component.openDayModal(myDate);
+    expect(component.availability.length != 0).toBeTruthy();
+    expect(component.interviews.length != 0).toBeTruthy();
+    expect(cSpy).toHaveBeenCalled();
   });
+
+  it('dayClicked should attempt open modal', () => {
+    let rSpy = spyOn(component, 'openDayModal').and.callThrough();
+    
+    let date = new Date();
+    let myEvent = <CalendarEvent> {
+      start: date,
+      title: "title",
+    }
+    let events: CalendarEvent[] = [myEvent];
+    component.dayClicked({date, events});
+    expect(component.openDayModal).toHaveBeenCalled();
+  });
+
+  it('eventTimesChanged should update event with relevent info')
 
   // //! not working yet, maybe requires a specific router component to do this type of route testing.
   // it('navigate to "input" redirects you to /input', fakeAsync(() => { 
