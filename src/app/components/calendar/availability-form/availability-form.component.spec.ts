@@ -6,12 +6,27 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { BsModalService } from 'ngx-bootstrap/modal';
+import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 
 import { AvailabilityFormComponent } from './availability-form.component';
+
+
+const dummyAvailForm = {
+  value: {
+    dateRange: [
+      new Date(),
+      new Date()
+    ],
+    startTime: new Date(),
+    endTime: new Date()
+  },
+  reset(){}
+}
 
 describe('AvailabilityFormComponent', () => {
   let component: AvailabilityFormComponent;
   let fixture: ComponentFixture<AvailabilityFormComponent>;
+  let aService: AvailabilityRequesterService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -34,10 +49,19 @@ describe('AvailabilityFormComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AvailabilityFormComponent);
     component = fixture.componentInstance;
+    aService = TestBed.inject(AvailabilityRequesterService);
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  
+  it('Submit should call service methods', () => {
+    let aSpy = spyOn(aService, 'addAvailability').and.callThrough();
+    let formG = dummyAvailForm;
+    component.onSubmit(formG);
+    expect(aService.addAvailability).toHaveBeenCalled();
+  })
 });

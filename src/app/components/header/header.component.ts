@@ -16,12 +16,26 @@ export class HeaderComponent implements OnInit {
     user: any = null;
     constructor(private _dataSourceService: DataSourceService, private router: Router, private socialAuthService: SocialAuthService) { }
 
+    // //* method is used in testing
+    // updateService(source: string, value: string){
+    //     this._dataSourceService.updateDataSource(source, value);
+    // }
+    // initService(){
+    //     this._dataSourceService.createDataSource();
+    //     // this._dataSourceService = new DataSourceService();
+    // }
+    // getServiceRoute(){
+    //     this._dataSourceService.getDataSource('route').subscribe( returnData => {
+    //         return returnData;
+    //     });
+    // }
     ngOnInit(): void {
         this._dataSourceService.getDataSource('route').subscribe((value: string) => {
             this.selectedMenu = value;
             if (value === 'login') {
                 this.isHeader = false;
-            } else {
+            } 
+            else {
                 this.isHeader = true;
             }
             const user = localStorage.getItem('ssoUser');

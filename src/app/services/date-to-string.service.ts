@@ -7,7 +7,9 @@ import { DatePipe } from '@angular/common';
 })
 export class DateToStringService {
 
-  constructor(private pipe: DatePipe) {}
+  constructor(private pipe: DatePipe) {
+  }
+
 
   dateToStringTime(date: Date): string {
     return '' + this.pipe.transform(date, 'HH:mm');

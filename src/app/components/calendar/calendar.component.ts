@@ -106,34 +106,35 @@ export class CalendarComponent implements OnInit {
   /**
    * Populates events and interviews arrays with interviews
    */
-  getInterviewsByInter(): void {
-    this.iRequester.getInterviewByInterviewer(
-      this.events,
-      this.rs.getUsername()
-    );
-    this.iRequester.getInterviewByInterviewer(
-      this.interviews,
-      this.rs.getUsername()
-    );
-  }
+  //! Probably depreciated
+  // getInterviewsByInter(): void {
+  //   this.iRequester.getInterviewByInterviewer(
+  //     this.events,
+  //     this.rs.getUsername()
+  //   );
+  //   this.iRequester.getInterviewByInterviewer(
+  //     this.interviews,
+  //     this.rs.getUsername()
+  //   );
+  // }
 
   /** @ignore does nothing for now */
-  getSkillsforUser(): void {
-    this.rs.getSkills(this.rs.getUsername());
-  }
+  // getSkillsforUser(): void {
+  //   this.rs.getSkills(this.rs.getUsername());
+  // }
 
   /** @ignore HUH? */
-  getUser(): void {
-    this.rs.getUser(this.rs.getUsername());
-  }
+  // getUser(): void {
+  //   this.rs.getUser(this.rs.getUsername());
+  // }
 
   /** Called only on button press for now */
-  populateViaRecruiter(): void {
-    this.resetEvents();
-    this.aRequester.getAllAvailability(this.events);
-    this.aRequester.getAllAvailability(this.availability);
-    this.delayedRefresh();
-  }
+  // populateViaRecruiter(): void {
+  //   this.resetEvents();
+  //   this.aRequester.getAllAvailability(this.events);
+  //   this.aRequester.getAllAvailability(this.availability);
+  //   this.delayedRefresh();
+  // }
 
   //* in test
   /**
@@ -156,9 +157,9 @@ export class CalendarComponent implements OnInit {
     this.delayedRefresh();
   }
   /** @ignore */
-  buttonRefresh(): void {
-    this.refresh.next();
-  }
+  // buttonRefresh(): void {
+  //   this.refresh.next();
+  // }
 
   // ! Calendar core functionality contained here, shouldn't need to touch it!
   // TODO openDayModal() may need corrected down the line.
@@ -173,24 +174,6 @@ export class CalendarComponent implements OnInit {
     action: string;
     event: CalendarEvent;
   };
-  /** @ignore */
-  actions: CalendarEventAction[] = [
-    {
-      label: '<i class="fas fa-fw fa-pencil-alt"></i>',
-      a11yLabel: 'Edit',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
-      },
-    },
-    {
-      label: '<i class="fas fa-fw fa-trash-alt"></i>',
-      a11yLabel: 'Delete',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.events = this.events.filter((iEvent) => iEvent !== event);
-        this.handleEvent('Deleted', event);
-      },
-    },
-  ];
   /** @ignore */
   refresh = new Subject<void>();
   /** @ignore */
@@ -217,46 +200,10 @@ export class CalendarComponent implements OnInit {
   /** @ignore */
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
-      // if (
-      //   (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-      //   events.length === 0
-      // ) {
-      //   this.activeDayIsOpen = false;
-      // } else {
-      //   this.activeDayIsOpen = true;
-      // }
-      // this.viewDate = date;
       if (events.length != 0) {
         this.openDayModal(date);
       }
     }
-  }
-  /** @ignore */
-  eventTimesChanged({
-    event,
-    newStart,
-    newEnd,
-  }: CalendarEventTimesChangedEvent): void {
-    this.events = this.events.map((iEvent) => {
-      if (iEvent === event) {
-        return {
-          ...event,
-          start: newStart,
-          end: newEnd,
-        };
-      }
-      return iEvent;
-    });
-    this.handleEvent('Dropped or resized', event);
-  }
-  /** @ignore */
-  handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = { event, action };
-    // this.modal.open(this.eventClickedContent, { size: 'lg' });
-  }
-  /** @ignore */
-  deleteEvent(eventToDelete: CalendarEvent): void {
-    this.events = this.events.filter((event) => event !== eventToDelete);
   }
   /** @ignore */
   setView(view: CalendarView): void {

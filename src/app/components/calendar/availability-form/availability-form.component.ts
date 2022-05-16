@@ -42,7 +42,7 @@ export class AvailabilityFormComponent implements OnInit {
    *
    * @param {FormGroup} form completed FormGroup to be submitted
    */
-  onSubmit(form: FormGroup): void {
+  onSubmit(form: FormGroup | any): void {
     this.aRequester.addAvailability(
       form.value.dateRange[0],
       form.value.dateRange[1],
