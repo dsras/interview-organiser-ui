@@ -4,7 +4,6 @@ import { CalendarComponent } from '../components/calendar/calendar.component';
 import { DashboardComponent } from '../components/dashboard/dashboard.component';
 import { LoginComponent } from '../components/login/login.component';
 import { LoginGuard } from './guards/login.guard';
-import { RoleGuard } from './guards/role.guard';
 
 
 const routes: Routes = [
@@ -39,7 +38,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  providers: [LoginGuard, RoleGuard],
+  providers: [LoginGuard],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

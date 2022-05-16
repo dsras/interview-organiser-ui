@@ -1,3 +1,5 @@
+import { Observer } from 'rxjs';
+
 export interface data {}
 export class skillIdOnly implements data {
   skillId: number;
@@ -28,6 +30,7 @@ export class userData implements data {
   designation: any;
   location: any;
   priorExperience: any;
+  appRoles: Array<AppRoles>;
 
   constructor(
     id: number,
@@ -42,7 +45,8 @@ export class userData implements data {
     dateOfJoining: any,
     designation: any,
     location: any,
-    priorExperience: any
+    priorExperience: any,
+    appRoles: Array<AppRoles>
   ) {
     this.id = id;
     this.username = username;
@@ -57,6 +61,7 @@ export class userData implements data {
     this.designation = designation;
     this.location = location;
     this.priorExperience = priorExperience;
+    this.appRoles = appRoles;
   }
 }
 
@@ -268,5 +273,17 @@ export class SkillOptions implements data {
   constructor(names: Set<string>, levels: Set<string>) {
     this.skillNames = names;
     this.skillLevels = levels;
+  }
+}
+
+export class AppRoles implements data {
+  id: number;
+  description: string;
+  name: string;
+
+  constructor(id: number, description: string, name: string) {
+    this.id = id;
+    this.description = description;
+    this.name = name;
   }
 }
