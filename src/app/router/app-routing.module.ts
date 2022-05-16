@@ -4,6 +4,7 @@ import { CalendarComponent } from '../components/calendar/calendar.component';
 import { DashboardComponent } from '../components/dashboard/dashboard.component';
 import { LoginComponent } from '../components/login/login.component';
 import { LoginGuard } from './guards/login.guard';
+import { RecruiterGuard } from './guards/recruiter.guard';
 
 
 const routes: Routes = [
@@ -16,7 +17,7 @@ const routes: Routes = [
     path: 'dashboard',
     component: DashboardComponent,
     pathMatch: 'full',
-    canActivate: [LoginGuard],
+    canActivate: [LoginGuard, RecruiterGuard],
   },
   {
     path: 'calendar',

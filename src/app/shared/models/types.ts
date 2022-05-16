@@ -30,7 +30,7 @@ export class userData implements data {
   designation: any;
   location: any;
   priorExperience: any;
-  appRoles: Array<AppRoles>;
+  roles: Array<AppRoles>;
 
   constructor(
     id: number,
@@ -46,7 +46,7 @@ export class userData implements data {
     designation: any,
     location: any,
     priorExperience: any,
-    appRoles: Array<AppRoles>
+    roles: Array<AppRoles>
   ) {
     this.id = id;
     this.username = username;
@@ -61,7 +61,7 @@ export class userData implements data {
     this.designation = designation;
     this.location = location;
     this.priorExperience = priorExperience;
-    this.appRoles = appRoles;
+    this.roles = roles;
   }
 }
 
