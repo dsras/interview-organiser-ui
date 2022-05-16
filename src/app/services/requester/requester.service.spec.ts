@@ -72,5 +72,22 @@ describe('RequesterService', () => {
    });
   }));
   
+  it('handle error should handle errors', fakeAsync(() => {
+    let reponse = new HttpErrorResponse({
+      error: 0,
+      status: 0,
+    })
+    let err = service['handleError'](reponse);
 
+    expect(err).toBeDefined();
+
+    reponse = new HttpErrorResponse({
+      error: 1,
+      status: 1,
+    })
+    err = service['handleError'](reponse);
+
+    expect(err).toBeDefined();
+  }));
+    
 });
