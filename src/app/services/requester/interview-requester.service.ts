@@ -160,14 +160,14 @@ export class InterviewRequesterService {
     });
   }
 
-  getInterviewsDashboard(interviews: Array<interview>) {
+  getInterviewsDashboard(interviews: Array<CalendarEventInterview>) {
     console.log(`getInterviewsDashboard() called`);
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ALL;
-    this.requester.getRequest<interview>(url).subscribe((returnData) => {
-      let dataArray = <Array<interview>>(<unknown>returnData);
+    this.requester.getRequest<interviewReturn>(url).subscribe((returnData) => {
+      let dataArray = <Array<interviewReturn>>(<unknown>returnData);
       dataArray.forEach((element) => {
-        interviews.push(element);
+        interviews.push(this.outputInterviewEvent(element));
       });
       return interviews;
     });
