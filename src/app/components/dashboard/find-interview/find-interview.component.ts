@@ -96,7 +96,7 @@ export class FindInterviewComponent implements OnInit {
       this.availableInterviews
     );
     form.reset();
-    this.switchView();
+    this.switchView('');
   }
 
   /**
@@ -114,11 +114,13 @@ export class FindInterviewComponent implements OnInit {
   }
 
   /** Switches which form is being viewed */
-  switchView(): void {
+  switchView(disp:string): void {
     const find: HTMLElement = document.getElementById('find')!;
     const confirm: HTMLElement = document.getElementById('confirm')!;
-    let disp: string = "";
-    try { disp = find.style.display; } catch (error) {}
+    if(!disp || disp==''){
+      disp = "";
+      try { disp = find.style.display; } catch (error) {}
+    }
     switch (disp) {
       case 'none':
         find.style.display = 'block';

@@ -10,8 +10,4 @@ export class DashboardComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {}
-
-  redirect(page: string): void {
-    this.router.navigate([page]);
-  }
 }
