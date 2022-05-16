@@ -12,7 +12,6 @@ import { CalendarColors } from '../../shared/constants/colours.constant';
 import { CalendarEventAvailability } from 'src/app/shared/models/calendar-event-detail';
 import { AvailabilityMetaData } from 'src/app/shared/models/event-meta-data';
 import { DateToStringService } from '../date-to-string.service';
-import { DatePipe } from '@angular/common';
 
 /** A service to handle any requests made to the database regarding availability. */
 @Injectable({
@@ -195,12 +194,8 @@ export class AvailabilityRequesterService {
     const newStartTime: Date = new Date(startTime);
     const newEndTime: Date = new Date(endTime);
 
-
     newStartTime.setDate(newStartDate.getDate());
     newEndTime.setDate(newStartDate.getDate());
-
-
-
 
     const startDateString: string = this.dateToStringDate(newStartDate);
     const endDateString: string = this.dateToStringDate(newEndDate);
