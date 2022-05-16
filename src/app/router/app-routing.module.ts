@@ -4,7 +4,7 @@ import { CalendarComponent } from '../components/calendar/calendar.component';
 import { DashboardComponent } from '../components/dashboard/dashboard.component';
 import { LoginComponent } from '../components/login/login.component';
 import { LoginGuard } from './guards/login.guard';
-import { RoleGuard } from './guards/role.guard';
+import { RecruiterGuard } from './guards/recruiter.guard';
 
 
 const routes: Routes = [
@@ -17,7 +17,7 @@ const routes: Routes = [
     path: 'dashboard',
     component: DashboardComponent,
     pathMatch: 'full',
-    canActivate: [LoginGuard],
+    canActivate: [LoginGuard, RecruiterGuard],
   },
   {
     path: 'calendar',
@@ -39,7 +39,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  providers: [LoginGuard, RoleGuard],
+  providers: [LoginGuard],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

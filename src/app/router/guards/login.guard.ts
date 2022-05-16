@@ -1,11 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  CanActivate,
-  Router,
-  RouterStateSnapshot,
-  UrlTree,
-} from '@angular/router';
-import { Observable } from 'rxjs';
+import { CanActivate, Router } from '@angular/router';
 import { LoginComponent } from 'src/app/components/login/login.component';
 
 @Injectable({
@@ -14,11 +8,7 @@ import { LoginComponent } from 'src/app/components/login/login.component';
 export class LoginGuard implements CanActivate {
   constructor(public auth: LoginComponent, public router: Router) {}
 
-  canActivate():
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
+  canActivate(): boolean {
     if (null === localStorage.getItem('ssoUser')) {
       this.router.navigate(['login']);
       return false;
