@@ -17,7 +17,6 @@ export class RecruiterGuard implements CanActivate {
     );
     if (userData) {
       for (let i = 0; i < userData.roles.length; i++) {
-        console.log(userData.roles[i])
         if (this._allowedRoles.includes(userData.roles[i].name)) {
           allowed = true;
         }
@@ -25,7 +24,6 @@ export class RecruiterGuard implements CanActivate {
     }
     if (!allowed) {
       this._router.navigate(['calendar']);
-      console.log('NOPE')
     }
     return allowed;
   }
