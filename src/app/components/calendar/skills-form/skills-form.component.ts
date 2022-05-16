@@ -62,7 +62,7 @@ export class SkillsFormComponent implements OnInit {
    *
    * @param form completed form to be submitted
    */
-  onSubmit(form: FormGroup): void {
+  onSubmit(form: FormGroup | any): void {
     let skillName: string = JSON.stringify(form.value.skill);
     let skillLevel: string = JSON.stringify(form.value.level);
     skillName = skillName.slice(1, -1);

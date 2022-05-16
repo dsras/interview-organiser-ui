@@ -76,5 +76,10 @@ describe('AvailabilityRequesterService', () => {
     service.getAvailabilityOnSkill(numbers);
     expect(service.getAvailabilityOnSkill).toHaveBeenCalled();
   });
-  
+    
+  it('getAvailabilityByRange gets called', () => {
+    spy = spyOn(service, 'getAvailabilityByRange').and.callThrough();
+    service.getAvailabilityByRange(new Date().toString(), new Date().toString(), new Date().toString(), new Date().toString(),[1],[]);
+    expect(service.getAvailabilityByRange).toHaveBeenCalled();
+  });
 });

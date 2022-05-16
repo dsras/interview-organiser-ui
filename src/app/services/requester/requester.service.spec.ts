@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient,HttpErrorResponse } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { fakeAsync, TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { Data } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -53,22 +53,41 @@ describe('RequesterService', () => {
       console.log(returnData);
       expect(returnData).toBeDefined();
     })
+    tick(3);
     const req = httpTestingController.expectOne({
       method: 'GET',  // find open Http request that is a get request.
    });
   }));
   
-  it('post should be called', () => {
+  it('post should be called', fakeAsync(() => {
     let url = "https://eosajx3tbq8buv5.m.pipedream.net";
     let out: any;
     service.postRequest<string>(url, "testString").subscribe(returnData => {
       out = returnData;
       expect(out).toBeDefined();
     })
+    tick(3);
     const req = httpTestingController.expectOne({
       method: 'POST',  // find open Http request that is a get request.
    });
-  });
+  }));
   
+  it('handle error should handle errors', fakeAsync(() => {
+    let reponse = new HttpErrorResponse({
+      error: 0,
+      status: 0,
+    })
+    let err = service['handleError'](reponse);
 
+    expect(err).toBeDefined();
+
+    reponse = new HttpErrorResponse({
+      error: 1,
+      status: 1,
+    })
+    err = service['handleError'](reponse);
+
+    expect(err).toBeDefined();
+  }));
+    
 });

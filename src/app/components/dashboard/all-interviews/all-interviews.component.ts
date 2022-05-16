@@ -26,10 +26,6 @@ export class AllInterviewsComponent implements OnInit {
   ngOnInit(): void {
     this.iRequester.getInterviewsDashboard(this.interviews);
   }
-  /** @ignore test method that should be replaced when completed */
-  print(obj: any): void {
-    console.log(JSON.stringify(obj));
-  }
   /** @ignore */
   openModal(template: TemplateRef<any>): void {
     this.ms.openModal(template);
