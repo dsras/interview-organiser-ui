@@ -241,6 +241,10 @@ export class InterviewReturn implements Data {
   }
 }
 
+export class SkillReturn implements Data {
+  
+}
+
 export class SkillOptions implements Data {
   skillNames: Set<string>;
   skillLevels: Set<string>;

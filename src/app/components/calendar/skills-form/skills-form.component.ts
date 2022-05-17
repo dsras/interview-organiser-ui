@@ -44,13 +44,13 @@ export class SkillsFormComponent implements OnInit {
   // ? should this be private ?
   /** {@link ModalControllerService} */
   openModal(template: TemplateRef<any>): void {
-    this.ms.openModal(template);
+    this.ms.openDialog(template);
   }
 
   // ? Should this be private ?
   /** {@link ModalControllerService} */
   closeModal(): void {
-    this.ms.closeModal();
+    this.ms.closeDialog();
   }
 
   /**

@@ -12,7 +12,7 @@ import { ModalControllerService } from 'src/app/services/modal-controller.servic
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 
-import { FindInterviewComponent } from './find-interview.component';
+import { CreateInterviewComponent } from './create-interview.component';
 
 const ModalControllerServiceStub  = {
   openModal(template: TemplateRef<any>) {
@@ -66,8 +66,8 @@ const dummySubmitForm = {
   reset(){}
 }
 describe('FindInterviewComponent', () => {
-  let component: FindInterviewComponent;
-  let fixture: ComponentFixture<FindInterviewComponent>;
+  let component: CreateInterviewComponent;
+  let fixture: ComponentFixture<CreateInterviewComponent>;
   let aService: AvailabilityRequesterService;
   let aSpy: any;
   let iService: InterviewRequesterService;
@@ -89,7 +89,7 @@ describe('FindInterviewComponent', () => {
         {provide: ModalControllerService, useValue: ModalControllerServiceStub},
           
       ],
-      declarations: [ FindInterviewComponent ]
+      declarations: [ CreateInterviewComponent ]
     })
     .compileComponents();
 
@@ -97,7 +97,7 @@ describe('FindInterviewComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FindInterviewComponent);
+    fixture = TestBed.createComponent(CreateInterviewComponent);
     iService = TestBed.inject(InterviewRequesterService);
     aService = TestBed.inject(AvailabilityRequesterService);
     mockMService = TestBed.inject(ModalControllerService);

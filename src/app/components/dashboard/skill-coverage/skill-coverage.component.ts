@@ -1,20 +1,16 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
-import { InterviewTableData } from 'src/app/shared/models/table-data';
-import { InterviewReturn } from 'src/app/shared/models/types';
+import { SkillCoverageTableData } from 'src/app/shared/models/table-data';
 
-/**
- * Display all interviews in a table
- */
 @Component({
-  selector: 'all-interviews',
-  templateUrl: './all-interviews.component.html',
-  styleUrls: ['./all-interviews.component.scss'],
+  selector: 'skill-coverage',
+  templateUrl: './skill-coverage.component.html',
+  styleUrls: ['./skill-coverage.component.scss']
 })
-export class AllInterviewsComponent implements OnInit {
+export class SkillCoverageComponent implements OnInit {
   /** Array to be populated with interviews */
-  interviews: Array<InterviewReturn> = [];
+  skills = [];
   displayedColumns: Array<string> = [
     'interview_id',
     'interviewers',
@@ -22,8 +18,8 @@ export class AllInterviewsComponent implements OnInit {
     'start_time',
     'status',
   ];
-  dataToDisplay = [...this.interviews];
-  dataSource = new InterviewTableData(this.dataToDisplay);
+  dataToDisplay = [...this.skills];
+  dataSource = new SkillCoverageTableData(this.dataToDisplay);
 
   /** @ignore */
   constructor(
