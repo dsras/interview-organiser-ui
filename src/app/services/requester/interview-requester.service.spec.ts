@@ -8,6 +8,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { fn } from 'moment';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { Observable, of } from 'rxjs';
+import { CalendarEventInterview } from 'src/app/shared/models/calendar-event-detail';
 import { interviewReturn } from '../../shared/models/types';
 
 import { InterviewRequesterService } from './interview-requester.service';
@@ -31,7 +32,16 @@ const RequesterServiceStub = {
   },
 }
 
-
+const interRet: interviewReturn = {
+  interview_id: 0,
+  interviewers: ["", ""],
+  date: "1995-05-10",
+  start_time: "10:00",
+  end_time: "11:00",
+  additional_info: "additional",
+  status: "completed",
+  outcome: "hired"
+}
 
 describe('InterviewRequesterService', () => {
   let service: InterviewRequesterService;
@@ -85,11 +95,15 @@ describe('InterviewRequesterService', () => {
     expect(spy).toHaveBeenCalled();
   }));
 
-  it('outputInterviewEvent gets called', () => {
-    let formInput: interviewReturn = new interviewReturn(0,[],"","","","","","");
-    spy = spyOn(service, 'outputInterviewEvent').and.callThrough();
-    service.outputInterviewEvent(formInput);
-    expect(service.outputInterviewEvent).toHaveBeenCalled();
+  it('outputInterviewEvent formats correctly', () => {
+    let retObj = service.outputInterviewEvent(interRet);
+    expect(retObj.id === interRet.interview_id).toBeTruthy();
+    expect(retObj.meta.interviewPanel === interRet.interviewers).toBeTruthy();
+
+    const start = new Date(interRet.date);
+    const times1 = interRet.start_time.split(':');
+    start.setHours(parseInt(times1[0]), parseInt(times1[1]));
+    expect(retObj.start.toString() === start.toString()).toBeTruthy();
   });
 
   it('addInterview gets called', fakeAsync(() => {
@@ -105,14 +119,14 @@ describe('InterviewRequesterService', () => {
 
 
   it('addInterviewForm calls requester methods', () => {
-    let formInput: string = "";
+    let formInput: string = "On 2022-04-19 between 13:00 -> 14:00 this is with: Emer Sweeney id: 19";
     let additional: string = "";
     let startTime: Date = new Date();
     spy = spyOn(service, 'addInterview').and.callThrough();
     service.addInterviewForm(formInput, additional, startTime);
     expect(spy).toHaveBeenCalled();
 
-    let startTimeNull: any = null;
+    let startTimeNull: any = <Date><unknown>'';
     service.addInterviewForm(formInput, additional, startTimeNull);
     expect(spy).toHaveBeenCalled();
   });
@@ -141,3 +155,5 @@ describe('InterviewRequesterService', () => {
     // After every test, assert that there are no more pending requests.
   });
 });
+
+

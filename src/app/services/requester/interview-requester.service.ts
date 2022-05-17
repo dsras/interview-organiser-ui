@@ -74,22 +74,20 @@ export class InterviewRequesterService {
     const dateString: string = formDecomp[1];
     let startTimeString: string;
     let endTimeString = '';
-    if(startTime != null){
-      if (startTime.toString() != '') {
-        startTimeString = this.dateToStringTime(startTime);
+    console.log(startTime.toString());
 
-        startTime.setHours(startTime.getHours() + 1);
 
-        endTimeString = this.dateToStringTime(startTime);
-      } else {
-        startTimeString = formDecomp[3];
-        endTimeString = this.stringTimeAdd(startTimeString, 1);
-      }
-    }
-    else{
+    if (startTime.toString() != '') {
+      startTimeString = this.dateToStringTime(startTime);
+
+      startTime.setHours(startTime.getHours() + 1);
+
+      endTimeString = this.dateToStringTime(startTime);
+    } else {
       startTimeString = formDecomp[3];
       endTimeString = this.stringTimeAdd(startTimeString, 1);
     }
+
     const id = [Number.parseInt(formDecomp[12])];
 
     this.addInterview(
