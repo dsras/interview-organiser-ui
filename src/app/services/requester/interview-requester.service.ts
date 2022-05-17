@@ -74,13 +74,19 @@ export class InterviewRequesterService {
     const dateString: string = formDecomp[1];
     let startTimeString: string;
     let endTimeString = '';
-    if (startTime.toString() != '') {
-      startTimeString = this.dateToStringTime(startTime);
+    if(startTime != null){
+      if (startTime.toString() != '') {
+        startTimeString = this.dateToStringTime(startTime);
 
-      startTime.setHours(startTime.getHours() + 1);
+        startTime.setHours(startTime.getHours() + 1);
 
-      endTimeString = this.dateToStringTime(startTime);
-    } else {
+        endTimeString = this.dateToStringTime(startTime);
+      } else {
+        startTimeString = formDecomp[3];
+        endTimeString = this.stringTimeAdd(startTimeString, 1);
+      }
+    }
+    else{
       startTimeString = formDecomp[3];
       endTimeString = this.stringTimeAdd(startTimeString, 1);
     }
@@ -126,6 +132,7 @@ export class InterviewRequesterService {
     this.requester.getRequest<interviewReturn>(url).subscribe((returnData) => {
       out = <Array<interviewReturn>>(<unknown>returnData);
       out.forEach((element) => {
+        //additonal filtering on output, find a way to spoof this separately
         events.push(this.outputInterviewEvent(element));
       });
       return returnData;
@@ -144,6 +151,7 @@ export class InterviewRequesterService {
     this.requester.getRequest<interviewReturn>(url).subscribe((returnData) => {
       out = <Array<interviewReturn>>(<unknown>returnData);
       out.forEach((element) => {
+        //additonal filtering on output, find a way to spoof this separately
         events.push(this.outputInterviewEvent(element));
       });
       return returnData;

@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CalendarEvent, CalendarModule, DateAdapter } from 'angular-calendar';
@@ -15,7 +15,16 @@ import { Requester } from './requester.service';
 
 const RequesterServiceStub = {
   getRequest<Type>(reqestURL: string): Observable<any> {
-    return of(['GET']);
+    return of([{
+      interview_id: 0,
+      interviewers: ["", ""],
+      date: "1995-05-10",
+      start_time: "10:00",
+      end_time: "11:00",
+      additional_info: "additional",
+      status: "completed",
+      outcome: "hired"
+      }]);
   },
   postRequest<Type>(reqestURL: string, obj: Type): Observable<any> {
     return of('POST');
@@ -61,42 +70,55 @@ describe('InterviewRequesterService', () => {
     service.getInterviewByInterviewer(events, userName);
     expect(spy).toHaveBeenCalled();
   });
-
-  it('addInterview gets called', () => {
-    let interviewerID: number[] = [];
-    let interviewDate: string = "";
-    let timeStart: string = "";
-    let timeEnd: string = "";
-    let additionalInfo: string = "";
-    spy = spyOn(service, 'addInterview').and.callThrough();
-    service.addInterview(interviewerID, interviewDate, timeStart, timeEnd, additionalInfo);
-    expect(service.addInterview).toHaveBeenCalled();
-  });
-
+  
   it('getInterviewByRecruiter gets called', () => {
     let events: CalendarEvent[] = [];
     let userName = "username";
-    spy = spyOn(service, 'getInterviewByRecruiter').and.callThrough();
+    spy = spyOn(rService, 'getRequest').and.callThrough();
     service.getInterviewByRecruiter(events, userName);
-    expect(service.getInterviewByRecruiter).toHaveBeenCalled();
+    expect(spy).toHaveBeenCalled();
   });
 
-  it('addInterviewForm gets called', () => {
-    let formInput: string = "";
-    let additional: string = "";
-    let startTime: Date = new Date();
-    spy = spyOn(service, 'addInterviewForm').and.callThrough();
-    service.addInterviewForm(formInput, additional, startTime);
-    expect(service.addInterviewForm).toHaveBeenCalled();
-  });
+  it('getInterviewsAll calls requester methods', fakeAsync(() => {
+    spy = spyOn(rService, 'getRequest').and.callThrough();
+    service.getInterviewAll();
+    expect(spy).toHaveBeenCalled();
+  }));
 
-  
   it('outputInterviewEvent gets called', () => {
     let formInput: interviewReturn = new interviewReturn(0,[],"","","","","","");
     spy = spyOn(service, 'outputInterviewEvent').and.callThrough();
     service.outputInterviewEvent(formInput);
     expect(service.outputInterviewEvent).toHaveBeenCalled();
   });
+
+  it('addInterview gets called', fakeAsync(() => {
+    let interviewerID: number[] = [];
+    let interviewDate: string = "";
+    let timeStart: string = "";
+    let timeEnd: string = "";
+    let additionalInfo: string = "";
+    spy = spyOn(rService, 'postRequest').and.callThrough();
+    service.addInterview(interviewerID, interviewDate, timeStart, timeEnd, additionalInfo);
+    expect(spy).toHaveBeenCalled();
+  }));
+
+
+  it('addInterviewForm calls requester methods', () => {
+    let formInput: string = "";
+    let additional: string = "";
+    let startTime: Date = new Date();
+    spy = spyOn(service, 'addInterview').and.callThrough();
+    service.addInterviewForm(formInput, additional, startTime);
+    expect(spy).toHaveBeenCalled();
+
+    let startTimeNull: any = null;
+    service.addInterviewForm(formInput, additional, startTimeNull);
+    expect(spy).toHaveBeenCalled();
+  });
+
+  
+
   
   it('date should be formatted to YYYY-MM-DD', () => {
     let tempDate = new Date('1995-12-17T03:24:00');
