@@ -2,7 +2,7 @@
   <button
     type="button"
     class="view-here-btn text-center"
-    (click)="openModal(form)"
+    (click)="openDialog(form)"
   >
     Add Skill
     <i
@@ -73,7 +73,7 @@
               type="submit"
               id="submit"
               [disabled]="!addSkillsForm.valid"
-              (click)="closeModal()"
+              (click)="closeDialog()"
             >
               <h6 class="mt-4 font-weight-normal">Submit</h6>
             </button>
