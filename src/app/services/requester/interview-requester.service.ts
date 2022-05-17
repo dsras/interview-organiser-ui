@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Requester } from '../requester/requester.service';
 import {
-  interview,
-  interviewReturn,
-  statusUpdate,
+  Interview,
+  InterviewReturn,
+  StatusUpdate,
 } from '../../shared/models/types';
 import { APPCONSTANTS } from '../../shared/constants/app.constant';
 import { CalendarEvent } from 'angular-calendar';
@@ -11,6 +11,7 @@ import { CalendarEventInterview } from 'src/app/shared/models/calendar-event-det
 import { InterviewMetaData } from 'src/app/shared/models/event-meta-data';
 import { CalendarColors } from 'src/app/shared/constants/colours.constant';
 import { DateToStringService } from '../date-to-string.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -21,15 +22,15 @@ export class InterviewRequesterService {
     private dateFormatter: DateToStringService
   ) {}
 
-  stringTimeAdd(input: string, add: number){
+  stringTimeAdd(input: string, add: number) {
     let splits = input.split(':');
     let hour = Number.parseInt(splits[0]);
-    hour = hour+add;
+    hour = hour + add;
     let newStringHour = hour.toString();
-    if(newStringHour.length < 2){
-      newStringHour = '0'+newStringHour;
+    if (newStringHour.length < 2) {
+      newStringHour = '0' + newStringHour;
     }
-    return (newStringHour+':'+splits[1]);
+    return newStringHour + ':' + splits[1];
   }
 
   dateToStringTime(date: Date): string {
@@ -40,7 +41,7 @@ export class InterviewRequesterService {
     return this.dateFormatter.dateToStringDate(date);
   }
 
-  outputInterviewEvent(element: interviewReturn): CalendarEventInterview {
+  outputInterviewEvent(element: InterviewReturn): CalendarEventInterview {
     const start = new Date(element.date);
     const end = new Date(element.date);
     const int_id = element.interview_id;
@@ -104,7 +105,7 @@ export class InterviewRequesterService {
   ) {
     const url: string =
       APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ADD;
-    const newInterview: interview = new interview(
+    const newInterview: Interview = new Interview(
       interviewerID,
       interviewDate,
       timeStart,
@@ -112,7 +113,7 @@ export class InterviewRequesterService {
       additionalInfo
     );
     this.requester
-      .postRequest<interview>(url, newInterview)
+      .postRequest<Interview>(url, newInterview)
       .subscribe((returnData) => {});
   }
 
@@ -123,8 +124,8 @@ export class InterviewRequesterService {
       '?username=' +
       username;
     let out;
-    this.requester.getRequest<interviewReturn>(url).subscribe((returnData) => {
-      out = <Array<interviewReturn>>(<unknown>returnData);
+    this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
+      out = <Array<InterviewReturn>>(<unknown>returnData);
       out.forEach((element) => {
         events.push(this.outputInterviewEvent(element));
       });
@@ -141,8 +142,8 @@ export class InterviewRequesterService {
       '?username=' +
       username;
     let out;
-    this.requester.getRequest<interviewReturn>(url).subscribe((returnData) => {
-      out = <Array<interviewReturn>>(<unknown>returnData);
+    this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
+      out = <Array<InterviewReturn>>(<unknown>returnData);
       out.forEach((element) => {
         events.push(this.outputInterviewEvent(element));
       });
@@ -150,26 +151,25 @@ export class InterviewRequesterService {
     });
   }
 
-  //? Currently not referenced
-  getInterviewAll() {
+  getInterviewAll(interviews: Array<InterviewReturn>): void {
     console.log(`getInterviewAll() called`);
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ALL;
-    this.requester.getRequest<interview>(url).subscribe((returnData) => {
-      return returnData;
-    });
-  }
-
-  getInterviewsDashboard(interviews: Array<interview>) {
-    console.log(`getInterviewsDashboard() called`);
-    const url =
-      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ALL;
-    this.requester.getRequest<interview>(url).subscribe((returnData) => {
-      let dataArray = <Array<interview>>(<unknown>returnData);
+    this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
+      let dataArray = <Array<InterviewReturn>>(<unknown>returnData);
       dataArray.forEach((element) => {
         interviews.push(element);
       });
       return interviews;
+    });
+  }
+
+  getInterviewsDashboard() {
+    console.log(`getInterviewsDashboard() called`);
+    const url =
+      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ALL;
+    this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
+      return returnData;
     });
   }
 
@@ -185,9 +185,17 @@ export class InterviewRequesterService {
         APPCONSTANTS.APICONSTANTS.OUTCOME_UPDATE;
     }
 
-    let newStatus = new statusUpdate(id, status);
-    this.requester.postRequest<statusUpdate>(url, newStatus).subscribe((returnData) => {
-      return returnData;
-    });
+    let newStatus = new StatusUpdate(id, status);
+    this.requester
+      .postRequest<StatusUpdate>(url, newStatus)
+      .subscribe((returnData) => {
+        return returnData;
+      });
+  }
+
+  getAllInterviews(): Observable<InterviewReturn[]>{
+    const url =
+    APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ALL;
+    return this.requester.getRequest<InterviewReturn[]>(url);
   }
 }

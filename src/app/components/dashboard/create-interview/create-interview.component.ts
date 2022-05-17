@@ -8,10 +8,10 @@ import { AvailabilityRequesterService } from 'src/app/services/requester/availab
 
 @Component({
   selector: 'find-interview',
-  templateUrl: './find-interview.component.html',
-  styleUrls: ['./find-interview.component.scss'],
+  templateUrl: './create-interview.component.html',
+  styleUrls: ['./create-interview.component.scss'],
 })
-export class FindInterviewComponent implements OnInit {
+export class CreateInterviewComponent implements OnInit {
   /** Array of skills */
   skillsAvailable: Skills[] = [];
   /** Options for filtering by skill */

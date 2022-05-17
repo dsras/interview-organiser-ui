@@ -1,6 +1,6 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ModalControllerService } from 'src/app/services/modal-controller.service';
+import { MatDialogService } from 'src/app/services/mat-dialog.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 
 /**
@@ -23,18 +23,18 @@ export class AvailabilityFormComponent implements OnInit {
   /** @ignore */
   constructor(
     private fb: FormBuilder,
-    private ms: ModalControllerService,
+    private _dialog: MatDialogService,
     private aRequester: AvailabilityRequesterService
   ) {}
   /** @ignore */
   ngOnInit(): void {}
   /** @ignore */
-  openModal(template: TemplateRef<any>): void {
-    this.ms.openModal(template);
+  openDialog(template: TemplateRef<any>): void {
+    this._dialog.openDialog(template);
   }
   /** @ignore */
-  closeModal(): void {
-    this.ms.closeModal();
+  closeDialog(): void {
+    this._dialog.closeDialog();
   }
 
   /**

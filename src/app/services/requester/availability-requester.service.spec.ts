@@ -6,7 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CalendarEvent, CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { availability } from '../../shared/models/types';
+import { Availability } from '../../shared/models/types';
 
 import { AvailabilityRequesterService } from './availability-requester.service';
 
@@ -46,7 +46,7 @@ describe('AvailabilityRequesterService', () => {
   });
 
   it('parseAvailabilityEvent gets called', () => {
-    let interviewerID: availability= new availability(0,"","","");
+    let interviewerID: Availability= new Availability(0,"","","");
     spy = spyOn(service, 'parseAvailabilityEvent').and.callThrough();
     service.parseAvailabilityEvent(interviewerID);
     expect(service.parseAvailabilityEvent).toHaveBeenCalled();

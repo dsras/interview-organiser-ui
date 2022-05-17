@@ -8,7 +8,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { fn } from 'moment';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { of } from 'rxjs';
-import { interviewReturn } from '../../shared/models/types';
+import { InterviewReturn } from '../../shared/models/types';
 
 import { InterviewRequesterService } from './interview-requester.service';
 
@@ -83,7 +83,7 @@ describe('InterviewRequesterService', () => {
 
   
   it('outputInterviewEvent gets called', () => {
-    let formInput: interviewReturn = new interviewReturn(0,[],"","","","","","");
+    let formInput: InterviewReturn = new InterviewReturn(0,[],"","","","","","");
     spy = spyOn(service, 'outputInterviewEvent').and.callThrough();
     service.outputInterviewEvent(formInput);
     expect(service.outputInterviewEvent).toHaveBeenCalled();

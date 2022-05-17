@@ -3,6 +3,7 @@ import { ModalControllerService } from 'src/app/services/modal-controller.servic
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { CalendarEventInterview } from 'src/app/shared/models/calendar-event-detail';
+import { InterviewOptions } from 'src/app/shared/constants/interview-options.constant';
 
 /**
  * Component to view and modify interview status
@@ -22,13 +23,9 @@ export class InterviewStatusComponent implements OnInit {
     status: [''],
   });
 
-  statusList: Array<string> = [
-    'Completed',
-    'Candidate No Show',
-    'Panel No Show',
-  ];
+  statusList: Array<string> = InterviewOptions.getStatus()
 
-  outcomeList: Array<string> = ['Progressed', 'Didnt Progress', 'Hired'];
+  outcomeList: Array<string> = InterviewOptions.getOutcome()
 
   interviewerOptions: Array<string> = [this.statusList[0], this.statusList[1]];
 

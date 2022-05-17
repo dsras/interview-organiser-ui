@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Requester } from '../requester/requester.service';
 import {
-  availability,
-  interviewRange,
-  availabilityRange,
-  availabilityForInterviews,
+  Availability,
+  InterviewRange,
+  AvailabilityRange,
+  AvailabilityForInterviews,
 } from '../../shared/models/types';
 import { APPCONSTANTS } from '../../shared/constants/app.constant';
 import { CalendarEvent } from 'angular-calendar';
@@ -53,7 +53,7 @@ export class AvailabilityRequesterService {
     const startString: string = this.dateToStringTime(newStart);
     const endString: string = this.dateToStringTime(newEnd);
 
-    const newAvail: availabilityRange = new availabilityRange(
+    const newAvail: AvailabilityRange = new AvailabilityRange(
       firstDateString,
       lastDateString,
       startString,
@@ -61,12 +61,12 @@ export class AvailabilityRequesterService {
     );
     const url: string =
       APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_ADD;
-    let out: availabilityRange;
+    let out: AvailabilityRange;
 
     this.requester
-      .postRequest<availabilityRange>(url, newAvail)
+      .postRequest<AvailabilityRange>(url, newAvail)
       .subscribe((returnData) => {
-        out = <availabilityRange>(<unknown>returnData);
+        out = <AvailabilityRange>(<unknown>returnData);
       });
   }
   /**
@@ -84,8 +84,8 @@ export class AvailabilityRequesterService {
       username;
     let out;
 
-    this.requester.getRequest<availability>(url).subscribe((returnData) => {
-      out = <Array<availability>>(<unknown>returnData);
+    this.requester.getRequest<Availability>(url).subscribe((returnData) => {
+      out = <Array<Availability>>(<unknown>returnData);
       out.forEach((element) => {
         events.push(this.parseAvailabilityEvent(element));
       });
@@ -109,7 +109,7 @@ export class AvailabilityRequesterService {
       url += (started ? ',' : '') + element.toString();
       started = true;
     });
-    this.requester.getRequest<availability>(url).subscribe((returnData) => {
+    this.requester.getRequest<Availability>(url).subscribe((returnData) => {
       return returnData;
     });
   }
@@ -127,8 +127,8 @@ export class AvailabilityRequesterService {
       APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_ALL;
     let out;
 
-    this.requester.getRequest<availability>(url).subscribe((returnData) => {
-      out = <Array<availability>>(<unknown>returnData);
+    this.requester.getRequest<Availability>(url).subscribe((returnData) => {
+      out = <Array<Availability>>(<unknown>returnData);
       out.forEach((element) => {
         events.push(this.parseAvailabilityEvent(element));
       });
@@ -143,10 +143,10 @@ export class AvailabilityRequesterService {
   getAllAvailabilityUI(events: string[]): void {
     const url: string =
       APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_ALL;
-    let out: Array<availability>;
+    let out: Array<Availability>;
 
-    this.requester.getRequest<availability>(url).subscribe((returnData) => {
-      out = <Array<availability>>(<unknown>returnData);
+    this.requester.getRequest<Availability>(url).subscribe((returnData) => {
+      out = <Array<Availability>>(<unknown>returnData);
       out.forEach((element) => {
         const start: Date = new Date(element.date);
         const end: Date = new Date(element.date);
@@ -202,7 +202,7 @@ export class AvailabilityRequesterService {
     const startString: string = this.dateToStringTime(newStartTime);
     const endString: string = this.dateToStringTime(newEndTime);
 
-    const newRange: interviewRange = new interviewRange(
+    const newRange: InterviewRange = new InterviewRange(
       startDateString,
       endDateString,
       startString,
@@ -210,9 +210,9 @@ export class AvailabilityRequesterService {
       skillsIDList
     );
     this.requester
-      .postRequestNoType<availabilityForInterviews>(url, newRange)
+      .postRequestNoType<AvailabilityForInterviews>(url, newRange)
       .subscribe((returnData) => {
-        let data = <Array<availabilityForInterviews>>returnData;
+        let data = <Array<AvailabilityForInterviews>>returnData;
         data.forEach((element) => {
           let refStart: Date = new Date(newStartTime);
           let refEnd: Date = new Date(newStartTime);
@@ -262,7 +262,7 @@ export class AvailabilityRequesterService {
     return this.dateFormatter.dateToStringDate(date);
   }
 
-  parseAvailabilityEvent(element: availability): CalendarEventAvailability {
+  parseAvailabilityEvent(element: Availability): CalendarEventAvailability {
     const start = new Date(element.date);
     const end = new Date(element.date);
     const times1 = element.start_time.split(':');

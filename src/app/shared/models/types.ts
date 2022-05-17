@@ -1,14 +1,12 @@
-import { Observer } from 'rxjs';
-
-export interface data {}
-export class skillIdOnly implements data {
+export interface Data {}
+export class skillIdOnly implements Data {
   skillId: number;
   constructor(skillId: number) {
     this.skillId = skillId;
   }
 }
 
-export class statusUpdate implements data {
+export class StatusUpdate implements Data {
   interview_id: number;
   update: string;
   constructor(interview_id: number, update: string) {
@@ -16,7 +14,7 @@ export class statusUpdate implements data {
     this.update = update;
   }
 }
-export class userData implements data {
+export class UserData implements Data {
   id: number;
   username: string;
   userpassword: string;
@@ -65,7 +63,7 @@ export class userData implements data {
   }
 }
 
-export class Skills implements data {
+export class Skills implements Data {
   id: number;
   skillName: string;
   skillLevel: string;
@@ -77,7 +75,7 @@ export class Skills implements data {
   }
 }
 
-export class available implements data {
+export class Available implements Data {
   date: string;
   startTime: string;
   endTime: string;
@@ -95,31 +93,8 @@ export class available implements data {
   }
 }
 
-export class applicant implements data {
-  //id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  mobile: number;
-  skillID: number;
-  constructor(
-    //id: number,
-    firstName: string,
-    lastName: string,
-    email: string,
-    mobile: number,
-    skillID: number
-  ) {
-    //this.id = id;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.email = email;
-    this.mobile = mobile;
-    this.skillID = skillID;
-  }
-}
 
-export class availabilityForInterviews implements data {
+export class AvailabilityForInterviews implements Data {
   interviewer: string;
   interviewer_id: number;
   availability_id: number;
@@ -143,7 +118,7 @@ export class availabilityForInterviews implements data {
   }
 }
 
-export class availability implements data {
+export class Availability implements Data {
   availability_id: number;
   date: string;
   start_time: string;
@@ -161,7 +136,7 @@ export class availability implements data {
   }
 }
 
-export class availabilityRange implements data {
+export class AvailabilityRange implements Data {
   start_date: string;
   end_date: string;
   start_time: string;
@@ -179,7 +154,7 @@ export class availabilityRange implements data {
   }
 }
 
-export class interviewRange implements data {
+export class InterviewRange implements Data {
   start_date: string;
   end_date: string;
   start_time: string;
@@ -200,7 +175,7 @@ export class interviewRange implements data {
   }
 }
 
-export class interview implements data {
+export class Interview implements Data {
   interviewer_ids: number[];
   //organiserId: number;
   // applicantId: number;
@@ -236,7 +211,7 @@ export class interview implements data {
   }
 }
 
-export class interviewReturn implements data {
+export class InterviewReturn implements Data {
   interview_id: number;
   interviewers: string[];
   date: string;
@@ -266,7 +241,11 @@ export class interviewReturn implements data {
   }
 }
 
-export class SkillOptions implements data {
+export class SkillReturn implements Data {
+  
+}
+
+export class SkillOptions implements Data {
   skillNames: Set<string>;
   skillLevels: Set<string>;
 
@@ -276,7 +255,7 @@ export class SkillOptions implements data {
   }
 }
 
-export class AppRoles implements data {
+export class AppRoles implements Data {
   id: number;
   description: string;
   name: string;

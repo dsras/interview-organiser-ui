@@ -70,13 +70,11 @@ export class HeaderComponent implements OnInit {
         if (this.loginType === APPCONSTANTS.LOGIN_CONSTANTS.LOGIN_TYPE_SSO) {
             this.socialAuthService.signOut();
         }
-        localStorage.removeItem('apiKey');
-        localStorage.removeItem('userType');
-        localStorage.removeItem('ssoUser');
+        localStorage.clear();
         this.user = null;
         this.router.navigate(['login']);
     }
     navigateHome(): void {
-        this.router.navigate(['positions'])
+        this.router.navigate(['calendar'])
     }
 }
