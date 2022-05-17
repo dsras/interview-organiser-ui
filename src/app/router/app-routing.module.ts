@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CalendarComponent } from '../components/calendar/calendar.component';
+import { AllInterviewsComponent } from '../components/dashboard/all-interviews/all-interviews.component';
 import { DashboardComponent } from '../components/dashboard/dashboard.component';
 import { LoginComponent } from '../components/login/login.component';
 import { LoginGuard } from './guards/login.guard';
@@ -12,6 +13,12 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     pathMatch: 'full',
+  },
+  {
+    path: 'dashboard/all-interviews',
+    component: AllInterviewsComponent,
+    pathMatch: 'full',
+    canActivate: [LoginGuard, RecruiterGuard]
   },
   {
     path: 'dashboard',

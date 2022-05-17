@@ -1,47 +1,25 @@
 <h2>Interviews</h2>
-<div class="col-12 mt-3 mx-auto orange-border">
-  <!-- <ul class="interviews">
-    <li *ngFor="let interview of interviews">
-      {{ interview.meta.interviewPanel }}> Start:
-      {{ interview.start | date: "hh:mm" }} End:
-      {{ interview.end | date: "hh:mm" }} Date
-      {{ interview.start | date: "DD/MM" }}
-      <button
-        type="button"
-        title="None"
-        (click)="print(interview)"
-        class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx-auto d-inline-block"
-      >
-        View
-      </button>
-    </li>
-  </ul> -->
-  <!-- <table>
-    <thead>
-      <tr>
-        <td>ID</td>
-        <td>Date</td>
-        <td>Time</td>
-        <td>Status</td>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let interview of interviews">
-        <td>ID</td>
-        <td>{{ interview.start | date: "dd/mm/yy" }}</td>
-        <td>{{ interview.start| date: 'HH:mm' }} =>
-          {{ interview.end | date: 'HH:mm'}}
-        </td>
-        <td>Status: {{ interview.meta.interviewStatus }}</td>
-      </tr>
-    </tbody>
-  </table> -->
-  <table mat-table [dataSource]="interviews">
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef>ID No.</th>
-      <td mat-cell *matCellDef="let interview">{{ interview.id }}</td>
-    </ng-container>
-    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-    <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
-  </table>
-</div>
+<table mat-table [dataSource]="dataSource">
+  <ng-container matColumnDef="interview_id">
+    <th mat-header-cell *matHeaderCellDef>ID No.</th>
+    <td mat-cell *matCellDef="let interview">{{ interview.interview_id }}</td>
+  </ng-container>
+  <ng-container matColumnDef="interviewers">
+    <th mat-header-cell *matHeaderCellDef>Interview panel</th>
+    <td mat-cell *matCellDef="let interview">{{ interview.interviewers }}</td>
+  </ng-container>
+  <ng-container matColumnDef="date">
+    <th mat-header-cell *matHeaderCellDef>Date</th>
+    <td mat-cell *matCellDef="let interview">{{ interview.date }}</td>
+  </ng-container>
+  <ng-container matColumnDef="start_time">
+    <th mat-header-cell *matHeaderCellDef>Time</th>
+    <td mat-cell *matCellDef="let interview">{{ interview.start_time }}</td>
+  </ng-container>
+  <ng-container matColumnDef="status">
+    <th mat-header-cell *matHeaderCellDef>Status</th>
+    <td mat-cell *matCellDef="let interview">{{ interview.status }}</td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let interviewrow; columns: displayedColumns"></tr>
+</table>
