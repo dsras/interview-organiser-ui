@@ -6,6 +6,7 @@ import { SocialAuthService, GoogleLoginProvider, SocialUser, SocialAuthServiceCo
 import { APPCONSTANTS, prodEnv } from '../../shared/constants/app.constant';
 import { DataSourceService } from 'src/app/services/data-source.service';
 import { BackendService } from 'src/app/services/backend.service';
+import { DatePipe } from '@angular/common';
 
 const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_DEV;
 
@@ -29,6 +30,7 @@ describe('LoginComponent', () => {
         DataSourceService,
         BackendService,
         SocialAuthService,
+        DatePipe,
         {
           provide: 'SocialAuthServiceConfig',
           useValue: {

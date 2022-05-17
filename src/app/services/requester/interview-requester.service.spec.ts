@@ -7,15 +7,19 @@ import { CalendarEvent, CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { fn } from 'moment';
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { interviewReturn } from '../../shared/models/types';
 
 import { InterviewRequesterService } from './interview-requester.service';
+import { Requester } from './requester.service';
 
-const MockService: Pick<InterviewRequesterService, 'addInterviewForm'> ={
-  addInterviewForm(){
-    return of(true);
-  }
+const RequesterServiceStub = {
+  getRequest<Type>(reqestURL: string): Observable<any> {
+    return of(['GET']);
+  },
+  postRequest<Type>(reqestURL: string, obj: Type): Observable<any> {
+    return of('POST');
+  },
 }
 
 
@@ -23,6 +27,7 @@ const MockService: Pick<InterviewRequesterService, 'addInterviewForm'> ={
 describe('InterviewRequesterService', () => {
   let service: InterviewRequesterService;
   let spy: any;
+  let rService: Requester;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -35,11 +40,15 @@ describe('InterviewRequesterService', () => {
       providers: [
         BsModalService,
         DatePipe,
-        FormBuilder,              
+        FormBuilder,  
+        {provide: Requester, useValue: RequesterServiceStub},
+            
       ],
     });
     service = TestBed.inject(InterviewRequesterService);
+    rService = TestBed.inject(Requester);
   });
+  
 
   it('should be created', () => {
     expect(service).toBeTruthy();
@@ -48,9 +57,9 @@ describe('InterviewRequesterService', () => {
   it('getInterviewByInterviewer gets called', () => {
     let events: CalendarEvent[] = [];
     let userName = "username";
-    spy = spyOn(service, 'getInterviewByInterviewer').and.callThrough();
+    spy = spyOn(rService, 'getRequest').and.callThrough();
     service.getInterviewByInterviewer(events, userName);
-    expect(service.getInterviewByInterviewer).toHaveBeenCalled();
+    expect(spy).toHaveBeenCalled();
   });
 
   it('addInterview gets called', () => {
