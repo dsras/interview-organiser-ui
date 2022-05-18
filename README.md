@@ -10,6 +10,18 @@ The application can be run from the base directory in a terminal by executing th
 
 2. `ng serve`
 
+** Requires NVM install, follow steps below on linux
+
+1. `sudo apt install curl`
+
+2. `curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash`
+
+3. Restart terminal
+
+4. `nvm install --lts`
+
+From this point follow the application shoulda be available to run by following the first set of instructions
+
 ## Documentation Generation
 
 The documentation can be created for the app by running `npm run compodoc` to generate documentation which will appear
