@@ -1,3 +1,5 @@
+import { StringToDatetimePipe } from "src/app/pipes/string-to-datetime.pipe";
+
 export interface Data {}
 export class skillIdOnly implements Data {
   skillId: number;
@@ -235,6 +237,37 @@ export class InterviewReturn implements Data {
     this.date = date;
     this.start_time = start_time;
     this.end_time = end_time;
+    this.additional_info = additional_info;
+    this.status = status;
+    this.outcome = outcome;
+  }
+}
+
+export class InterviewTableReturn implements Data {
+  interview_id: number;
+  interviewers: string[];
+  date: Date;
+  start_time: Date;
+  end_time: Date;
+  additional_info: string;
+  status: string;
+  outcome: string;
+  constructor(
+    private pipe: StringToDatetimePipe,
+    interview_id: number,
+    interviewers: string[],
+    date: string,
+    start_time: string,
+    end_time: string,
+    additional_info: string,
+    status: string,
+    outcome: string
+  ) {
+    this.interview_id = interview_id;
+    this.interviewers = interviewers;
+    this.date = new Date(date);
+    this.start_time = pipe.transform(start_time);
+    this.end_time = pipe.transform(end_time);
     this.additional_info = additional_info;
     this.status = status;
     this.outcome = outcome;

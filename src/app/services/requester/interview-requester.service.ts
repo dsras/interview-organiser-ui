@@ -3,6 +3,7 @@ import { Requester } from '../requester/requester.service';
 import {
   Interview,
   InterviewReturn,
+  InterviewTableReturn,
   StatusUpdate,
 } from '../../shared/models/types';
 import { APPCONSTANTS } from '../../shared/constants/app.constant';
@@ -192,10 +193,15 @@ export class InterviewRequesterService {
         return returnData;
       });
   }
-
+  
   getAllInterviews(): Observable<InterviewReturn[]>{
     const url =
     APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ALL;
     return this.requester.getRequest<InterviewReturn[]>(url);
+  }
+  getAllInterviews2(): Observable<InterviewTableReturn[]>{
+    const url =
+    APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ALL;
+    return this.requester.getRequest<InterviewTableReturn[]>(url);
   }
 }
