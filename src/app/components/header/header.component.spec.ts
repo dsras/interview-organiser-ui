@@ -48,6 +48,7 @@ describe('HeaderComponent', () => {
   let dService: DataSourceService;
   let router: Router;
   
+  let aService: SocialAuthService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -88,6 +89,7 @@ describe('HeaderComponent', () => {
     fixture = TestBed.createComponent(HeaderComponent);
     dService = TestBed.inject(DataSourceService);
     router = TestBed.inject(Router);
+    aService = TestBed.inject(SocialAuthService);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -108,9 +110,9 @@ describe('HeaderComponent', () => {
   }));
 
   it('getSelectedClass returns correct response based on input', () => {
-    let response = component.getSelectedClass("candidates");
     component.selectedMenu = 'candidates';
-    
+    let response = component.getSelectedClass("candidates");
+
     console.log("check here");
     
     console.log(response);
@@ -118,23 +120,34 @@ describe('HeaderComponent', () => {
     console.log(component.selectedMenu);
 
     expect(response == 'selected').toBeTruthy();
-    response = component.getSelectedClass("positions");
     component.selectedMenu = 'positions';
+    response = component.getSelectedClass("positions");
     expect(response == 'selected').toBeTruthy();
     response = component.getSelectedClass("fhajgd");
     expect(response == '').toBeTruthy();
+
+    component.selectedMenu = 'ashajj';
+    response = component.getSelectedClass("positions");
+    expect(response == 'selected').toBeFalsy();
   });
 
-  it('menu change calls navigate and update, and updates source variables', () => {
-    // let spy = spyOn(router, "navigate").and.callThrough();
-    // dService.createDataSource();
-    // let dSpy = spyOn(dService, "updateDataSource").and.callThrough();
+  it('logout clears the local storage and calls signout', fakeAsync(() => {
+    let spy = spyOn(aService, 'signOut').and.callThrough();
+    localStorage.clear();
+    localStorage.setItem('apiKey', 'apiKey');
+    localStorage.setItem('userType', 'userType');
+    localStorage.setItem('ssoUser', 'ssoUser');    
+    
+    component.loginType = APPCONSTANTS.LOGIN_CONSTANTS.LOGIN_TYPE_SSO;
+    component.logout();
+    tick(3);
 
-    // console.log("menu change");
-    // console.log(component.getServiceRoute());
-    // component.onMenuChange('login');
+    expect(spy).toHaveBeenCalled();
+    expect(localStorage.getItem('apiKey')).toBeNull();
 
-    // expect(spy).toHaveBeenCalled();
-    // expect(dSpy).toHaveBeenCalled();
-  });
+
+    localStorage.clear();
+
+
+  }))
 });
