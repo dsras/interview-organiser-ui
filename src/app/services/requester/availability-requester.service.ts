@@ -128,6 +128,8 @@ export class AvailabilityRequesterService {
     let out;
 
     this.requester.getRequest<availability>(url).subscribe((returnData) => {
+      console.log("return data");
+      console.log(returnData);
       out = <Array<availability>>(<unknown>returnData);
       out.forEach((element) => {
         events.push(this.parseAvailabilityEvent(element));

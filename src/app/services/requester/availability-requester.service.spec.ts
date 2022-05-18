@@ -6,7 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CalendarEvent, CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { availability } from '../../shared/models/types';
 
 import { AvailabilityRequesterService } from './availability-requester.service';
@@ -34,6 +34,45 @@ const FakeAvailabilityReturn: availability[] = [
   },
 ]
 
+const RequesterServiceStub = {
+  getRequest<Type>(reqestURL: string): Observable<any> {
+    return of([{
+      interview_id: 0,
+      interviewers: ["", ""],
+      date: "1995-05-10",
+      start_time: "10:00",
+      end_time: "11:00",
+      additional_info: "additional",
+      status: "completed",
+      outcome: "hired"
+      }]);
+  },
+  postRequest<Type>(reqestURL: string, obj: Type): Observable<any> {
+    return of([{ 
+      interview_id: 0,
+      interviewers: ["", ""],
+      date: "1995-05-10",
+      start_time: "10:00",
+      end_time: "11:00",
+      additional_info: "additional",
+      status: "completed",
+      outcome: "hired"
+    }]);
+  },
+  postRequestNoType<type>(link: string, obj: any): Observable<any> {
+    return of([{ 
+      interview_id: 0,
+      interviewers: ["", ""],
+      date: "1995-05-10",
+      start_time: "10:00",
+      end_time: "11:00",
+      additional_info: "additional",
+      status: "completed",
+      outcome: "hired"
+    }]);
+  }
+}
+
 describe('AvailabilityRequesterService', () => {
   let service: AvailabilityRequesterService;
   let spy;
@@ -50,7 +89,9 @@ describe('AvailabilityRequesterService', () => {
       providers: [
         BsModalService,
         DatePipe,
-        FormBuilder,              
+        FormBuilder,      
+        {provide: Requester, useValue: RequesterServiceStub},
+        
       ],
     });
     service = TestBed.inject(AvailabilityRequesterService);
@@ -103,8 +144,17 @@ describe('AvailabilityRequesterService', () => {
 
   it('getAvailabilityAll calls the requester methods', fakeAsync(() => {
     let events: CalendarEvent[] = [];
-    spy = spyOn(rService, 'getRequest').and.returnValue(<Observable<any>><unknown>FakeAvailabilityReturn);
+    spy = spyOn(rService, 'getRequest').and.callThrough();
     service.getAllAvailability(events);
+    tick(3);
+    expect(spy).toHaveBeenCalled();
+    expect(events.length != 0).toBeTruthy();
+  }));
+  
+  it('getAllAvailabilityUI calls the requester methods', fakeAsync(() => {
+    let events: string[] = [];
+    spy = spyOn(rService, 'getRequest').and.callThrough();
+    service.getAllAvailabilityUI(events);
     tick(3);
     expect(spy).toHaveBeenCalled();
     expect(events.length != 0).toBeTruthy();

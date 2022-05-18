@@ -25,7 +25,7 @@ const FakeDataSource = {
     this._dataSource[source] = <Observable<any>><unknown>'login';
     console.log(this._dataSource[source]);
 
-    return this._dataSource[source].asObservable();
+    return of(this._dataSource[source]);
   },
   createDataSource(): void {
     this._dataSource = new DataSource();
@@ -92,55 +92,49 @@ describe('HeaderComponent', () => {
     fixture.detectChanges();
   });
 
-  // it('should create', () => {
-  //   expect(component).toBeTruthy();
-  // });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 
-  //! data source service disconnected from private member variable internal to component
-  // it("ngOnInit calls relevent methods", fakeAsync(() => {
-  //   // //attempt 1
-  //   console.log("here is the start of the test");
-   
-  //   dService.createDataSource();
-  //   dService.getDataSource('route').subscribe(returnData=>{
-  //     console.log(returnData);
-  //   });    
+  it("ngOnInit calls relevent methods", fakeAsync(() => {
+    console.log("here is the start of the test");
+    //let spy = spyOn(dService, "getDataSource").and.returnValue(<Observable<any>><unknown>"login");
+    let spy = spyOn(dService, "getDataSource").and.callThrough();
+
+    dService.createDataSource();
+    component.ngOnInit();
+    tick(3);
+    expect(spy).toHaveBeenCalled();
+  }));
+
+  it('getSelectedClass returns correct response based on input', () => {
+    let response = component.getSelectedClass("candidates");
+    component.selectedMenu = 'candidates';
     
-  //   dService.createDataSource();
-  //   dService.getDataSource('route').subscribe(returnData=>{
-  //     console.log(returnData);
-  //   });
-  //   let spy = spyOn(dService, "getDataSource").and.returnValue(<Observable<any>><unknown>"login");
-
-  //   component.ngOnInit();
-  //   tick(3);
-
-  //   expect(spy).toHaveBeenCalled();
-
-  //   // //attempt 2
-  //   // component.initService();
-  //   // component.updateService('route', 'login');
-  //   // component.ngOnInit();
-  //   // tick(3);
-  //   // expect(component.isHeader == false).toBeTruthy();
+    console.log("check here");
     
-  //   // component.updateService('route', 'cal');
-  //   // component.ngOnInit();
-  //   // tick(3);
-  //   // expect(component.isHeader == true).toBeTruthy();
-    
-  // }));
+    console.log(response);
 
-  // it('menu change calls navigate and update, and updates source variables', () => {
-  //   // let spy = spyOn(router, "navigate").and.callThrough();
-  //   // dService.createDataSource();
-  //   // let dSpy = spyOn(dService, "updateDataSource").and.callThrough();
+    console.log(component.selectedMenu);
 
-  //   // console.log("menu change");
-  //   // console.log(component.getServiceRoute());
-  //   // component.onMenuChange('login');
+    expect(response == 'selected').toBeTruthy();
+    response = component.getSelectedClass("positions");
+    component.selectedMenu = 'positions';
+    expect(response == 'selected').toBeTruthy();
+    response = component.getSelectedClass("fhajgd");
+    expect(response == '').toBeTruthy();
+  });
 
-  //   // expect(spy).toHaveBeenCalled();
-  //   // expect(dSpy).toHaveBeenCalled();
-  // });
+  it('menu change calls navigate and update, and updates source variables', () => {
+    // let spy = spyOn(router, "navigate").and.callThrough();
+    // dService.createDataSource();
+    // let dSpy = spyOn(dService, "updateDataSource").and.callThrough();
+
+    // console.log("menu change");
+    // console.log(component.getServiceRoute());
+    // component.onMenuChange('login');
+
+    // expect(spy).toHaveBeenCalled();
+    // expect(dSpy).toHaveBeenCalled();
+  });
 });
