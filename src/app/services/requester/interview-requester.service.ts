@@ -3,8 +3,7 @@ import { Requester } from '../requester/requester.service';
 import {
   Interview,
   InterviewReturn,
-  InterviewTableReturn,
-  StatusUpdate,
+ StatusUpdate,
 } from '../../shared/models/types';
 import { APPCONSTANTS } from '../../shared/constants/app.constant';
 import { CalendarEvent } from 'angular-calendar';
@@ -45,18 +44,18 @@ export class InterviewRequesterService {
   outputInterviewEvent(element: InterviewReturn): CalendarEventInterview {
     const start = new Date(element.date);
     const end = new Date(element.date);
-    const int_id = element.interview_id;
-    const times1 = element.start_time.split(':');
-    const times2 = element.end_time.split(':');
+    const int_id = element.interviewId;
+    const times1 = element.startTime.split(':');
+    const times2 = element.endTime.split(':');
 
     start.setHours(parseInt(times1[0]), parseInt(times1[1]));
     end.setHours(parseInt(times2[0]), parseInt(times2[1]));
 
     const newInterviewData = new InterviewMetaData({
-      interviewPanel: element.interviewers,
-      interviewOutcome: element.outcome,
-      interviewStatus: element.status,
-      additional: element.additional_info,
+      panel: element.interviewers,
+      outcome: element.outcome,
+      status: element.status,
+      additional: element.additionalInfo,
     });
 
     const newInterview: CalendarEventInterview = {
@@ -199,9 +198,5 @@ export class InterviewRequesterService {
     APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ALL;
     return this.requester.getRequest<InterviewReturn[]>(url);
   }
-  getAllInterviews2(): Observable<InterviewTableReturn[]>{
-    const url =
-    APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ALL;
-    return this.requester.getRequest<InterviewTableReturn[]>(url);
-  }
+  
 }

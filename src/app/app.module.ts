@@ -56,13 +56,12 @@ import { AppInterceptor } from './components/interceptor/app.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { APPCONSTANTS, prodEnv } from './shared/constants/app.constant';
 import { Requester } from './services/requester/requester.service';
-import { StringToDatetimePipe } from './pipes/string-to-datetime.pipe';
 
 const CLIENT_ID = prodEnv
   ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD
   : APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_DEV;
 @NgModule({
-  declarations: [AppComponent, LoginComponent, HeaderComponent, StringToDatetimePipe],
+  declarations: [AppComponent, LoginComponent, HeaderComponent],
   imports: [
     BrowserModule,
     DashboardModule,
@@ -110,7 +109,6 @@ const CLIENT_ID = prodEnv
     Requester,
     DatePipe,
     LoginComponent,
-    StringToDatetimePipe,
     { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true },
     {
       provide: 'SocialAuthServiceConfig',

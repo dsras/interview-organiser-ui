@@ -1,8 +1,9 @@
+import {animate, state, style, transition, trigger} from '@angular/animations';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
-import { InterviewTableData, InterviewTableData2 } from 'src/app/shared/models/table-data';
-import { InterviewReturn, InterviewTableReturn } from 'src/app/shared/models/types';
+import { InterviewTableData } from 'src/app/shared/models/table-data';
+import { InterviewReturn } from 'src/app/shared/models/types';
 
 /**
  * Display all interviews in a table
@@ -11,22 +12,28 @@ import { InterviewReturn, InterviewTableReturn } from 'src/app/shared/models/typ
   selector: 'all-interviews',
   templateUrl: './all-interviews.component.html',
   styleUrls: ['./all-interviews.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class AllInterviewsComponent implements OnInit {
   /** Array to be populated with interviews */
   interviews: Array<InterviewReturn> = [];
-  interviews2: Array<InterviewTableReturn> = [];
   displayedColumns: Array<string> = [
-    'interview_id',
+    'interviewId',
     'interviewers',
     'date',
-    'start_time',
-    'status',
+    'time',
+    // 'outcome',
+    // 'status',
   ];
-  dataToDisplay = [...this.interviews];
-  dataSource = new InterviewTableData(this.dataToDisplay);
-  dataToDisplay2 = [...this.interviews2];
-  dataSource2 = new InterviewTableData2(this.dataToDisplay2);
+  tableData: InterviewTableData = new InterviewTableData(this.interviews);
+  expandedInterview!: InterviewReturn | null;
+
 
   /** @ignore */
   constructor(
@@ -37,12 +44,13 @@ export class AllInterviewsComponent implements OnInit {
   /** Populate interviews on init */
   ngOnInit(): void {
     this.getInterviews();
+    this.expandedInterview = null
   }
 
-  getInterviews() {
+  getInterviews(): void {
     this.iRequester.getAllInterviews().subscribe((interviews) => {
-      console.log(interviews)
-      this.dataSource.setData(interviews);
+      this.tableData.setData(interviews);
+      console.table(interviews);
     });
   }
   /** @ignore */

@@ -1,6 +1,6 @@
 import { DataSource } from '@angular/cdk/collections';
 import { Observable, ReplaySubject } from 'rxjs';
-import { InterviewTableReturn, InterviewReturn, SkillReturn } from './types';
+import { InterviewReturn, SkillReturn } from './types';
 
 export class InterviewTableData extends DataSource<InterviewReturn> {
   private _dataStream = new ReplaySubject<InterviewReturn[]>();
@@ -17,24 +17,6 @@ export class InterviewTableData extends DataSource<InterviewReturn> {
   disconnect() {}
 
   setData(data: InterviewReturn[]) {
-    this._dataStream.next(data);
-  }
-}
-export class InterviewTableData2 extends DataSource<InterviewTableReturn> {
-  private _dataStream = new ReplaySubject<InterviewTableReturn[]>();
-
-  constructor(initialData: InterviewTableReturn[]) {
-    super();
-    this.setData(initialData);
-  }
-
-  connect(): Observable<InterviewTableReturn[]> {
-    return this._dataStream;
-  }
-
-  disconnect() {}
-
-  setData(data: InterviewTableReturn[]) {
     this._dataStream.next(data);
   }
 }
@@ -57,4 +39,3 @@ export class SkillCoverageTableData extends DataSource<SkillReturn> {
     this._dataStream.next(data);
   }
 }
-
