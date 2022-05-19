@@ -20,11 +20,7 @@ const FakeDataSource = {
   _dataSource: <any> new Object,
 
   getDataSource(source: string): Observable<any> {
-    console.log("datasource log");
-    console.log(this._dataSource[source]);
     this._dataSource[source] = <Observable<any>><unknown>'login';
-    console.log(this._dataSource[source]);
-
     return of(this._dataSource[source]);
   },
   createDataSource(): void {
@@ -39,6 +35,12 @@ const FakeDataSource = {
   }
 }
 
+
+const fakeRouter = {
+  navigate(input: Array<any>){
+    return <Promise<void>>input[0];
+  }
+}
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -55,7 +57,7 @@ describe('HeaderComponent', () => {
       imports:[
         ReactiveFormsModule,
         HttpClientTestingModule,
-        RouterTestingModule,
+        //RouterTestingModule,
         CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
 
       ],
@@ -66,6 +68,7 @@ describe('HeaderComponent', () => {
         SocialAuthService,
         //DataSourceService,
         {provide: DataSourceService, useValue: FakeDataSource},
+        {provide: Router, useValue: fakeRouter},
 
         {
           provide: 'SocialAuthServiceConfig',
@@ -109,6 +112,17 @@ describe('HeaderComponent', () => {
     expect(spy).toHaveBeenCalled();
   }));
 
+  it('onMenuChange calls router navigate and changes datasource', () => {
+    let rSpy = spyOn(router, 'navigate').and.callThrough();
+    let spy = spyOn(dService, "updateDataSource").and.callThrough();
+    
+    dService.createDataSource();
+    component.onMenuChange("calendar");
+
+    expect(rSpy).toHaveBeenCalled();
+    expect(spy).toHaveBeenCalled();
+  });
+
   it('getSelectedClass returns correct response based on input', () => {
     component.selectedMenu = 'candidates';
     let response = component.getSelectedClass("candidates");
@@ -132,22 +146,25 @@ describe('HeaderComponent', () => {
   });
 
   it('logout clears the local storage and calls signout', fakeAsync(() => {
-    let spy = spyOn(aService, 'signOut').and.callThrough();
+    let spy = spyOn(aService, 'signOut').and.returnValue(<Promise<void>><unknown>'passed');
+    let rSpy = spyOn(router, 'navigate').and.callThrough();
     localStorage.clear();
     localStorage.setItem('apiKey', 'apiKey');
     localStorage.setItem('userType', 'userType');
     localStorage.setItem('ssoUser', 'ssoUser');    
-    
+
+    tick(3);
+
     component.loginType = APPCONSTANTS.LOGIN_CONSTANTS.LOGIN_TYPE_SSO;
     component.logout();
     tick(3);
 
     expect(spy).toHaveBeenCalled();
+    expect(rSpy).toHaveBeenCalled();
     expect(localStorage.getItem('apiKey')).toBeNull();
 
-
     localStorage.clear();
+  }));
 
 
-  }))
 });
