@@ -107,7 +107,7 @@ export class applicant implements data {
     firstName: string,
     lastName: string,
     email: string,
-    mobile: number,
+    mobile: number | any,
     skillID: number
   ) {
     //this.id = id;

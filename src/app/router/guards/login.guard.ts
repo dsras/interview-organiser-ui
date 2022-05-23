@@ -9,7 +9,7 @@ export class LoginGuard implements CanActivate {
   constructor(public auth: LoginComponent, public router: Router) {}
 
   canActivate(): boolean {
-    if (null === localStorage.getItem('ssoUser')) {
+    if (null === localStorage.getItem('ssoUser') || localStorage.getItem('ssoUser') === '') {
       this.router.navigate(['login']);
       return false;
     }

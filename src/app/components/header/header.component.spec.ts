@@ -127,12 +127,6 @@ describe('HeaderComponent', () => {
     component.selectedMenu = 'candidates';
     let response = component.getSelectedClass("candidates");
 
-    console.log("check here");
-    
-    console.log(response);
-
-    console.log(component.selectedMenu);
-
     expect(response == 'selected').toBeTruthy();
     component.selectedMenu = 'positions';
     response = component.getSelectedClass("positions");
