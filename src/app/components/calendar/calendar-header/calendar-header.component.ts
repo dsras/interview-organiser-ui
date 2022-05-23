@@ -4,7 +4,7 @@ import { CalendarView } from 'angular-calendar';
 /** @ignore */
 @Component({
   selector: 'calendar-header',
-  templateUrl: './calHead.component.html',
+  templateUrl: './calendar-header.component.html',
 })
 export class CalendarHeaderComponent {
   @Input() view!: CalendarView;

@@ -13,6 +13,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { InterviewStatusComponent } from './interview-status/interview-status.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
+import { CalendarHeaderComponent } from './calendar-header/calendar-header.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { SharedModule } from '../../shared/shared.module';
     SkillsFormComponent,
     ViewAvailabilityComponent,
     InterviewStatusComponent,
+    CalendarHeaderComponent,
   ],
   imports: [
     SharedModule,
