@@ -1,6 +1,6 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ModalControllerService } from 'src/app/services/modal-controller.service';
+import { MatDialogService } from 'src/app/services/mat-dialog.service';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 import { SkillOptions, Skills } from 'src/app/shared/models/types';
 
@@ -33,7 +33,7 @@ export class SkillsFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private rs: RequestCenterService,
-    private ms: ModalControllerService
+    private _dialog: MatDialogService,
   ) {}
 
   /** @ignore */
@@ -42,15 +42,15 @@ export class SkillsFormComponent implements OnInit {
   }
 
   // ? should this be private ?
-  /** {@link ModalControllerService} */
-  openModal(template: TemplateRef<any>): void {
-    this.ms.openModal(template);
+  /** {@link MatDialogService} */
+  openDialog(template: TemplateRef<any>): void {
+    this._dialog.openDialog(template);
   }
 
   // ? Should this be private ?
   /** {@link ModalControllerService} */
-  closeModal(): void {
-    this.ms.closeModal();
+  closeDialog(): void {
+    this._dialog.closeDialog();
   }
 
   /**
@@ -62,7 +62,7 @@ export class SkillsFormComponent implements OnInit {
    *
    * @param form completed form to be submitted
    */
-  onSubmit(form: FormGroup): void {
+  onSubmit(form: FormGroup | any): void {
     let skillName: string = JSON.stringify(form.value.skill);
     let skillLevel: string = JSON.stringify(form.value.level);
     skillName = skillName.slice(1, -1);

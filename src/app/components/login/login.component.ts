@@ -7,6 +7,7 @@ import {
   SocialLoginModule,
   SocialAuthServiceConfig,
 } from 'angularx-social-login';
+import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 
 // [APP_LEVEL Imports]
 import { BackendService } from '../../services/backend.service';
@@ -23,7 +24,8 @@ export class LoginComponent implements OnInit {
   socialUser: SocialUser = <any>null;
   isLoggedin: boolean = false;
   constructor(
-    private router: Router,
+    private _router: Router,
+    private _rs: RequestCenterService,
     private _dataSourceService: DataSourceService,
     private _backEndService: BackendService,
     private socialAuthService: SocialAuthService
@@ -63,7 +65,8 @@ export class LoginComponent implements OnInit {
     this._backEndService.login(user).subscribe((response: any) => {
       if (response && response.token) {
         localStorage.setItem('apiKey', response.token);
-        this.router.navigate(['calendar']);
+        this._rs.getUserData(JSON.parse('' + localStorage.getItem('ssoUser')).email)
+        this._router.navigate(['calendar']);
       }
     });
   }

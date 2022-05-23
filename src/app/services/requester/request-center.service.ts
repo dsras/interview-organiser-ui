@@ -1,13 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Requester } from '../requester/requester.service';
-import {
-  userData,
-  Skills,
-  applicant,
-  SkillOptions,
-} from '../../shared/models/types';
+import { UserData, Skills, SkillOptions } from '../../shared/models/types';
 import { APPCONSTANTS } from '../../shared/constants/app.constant';
 import { DatePipe } from '@angular/common';
+
 
 @Injectable({
   providedIn: 'root',
@@ -15,19 +11,33 @@ import { DatePipe } from '@angular/common';
 export class RequestCenterService {
   constructor(private requester: Requester, private pipe: DatePipe) {}
 
-  getUser(username: string) {
+  getUser(username: string): void {
+    console.log('Calling')
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.USER_FIND +
       '?username=' +
       username;
-    this.requester.getRequest<userData>(url).subscribe((returnData) => {
+    this.requester.getRequest<UserData>(url).subscribe((returnData) => {
       return returnData;
     });
   }
 
-  // ? Does this replace getUser() when deployed ?
-  getUsername() {
+  getUserData(username: string) {
+    let user: UserData;
+    const url =
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.USER_FIND +
+      '?username=' +
+      username;
+    this.requester.getRequest<UserData>(url).subscribe((returnData: any) => {
+      user = returnData
+      localStorage.setItem('userData', JSON.stringify(user))
+    })  
+    
+  }
+
+  getUsername(): string {
     let username: string = '';
     let inString = <string>localStorage.getItem('ssoUser');
 
@@ -81,46 +91,5 @@ export class RequestCenterService {
         });
       });
     });
-  }
-
-  // ? Not sure whether this is needed or just a test method
-  addApplicant() {
-    const url =
-      APPCONSTANTS.APICONSTANTS.BASE_URL +
-      APPCONSTANTS.APICONSTANTS.APPLICANT_ADD;
-    const newApplicant = new applicant(
-      'ted',
-      'testerton',
-      'ted@test.com',
-      100,
-      1
-    );
-    this.requester
-      .postRequest<applicant>(url, newApplicant)
-      .subscribe((returnData) => {});
-  }
-
-  getAllApplicants(applicantList: string[]) {
-    const url =
-      APPCONSTANTS.APICONSTANTS.BASE_URL +
-      APPCONSTANTS.APICONSTANTS.APPLICANT_ALL;
-    let out;
-    this.requester.getRequest<applicant>(url).subscribe((returnData) => {
-      out = <Array<applicant>>(<unknown>returnData);
-      out.forEach((ele) => {
-        applicantList.push(ele.firstName + ',');
-      });
-    });
-
-    out = <Array<applicant>>(<unknown>out);
-    return out;
-  }
-
-  dateToStringTime(date: Date): string {
-    return '' + this.pipe.transform(date, 'HH:mm');
-  }
-
-  dateToStringDate(date: Date): string {
-    return '' + this.pipe.transform(date, 'yyyy-MM-dd');
   }
 }

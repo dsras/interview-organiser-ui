@@ -6,13 +6,32 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { BsModalService } from 'ngx-bootstrap/modal';
+import { RequestCenterService } from 'src/app/services/requester/request-center.service';
+import { Skills, SkillOptions } from 'src/app/shared/models/types';
 
 import { SkillsFormComponent } from './skills-form.component';
+
+const dummySkillForm = {
+  value: {
+    skill: "Java",
+    level: "Junior"
+  },
+  reset(){}
+}
+
+const skillsAvailable: Array<Skills> = [];
+
+/** Empty sets to be populated and used as options for skill form */
+const formOptions: SkillOptions = {
+  skillNames: new Set<string>(),
+  skillLevels: new Set<string>(),
+  
+};
 
 describe('SkillsFormComponent', () => {
   let component: SkillsFormComponent;
   let fixture: ComponentFixture<SkillsFormComponent>;
-
+  let rService: RequestCenterService
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports:[
@@ -33,11 +52,26 @@ describe('SkillsFormComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SkillsFormComponent);
+    rService = TestBed.inject(RequestCenterService);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+    
+  it('init should call service methods', () => {
+    let rSpy = spyOn(rService, 'getAllSkills').and.callThrough();
+    component.ngOnInit();
+    expect(rService.getAllSkills).toHaveBeenCalled();
+  });
+
+  it('Submit should call service methods', () => {
+    let rSpy = spyOn(rService, 'addSkills').and.callThrough();
+    let formG = dummySkillForm;
+    component.onSubmit(formG);
+    expect(rService.addSkills).toHaveBeenCalled();
   });
 });

@@ -1,12 +1,12 @@
-export interface data {}
-export class skillIdOnly implements data {
+export interface Data {}
+export class skillIdOnly implements Data {
   skillId: number;
   constructor(skillId: number) {
     this.skillId = skillId;
   }
 }
 
-export class statusUpdate implements data {
+export class StatusUpdate implements Data {
   interview_id: number;
   update: string;
   constructor(interview_id: number, update: string) {
@@ -14,7 +14,7 @@ export class statusUpdate implements data {
     this.update = update;
   }
 }
-export class userData implements data {
+export class UserData implements Data {
   id: number;
   username: string;
   userpassword: string;
@@ -28,6 +28,7 @@ export class userData implements data {
   designation: any;
   location: any;
   priorExperience: any;
+  roles: Array<AppRoles>;
 
   constructor(
     id: number,
@@ -42,7 +43,8 @@ export class userData implements data {
     dateOfJoining: any,
     designation: any,
     location: any,
-    priorExperience: any
+    priorExperience: any,
+    roles: Array<AppRoles>
   ) {
     this.id = id;
     this.username = username;
@@ -57,10 +59,11 @@ export class userData implements data {
     this.designation = designation;
     this.location = location;
     this.priorExperience = priorExperience;
+    this.roles = roles;
   }
 }
 
-export class Skills implements data {
+export class Skills implements Data {
   id: number;
   skillName: string;
   skillLevel: string;
@@ -72,7 +75,7 @@ export class Skills implements data {
   }
 }
 
-export class available implements data {
+export class Available implements Data {
   date: string;
   startTime: string;
   endTime: string;
@@ -90,7 +93,7 @@ export class available implements data {
   }
 }
 
-export class applicant implements data {
+export class applicant implements Data {
   //id: number;
   firstName: string;
   lastName: string;
@@ -102,7 +105,7 @@ export class applicant implements data {
     firstName: string,
     lastName: string,
     email: string,
-    mobile: number,
+    mobile: number | any,
     skillID: number
   ) {
     //this.id = id;
@@ -114,7 +117,7 @@ export class applicant implements data {
   }
 }
 
-export class availabilityForInterviews implements data {
+export class AvailabilityForInterviews implements Data {
   interviewer: string;
   interviewer_id: number;
   availability_id: number;
@@ -138,7 +141,7 @@ export class availabilityForInterviews implements data {
   }
 }
 
-export class availability implements data {
+export class Availability implements Data {
   availability_id: number;
   date: string;
   start_time: string;
@@ -156,7 +159,7 @@ export class availability implements data {
   }
 }
 
-export class availabilityRange implements data {
+export class AvailabilityRange implements Data {
   start_date: string;
   end_date: string;
   start_time: string;
@@ -174,7 +177,7 @@ export class availabilityRange implements data {
   }
 }
 
-export class interviewRange implements data {
+export class InterviewRange implements Data {
   start_date: string;
   end_date: string;
   start_time: string;
@@ -195,7 +198,7 @@ export class interviewRange implements data {
   }
 }
 
-export class interview implements data {
+export class Interview implements Data {
   interviewer_ids: number[];
   //organiserId: number;
   // applicantId: number;
@@ -231,42 +234,59 @@ export class interview implements data {
   }
 }
 
-export class interviewReturn implements data {
-  interview_id: number;
-  interviewers: string[];
+export class InterviewReturn implements Data {
+  interviewId: number;
+  interviewers: Array<string>;
   date: string;
-  start_time: string;
-  end_time: string;
-  additional_info: string;
-  status: string;
-  outcome: string;
+  startTime: string;
+  endTime: string;
+  additionalInfo?: string;
+  status?: string;
+  outcome?: string;
+  organiser?: string;
   constructor(
-    interview_id: number,
-    interviewers: string[],
+    interviewId: number,
+    interviewers: Array<string>,
     date: string,
-    start_time: string,
-    end_time: string,
-    additional_info: string,
+    startTime: string,
+    endTime: string,
+    additionalInfo: string,
     status: string,
-    outcome: string
+    outcome: string,
+    organiser: string
   ) {
-    this.interview_id = interview_id;
+    this.interviewId = interviewId;
     this.interviewers = interviewers;
     this.date = date;
-    this.start_time = start_time;
-    this.end_time = end_time;
-    this.additional_info = additional_info;
+    this.startTime = startTime;
+    this.endTime = endTime;
+    this.additionalInfo = additionalInfo;
     this.status = status;
     this.outcome = outcome;
+    this.organiser = organiser;
   }
 }
 
-export class SkillOptions implements data {
+export class SkillReturn implements Data {}
+
+export class SkillOptions implements Data {
   skillNames: Set<string>;
   skillLevels: Set<string>;
 
   constructor(names: Set<string>, levels: Set<string>) {
     this.skillNames = names;
     this.skillLevels = levels;
+  }
+}
+
+export class AppRoles implements Data {
+  id: number;
+  description: string;
+  name: string;
+
+  constructor(id: number, description: string, name: string) {
+    this.id = id;
+    this.description = description;
+    this.name = name;
   }
 }

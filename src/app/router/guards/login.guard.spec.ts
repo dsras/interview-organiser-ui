@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
@@ -14,9 +15,14 @@ import { LoginGuard } from './login.guard';
 
 const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_DEV;
 
-
+const fakeRouter = {
+  navigate(input: Array<any>){
+    return <Promise<void>>input[0];
+  }
+}
 describe('LoginGuard', () => {
   let guard: LoginGuard;
+  let router: Router;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -27,6 +33,7 @@ describe('LoginGuard', () => {
         CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
       ],
       providers: [
+        {provide: Router, useValue: fakeRouter},
         SocialAuthService,
         {
           provide: 'SocialAuthServiceConfig',
@@ -42,6 +49,7 @@ describe('LoginGuard', () => {
               ]
           } as SocialAuthServiceConfig,
         },
+        LoginComponent,
         BsModalService,
         DatePipe,
         FormBuilder, 
@@ -49,9 +57,23 @@ describe('LoginGuard', () => {
       ],
     });
     guard = TestBed.inject(LoginGuard);
+    router = TestBed.inject(Router);
   });
 
   it('should be created', () => {
     expect(guard).toBeTruthy();
+  });
+
+  it('can activate calls through', () => {
+    let rSpy = spyOn(router, 'navigate').and.callThrough();
+    localStorage.clear();
+    guard.canActivate();
+    expect(rSpy).toHaveBeenCalledTimes(1);
+
+    localStorage.setItem('ssoUser', 'valid');
+    guard.canActivate();
+    expect(rSpy).toHaveBeenCalledTimes(1);
+
+    localStorage.clear();
   });
 });

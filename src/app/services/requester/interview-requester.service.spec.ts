@@ -1,28 +1,51 @@
 import { DatePipe } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CalendarEvent, CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { fn } from 'moment';
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { of } from 'rxjs';
-import { interviewReturn } from '../../shared/models/types';
+import { Observable, of } from 'rxjs';
+import { InterviewReturn } from '../../shared/models/types';
 
 import { InterviewRequesterService } from './interview-requester.service';
+import { Requester } from './requester.service';
 
-const MockService: Pick<InterviewRequesterService, 'addInterviewForm'> ={
-  addInterviewForm(){
-    return of(true);
-  }
+const RequesterServiceStub = {
+  getRequest<Type>(reqestURL: string): Observable<any> {
+    return of([{
+      interview_id: 0,
+      interviewers: ["", ""],
+      date: "1995-05-10",
+      start_time: "10:00",
+      end_time: "11:00",
+      additional_info: "additional",
+      status: "completed",
+      outcome: "hired"
+      }]);
+  },
+  postRequest<Type>(reqestURL: string, obj: Type): Observable<any> {
+    return of('POST');
+  },
 }
 
-
+const interRet: InterviewReturn = {
+  interviewId: 0,
+  interviewers: ["", ""],
+  date: "1995-05-10",
+  startTime: "10:00",
+  endTime: "11:00",
+  additionalInfo: "additional",
+  status: "completed",
+  outcome: "hired"
+}
 
 describe('InterviewRequesterService', () => {
   let service: InterviewRequesterService;
   let spy: any;
+  let rService: Requester;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -35,11 +58,15 @@ describe('InterviewRequesterService', () => {
       providers: [
         BsModalService,
         DatePipe,
-        FormBuilder,              
+        FormBuilder,  
+        {provide: Requester, useValue: RequesterServiceStub},
+            
       ],
     });
     service = TestBed.inject(InterviewRequesterService);
+    rService = TestBed.inject(Requester);
   });
+  
 
   it('should be created', () => {
     expect(service).toBeTruthy();
@@ -48,42 +75,65 @@ describe('InterviewRequesterService', () => {
   it('getInterviewByInterviewer gets called', () => {
     let events: CalendarEvent[] = [];
     let userName = "username";
-    spy = spyOn(service, 'getInterviewByInterviewer').and.callThrough();
+    spy = spyOn(rService, 'getRequest').and.callThrough();
     service.getInterviewByInterviewer(events, userName);
-    expect(service.getInterviewByInterviewer).toHaveBeenCalled();
+    expect(spy).toHaveBeenCalled();
+  });
+  
+  it('getInterviewByRecruiter gets called', () => {
+    let events: CalendarEvent[] = [];
+    let userName = "username";
+    spy = spyOn(rService, 'getRequest').and.callThrough();
+    service.getInterviewByRecruiter(events, userName);
+    expect(spy).toHaveBeenCalled();
   });
 
-  it('addInterview gets called', () => {
+  it('getInterviewsAll calls requester methods', fakeAsync(() => {
+    spy = spyOn(rService, 'getRequest').and.callThrough();
+    let events: InterviewReturn[] = [];
+    service.getInterviewAll(events);
+    expect(spy).toHaveBeenCalled();
+  }));
+
+  it('outputInterviewEvent formats correctly', () => {
+    let retObj = service.outputInterviewEvent(interRet);
+    expect(retObj.id === interRet.interviewId).toBeTruthy();
+    expect(retObj.meta.interviewPanel === interRet.interviewers).toBeTruthy();
+
+    const start = new Date(interRet.date);
+    const times1 = interRet.startTime.split(':');
+    start.setHours(parseInt(times1[0]), parseInt(times1[1]));
+    expect(retObj.start.toString() === start.toString()).toBeTruthy();
+  });
+
+  it('addInterview gets called', fakeAsync(() => {
     let interviewerID: number[] = [];
     let interviewDate: string = "";
     let timeStart: string = "";
     let timeEnd: string = "";
     let additionalInfo: string = "";
-    spy = spyOn(service, 'addInterview').and.callThrough();
+    spy = spyOn(rService, 'postRequest').and.callThrough();
     service.addInterview(interviewerID, interviewDate, timeStart, timeEnd, additionalInfo);
-    expect(service.addInterview).toHaveBeenCalled();
-  });
+    expect(spy).toHaveBeenCalled();
+  }));
 
-  it('getInterviewByRecruiter gets called', () => {
-    let events: CalendarEvent[] = [];
-    let userName = "username";
-    spy = spyOn(service, 'getInterviewByRecruiter').and.callThrough();
-    service.getInterviewByRecruiter(events, userName);
-    expect(service.getInterviewByRecruiter).toHaveBeenCalled();
-  });
 
-  it('addInterviewForm gets called', () => {
-    let formInput: string = "";
+  it('addInterviewForm calls requester methods', () => {
+    let formInput: string = "On 2022-04-19 between 13:00 -> 14:00 this is with: Emer Sweeney id: 19";
     let additional: string = "";
     let startTime: Date = new Date();
-    spy = spyOn(service, 'addInterviewForm').and.callThrough();
+    spy = spyOn(service, 'addInterview').and.callThrough();
     service.addInterviewForm(formInput, additional, startTime);
-    expect(service.addInterviewForm).toHaveBeenCalled();
+    expect(spy).toHaveBeenCalled();
+
+    let startTimeNull: any = <Date><unknown>'';
+    service.addInterviewForm(formInput, additional, startTimeNull);
+    expect(spy).toHaveBeenCalled();
   });
 
   
   it('outputInterviewEvent gets called', () => {
-    let formInput: interviewReturn = new interviewReturn(0,[],"","","","","","");
+    let formInput: InterviewReturn = new InterviewReturn(0,[],"","","","","","","");
     spy = spyOn(service, 'outputInterviewEvent').and.callThrough();
     service.outputInterviewEvent(formInput);
     expect(service.outputInterviewEvent).toHaveBeenCalled();
@@ -110,3 +160,5 @@ describe('InterviewRequesterService', () => {
     // After every test, assert that there are no more pending requests.
   });
 });
+
+

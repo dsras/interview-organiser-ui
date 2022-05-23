@@ -2,7 +2,7 @@
   <button
     type="button"
     class="view-here-btn text-center"
-    (click)="openModal(form)"
+    (click)="openDialog(form)"
   >
     Add Skill
     <i
@@ -45,6 +45,14 @@
               {{ name }}
             </option>
           </select>
+          <mat-form-field appearance="fill">
+            <mat-label>Select Skill</mat-label>
+            <mat-select formControlName="skill" name="skill">
+              <mat-option *ngFor="let name of formOptions.skillNames" [value]="name">
+                {{name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
           <br />
           <label for="level">Level: </label>
           <br />
@@ -65,7 +73,7 @@
               type="submit"
               id="submit"
               [disabled]="!addSkillsForm.valid"
-              (click)="closeModal()"
+              (click)="closeDialog()"
             >
               <h6 class="mt-4 font-weight-normal">Submit</h6>
             </button>

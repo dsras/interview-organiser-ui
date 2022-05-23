@@ -2,6 +2,31 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.0.3.
 
+## Running the angular front-end on local machine
+
+The application can be run from the base directory in a terminal by executing the following commands:
+
+1. `npm install`
+
+2. `ng serve`
+
+** Requires NVM install, follow steps below on linux
+
+1. `sudo apt install curl`
+
+2. `curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash`
+
+3. Restart terminal
+
+4. `nvm install --lts`
+
+From this point follow the application shoulda be available to run by following the first set of instructions
+
+## Documentation Generation
+
+The documentation can be created for the app by running `npm run compodoc` to generate documentation which will appear
+in ./doucementation directory
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
@@ -22,21 +47,6 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Running the application
-
-The application can be run from the base directory in a terminal with the following commands:
-
-1. `npm install --legacy-peer-deps`
-
-2. `npm audit fix`
-
-3. `ng serve`
-
-## Documentation Generation
-
-The documentation can be created for the app using compodoc
-
-`npm run compodoc`
 
 ## Further help
 
