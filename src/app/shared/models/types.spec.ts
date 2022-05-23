@@ -60,55 +60,55 @@ describe('model classes pass init test', () => {
     expect(skillIdOnly).toBeTruthy();
   });
 
-  it('skillIdOnly should be created', () => {
+  it('statusUpdate should be created', () => {
     expect(statusUpdate).toBeTruthy();
   });
 
-  it('skillIdOnly should be created', () => {
+  it('userData should be created', () => {
     expect(userData).toBeTruthy();
   });
 
-  it('skillIdOnly should be created', () => {
+  it('Skills should be created', () => {
     expect(Skills).toBeTruthy();
   });
 
-  it('skillIdOnly should be created', () => {
+  it('available should be created', () => {
     expect(available).toBeTruthy();
   });
 
-  it('skillIdOnly should be created', () => {
+  it('applicant should be created', () => {
     expect(applicant).toBeTruthy();
   });
 
-  it('skillIdOnly should be created', () => {
+  it('availabilityForInterviews should be created', () => {
     expect(availabilityForInterviews).toBeTruthy();
   });
 
-  it('skillIdOnly should be created', () => {
+  it('availability should be created', () => {
     expect(availability).toBeTruthy();
   });
 
-  it('skillIdOnly should be created', () => {
+  it('availabilityRange should be created', () => {
     expect(availabilityRange).toBeTruthy();
   });
 
-  it('skillIdOnly should be created', () => {
+  it('interviewRange should be created', () => {
     expect(interviewRange).toBeTruthy();
   });
 
-  it('skillIdOnly should be created', () => {
+  it('interview should be created', () => {
     expect(interview).toBeTruthy();
   });
 
-  it('skillIdOnly should be created', () => {
+  it('interviewReturn should be created', () => {
     expect(interviewReturn).toBeTruthy();
   });
 
-  it('skillIdOnly should be created', () => {
+  it('SkillOptions should be created', () => {
     expect(SkillOptions).toBeTruthy();
   });
 
-  it('skillIdOnly should be created', () => {
+  it('AppRoles should be created', () => {
     expect(AppRoles).toBeTruthy();
   });
 
