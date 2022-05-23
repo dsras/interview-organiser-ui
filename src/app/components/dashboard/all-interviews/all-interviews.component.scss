@@ -32,3 +32,37 @@
   text-align: center;
   font-weight: bold;
 }
+
+table {
+  width: 100%;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: lightblue;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.interview-expanded {
+  overflow: hidden;
+  display: flex;
+}
+
+.interview-detail {
+  padding: 16px;
+  font-weight: lighter;
+}
+
+
+
+

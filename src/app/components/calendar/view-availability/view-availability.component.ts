@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Subject } from 'rxjs';
 import {
   CalendarEventAvailability,
   CalendarEventInterview,

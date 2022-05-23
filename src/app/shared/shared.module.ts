@@ -10,6 +10,10 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
+import { StringToDatetimePipe } from '../pipes/string-to-datetime.pipe';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @NgModule({
   imports: [
@@ -23,6 +27,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatInputModule,
     MatPaginatorModule,
     MatDialogModule,
+    MatIconModule,
+    MatButtonModule,
+    MatSidenavModule,
   ],
   exports: [
     TimepickerModule,
@@ -34,7 +41,12 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatInputModule,
     MatPaginatorModule,
     MatDialogModule,
+    StringToDatetimePipe,
+    MatIconModule,
+    MatButtonModule,
+    MatSidenavModule,
   ],
+  declarations: [StringToDatetimePipe],
   providers: [{ provide: TimepickerConfig, useFactory: getTimepickerConfig }],
 })
 export class SharedModule {}

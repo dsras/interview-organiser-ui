@@ -6,14 +6,14 @@ import { AllInterviewsComponent } from './all-interviews/all-interviews.componen
 import { SharedModule } from '../../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from 'src/app/router/app-routing.module';
-import { SkillCoverageComponent } from './skill-coverage/skill-coverage.component';
+import { InterviewSummaryComponent } from './interview-summary/interview-summary.component';
 
 @NgModule({
   declarations: [
     DashboardComponent,
     CreateInterviewComponent,
     AllInterviewsComponent,
-    SkillCoverageComponent,
+    InterviewSummaryComponent,
   ],
   imports: [CommonModule, SharedModule, ReactiveFormsModule, AppRoutingModule],
   exports: [DashboardComponent],

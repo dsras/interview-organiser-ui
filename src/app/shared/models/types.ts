@@ -93,7 +93,6 @@ export class Available implements Data {
   }
 }
 
-
 export class AvailabilityForInterviews implements Data {
   interviewer: string;
   interviewer_id: number;
@@ -212,38 +211,39 @@ export class Interview implements Data {
 }
 
 export class InterviewReturn implements Data {
-  interview_id: number;
-  interviewers: string[];
+  interviewId: number;
+  interviewers: Array<string>;
   date: string;
-  start_time: string;
-  end_time: string;
-  additional_info: string;
-  status: string;
-  outcome: string;
+  startTime: string;
+  endTime: string;
+  additionalInfo?: string;
+  status?: string;
+  outcome?: string;
+  organiser?: string;
   constructor(
-    interview_id: number,
-    interviewers: string[],
+    interviewId: number,
+    interviewers: Array<string>,
     date: string,
-    start_time: string,
-    end_time: string,
-    additional_info: string,
+    startTime: string,
+    endTime: string,
+    additionalInfo: string,
     status: string,
-    outcome: string
+    outcome: string,
+    organiser: string
   ) {
-    this.interview_id = interview_id;
+    this.interviewId = interviewId;
     this.interviewers = interviewers;
     this.date = date;
-    this.start_time = start_time;
-    this.end_time = end_time;
-    this.additional_info = additional_info;
+    this.startTime = startTime;
+    this.endTime = endTime;
+    this.additionalInfo = additionalInfo;
     this.status = status;
     this.outcome = outcome;
+    this.organiser = organiser;
   }
 }
 
-export class SkillReturn implements Data {
-  
-}
+export class SkillReturn implements Data {}
 
 export class SkillOptions implements Data {
   skillNames: Set<string>;
