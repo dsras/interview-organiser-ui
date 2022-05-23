@@ -13,7 +13,7 @@ import {
   GoogleLoginProvider,
 } from 'angularx-social-login';
 
-// [Bootstrap Components]
+// [Bootstrap]
 import { MDBBootstrapModulesPro } from 'ng-uikit-pro-standard';
 import { MDBSpinningPreloader } from 'ng-uikit-pro-standard';
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
@@ -45,6 +45,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { LoginComponent } from './components/login/login.component';
 import { HeaderComponent } from './components/header/header.component';
 import { AppComponent } from './app.component';
+import { SidenavBarComponent } from './components/sidenav-bar/sidenav-bar.component';
 
 // [application modules]
 import { MyCalendarModule } from './components/calendar/calendar.module';
@@ -61,7 +62,7 @@ const CLIENT_ID = prodEnv
   ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD
   : APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_DEV;
 @NgModule({
-  declarations: [AppComponent, LoginComponent, HeaderComponent],
+  declarations: [AppComponent, LoginComponent, HeaderComponent, SidenavBarComponent],
   imports: [
     BrowserModule,
     DashboardModule,

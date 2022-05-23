@@ -7,19 +7,19 @@ import { CalendarEvent, CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { Observable, of } from 'rxjs';
-import { availability } from '../../shared/models/types';
+import { Availability } from '../../shared/models/types';
 
 import { AvailabilityRequesterService } from './availability-requester.service';
 import { Requester } from './requester.service';
 
-const AvailabilityInfoFake: availability = {
+const AvailabilityInfoFake: Availability = {
   availability_id: 0,
   date: new Date().toString(),
   start_time: new Date().toString(),
   end_time: new Date().toString(),
 }
 
-const FakeAvailabilityReturn: availability[] = [
+const FakeAvailabilityReturn: Availability[] = [
   {
     availability_id: 0,
     date: new Date().toString(),
@@ -110,6 +110,12 @@ describe('AvailabilityRequesterService', () => {
     expect(service.dateToStringTime(tempDate) === "03:24").toBeTruthy();
   });
 
+  it('parseAvailabilityEvent gets called', () => {
+    let interviewerID: Availability= new Availability(0,"","","");
+    spy = spyOn(service, 'parseAvailabilityEvent').and.callThrough();
+    service.parseAvailabilityEvent(interviewerID);
+    expect(service.parseAvailabilityEvent).toHaveBeenCalled();
+  });
 
   it('addAvailability calls requester methods', () => {
     let first: string = "1995-12-17T03:24:00";

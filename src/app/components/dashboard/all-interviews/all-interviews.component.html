@@ -1,12 +1,90 @@
-<h2>Interviews</h2>
-<div class="col-12 mt-3 mx-auto orange-border">
-  <ul class="interviews">
-    <li *ngFor="let interview of interviews">
-      {{interview.interviewer_ids}}> Start: {{interview.start_time}} End: {{interview.end_time}} Date {{interview.date}}
-      <button type="button" title="None" (click)="print(interview)"
-        class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx-auto d-inline-block">
-        View
-      </button>
-    </li>
-  </ul>
+<div class="container-fluid text-center">
+  <h2>Interviews</h2>
+</div>
+<div class="container-fluid section">
+  <table
+    mat-table
+    class="interview-table mat-elevation-z8"
+    [dataSource]="tableData"
+    multiTemplateDataRows
+  >
+    <ng-container matColumnDef="interviewId">
+      <th mat-header-cell *matHeaderCellDef>ID No.</th>
+      <td mat-cell *matCellDef="let interview">{{ interview.interviewId }}</td>
+    </ng-container>
+    <ng-container matColumnDef="interviewers">
+      <th mat-header-cell *matHeaderCellDef>Interview panel</th>
+      <td mat-cell *matCellDef="let interview">
+        {{ interview.interviewers.replaceAll(",", " & ") }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef>Date</th>
+      <td mat-cell *matCellDef="let interview">{{ interview.date | date }}</td>
+    </ng-container>
+    <ng-container matColumnDef="time">
+      <th mat-header-cell *matHeaderCellDef>Time</th>
+      <td mat-cell *matCellDef="let interview">
+        {{ interview.startTime | stringToDatetime | date: "HH:mm" }} -
+        {{ interview.endTime | stringToDatetime | date: "HH:mm" }}
+      </td>
+    </ng-container>
+    <!-- <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td mat-cell *matCellDef="let interview">{{ interview.status }}</td>
+    </ng-container>
+    <ng-container matColumnDef="outcome">
+      <th mat-header-cell *matHeaderCellDef>Outcome</th>
+      <td mat-cell *matCellDef="let interview">{{ interview.outcome }}</td>
+    </ng-container> -->
+
+    <ng-container matColumnDef="expandedDetail">
+      <td
+        mat-cell
+        *matCellDef="let interview"
+        [attr.colspan]="displayedColumns.length"
+      >
+        <div
+          class="interview-expanded"
+          [@detailExpand]="
+            interview == expandedInterview ? 'expanded' : 'collapsed'
+          "
+        >
+          <div class="container row">
+            <div class="col-3 interview-detail">
+              Status: {{ interview.status || "N/A" }}
+            </div>
+            <div class="col-3 interview-detail">
+              Outcome: {{ interview.outcome || "N/A" }}
+            </div>
+            <div class="col-5 interview-detail">
+              Additional Information: {{ interview.additionalInfo || "N/A" }}
+            </div>
+            <div class="col-1">
+              <button mat-stroked-button (click)="message('click')">
+                Update
+                <mat-icon>save</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let interview; columns: displayedColumns"
+      class="example-element-row"
+      [class.example-expanded-row]="expandedInterview === interview"
+      (click)="
+        expandedInterview = expandedInterview === interview ? null : interview
+      "
+    ></tr>
+    <tr
+      mat-row
+      *matRowDef="let interview; columns: ['expandedDetail']"
+      class="example-detail-row"
+    ></tr>
+  </table>
 </div>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Requester } from '../requester/requester.service';
-import { userData, Skills, SkillOptions } from '../../shared/models/types';
+import { UserData, Skills, SkillOptions } from '../../shared/models/types';
 import { APPCONSTANTS } from '../../shared/constants/app.constant';
 import { DatePipe } from '@angular/common';
 
@@ -18,19 +18,19 @@ export class RequestCenterService {
       APPCONSTANTS.APICONSTANTS.USER_FIND +
       '?username=' +
       username;
-    this.requester.getRequest<userData>(url).subscribe((returnData) => {
+    this.requester.getRequest<UserData>(url).subscribe((returnData) => {
       return returnData;
     });
   }
 
   getUserData(username: string) {
-    let user: userData;
+    let user: UserData;
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.USER_FIND +
       '?username=' +
       username;
-    this.requester.getRequest<userData>(url).subscribe((returnData: any) => {
+    this.requester.getRequest<UserData>(url).subscribe((returnData: any) => {
       user = returnData
       localStorage.setItem('userData', JSON.stringify(user))
     })  

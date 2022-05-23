@@ -7,11 +7,11 @@ import { InterviewRequesterService } from 'src/app/services/requester/interview-
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 
 @Component({
-  selector: 'find-interview',
-  templateUrl: './find-interview.component.html',
-  styleUrls: ['./find-interview.component.scss'],
+  selector: 'create-interview',
+  templateUrl: './create-interview.component.html',
+  styleUrls: ['./create-interview.component.scss'],
 })
-export class FindInterviewComponent implements OnInit {
+export class CreateInterviewComponent implements OnInit {
   /** Array of skills */
   skillsAvailable: Skills[] = [];
   /** Options for filtering by skill */
@@ -34,7 +34,7 @@ export class FindInterviewComponent implements OnInit {
   findInterviewsForm: FormGroup = this.fb.group({
     startTime: ['', Validators.required],
     endTime: ['', Validators.required],
-    dateRange:['', Validators.required],
+    dateRange: ['', Validators.required],
     skills: this.fb.group({
       skillType: ['', Validators.required],
       skillLevel: ['', Validators.required],
@@ -114,12 +114,13 @@ export class FindInterviewComponent implements OnInit {
   }
 
   /** Switches which form is being viewed */
-  switchView(disp:string): void {
+  switchView(disp: string): void {
     const find: HTMLElement = document.getElementById('find')!;
     const confirm: HTMLElement = document.getElementById('confirm')!;
-    if(!disp || disp==''){
-      disp = "";
-      try { disp = find.style.display; } catch (error) {}
+    if (!disp || disp == '') {
+      try {
+        disp = find.style.display;
+      } catch (error) {}
     }
     switch (disp) {
       case 'none':

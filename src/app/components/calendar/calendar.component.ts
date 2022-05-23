@@ -7,12 +7,7 @@ import {
 } from '@angular/core';
 import { isSameDay, isSameMonth } from 'date-fns';
 import { Subject } from 'rxjs';
-import {
-  CalendarEvent,
-  CalendarEventAction,
-  CalendarEventTimesChangedEvent,
-  CalendarView,
-} from 'angular-calendar';
+import { CalendarEvent, CalendarView } from 'angular-calendar';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import {
@@ -35,9 +30,9 @@ import { AvailabilityRequesterService } from 'src/app/services/requester/availab
   styleUrls: ['./calendar.component.scss'],
 })
 export class CalendarComponent implements OnInit {
-  /** 
-   * Passes information to {@link ViewAvailabilityComponent} 
-   * when the day is clicked on the calendar 
+  /**
+   * Passes information to {@link ViewAvailabilityComponent}
+   * when the day is clicked on the calendar
    */
   @ViewChild('dayContent', { static: true }) dayContent!: TemplateRef<any>;
 
@@ -57,13 +52,13 @@ export class CalendarComponent implements OnInit {
   events: Array<CalendarEventAvailability | CalendarEventInterview> = [];
   /**
    * Array of all availability.
-   * 
+   *
    * TODO implement using just events and filtering
    */
   availability: Array<CalendarEventAvailability> = [];
-   /**
+  /**
    * Array of all interviews.
-   * 
+   *
    * TODO implement using just events and filtering
    */
   interviews: Array<CalendarEventInterview> = [];
@@ -102,7 +97,6 @@ export class CalendarComponent implements OnInit {
       .catch();
   }
 
-
   /**
    * Populates events and interviews arrays with interviews
    */
@@ -139,7 +133,7 @@ export class CalendarComponent implements OnInit {
   //* in test
   /**
    *  Populate the calendar with an interviewers events and availability.
-   * 
+   *
    * todo stremline by removing availability and interviews and using filtering of events
    */
   populateCalendar(): void {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { userData } from 'src/app/shared/models/types';
+import { UserData } from 'src/app/shared/models/types';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +12,7 @@ export class RecruiterGuard implements CanActivate {
 
   canActivate(): boolean {
     let allowed = false;
-    const userData: userData = JSON.parse(
+    const userData: UserData = JSON.parse(
       '' + localStorage.getItem('userData')
     );
     if (userData) {

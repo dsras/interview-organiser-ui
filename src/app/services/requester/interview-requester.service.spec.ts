@@ -8,8 +8,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { fn } from 'moment';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { Observable, of } from 'rxjs';
-import { CalendarEventInterview } from 'src/app/shared/models/calendar-event-detail';
-import { interviewReturn } from '../../shared/models/types';
+import { InterviewReturn } from '../../shared/models/types';
 
 import { InterviewRequesterService } from './interview-requester.service';
 import { Requester } from './requester.service';
@@ -32,13 +31,13 @@ const RequesterServiceStub = {
   },
 }
 
-const interRet: interviewReturn = {
-  interview_id: 0,
+const interRet: InterviewReturn = {
+  interviewId: 0,
   interviewers: ["", ""],
   date: "1995-05-10",
-  start_time: "10:00",
-  end_time: "11:00",
-  additional_info: "additional",
+  startTime: "10:00",
+  endTime: "11:00",
+  additionalInfo: "additional",
   status: "completed",
   outcome: "hired"
 }
@@ -91,17 +90,18 @@ describe('InterviewRequesterService', () => {
 
   it('getInterviewsAll calls requester methods', fakeAsync(() => {
     spy = spyOn(rService, 'getRequest').and.callThrough();
-    service.getInterviewAll();
+    let events: InterviewReturn[] = [];
+    service.getInterviewAll(events);
     expect(spy).toHaveBeenCalled();
   }));
 
   it('outputInterviewEvent formats correctly', () => {
     let retObj = service.outputInterviewEvent(interRet);
-    expect(retObj.id === interRet.interview_id).toBeTruthy();
+    expect(retObj.id === interRet.interviewId).toBeTruthy();
     expect(retObj.meta.interviewPanel === interRet.interviewers).toBeTruthy();
 
     const start = new Date(interRet.date);
-    const times1 = interRet.start_time.split(':');
+    const times1 = interRet.startTime.split(':');
     start.setHours(parseInt(times1[0]), parseInt(times1[1]));
     expect(retObj.start.toString() === start.toString()).toBeTruthy();
   });
@@ -132,7 +132,12 @@ describe('InterviewRequesterService', () => {
   });
 
   
-
+  it('outputInterviewEvent gets called', () => {
+    let formInput: InterviewReturn = new InterviewReturn(0,[],"","","","","","","");
+    spy = spyOn(service, 'outputInterviewEvent').and.callThrough();
+    service.outputInterviewEvent(formInput);
+    expect(service.outputInterviewEvent).toHaveBeenCalled();
+  });
   
   it('date should be formatted to YYYY-MM-DD', () => {
     let tempDate = new Date('1995-12-17T03:24:00');

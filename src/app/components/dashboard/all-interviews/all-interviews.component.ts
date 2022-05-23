@@ -1,29 +1,63 @@
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { interview } from 'src/app/shared/models/types';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
+import { InterviewTableData } from 'src/app/shared/models/table-data';
+import { InterviewReturn } from 'src/app/shared/models/types';
 
 /**
- * Display all interviews
+ * Display all interviews in a table
  */
 @Component({
   selector: 'all-interviews',
   templateUrl: './all-interviews.component.html',
-  styleUrls: ['./all-interviews.component.scss']
+  styleUrls: ['./all-interviews.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition(
+        'expanded <=> collapsed',
+        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
+      ),
+    ]),
+  ],
 })
 export class AllInterviewsComponent implements OnInit {
   /** Array to be populated with interviews */
-  interviews: Array<interview> = [];
-
+  interviews: Array<InterviewReturn> = [];
+  tableData: InterviewTableData = new InterviewTableData(this.interviews);
+  expandedInterview!: InterviewReturn | null;
+  displayedColumns: Array<string> = [
+    'interviewId',
+    'interviewers',
+    'date',
+    'time',
+    // 'outcome',
+    // 'status',
+  ];
   /** @ignore */
   constructor(
     private ms: ModalControllerService,
     private iRequester: InterviewRequesterService
-  ) { }
+  ) {}
 
   /** Populate interviews on init */
   ngOnInit(): void {
-    this.iRequester.getInterviewsDashboard(this.interviews);
+    this.getInterviews();
+    this.expandedInterview = null;
+  }
+
+  getInterviews(): void {
+    this.iRequester.getAllInterviews().subscribe((interviews) => {
+      this.tableData.setData(interviews);
+    });
   }
     /** @ignore test method that should be replaced when completed */
     print(obj: any): void {
@@ -31,11 +65,13 @@ export class AllInterviewsComponent implements OnInit {
     }
   /** @ignore */
   openModal(template: TemplateRef<any>): void {
-    this.ms.openModal(template)
+    this.ms.openModal(template);
   }
   /** @ignore */
   closeModal(): void {
-    this.ms.closeModal()
+    this.ms.closeModal();
   }
-
+  message(text: string): void {
+    console.log(text)
+  }
 }

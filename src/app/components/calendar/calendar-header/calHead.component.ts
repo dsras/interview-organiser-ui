@@ -3,7 +3,7 @@ import { CalendarView } from 'angular-calendar';
 
 /** @ignore */
 @Component({
-  selector: 'components-calendar-header',
+  selector: 'calendar-header',
   templateUrl: './calHead.component.html',
 })
 export class CalendarHeaderComponent {
