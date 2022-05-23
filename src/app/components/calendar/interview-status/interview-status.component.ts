@@ -54,7 +54,7 @@ export class InterviewStatusComponent implements OnInit {
     this.ms.closeModal();
   }
 
-  onSubmit(f: FormGroup | any): void {
+  onSubmit(f: FormGroup): void {
     console.log(f.value);
     console.log(this.slot);
     const str: string = f.value.status;

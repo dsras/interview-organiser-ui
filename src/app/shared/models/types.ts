@@ -1,5 +1,3 @@
-import { StringToDatetimePipe } from "src/app/pipes/string-to-datetime.pipe";
-
 export interface Data {}
 export class skillIdOnly implements Data {
   skillId: number;
@@ -94,7 +92,6 @@ export class Available implements Data {
     this.skills = skills;
   }
 }
-
 
 export class AvailabilityForInterviews implements Data {
   interviewer: string;
@@ -222,6 +219,7 @@ export class InterviewReturn implements Data {
   additionalInfo?: string;
   status?: string;
   outcome?: string;
+  organiser?: string;
   constructor(
     interviewId: number,
     interviewers: Array<string>,
@@ -230,7 +228,8 @@ export class InterviewReturn implements Data {
     endTime: string,
     additionalInfo: string,
     status: string,
-    outcome: string
+    outcome: string,
+    organiser: string
   ) {
     this.interviewId = interviewId;
     this.interviewers = interviewers;
@@ -240,13 +239,11 @@ export class InterviewReturn implements Data {
     this.additionalInfo = additionalInfo;
     this.status = status;
     this.outcome = outcome;
+    this.organiser = organiser;
   }
 }
 
-
-export class SkillReturn implements Data {
-  
-}
+export class SkillReturn implements Data {}
 
 export class SkillOptions implements Data {
   skillNames: Set<string>;

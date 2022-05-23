@@ -4,6 +4,7 @@ import { InterviewReturn, SkillReturn } from './types';
 
 export class InterviewTableData extends DataSource<InterviewReturn> {
   private _dataStream = new ReplaySubject<InterviewReturn[]>();
+  filter!: string;
 
   constructor(initialData: InterviewReturn[]) {
     super();
@@ -14,9 +15,11 @@ export class InterviewTableData extends DataSource<InterviewReturn> {
     return this._dataStream;
   }
 
-  disconnect() {}
+  disconnect(): void {
+    this._dataStream.unsubscribe()
+  }
 
-  setData(data: InterviewReturn[]) {
+  setData(data: InterviewReturn[]): void {
     this._dataStream.next(data);
   }
 }

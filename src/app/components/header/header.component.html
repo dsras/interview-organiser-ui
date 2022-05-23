@@ -29,28 +29,22 @@
       >
         <i class="fa fa-bars text-black w-20"></i>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNav" *ngIf="isHeader">
+      <div class="collapse navbar-collapse" id="navbarNav" *ngIf="onLoginPage()">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
             <a
               class="nav-link"
               routerLink="dashboard"
               routerLinkActive="active"
-              id="industriesDropdown"
               role="button"
               aria-haspopup="true"
               aria-expanded="false"
               >Dashboard</a
             >
-            <span
-              class="menu"
-              (click)="onMenuChange('dashboard')"
-              [ngClass]="getSelectedClass('dashboard')"
-            ></span>
           </li>
         </ul>
       </div>
-      <div class="collapse navbar-collapse" id="navbarNav" *ngIf="isHeader">
+      <div class="collapse navbar-collapse" id="navbarNav" *ngIf="onLoginPage()">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
             <a
@@ -71,7 +65,7 @@
         id="navbarNav"
         dropdown
         placement="bottom left"
-        *ngIf="isHeader"
+        *ngIf="onLoginPage()"
       >
         <ul class="navbar-nav ml-auto">
           <li class="nav-item dropdown">
@@ -88,7 +82,7 @@
                 [src]="user.photoUrl"
                 class="rounded-circle"
                 style="height: 30px; width: 30px"
-                *ngIf="user"
+                *ngIf="loggedIn()"
               />
               <i class="fa fa-user-circle" aria-hidden="true" *ngIf="!user"></i>
             </button>
@@ -102,7 +96,7 @@
               <li role="menuitem" style="cursor: pointer">
                 <span
                   class="dropdown-item"
-                  *ngIf="user"
+                  *ngIf="loggedIn()"
                   style="padding-left: 50px"
                 >
                   <img
@@ -125,7 +119,7 @@
       </div>
     </nav>
   </div>
-  <div class="collapse navbar-collapse" id="navbarNav" *ngIf="isHeader">
+  <div class="collapse navbar-collapse" id="navbarNav" *ngIf="onLoginPage()">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
         <a
@@ -145,7 +139,7 @@
     id="navbarNav"
     dropdown
     placement="bottom left"
-    *ngIf="isHeader"
+    *ngIf="onLoginPage()"
   >
     <ul class="navbar-nav ml-auto">
       <li class="nav-item dropdown">
@@ -162,9 +156,9 @@
             [src]="user.photoUrl"
             class="rounded-circle"
             style="height: 30px; width: 30px"
-            *ngIf="user"
+            *ngIf="loggedIn()"
           />
-          <i class="fa fa-user-circle" aria-hidden="true" *ngIf="!user"></i>
+          <i class="fa fa-user-circle" aria-hidden="true" *ngIf="!loggedIn()"></i>
         </button>
         <ul
           id="dropdown-animated"
@@ -174,7 +168,7 @@
           aria-labelledby="button-animated"
         >
           <li role="menuitem" style="cursor: pointer">
-            <span class="dropdown-item" *ngIf="user" style="padding-left: 50px">
+            <span class="dropdown-item" *ngIf="loggedIn()" style="padding-left: 50px">
               <img
                 [src]="user.photoUrl"
                 class="rounded-circle"

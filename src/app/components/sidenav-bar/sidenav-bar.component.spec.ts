@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SkillCoverageComponent } from './skill-coverage.component';
+import { SidenavBarComponent } from './sidenav-bar.component';
 
-describe('SkillCoverageComponent', () => {
-  let component: SkillCoverageComponent;
-  let fixture: ComponentFixture<SkillCoverageComponent>;
+describe('SidenavBarComponent', () => {
+  let component: SidenavBarComponent;
+  let fixture: ComponentFixture<SidenavBarComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SkillCoverageComponent ]
+      declarations: [ SidenavBarComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SkillCoverageComponent);
+    fixture = TestBed.createComponent(SidenavBarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

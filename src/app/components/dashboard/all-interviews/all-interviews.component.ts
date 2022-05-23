@@ -1,4 +1,10 @@
-import {animate, state, style, transition, trigger} from '@angular/animations';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
@@ -14,15 +20,20 @@ import { InterviewReturn } from 'src/app/shared/models/types';
   styleUrls: ['./all-interviews.component.scss'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition(
+        'expanded <=> collapsed',
+        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
+      ),
     ]),
   ],
 })
 export class AllInterviewsComponent implements OnInit {
   /** Array to be populated with interviews */
   interviews: Array<InterviewReturn> = [];
+  tableData: InterviewTableData = new InterviewTableData(this.interviews);
+  expandedInterview!: InterviewReturn | null;
   displayedColumns: Array<string> = [
     'interviewId',
     'interviewers',
@@ -31,10 +42,6 @@ export class AllInterviewsComponent implements OnInit {
     // 'outcome',
     // 'status',
   ];
-  tableData: InterviewTableData = new InterviewTableData(this.interviews);
-  expandedInterview!: InterviewReturn | null;
-
-
   /** @ignore */
   constructor(
     private ms: ModalControllerService,
@@ -44,13 +51,12 @@ export class AllInterviewsComponent implements OnInit {
   /** Populate interviews on init */
   ngOnInit(): void {
     this.getInterviews();
-    this.expandedInterview = null
+    this.expandedInterview = null;
   }
 
   getInterviews(): void {
     this.iRequester.getAllInterviews().subscribe((interviews) => {
       this.tableData.setData(interviews);
-      console.table(interviews);
     });
   }
   /** @ignore */
@@ -60,5 +66,8 @@ export class AllInterviewsComponent implements OnInit {
   /** @ignore */
   closeModal(): void {
     this.ms.closeModal();
+  }
+  message(text: string): void {
+    console.log(text)
   }
 }
