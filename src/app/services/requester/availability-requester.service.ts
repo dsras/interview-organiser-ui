@@ -37,6 +37,7 @@ export class AvailabilityRequesterService {
    * @returns void - The new range of availability is sent as a POST to database.
    */
   addAvailability(
+    userName: string,
     first: string,
     last: string,
     start: string,
@@ -60,7 +61,9 @@ export class AvailabilityRequesterService {
       endString
     );
     const url: string =
-      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_ADD;
+      APPCONSTANTS.APICONSTANTS.BASE_URL + 
+      APPCONSTANTS.APICONSTANTS.AVAIL +
+      '/' + userName;
     let out: AvailabilityRange;
 
     this.requester
@@ -79,9 +82,8 @@ export class AvailabilityRequesterService {
   getMyAvailability(events: CalendarEvent[], username: string): void {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
-      APPCONSTANTS.APICONSTANTS.AVAIL_GET +
-      '?username=' +
-      username;
+      APPCONSTANTS.APICONSTANTS.AVAIL +
+      '/' + username;
     let out;
 
     this.requester.getRequest<Availability>(url).subscribe((returnData) => {
@@ -103,7 +105,8 @@ export class AvailabilityRequesterService {
   getAvailabilityOnSkill(input: Array<number>): void {
     let url: string =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
-      APPCONSTANTS.APICONSTANTS.AVAIL_SKILL;
+      APPCONSTANTS.APICONSTANTS.AVAIL +
+      '?ids=' + input.toString();
     let started: boolean = false;
     input.forEach((element) => {
       url += (started ? ',' : '') + element.toString();
@@ -124,7 +127,7 @@ export class AvailabilityRequesterService {
    */
   getAllAvailability(events: CalendarEvent[]): void {
     const url =
-      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_ALL;
+      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL;
     let out;
 
     this.requester.getRequest<Availability>(url).subscribe((returnData) => {
@@ -142,7 +145,7 @@ export class AvailabilityRequesterService {
    */
   getAllAvailabilityUI(events: string[]): void {
     const url: string =
-      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_ALL;
+      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL;
     let out: Array<Availability>;
 
     this.requester.getRequest<Availability>(url).subscribe((returnData) => {

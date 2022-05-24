@@ -8,9 +8,10 @@ class API_CONSTANTS {
   LOGIN: string = 'users/authenticate';
   USER: string = 'users'; 
   USER_FIND: string = 'users/findUser';
+
+  AVAIL: string = 'availability';
   AVAIL_ADD: string = 'availability/new';
   AVAIL_GET: string = 'availability/find';
-  //! this url REQUIRES params, do not use if not sure
   AVAIL_SKILL: string = 'availability/findBySkills?ids=';
   AVAIL_ALL: string = 'availability/findAll';
   AVAIL_FILTER: string = 'users/findInterviewers';
