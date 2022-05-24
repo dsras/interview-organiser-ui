@@ -29,6 +29,7 @@ class API_CONSTANTS {
   INTER_PROG: string = 'interviews/username/status/progressed'
   INTER_NOPROG: string = 'interviews/username/status/not-progressed'
   INTER_HIRE: string = 'interviews/username/status/hired'
+  INTER_INTER: string = 'interviews/interviewers'
 
   INTER_ADD: string = 'interviews/new';
   INTER_BY_INT: string = 'interviews/findByInterviewer';
