@@ -12,6 +12,7 @@ import { InterviewMetaData } from 'src/app/shared/models/event-meta-data';
 import { CalendarColors } from 'src/app/shared/constants/colours.constant';
 import { DateToStringService } from '../date-to-string.service';
 import { Observable } from 'rxjs';
+import { RequestCenterService } from './request-center.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +20,7 @@ import { Observable } from 'rxjs';
 export class InterviewRequesterService {
   constructor(
     private requester: Requester,
+    private rs: RequestCenterService,
     private dateFormatter: DateToStringService
   ) {}
 
@@ -92,6 +94,7 @@ export class InterviewRequesterService {
     const id = [Number.parseInt(formDecomp[12])];
 
     this.addInterview(
+      this.rs.getUsername(),
       id,
       dateString,
       startTimeString,
@@ -101,6 +104,7 @@ export class InterviewRequesterService {
   }
 
   addInterview(
+    userName: string,
     interviewerID: number[],
     interviewDate: string,
     timeStart: string,
@@ -108,7 +112,9 @@ export class InterviewRequesterService {
     additionalInfo: string
   ) {
     const url: string =
-      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ADD;
+      APPCONSTANTS.APICONSTANTS.BASE_URL 
+      + APPCONSTANTS.APICONSTANTS.INTER_ADD
+      + '/'+userName;
     const newInterview: Interview = new Interview(
       interviewerID,
       interviewDate,
