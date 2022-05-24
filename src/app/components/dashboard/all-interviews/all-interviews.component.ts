@@ -32,8 +32,11 @@ import { InterviewReturn } from 'src/app/shared/models/types';
 export class AllInterviewsComponent implements OnInit {
   /** Array to be populated with interviews */
   interviews: Array<InterviewReturn> = [];
+  /** Collection of data to be displayed in table */
   tableData: InterviewTableData = new InterviewTableData(this.interviews);
+  /** Selector for expanded view on table */
   expandedInterview!: InterviewReturn | null;
+  /** The columns to be displayed in the table */
   displayedColumns: Array<string> = [
     'interviewId',
     'interviewers',
@@ -54,24 +57,29 @@ export class AllInterviewsComponent implements OnInit {
     this.expandedInterview = null;
   }
 
+  /** Request table data from the database */
   getInterviews(): void {
     this.iRequester.getAllInterviews().subscribe((interviews) => {
       this.tableData.setData(interviews);
     });
   }
-    /** @ignore test method that should be replaced when completed */
-    print(obj: any): void {
-      console.log(JSON.stringify(obj))
-    }
+
+  /** @ignore test method that should be replaced when completed */
+  print(obj: any): void {
+    console.log(JSON.stringify(obj));
+  }
+
   /** @ignore */
   openModal(template: TemplateRef<any>): void {
     this.ms.openModal(template);
   }
+
   /** @ignore */
   closeModal(): void {
     this.ms.closeModal();
   }
+  /** @ignore test method to be removed when completed */
   message(text: string): void {
-    console.log(text)
+    console.log(text);
   }
 }

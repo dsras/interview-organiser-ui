@@ -12,6 +12,7 @@ import { InterviewRequesterService } from 'src/app/services/requester/interview-
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import { CalendarEventAvailability, CalendarEventInterview } from 'src/app/shared/models/calendar-event-detail';
+import { InterviewMetaData } from 'src/app/shared/models/event-meta-data';
 
 describe('CalendarComponent', () => {
   let component: CalendarComponent;
@@ -103,7 +104,7 @@ describe('CalendarComponent', () => {
       title: "title",
     }
     component.availability.push(new CalendarEventAvailability(myEvent));
-    component.interviews.push(new CalendarEventInterview(myEvent, {}));
+    component.interviews.push(new CalendarEventInterview(myEvent, <InterviewMetaData>{}));
     component.openDayModal(myDate);
     expect(component.availability.length != 0).toBeTruthy();
     expect(component.interviews.length != 0).toBeTruthy();

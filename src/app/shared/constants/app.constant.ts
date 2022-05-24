@@ -6,11 +6,12 @@ class API_CONSTANTS {
     ? 'http://ec2-18-141-205-66.ap-southeast-1.compute.amazonaws.com:8080/'
     : 'http://localhost:8080/';
   LOGIN: string = 'users/authenticate';
-  //USER: string = 'users/user'; testing method
+  USER: string = 'users'; 
   USER_FIND: string = 'users/findUser';
+
+  AVAIL: string = 'availability';
   AVAIL_ADD: string = 'availability/new';
   AVAIL_GET: string = 'availability/find';
-  //! this url REQUIRES params, do not use if not sure
   AVAIL_SKILL: string = 'availability/findBySkills?ids=';
   AVAIL_ALL: string = 'availability/findAll';
   AVAIL_FILTER: string = 'users/findInterviewers';
@@ -21,11 +22,22 @@ class API_CONSTANTS {
   APPLICANT_ADD: string = 'applicants/new';
   APPLICANT_ALL: string = 'applicants/findAll';
 
+  INTER: string = 'interviews';
+  INTER_COMP: string = 'interviews/username/completed';
+  INTER_CONF: string = 'interviews/username/status/confirmed'
+  INTER_PNS: string = 'interviews/username/status/panel-no-show'
+  INTER_CNS: string = 'interviews/username/status/candidate-no-show'
+  INTER_PROG: string = 'interviews/username/status/progressed'
+  INTER_NOPROG: string = 'interviews/username/status/not-progressed'
+  INTER_HIRE: string = 'interviews/username/status/hired'
+  INTER_INTER: string = 'interviews/interviewers'
+
   INTER_ADD: string = 'interviews/new';
   INTER_BY_INT: string = 'interviews/findByInterviewer';
-  INTER_BY_REC: string = 'interviews/findByRecruiter';
+  INTER_BY_REC: string = 'interviews/organiser';
   INTER_ALL: string = 'interviews/findAll';
 
+  SKILLS: string = 'user-skills';
   SKILLS_GET: string = 'users/findSkills';
   SKILLS_ADD: string = 'users/addSkill';
   SKILLS_GET_ALL: string = 'skills/findAll';

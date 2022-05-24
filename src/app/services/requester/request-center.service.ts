@@ -15,9 +15,8 @@ export class RequestCenterService {
     console.log('Calling')
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
-      APPCONSTANTS.APICONSTANTS.USER_FIND +
-      '?username=' +
-      username;
+      APPCONSTANTS.APICONSTANTS.USER +
+      '/' + username;
     this.requester.getRequest<UserData>(url).subscribe((returnData) => {
       return returnData;
     });
@@ -27,9 +26,8 @@ export class RequestCenterService {
     let user: UserData;
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
-      APPCONSTANTS.APICONSTANTS.USER_FIND +
-      '?username=' +
-      username;
+      APPCONSTANTS.APICONSTANTS.USER +
+      '/' + username;
     this.requester.getRequest<UserData>(url).subscribe((returnData: any) => {
       user = returnData
       localStorage.setItem('userData', JSON.stringify(user))
@@ -53,9 +51,8 @@ export class RequestCenterService {
   getSkills(username: string): Array<Skills> {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
-      APPCONSTANTS.APICONSTANTS.SKILLS_GET +
-      '?username=' +
-      username;
+      APPCONSTANTS.APICONSTANTS.SKILLS +
+      '/' + username;
     let out;
     this.requester.getRequest<Skills>(url).subscribe((returnData) => {
       out = returnData;
@@ -67,9 +64,8 @@ export class RequestCenterService {
   addSkills(id: number, username: string) {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
-      APPCONSTANTS.APICONSTANTS.SKILLS_ADD +
-      '?username=' +
-      username;
+      APPCONSTANTS.APICONSTANTS.SKILLS +
+      '/' + username;
     const newSkillID = id;
     this.requester.postRequest<number>(url, id).subscribe((returnData) => {});
   }

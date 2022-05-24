@@ -113,7 +113,7 @@ describe('InterviewRequesterService', () => {
     let timeEnd: string = "";
     let additionalInfo: string = "";
     spy = spyOn(rService, 'postRequest').and.callThrough();
-    service.addInterview(interviewerID, interviewDate, timeStart, timeEnd, additionalInfo);
+    service.addInterview('name', interviewerID, interviewDate, timeStart, timeEnd, additionalInfo);
     expect(spy).toHaveBeenCalled();
   }));
 
