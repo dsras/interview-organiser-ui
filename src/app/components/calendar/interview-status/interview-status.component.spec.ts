@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, resetFakeAsyncZone, TestBed } from '@angular/core/testing';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 
@@ -56,7 +56,7 @@ describe('InterviewStatusComponent', () => {
   it('Submit should call service methods', () => {
     iSpy = spyOn(iService, 'updateInterviewStatus').and.callThrough();
     let formG = dummyStatusForm;
-    component.onSubmit(formG);
+    component.onSubmit(<FormGroup>formG);
     expect(iService.updateInterviewStatus).toHaveBeenCalled();
   })
 });
