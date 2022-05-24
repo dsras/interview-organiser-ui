@@ -154,9 +154,9 @@ export class InterviewRequesterService {
   outputInterviewEvent(element: InterviewReturn): CalendarEventInterview {
     const start = new Date(element.date);
     const end = new Date(element.date);
-    const int_id = element.interviewId;
-    const times1 = element.startTime.split(':');
-    const times2 = element.endTime.split(':');
+    const int_id = element.interview_id;
+    const times1 = element.start_time.split(':');
+    const times2 = element.end_time.split(':');
 
     start.setHours(parseInt(times1[0]), parseInt(times1[1]));
     end.setHours(parseInt(times2[0]), parseInt(times2[1]));
@@ -165,7 +165,7 @@ export class InterviewRequesterService {
       panel: element.interviewers,
       outcome: element.outcome,
       status: element.status,
-      additional: element.additionalInfo,
+      additional: element.additional_info,
     });
 
     const newInterview: CalendarEventInterview = {
