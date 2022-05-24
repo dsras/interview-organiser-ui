@@ -39,9 +39,8 @@ export class BackendService implements IBackendService {
     };
     return this._httpClient.get(
       APPCONSTANTS.APICONSTANTS.BASE_URL +
-        APPCONSTANTS.APICONSTANTS.USER_FIND +
-        '?username=' +
-        user.username,
+        APPCONSTANTS.APICONSTANTS.USER +
+        '/' + user.username,
       httpOptions
     );
   }

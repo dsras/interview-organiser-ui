@@ -113,8 +113,8 @@ export class InterviewRequesterService {
   ) {
     const url: string =
       APPCONSTANTS.APICONSTANTS.BASE_URL 
-      + APPCONSTANTS.APICONSTANTS.INTER_ADD
-      + '/'+userName;
+      + APPCONSTANTS.APICONSTANTS.INTER
+      + '/'+ userName;
     const newInterview: Interview = new Interview(
       interviewerID,
       interviewDate,
@@ -130,9 +130,8 @@ export class InterviewRequesterService {
   getInterviewByInterviewer(events: CalendarEvent[], username: string) {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
-      APPCONSTANTS.APICONSTANTS.INTER_BY_INT +
-      '?username=' +
-      username;
+      APPCONSTANTS.APICONSTANTS.INTER +
+      '/' + username;
     let out;
     this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
       out = <Array<InterviewReturn>>(<unknown>returnData);
@@ -150,8 +149,7 @@ export class InterviewRequesterService {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.INTER_BY_REC +
-      '?username=' +
-      username;
+      '/' + username;
     let out;
     this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
       out = <Array<InterviewReturn>>(<unknown>returnData);

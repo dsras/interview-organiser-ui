@@ -6,7 +6,7 @@ class API_CONSTANTS {
     ? 'http://ec2-18-141-205-66.ap-southeast-1.compute.amazonaws.com:8080/'
     : 'http://localhost:8080/';
   LOGIN: string = 'users/authenticate';
-  //USER: string = 'users/user'; testing method
+  USER: string = 'users'; 
   USER_FIND: string = 'users/findUser';
   AVAIL_ADD: string = 'availability/new';
   AVAIL_GET: string = 'availability/find';
@@ -21,11 +21,13 @@ class API_CONSTANTS {
   APPLICANT_ADD: string = 'applicants/new';
   APPLICANT_ALL: string = 'applicants/findAll';
 
+  INTER: string = 'interviews';
   INTER_ADD: string = 'interviews/new';
   INTER_BY_INT: string = 'interviews/findByInterviewer';
-  INTER_BY_REC: string = 'interviews/findByRecruiter';
+  INTER_BY_REC: string = 'interviews/organiser';
   INTER_ALL: string = 'interviews/findAll';
 
+  SKILLS: string = 'user-skills';
   SKILLS_GET: string = 'users/findSkills';
   SKILLS_ADD: string = 'users/addSkill';
   SKILLS_GET_ALL: string = 'skills/findAll';
