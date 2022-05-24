@@ -24,6 +24,114 @@ export class InterviewRequesterService {
     private dateFormatter: DateToStringService
   ) {}
 
+
+  //New function calls using new URIs
+  InterviewsFindAll(){
+    const url =
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.INTER;
+    let out;
+    this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
+      out = <Array<InterviewReturn>>(<unknown>returnData);
+      out.forEach((element) => {
+        //additonal filtering on output, find a way to spoof this separately
+      });
+      return returnData;
+    });
+  }
+
+  InterviewsFindCompleted(userName: string){
+    const url =
+    APPCONSTANTS.APICONSTANTS.BASE_URL +
+    APPCONSTANTS.APICONSTANTS.INTER_COMP.replace('username', userName);
+    let out;
+    this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
+      out = <Array<InterviewReturn>>(<unknown>returnData);
+      out.forEach((element) => {
+        //additonal filtering on output, find a way to spoof this separately
+      });
+      return returnData;
+    });
+  }
+  InterviewsFindConfirmed(userName: string){
+    const url =
+    APPCONSTANTS.APICONSTANTS.BASE_URL +
+    APPCONSTANTS.APICONSTANTS.INTER_CONF.replace('username', userName);
+    let out;
+    this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
+      out = <Array<InterviewReturn>>(<unknown>returnData);
+      out.forEach((element) => {
+        //additonal filtering on output, find a way to spoof this separately
+      });
+      return returnData;
+    });
+  }
+  InterviewsFindPanelNoShow(userName: string){
+    const url =
+    APPCONSTANTS.APICONSTANTS.BASE_URL +
+    APPCONSTANTS.APICONSTANTS.INTER_PNS.replace('username', userName);
+    let out;
+    this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
+      out = <Array<InterviewReturn>>(<unknown>returnData);
+      out.forEach((element) => {
+        //additonal filtering on output, find a way to spoof this separately
+      });
+      return returnData;
+    });
+  }
+  InterviewsFindCandidateNoShow(userName: string){
+    const url =
+    APPCONSTANTS.APICONSTANTS.BASE_URL +
+    APPCONSTANTS.APICONSTANTS.INTER_CNS.replace('username', userName);
+    let out;
+    this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
+      out = <Array<InterviewReturn>>(<unknown>returnData);
+      out.forEach((element) => {
+        //additonal filtering on output, find a way to spoof this separately
+      });
+      return returnData;
+    });
+  }
+  InterviewsFindProgressed(userName: string){
+    const url =
+    APPCONSTANTS.APICONSTANTS.BASE_URL +
+    APPCONSTANTS.APICONSTANTS.INTER_PROG.replace('username', userName);
+    let out;
+    this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
+      out = <Array<InterviewReturn>>(<unknown>returnData);
+      out.forEach((element) => {
+        //additonal filtering on output, find a way to spoof this separately
+      });
+      return returnData;
+    });
+  }
+  InterviewsFindNotProgressed(userName: string){
+    const url =
+    APPCONSTANTS.APICONSTANTS.BASE_URL +
+    APPCONSTANTS.APICONSTANTS.INTER_NOPROG.replace('username', userName);
+    let out;
+    this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
+      out = <Array<InterviewReturn>>(<unknown>returnData);
+      out.forEach((element) => {
+        //additonal filtering on output, find a way to spoof this separately
+      });
+      return returnData;
+    });
+  }
+  InterviewsFindHired(userName: string){
+    const url =
+    APPCONSTANTS.APICONSTANTS.BASE_URL +
+    APPCONSTANTS.APICONSTANTS.INTER_HIRE.replace('username', userName);
+    let out;
+    this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
+      out = <Array<InterviewReturn>>(<unknown>returnData);
+      out.forEach((element) => {
+        //additonal filtering on output, find a way to spoof this separately
+      });
+      return returnData;
+    });
+  }
+  ///Old function calls some are still in use
   stringTimeAdd(input: string, add: number) {
     let splits = input.split(':');
     let hour = Number.parseInt(splits[0]);
@@ -164,7 +272,7 @@ export class InterviewRequesterService {
   getInterviewAll(interviews: Array<InterviewReturn>): void {
     console.log(`getInterviewAll() called`);
     const url =
-      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ALL;
+      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER;
     this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
       let dataArray = <Array<InterviewReturn>>(<unknown>returnData);
       dataArray.forEach((element) => {
@@ -177,7 +285,7 @@ export class InterviewRequesterService {
   getInterviewsDashboard() {
     console.log(`getInterviewsDashboard() called`);
     const url =
-      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ALL;
+      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER;
     this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
       return returnData;
     });
@@ -205,7 +313,7 @@ export class InterviewRequesterService {
   
   getAllInterviews(): Observable<InterviewReturn[]>{
     const url =
-    APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_ALL;
+    APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER;
     return this.requester.getRequest<InterviewReturn[]>(url);
   }
   

@@ -22,6 +22,14 @@ class API_CONSTANTS {
   APPLICANT_ALL: string = 'applicants/findAll';
 
   INTER: string = 'interviews';
+  INTER_COMP: string = 'interviews/username/completed';
+  INTER_CONF: string = 'interviews/username/status/confirmed'
+  INTER_PNS: string = 'interviews/username/status/panel-no-show'
+  INTER_CNS: string = 'interviews/username/status/candidate-no-show'
+  INTER_PROG: string = 'interviews/username/status/progressed'
+  INTER_NOPROG: string = 'interviews/username/status/not-progressed'
+  INTER_HIRE: string = 'interviews/username/status/hired'
+
   INTER_ADD: string = 'interviews/new';
   INTER_BY_INT: string = 'interviews/findByInterviewer';
   INTER_BY_REC: string = 'interviews/organiser';
