@@ -18,6 +18,7 @@ import { DateToStringService } from '../date-to-string.service';
   providedIn: 'root',
 })
 export class AvailabilityRequesterService {
+  /** @ignore */
   constructor(
     private requester: Requester,
     private dateFormatter: DateToStringService
@@ -28,8 +29,7 @@ export class AvailabilityRequesterService {
    * Slots are created on each day in the range from first date to last date,
    * with each slot having the same start and end time for each day.
    * If first and last are the same, one slot is created.
-   *
-   *
+   * 
    * @param  {string} first - First date of the slot(s)
    * @param  {string} last - Last date of the slot(s)
    * @param  {string} start - The start time of each slot
@@ -42,22 +42,11 @@ export class AvailabilityRequesterService {
     start: string,
     end: string
   ): void {
-    const firstDate: Date = new Date(first);
-    const lastDate: Date = new Date(last);
-    const newStart: Date = new Date(start);
-    const newEnd: Date = new Date(end);
-
-    const firstDateString: string = this.dateToStringDate(firstDate);
-    const lastDateString: string = this.dateToStringDate(lastDate);
-
-    const startString: string = this.dateToStringTime(newStart);
-    const endString: string = this.dateToStringTime(newEnd);
-
     const newAvail: AvailabilityRange = new AvailabilityRange(
-      firstDateString,
-      lastDateString,
-      startString,
-      endString
+      this.dateToStringDate(new Date(first)),
+      this.dateToStringDate(new Date(last)),
+      this.dateToStringTime(new Date(start)),
+      this.dateToStringTime(new Date(end))
     );
     const url: string =
       APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_ADD;
@@ -98,7 +87,7 @@ export class AvailabilityRequesterService {
    * @deprecated
    *
    * @param  {Array<number>} input - the array of skill id's required
-   * @returns
+   * @returns void
    */
   getAvailabilityOnSkill(input: Array<number>): void {
     let url: string =
@@ -113,6 +102,7 @@ export class AvailabilityRequesterService {
       return returnData;
     });
   }
+
   /**
    * Returns all availability currently stored in DB,
    * called by {@link CalendarComponent}
@@ -137,8 +127,8 @@ export class AvailabilityRequesterService {
   }
 
   /**
-   *
-   * @param events
+   * TODO still required?
+   * @param {Array<string>} events
    */
   getAllAvailabilityUI(events: string[]): void {
     const url: string =
@@ -169,13 +159,13 @@ export class AvailabilityRequesterService {
    * Populates an input array with availability in a specified range that can
    * be used to create interviews.
    *
-   * @param startDate
-   * @param endDate
-   * @param startTime
-   * @param endTime
-   * @param skillsIDList
-   * @param interviewsReturn
-   * @returns Modified interviewsReturn with all relevant availability
+   * @param {string} startDate
+   * @param {string} endDate
+   * @param {string} startTime
+   * @param {string} endTime
+   * @param {Array<number>} skillsIDList
+   * @param {Array<string>} interviewsReturn
+   * @returns {void} Modified interviewsReturn with all relevant availability
    */
   getAvailabilityByRange(
     startDate: string,
@@ -254,33 +244,52 @@ export class AvailabilityRequesterService {
       });
   }
 
+  /**
+   * Retrives a string representation of the time from a Date object
+   * 
+   * @param date the date to have the time represented as a string
+   * @returns the string representation of the time
+   */
   dateToStringTime(date: Date): string {
     return this.dateFormatter.dateToStringTime(date);
   }
 
+  /**
+   * Retrives a string representation of the date from a Date object
+   * 
+   * @param date the date to have the date represented as a string
+   * @returns the string representation of the date
+   */
   dateToStringDate(date: Date): string {
     return this.dateFormatter.dateToStringDate(date);
   }
 
-  parseAvailabilityEvent(element: Availability): CalendarEventAvailability {
-    const start = new Date(element.date);
-    const end = new Date(element.date);
-    const times1 = element.start_time.split(':');
-    const times2 = element.end_time.split(':');
+  /**
+   * Takes an Availability object and outputs the information in an object to be 
+   * displayed in the calendar
+   * 
+   * @param availability the object to be converted to a calendar event 
+   * @returns a calendar event to be displayed in the calendar
+   */
+  parseAvailabilityEvent(availability: Availability): CalendarEventAvailability {
+    const start = new Date(availability.date);
+    const end = new Date(availability.date);
+    const times1 = availability.start_time.split(':');
+    const times2 = availability.end_time.split(':');
 
     start.setHours(parseInt(times1[0]), parseInt(times1[1]));
     end.setHours(parseInt(times2[0]), parseInt(times2[1]));
 
     const data = new AvailabilityMetaData();
 
-    const newInterview: CalendarEventAvailability = {
-      id: element.availability_id,
+    const newAvailability: CalendarEventAvailability = {
+      id: availability.availability_id,
       start: start,
       end: end,
-      title: 'interview',
+      title: 'availability',
       color: CalendarColors.blue,
       meta: data,
     };
-    return newInterview;
+    return newAvailability;
   }
 }

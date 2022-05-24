@@ -43,14 +43,13 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 // [application components]
 import { LoginComponent } from './components/login/login.component';
-import { HeaderComponent } from './components/header/header.component';
 import { AppComponent } from './app.component';
-import { SidenavBarComponent } from './components/sidenav-bar/sidenav-bar.component';
 
 // [application modules]
 import { MyCalendarModule } from './components/calendar/calendar.module';
 import { DashboardModule } from './components/dashboard/dashboard.module';
 import { AppRoutingModule } from './router/app-routing.module';
+import { NavigationModule } from './components/navigation/navigation.module';
 
 // [application Services]
 import { AppInterceptor } from './components/interceptor/app.interceptor';
@@ -62,10 +61,11 @@ const CLIENT_ID = prodEnv
   ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD
   : APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_DEV;
 @NgModule({
-  declarations: [AppComponent, LoginComponent, HeaderComponent, SidenavBarComponent],
+  declarations: [AppComponent, LoginComponent,],
   imports: [
     BrowserModule,
     DashboardModule,
+    NavigationModule,
     MDBBootstrapModulesPro.forRoot(),
     AppRoutingModule,
     HttpClientModule,
