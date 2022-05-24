@@ -2,6 +2,7 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
+import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 
 /**
  * Form for collecting interviewer availability data and posting to DB
@@ -24,7 +25,8 @@ export class AvailabilityFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private _dialog: MatDialogService,
-    private aRequester: AvailabilityRequesterService
+    private aRequester: AvailabilityRequesterService,
+    private rs: RequestCenterService,
   ) {}
   /** @ignore */
   ngOnInit(): void {}
@@ -44,6 +46,7 @@ export class AvailabilityFormComponent implements OnInit {
    */
   onSubmit(form: FormGroup | any): void {
     this.aRequester.addAvailability(
+      this.rs.getUsername(),
       form.value.dateRange[0],
       form.value.dateRange[1],
       form.value.startTime,

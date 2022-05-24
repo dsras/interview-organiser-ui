@@ -123,7 +123,7 @@ describe('AvailabilityRequesterService', () => {
     let start: string = "1995-12-17T09:24:00";
     let end: string = "1995-12-19T12:24:00";
     spy = spyOn(rService, 'postRequest').and.callThrough();
-    service.addAvailability(first, last, start, end);
+    service.addAvailability('name',first, last, start, end);
     expect(spy).toHaveBeenCalled();
   });
 
