@@ -7,7 +7,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { userData } from 'src/app/shared/models/types';
+import { UserData } from 'src/app/shared/models/types';
 
 import { RecruiterGuard } from './recruiter.guard';
 const fakeRouter = {

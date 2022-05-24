@@ -122,6 +122,33 @@ describe('NavbarComponent', () => {
     expect(spy).toHaveBeenCalled();
   }));
 
+  // it('onMenuChange calls router navigate and changes datasource', () => {
+  //   let rSpy = spyOn(router, 'navigate').and.callThrough();
+  //   let spy = spyOn(dService, "updateDataSource").and.callThrough();
+    
+  //   dService.createDataSource();
+  //   component.onMenuChange("calendar");
+
+  //   expect(rSpy).toHaveBeenCalled();
+  //   expect(spy).toHaveBeenCalled();
+  // });
+
+  // it('getSelectedClass returns correct response based on input', () => {
+  //   component.selectedMenu = 'candidates';
+  //   let response = component.getSelectedClass("candidates");
+
+  //   expect(response == 'selected').toBeTruthy();
+  //   component.selectedMenu = 'positions';
+  //   response = component.getSelectedClass("positions");
+  //   expect(response == 'selected').toBeTruthy();
+  //   response = component.getSelectedClass("fhajgd");
+  //   expect(response == '').toBeTruthy();
+
+  //   component.selectedMenu = 'ashajj';
+  //   response = component.getSelectedClass("positions");
+  //   expect(response == 'selected').toBeFalsy();
+  // });
+
   it('logout clears the local storage and calls signout', fakeAsync(() => {
     let spy = spyOn(aService, 'signOut').and.returnValue(
       <Promise<void>>(<unknown>'passed')
