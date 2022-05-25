@@ -11,6 +11,7 @@ import { Observable, of } from 'rxjs';
 import { DataSource } from 'src/app/shared/models/data-service';
 import { Router } from '@angular/router';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
+import { LoggedInObject } from 'src/app/shared/models/user-model';
 
 const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_DEV;
 
@@ -155,7 +156,7 @@ describe('LoginComponent', () => {
       email: 'thorfinn.manson@accolitedigital.com'
     }));
     let dummyStringInput = "Social";
-    component.validate(dummyStringInput, {type:"type"});
+    component.validate(dummyStringInput, <LoggedInObject><unknown>{ type: "type" });
     expect(dSpy).toHaveBeenCalled();
     expect(bSpy).toHaveBeenCalled();
     expect(localStorage.getItem('apiKey') == 'this is a token').toBeTruthy();
