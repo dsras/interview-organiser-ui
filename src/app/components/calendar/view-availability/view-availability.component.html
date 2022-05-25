@@ -10,7 +10,9 @@
       <div *ngFor="let slot of availability">
         {{ slot.start | date: "HH:mm" }} =>
         {{ slot?.end | date: "HH:mm" }}
-        <button class="btn btn-warning" (click)="onDelete()">Delete</button>
+        <div class='d-inline pull-right'>
+          <button class="btn btn-warning" (click)="onDelete(slot.id)">Delete</button>
+        </div>
       </div>
     </div>
   </div>

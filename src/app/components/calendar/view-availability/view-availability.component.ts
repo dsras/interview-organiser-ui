@@ -22,7 +22,7 @@ export class ViewAvailabilityComponent {
 
   /** @ignore */
   constructor() {}
-  onDelete(){
-    
+  onDelete(id: string | number | any){
+    console.log(id);
   }
 }
