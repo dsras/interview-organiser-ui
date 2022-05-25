@@ -71,11 +71,60 @@ describe('InterviewRequesterService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('InterviewsFindAll calls requester methods', fakeAsync(() => {
+    spy = spyOn(rService, 'getRequest').and.callThrough();
+    service.InterviewsFindAll();
+    expect(spy).toHaveBeenCalled();
+  }));
+
+  it('InterviewsFindCompleted gets called', () => {
+    let userName = "username";
+    spy = spyOn(rService, 'getRequest').and.callThrough();
+    service.InterviewsFindCompleted(userName);
+    expect(spy).toHaveBeenCalled();
+  });
   
+  it('InterviewsFindConfirmed gets called', () => {
+    let userName = "username";
+    spy = spyOn(rService, 'getRequest').and.callThrough();
+    service.InterviewsFindConfirmed(userName);
+    expect(spy).toHaveBeenCalled();
+  });  
+  it('InterviewsFindPanelNoShow gets called', () => {
+    let userName = "username";
+    spy = spyOn(rService, 'getRequest').and.callThrough();
+    service.InterviewsFindPanelNoShow(userName);
+    expect(spy).toHaveBeenCalled();
+  });
+  it('InterviewsFindCandidateNoShow gets called', () => {
+    let userName = "username";
+    spy = spyOn(rService, 'getRequest').and.callThrough();
+    service.InterviewsFindCandidateNoShow(userName);
+    expect(spy).toHaveBeenCalled();
+  });
+  it('InterviewsFindProgressed gets called', () => {
+    let userName = "username";
+    spy = spyOn(rService, 'getRequest').and.callThrough();
+    service.InterviewsFindProgressed(userName);
+    expect(spy).toHaveBeenCalled();
+  });
+  it('InterviewsFindNotProgressed gets called', () => {
+    let userName = "username";
+    spy = spyOn(rService, 'getRequest').and.callThrough();
+    service.InterviewsFindNotProgressed(userName);
+    expect(spy).toHaveBeenCalled();
+  });
+  it('InterviewsFindHired gets called', () => {
+    let userName = "username";
+    spy = spyOn(rService, 'getRequest').and.callThrough();
+    service.InterviewsFindHired(userName);
+    expect(spy).toHaveBeenCalled();
+  });
   it('getInterviewByInterviewer gets called', () => {
     let events: CalendarEvent[] = [];
     let userName = "username";
-    spy = spyOn(rService, 'getRequest').and.callThrough();
+    spy = spyOn(rService, 'getRequest').and.returnValue(of([interRet]));
     service.getInterviewByInterviewer(events, userName);
     expect(spy).toHaveBeenCalled();
   });
@@ -83,7 +132,7 @@ describe('InterviewRequesterService', () => {
   it('getInterviewByRecruiter gets called', () => {
     let events: CalendarEvent[] = [];
     let userName = "username";
-    spy = spyOn(rService, 'getRequest').and.callThrough();
+    spy = spyOn(rService, 'getRequest').and.returnValue(of([interRet]));
     service.getInterviewByRecruiter(events, userName);
     expect(spy).toHaveBeenCalled();
   });
@@ -109,8 +158,8 @@ describe('InterviewRequesterService', () => {
   it('addInterview gets called', fakeAsync(() => {
     let interviewerID: number[] = [];
     let interviewDate: string = "";
-    let timeStart: string = "";
-    let timeEnd: string = "";
+    let timeStart: string = "19:00";
+    let timeEnd: string = "21:00";
     let additionalInfo: string = "";
     spy = spyOn(rService, 'postRequest').and.callThrough();
     service.addInterview('name', interviewerID, interviewDate, timeStart, timeEnd, additionalInfo);
@@ -132,12 +181,6 @@ describe('InterviewRequesterService', () => {
   });
 
   
-  it('outputInterviewEvent gets called', () => {
-    let formInput: InterviewReturn = new InterviewReturn(0,[],"","","","","","","");
-    spy = spyOn(service, 'outputInterviewEvent').and.callThrough();
-    service.outputInterviewEvent(formInput);
-    expect(service.outputInterviewEvent).toHaveBeenCalled();
-  });
   
   it('date should be formatted to YYYY-MM-DD', () => {
     let tempDate = new Date('1995-12-17T03:24:00');

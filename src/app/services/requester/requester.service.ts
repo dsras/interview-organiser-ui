@@ -34,6 +34,16 @@ export class Requester {
       .post<type>(link, obj, opt)
       .pipe(catchError(this.handleError));
   }
+  postRequestNoAuth<type>(link: string, obj: any): Observable<any> {
+    const opt = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
+    return this.http
+      .post<type>(link, obj, opt)
+      .pipe(catchError(this.handleError));
+  }
   postRequest<Type>(link: string, obj: Type): Observable<Type> {
     const opt = {
       headers: new HttpHeaders({

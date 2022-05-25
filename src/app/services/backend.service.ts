@@ -19,29 +19,32 @@ export class BackendService implements IBackendService {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     };
-    return this._httpClient.post(
-      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.LOGIN,
-      user,
-      httpOptions
-    );
+    return this._requester.postRequestNoAuth(APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.LOGIN, user);
+    // return this._httpClient.post(
+    //   APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.LOGIN,
+    //   user,
+    //   httpOptions
+    // );
   }
 
-  getRequestHeader(): HttpHeaders {
-    return new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + localStorage.getItem('apiKey'),
-    });
-  }
 
-  getUserRole(user: IUser): Observable<any> {
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-    };
-    return this._httpClient.get(
-      APPCONSTANTS.APICONSTANTS.BASE_URL +
-        APPCONSTANTS.APICONSTANTS.USER +
-        '/' + user.username,
-      httpOptions
-    );
-  }
+  //! not used, maybe needed later but for now, commented.
+  // getRequestHeader(): HttpHeaders {
+  //   return new HttpHeaders({
+  //     'Content-Type': 'application/json',
+  //     Authorization: 'Bearer ' + localStorage.getItem('apiKey'),
+  //   });
+  // }
+
+  // getUserRole(user: IUser): Observable<any> {
+  //   const httpOptions = {
+  //     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  //   };
+  //   return this._httpClient.get(
+  //     APPCONSTANTS.APICONSTANTS.BASE_URL +
+  //       APPCONSTANTS.APICONSTANTS.USER +
+  //       '/' + user.username,
+  //     httpOptions
+  //   );
+  // }
 }
