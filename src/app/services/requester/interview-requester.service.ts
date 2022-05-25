@@ -3,7 +3,7 @@ import { Requester } from '../requester/requester.service';
 import {
   Interview,
   InterviewReturn,
- StatusUpdate,
+  StatusUpdate,
 } from '../../shared/models/types';
 import { APPCONSTANTS } from '../../shared/constants/app.constant';
 import { CalendarEvent } from 'angular-calendar';
@@ -13,6 +13,8 @@ import { CalendarColors } from 'src/app/shared/constants/colours.constant';
 import { DateToStringService } from '../date-to-string.service';
 import { Observable } from 'rxjs';
 import { RequestCenterService } from './request-center.service';
+import { userInfo } from 'os';
+import { getUsername } from 'src/app/shared/functions/get-user-from-local.function';
 
 @Injectable({
   providedIn: 'root',
@@ -24,12 +26,24 @@ export class InterviewRequesterService {
     private dateFormatter: DateToStringService
   ) {}
 
-
   //New function calls using new URIs
-  InterviewsFindAll(){
+  InterviewsFindAll() {
+    const url =
+      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER;
+    let out;
+    this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
+      out = <Array<InterviewReturn>>(<unknown>returnData);
+      out.forEach((element) => {
+        //additonal filtering on output, find a way to spoof this separately
+      });
+      return returnData;
+    });
+  }
+
+  InterviewsFindCompleted(userName: string) {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
-      APPCONSTANTS.APICONSTANTS.INTER;
+      APPCONSTANTS.APICONSTANTS.INTER_COMP.replace('username', userName);
     let out;
     this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
       out = <Array<InterviewReturn>>(<unknown>returnData);
@@ -39,11 +53,10 @@ export class InterviewRequesterService {
       return returnData;
     });
   }
-
-  InterviewsFindCompleted(userName: string){
+  InterviewsFindConfirmed(userName: string) {
     const url =
-    APPCONSTANTS.APICONSTANTS.BASE_URL +
-    APPCONSTANTS.APICONSTANTS.INTER_COMP.replace('username', userName);
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.INTER_CONF.replace('username', userName);
     let out;
     this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
       out = <Array<InterviewReturn>>(<unknown>returnData);
@@ -53,10 +66,10 @@ export class InterviewRequesterService {
       return returnData;
     });
   }
-  InterviewsFindConfirmed(userName: string){
+  InterviewsFindPanelNoShow(userName: string) {
     const url =
-    APPCONSTANTS.APICONSTANTS.BASE_URL +
-    APPCONSTANTS.APICONSTANTS.INTER_CONF.replace('username', userName);
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.INTER_PNS.replace('username', userName);
     let out;
     this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
       out = <Array<InterviewReturn>>(<unknown>returnData);
@@ -66,10 +79,10 @@ export class InterviewRequesterService {
       return returnData;
     });
   }
-  InterviewsFindPanelNoShow(userName: string){
+  InterviewsFindCandidateNoShow(userName: string) {
     const url =
-    APPCONSTANTS.APICONSTANTS.BASE_URL +
-    APPCONSTANTS.APICONSTANTS.INTER_PNS.replace('username', userName);
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.INTER_CNS.replace('username', userName);
     let out;
     this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
       out = <Array<InterviewReturn>>(<unknown>returnData);
@@ -79,10 +92,10 @@ export class InterviewRequesterService {
       return returnData;
     });
   }
-  InterviewsFindCandidateNoShow(userName: string){
+  InterviewsFindProgressed(userName: string) {
     const url =
-    APPCONSTANTS.APICONSTANTS.BASE_URL +
-    APPCONSTANTS.APICONSTANTS.INTER_CNS.replace('username', userName);
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.INTER_PROG.replace('username', userName);
     let out;
     this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
       out = <Array<InterviewReturn>>(<unknown>returnData);
@@ -92,10 +105,10 @@ export class InterviewRequesterService {
       return returnData;
     });
   }
-  InterviewsFindProgressed(userName: string){
+  InterviewsFindNotProgressed(userName: string) {
     const url =
-    APPCONSTANTS.APICONSTANTS.BASE_URL +
-    APPCONSTANTS.APICONSTANTS.INTER_PROG.replace('username', userName);
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.INTER_NOPROG.replace('username', userName);
     let out;
     this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
       out = <Array<InterviewReturn>>(<unknown>returnData);
@@ -105,23 +118,10 @@ export class InterviewRequesterService {
       return returnData;
     });
   }
-  InterviewsFindNotProgressed(userName: string){
+  InterviewsFindHired(userName: string) {
     const url =
-    APPCONSTANTS.APICONSTANTS.BASE_URL +
-    APPCONSTANTS.APICONSTANTS.INTER_NOPROG.replace('username', userName);
-    let out;
-    this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
-      out = <Array<InterviewReturn>>(<unknown>returnData);
-      out.forEach((element) => {
-        //additonal filtering on output, find a way to spoof this separately
-      });
-      return returnData;
-    });
-  }
-  InterviewsFindHired(userName: string){
-    const url =
-    APPCONSTANTS.APICONSTANTS.BASE_URL +
-    APPCONSTANTS.APICONSTANTS.INTER_HIRE.replace('username', userName);
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.INTER_HIRE.replace('username', userName);
     let out;
     this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
       out = <Array<InterviewReturn>>(<unknown>returnData);
@@ -154,9 +154,9 @@ export class InterviewRequesterService {
   outputInterviewEvent(element: InterviewReturn): CalendarEventInterview {
     const start = new Date(element.date);
     const end = new Date(element.date);
-    const int_id = element.interview_id;
-    const times1 = element.start_time.split(':');
-    const times2 = element.end_time.split(':');
+    const int_id = element.interviewId;
+    const times1 = element.startTime.split(':');
+    const times2 = element.endTime.split(':');
 
     start.setHours(parseInt(times1[0]), parseInt(times1[1]));
     end.setHours(parseInt(times2[0]), parseInt(times2[1]));
@@ -165,7 +165,7 @@ export class InterviewRequesterService {
       panel: element.interviewers,
       outcome: element.outcome,
       status: element.status,
-      additional: element.additional_info,
+      additional: element.additionalInfo,
     });
 
     const newInterview: CalendarEventInterview = {
@@ -186,7 +186,6 @@ export class InterviewRequesterService {
     let startTimeString: string;
     let endTimeString = '';
     console.log(startTime.toString());
-
 
     if (startTime.toString() != '') {
       startTimeString = this.dateToStringTime(startTime);
@@ -220,9 +219,10 @@ export class InterviewRequesterService {
     additionalInfo: string
   ) {
     const url: string =
-      APPCONSTANTS.APICONSTANTS.BASE_URL 
-      + APPCONSTANTS.APICONSTANTS.INTER
-      + '/'+ userName;
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.INTER +
+      '/' +
+      userName;
     const newInterview: Interview = new Interview(
       interviewerID,
       interviewDate,
@@ -239,7 +239,8 @@ export class InterviewRequesterService {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.INTER +
-      '/' + username;
+      '/' +
+      username;
     let out;
     this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
       out = <Array<InterviewReturn>>(<unknown>returnData);
@@ -257,7 +258,8 @@ export class InterviewRequesterService {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.INTER_BY_REC +
-      '/' + username;
+      '/' +
+      username;
     let out;
     this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
       out = <Array<InterviewReturn>>(<unknown>returnData);
@@ -310,11 +312,13 @@ export class InterviewRequesterService {
         return returnData;
       });
   }
-  
-  getAllInterviews(): Observable<InterviewReturn[]>{
+
+  getAllInterviews(): Observable<InterviewReturn[]> {
     const url =
-    APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER;
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.INTER +
+      '/organiser/' +
+      getUsername();
     return this.requester.getRequest<InterviewReturn[]>(url);
   }
-  
 }
