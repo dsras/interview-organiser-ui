@@ -22,4 +22,7 @@ export class ViewAvailabilityComponent {
 
   /** @ignore */
   constructor() {}
+  onDelete(){
+    
+  }
 }
