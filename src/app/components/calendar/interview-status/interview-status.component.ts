@@ -11,7 +11,8 @@ import {
 /**
  * Component to view and modify interview status
  *
- * TODO Filter form options depending on the roles of logged in user
+ * TODO Filter form options depending on the roles of logged in user.
+ * TODO onSubmit options to select whether updating a status or outcome.
  */
 @Component({
   selector: 'interview-status',
@@ -19,6 +20,7 @@ import {
   styleUrls: ['./interview-status.component.scss'],
 })
 export class InterviewStatusComponent implements OnInit {
+  /** The time slot being displayed */
   @Input() slot?: CalendarEventInterview;
 
   /** Form for updating interview status */
@@ -39,14 +41,14 @@ export class InterviewStatusComponent implements OnInit {
     this.outcomeList[2],
   ];
 
-  // interviewStatusForm?: FormGroup;
-
+  /** @ignore */
   constructor(
     private ms: ModalControllerService,
     private fb: FormBuilder,
     private iRequester: InterviewRequesterService
   ) {}
 
+  /** @ignore */
   ngOnInit() {}
 
   /** @ignore */
@@ -59,30 +61,22 @@ export class InterviewStatusComponent implements OnInit {
     this.ms.closeModal();
   }
 
-  /** 
+  /**
    * Function to be called on click of the submit button
    */
   onSubmit(f: FormGroup): void {
-    console.log(f.value);
-    console.log(this.slot);
     const str: string = f.value.status;
     let id: number = -1;
 
     if (this.slot?.id) {
       id = Number(this.slot.id);
     }
-    console.log('made it to the error check');
-    console.log(str);
-    console.log(this.statusList);
-    console.log(this.outcomeList);
     // TODO streamline this?
-    let errCount: number = 0;
     let isOutcome: boolean = true;
     if (!this.statusList.includes(str) && !this.outcomeList.includes(str)) {
       console.warn('no valid status given');
       return;
     }
-
     console.log('made it to the requester');
     this.iRequester.updateInterviewStatus(id, str, !isOutcome);
     f.reset();

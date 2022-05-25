@@ -6,6 +6,7 @@ import { SkillOptions, Skills } from '../../../shared/models/types';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 
+/** Component for finding savailability for interview and creating them */
 @Component({
   selector: 'create-interview',
   templateUrl: './create-interview.component.html',

@@ -4,23 +4,30 @@ import { SocialAuthService } from 'angularx-social-login';
 import { APPCONSTANTS } from 'src/app/shared/constants/app.constant';
 import { DataSourceService } from 'src/app/services/data-source.service';
 
+/**
+ * Navbar component displayed at the head of every page for navigation
+ */
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['../../../styles.scss'],
+  selector: 'navbar',
+  templateUrl: './navbar.component.html',
+  styleUrls: ['../../../../styles.scss'],
 })
-export class HeaderComponent implements OnInit {
-//   isHeader: boolean = true;
-//   selectedMenu: string = '';
+export class NavbarComponent implements OnInit {
+  //   isHeader: boolean = true;
+  //   selectedMenu: string = '';
+  /** Login type */
   loginType: string = '';
+  /** User */
   user: any = null;
 
+  /** @ignore */
   constructor(
     private _dataSourceService: DataSourceService,
     private router: Router,
     private socialAuthService: SocialAuthService
   ) {}
 
+  /** @ignore */
   ngOnInit(): void {
     this._dataSourceService
       .getDataSource('route')
@@ -45,6 +52,7 @@ export class HeaderComponent implements OnInit {
       });
   }
 
+  /** Logs out the user */
   logout(): void {
     if (this.loginType === APPCONSTANTS.LOGIN_CONSTANTS.LOGIN_TYPE_SSO) {
       this.socialAuthService.signOut();
@@ -53,13 +61,25 @@ export class HeaderComponent implements OnInit {
     this.user = null;
     this.router.navigate(['login']);
   }
+
+  /**
+   * Gets the current navigation state of the app
+   * 
+   * @returns {boolean} True if currently on '/login', otherwise false.
+   */
   onLoginPage(): boolean {
-      if (this.router.url === '/login') {
-          return false
-      }
-      return true
+    if (this.router.url === '/login') {
+      return true;
+    }
+    return false;
   }
+
+  /**
+   * Gets the logged in status of the user
+   * 
+   * @returns {boolean} True if the user is logged in
+   */
   loggedIn(): boolean {
-      return this.user != null
+    return this.user != null;
   }
 }
