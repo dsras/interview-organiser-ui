@@ -122,14 +122,25 @@ describe('LoginComponent', () => {
   //! not sure how to proceed with this one
   it('ngOnInit calls various service methods', fakeAsync(() => {
     dService.createDataSource();
+    sService.signIn(GoogleLoginProvider.PROVIDER_ID);
     tick(3);
     let dSpy = spyOn(dService, "updateDataSource").and.callThrough();
     let cSpy = spyOn(component, "validate").and.callThrough();
+    console.log('here we go again');
+    sService.authState.subscribe(ret=>{
+      console.log(ret);
+      if(ret ==null){
+        console.log('null');
+      }
+      else{
+        console.log('valid');
+      }
+    });
     // sService.signIn(GoogleLoginProvider.PROVIDER_ID);
     // let aSpy = spyOn(sService, 'authState').and.callFake(() =>of(new SocialUser));
     let aSpy = spyOnProperty(sService, 'authState', 'get').and.returnValue(of(new SocialUser));
     component.ngOnInit();
-    tick(3);
+    tick(10);
     expect(dSpy).toHaveBeenCalled();
     expect(cSpy).toHaveBeenCalled();
   }));
