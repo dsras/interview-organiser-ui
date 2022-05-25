@@ -143,8 +143,8 @@ export class AvailabilityRequesterService {
       out.forEach((element) => {
         const start: Date = new Date(element.date);
         const end: Date = new Date(element.date);
-        const times1: string[] = element.start_time.split(':');
-        const times2: string[] = element.end_time.split(':');
+        const times1: string[] = element.startTime.split(':');
+        const times2: string[] = element.endTime.split(':');
 
         start.setHours(parseInt(times1[0]), parseInt(times1[1]));
         end.setHours(parseInt(times2[0]), parseInt(times2[1]));
@@ -210,12 +210,12 @@ export class AvailabilityRequesterService {
           let refStart: Date = new Date(newStartTime);
           let refEnd: Date = new Date(newStartTime);
           refStart.setHours(
-            Number.parseInt(element.start_time.split(':')[0]),
-            Number.parseInt(element.start_time.split(':')[1])
+            Number.parseInt(element.startTime.split(':')[0]),
+            Number.parseInt(element.startTime.split(':')[1])
           );
           refEnd.setHours(
-            Number.parseInt(element.end_time.split(':')[0]),
-            Number.parseInt(element.end_time.split(':')[1])
+            Number.parseInt(element.endTime.split(':')[0]),
+            Number.parseInt(element.endTime.split(':')[1])
           );
 
           let startInput: string = '';
@@ -275,10 +275,11 @@ export class AvailabilityRequesterService {
    * @returns a calendar event to be displayed in the calendar
    */
   parseAvailabilityEvent(availability: Availability): CalendarEventAvailability {
+    console.log(availability)
     const start = new Date(availability.date);
     const end = new Date(availability.date);
-    const times1 = availability.start_time.split(':');
-    const times2 = availability.end_time.split(':');
+    const times1 = availability.startTime.split(':');
+    const times2 = availability.endTime.split(':');
 
     start.setHours(parseInt(times1[0]), parseInt(times1[1]));
     end.setHours(parseInt(times2[0]), parseInt(times2[1]));
@@ -286,7 +287,7 @@ export class AvailabilityRequesterService {
     const data = new AvailabilityMetaData();
 
     const newAvailability: CalendarEventAvailability = {
-      id: availability.availability_id,
+      id: availability.availabilityId,
       start: start,
       end: end,
       title: 'availability',
