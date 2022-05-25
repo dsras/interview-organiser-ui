@@ -39,6 +39,16 @@ const FakeDataSource = {
     }
   }
 }
+const fakeSocialAuth = {
+  _authState: of(new SocialUser),
+  get authState(): Observable<SocialUser>{
+    return of(new SocialUser);
+  },
+  signIn(providerId: string){
+    return of(new SocialUser);
+  }
+
+}
 
 const fakeRouter = {
   navigate(input: Array<any>){
@@ -71,6 +81,7 @@ describe('LoginComponent', () => {
         {provide: BackendService, useValue: FakeBackendService},
         {provide: DataSourceService, useValue: FakeDataSource},
         {provide: Router, useValue: fakeRouter},
+        {provide: SocialAuthService, useValue: fakeSocialAuth},
         {
           provide: 'SocialAuthServiceConfig',
           useValue: {
@@ -109,12 +120,19 @@ describe('LoginComponent', () => {
   });
 
   //! not sure how to proceed with this one
-  it('ngOnInit calls various service methods', () => {
+  it('ngOnInit calls various service methods', fakeAsync(() => {
     dService.createDataSource();
+    tick(3);
     let dSpy = spyOn(dService, "updateDataSource").and.callThrough();
+    let cSpy = spyOn(component, "validate").and.callThrough();
+    // sService.signIn(GoogleLoginProvider.PROVIDER_ID);
+    // let aSpy = spyOn(sService, 'authState').and.callFake(() =>of(new SocialUser));
+    let aSpy = spyOnProperty(sService, 'authState', 'get').and.returnValue(of(new SocialUser));
     component.ngOnInit();
+    tick(3);
     expect(dSpy).toHaveBeenCalled();
-  })
+    expect(cSpy).toHaveBeenCalled();
+  }));
 
 
   it('validate should call service methods', () => {
@@ -136,9 +154,13 @@ describe('LoginComponent', () => {
   });
 
   //! still trying to get the signIn function to call
-  // it('SSO should call service methods', fakeAsync(() => {
-  //   let sSpy = spyOn(sService, 'signIn').and.returnValue(<Promise<SocialUser>><unknown>'good');    
-  //   component.sso();
-  //   expect(sSpy).toHaveBeenCalled();
-  // }));
+  it('SSO should call service methods', fakeAsync(() => {
+    let sSpy = spyOn(sService, 'signIn').and.returnValue(new Promise<SocialUser>((resolve, reject) => {
+      resolve(new SocialUser());
+    }));  
+    tick(3)  ;
+    component.sso();
+    tick(3);
+    expect(sSpy).toHaveBeenCalled();
+  }));
 });
