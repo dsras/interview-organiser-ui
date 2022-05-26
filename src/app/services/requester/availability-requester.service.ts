@@ -29,7 +29,7 @@ export class AvailabilityRequesterService {
   deleteAvailability(id: string | number | any){
     const url: string =
     APPCONSTANTS.APICONSTANTS.BASE_URL + 
-    APPCONSTANTS.APICONSTANTS.AVAIL;
+    APPCONSTANTS.APICONSTANTS.AVAIL_DEL;
     this.requester
       .postRequest<availIdOnly>(url, id)
       .subscribe((returnData) => {
