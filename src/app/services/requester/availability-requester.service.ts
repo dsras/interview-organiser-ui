@@ -241,7 +241,7 @@ export class AvailabilityRequesterService {
               ' this is with: ' +
               element.interviewer +
               ' id: ' +
-              element.interviewer_id
+              element.interviewerId
           );
         });
       });

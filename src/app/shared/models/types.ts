@@ -119,23 +119,23 @@ export class applicant implements Data {
 
 export class AvailabilityForInterviews implements Data {
   interviewer: string;
-  interviewer_id: number;
-  availability_id: number;
+  interviewerId: number;
+  availabilityId: number;
   date: string;
   startTime: string;
   endTime: string;
   constructor(
     interviewer: string,
-    interviewer_id: number,
-    availability_id: number,
+    interviewerId: number,
+    availabilityId: number,
     date: string,
     startTime: string,
     endTime: string
   ) {
     this.interviewer = interviewer;
-    this.interviewer_id = interviewer_id;
+    this.interviewerId = interviewerId;
     this.date = date;
-    this.availability_id = availability_id;
+    this.availabilityId = availabilityId;
     this.startTime = startTime;
     this.endTime = endTime;
   }
@@ -160,38 +160,38 @@ export class Availability implements Data {
 }
 
 export class AvailabilityRange implements Data {
-  start_date: string;
-  end_date: string;
+  startDate: string;
+  endDate: string;
   startTime: string;
   endTime: string;
   constructor(
-    start_date: string,
-    end_date: string,
+    startDate: string,
+    endDate: string,
     startTime: string,
     endTime: string
   ) {
-    this.start_date = start_date;
-    this.end_date = end_date;
+    this.startDate = startDate;
+    this.endDate = endDate;
     this.startTime = startTime;
     this.endTime = endTime;
   }
 }
 
 export class InterviewRange implements Data {
-  start_date: string;
-  end_date: string;
+  startDate: string;
+  endDate: string;
   startTime: string;
   endTime: string;
   skills: number[];
   constructor(
-    start_date: string,
-    end_date: string,
+    startDate: string,
+    endDate: string,
     startTime: string,
     endTime: string,
     skills: number[]
   ) {
-    this.start_date = start_date;
-    this.end_date = end_date;
+    this.startDate = startDate;
+    this.endDate = endDate;
     this.startTime = startTime;
     this.endTime = endTime;
     this.skills = skills;
@@ -199,7 +199,7 @@ export class InterviewRange implements Data {
 }
 
 export class Interview implements Data {
-  interviewer_ids: number[];
+  interviewerIds: number[];
   //organiserId: number;
   // applicantId: number;
   //roleApplied: number;
@@ -210,7 +210,7 @@ export class Interview implements Data {
   // skillID: number;
   //confirmed: number;
   constructor(
-    interviewer_ids: number[],
+    interviewerIds: number[],
     //organiserId: number,
     // applicantId: number,
     //roleApplied: number,
@@ -221,7 +221,7 @@ export class Interview implements Data {
     // skillID: number
     additionalInfo: string
   ) {
-    this.interviewer_ids = interviewer_ids;
+    this.interviewerIds = interviewerIds;
     //this.organiserId = organiserId;
     // this.applicantId = applicantId;
     //this.roleApplied = roleApplied;
