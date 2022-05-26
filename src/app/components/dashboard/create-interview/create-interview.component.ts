@@ -1,10 +1,10 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 import { SkillOptions, Skills } from '../../../shared/models/types';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
+import { MatDialogService } from 'src/app/services/mat-dialog.service';
 
 /** Component for finding savailability for interview and creating them */
 @Component({
@@ -45,7 +45,7 @@ export class CreateInterviewComponent implements OnInit {
   /** @ignore */
   constructor(
     private fb: FormBuilder,
-    private ms: ModalControllerService,
+    private _dialog: MatDialogService,
     private rs: RequestCenterService,
     private aRequester: AvailabilityRequesterService,
     private iRequester: InterviewRequesterService
@@ -58,12 +58,12 @@ export class CreateInterviewComponent implements OnInit {
 
   /** @ignore */
   openModal(template: TemplateRef<any>): void {
-    this.ms.openModal(template);
+    this._dialog.openDialog(template);
   }
 
   /** @ignore */
   closeModal(): void {
-    this.ms.closeModal();
+    this._dialog.closeDialog();
   }
 
   /**
