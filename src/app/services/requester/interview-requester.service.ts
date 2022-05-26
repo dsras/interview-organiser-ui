@@ -13,7 +13,6 @@ import { CalendarColors } from 'src/app/shared/constants/colours.constant';
 import { DateToStringService } from '../date-to-string.service';
 import { Observable } from 'rxjs';
 import { RequestCenterService } from './request-center.service';
-import { userInfo } from 'os';
 import { getUsername } from 'src/app/shared/functions/get-user-from-local.function';
 
 @Injectable({

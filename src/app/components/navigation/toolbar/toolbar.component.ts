@@ -1,19 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SocialAuthService } from 'angularx-social-login';
-import { APPCONSTANTS } from 'src/app/shared/constants/app.constant';
 import { DataSourceService } from 'src/app/services/data-source.service';
+import { APPCONSTANTS } from 'src/app/shared/constants/app.constant';
 
-/**
- * Navbar component displayed at the head of every page for navigation
- */
 @Component({
-  selector: 'navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['../../../../styles.scss'],
+  selector: 'toolbar',
+  templateUrl: './toolbar.component.html',
+  styleUrls: ['./toolbar.component.scss']
 })
-export class NavbarComponent implements OnInit {
-  //   isHeader: boolean = true;
+export class ToolbarComponent implements OnInit {
+
+//   isHeader: boolean = true;
   //   selectedMenu: string = '';
   /** Login type */
   loginType: string = '';
@@ -85,4 +83,5 @@ export class NavbarComponent implements OnInit {
   click(message: string): void {
     console.log(message)
   }
+
 }

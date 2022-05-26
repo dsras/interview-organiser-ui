@@ -26,6 +26,7 @@
         aria-controls="navbarNav"
         aria-expanded="false"
         aria-label="Toggle navigation"
+        (click)="click('1')"
       >
         <i class="fa fa-bars text-black w-20"></i>
       </button>
@@ -77,6 +78,7 @@
               class="btn dropdown-toggle float-end"
               aria-controls="dropdown-animated"
               style="width: 60px"
+              (click)="click('2')"
             >
               <img
                 [src]="user.photoUrl"
@@ -107,7 +109,7 @@
                   <p style="margin-left: -15px">{{ user.name }}</p>
                 </span>
                 <span class="dropdown-item" style="display: grid">
-                  <button class="btn primary-btn" (click)="logout()">
+                  <button class="btn primary-btn" (click)="logout()" (click)="click('3')">
                     <i class="fa fa-sign-out" aria-hidden="true"></i>
                     Logout
                   </button>
@@ -151,6 +153,7 @@
           class="btn dropdown-toggle float-end"
           aria-controls="dropdown-animated"
           style="width: 60px"
+          (click)="click('4')"
         >
           <img
             [src]="user.photoUrl"
@@ -177,7 +180,7 @@
               <p style="margin-left: -15px">{{ user.name }}</p>
             </span>
             <span class="dropdown-item" style="display: grid">
-              <button class="btn primary-btn" (click)="logout()">
+              <button class="btn primary-btn" (click)="logout()" (click)="click('5')">
                 <i class="fa fa-sign-out" aria-hidden="true"></i>
                 Logout
               </button>
