@@ -1,3 +1,3 @@
 export function getUsername(): string {
-    return JSON.parse('' + localStorage.getItem('userdata')).username
+  return JSON.parse('' + localStorage.getItem('userData')).username;
 }

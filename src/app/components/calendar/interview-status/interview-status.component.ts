@@ -1,5 +1,4 @@
 import { Component, Input, OnInit, TemplateRef } from '@angular/core';
-import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { CalendarEventInterview } from 'src/app/shared/models/calendar-event-detail';
@@ -7,6 +6,7 @@ import {
   interviewOutcomeOptions,
   interviewStatusOptions,
 } from 'src/app/shared/constants/interview-options.constant';
+import { MatDialogService } from 'src/app/services/mat-dialog.service';
 
 /**
  * Component to view and modify interview status
@@ -43,7 +43,7 @@ export class InterviewStatusComponent implements OnInit {
 
   /** @ignore */
   constructor(
-    private ms: ModalControllerService,
+    private _dialog: MatDialogService,
     private fb: FormBuilder,
     private iRequester: InterviewRequesterService
   ) {}
@@ -53,12 +53,12 @@ export class InterviewStatusComponent implements OnInit {
 
   /** @ignore */
   openModal(template: TemplateRef<any>): void {
-    this.ms.openModalLg(template);
+    this._dialog.openDialogLarge(template);
   }
 
   /** @ignore */
   closeModal(): void {
-    this.ms.closeModal();
+    this._dialog.closeDialog();
   }
 
   /**

@@ -6,7 +6,7 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { ModalControllerService } from 'src/app/services/modal-controller.service';
+import { MatDialogService } from 'src/app/services/mat-dialog.service';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { InterviewTableData } from 'src/app/shared/models/table-data';
 import { InterviewReturn } from 'src/app/shared/models/types';
@@ -47,7 +47,7 @@ export class AllInterviewsComponent implements OnInit {
   ];
   /** @ignore */
   constructor(
-    private ms: ModalControllerService,
+    private _dialog: MatDialogService,
     private iRequester: InterviewRequesterService
   ) {}
 
@@ -71,12 +71,12 @@ export class AllInterviewsComponent implements OnInit {
 
   /** @ignore */
   openModal(template: TemplateRef<any>): void {
-    this.ms.openModal(template);
+    this._dialog.openDialog(template);
   }
 
   /** @ignore */
   closeModal(): void {
-    this.ms.closeModal();
+    this._dialog.closeDialog();
   }
   /** @ignore test method to be removed when completed */
   message(text: string): void {

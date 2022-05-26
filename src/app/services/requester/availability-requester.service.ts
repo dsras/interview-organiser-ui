@@ -288,7 +288,6 @@ export class AvailabilityRequesterService {
    * @returns a calendar event to be displayed in the calendar
    */
   parseAvailabilityEvent(availability: Availability): CalendarEventAvailability {
-    console.log(availability)
     const start = new Date(availability.date);
     const end = new Date(availability.date);
     const times1 = availability.startTime.split(':');

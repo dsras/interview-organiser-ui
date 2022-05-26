@@ -20,7 +20,6 @@ export class SkillsFormComponent implements OnInit {
   formOptions: SkillOptions = {
     skillNames: new Set<string>(),
     skillLevels: new Set<string>(),
-    
   };
 
   /** Empty skills form to be populated by user */
@@ -33,7 +32,7 @@ export class SkillsFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private rs: RequestCenterService,
-    private _dialog: MatDialogService,
+    private _dialog: MatDialogService
   ) {}
 
   /** @ignore */
@@ -44,7 +43,7 @@ export class SkillsFormComponent implements OnInit {
   // ? should this be private ?
   /** {@link MatDialogService} */
   openDialog(template: TemplateRef<any>): void {
-    this._dialog.openDialog(template);
+    this._dialog.openDialogSmall(template);
   }
 
   // ? Should this be private ?
@@ -63,10 +62,8 @@ export class SkillsFormComponent implements OnInit {
    * @param form completed form to be submitted
    */
   onSubmit(form: FormGroup | any): void {
-    let skillName: string = JSON.stringify(form.value.skill);
-    let skillLevel: string = JSON.stringify(form.value.level);
-    skillName = skillName.slice(1, -1);
-    skillLevel = skillLevel.slice(1, -1);
+    const skillName: string = JSON.stringify(form.value.skill).slice(1, -1);
+    const skillLevel: string = JSON.stringify(form.value.level).slice(1, -1);
     let id: number = 0;
     this.skillsAvailable.forEach((element) => {
       if (

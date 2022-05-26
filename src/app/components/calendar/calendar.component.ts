@@ -9,13 +9,13 @@ import { isSameDay, isSameMonth } from 'date-fns';
 import { Subject } from 'rxjs';
 import { CalendarEvent, CalendarView } from 'angular-calendar';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
-import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import {
   CalendarEventAvailability,
   CalendarEventInterview,
 } from 'src/app/shared/models/calendar-event-detail';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
+import { MatDialogService } from 'src/app/services/mat-dialog.service';
 
 /**
  * The main component of the calendar, an implementation of angular-calendar
@@ -50,22 +50,14 @@ export class CalendarComponent implements OnInit {
 
   /** This is where the local calendar events are stored */
   events: Array<CalendarEventAvailability | CalendarEventInterview> = [];
-  /**
-   * Array of all availability.
-   *
-   * TODO implement using just events and filtering
-   */
+  /** Array of all availability. */
   availability: Array<CalendarEventAvailability> = [];
-  /**
-   * Array of all interviews.
-   *
-   * TODO implement using just events and filtering
-   */
+  /** Array of all interviews. */
   interviews: Array<CalendarEventInterview> = [];
 
   /** @ignore */
   constructor(
-    private ms: ModalControllerService,
+    private _dialog: MatDialogService,
     private rs: RequestCenterService,
     private iRequester: InterviewRequesterService,
     private aRequester: AvailabilityRequesterService
@@ -189,7 +181,8 @@ export class CalendarComponent implements OnInit {
       }
     }
 
-    this.ms.openModalLg(this.dayContent);
+    // this.ms.openModalLg(this.dayContent);
+    this._dialog.openDialogLarge(this.dayContent)
   }
   /** @ignore */
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
