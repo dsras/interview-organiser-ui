@@ -83,9 +83,9 @@ describe('AllInterviewsComponent', () => {
   });
 
   it('ngOnInit should call API request', () => {
-    iSpy = spyOn(iService, 'getInterviewsDashboard').and.callThrough();
+    iSpy = spyOn(iService, 'getAllInterviews').and.callThrough();
     component.ngOnInit();
-    expect(iService.getInterviewsDashboard).toHaveBeenCalled();
+    expect(iSpy).toHaveBeenCalled();
   });
   
   it('openModal should call open template', () => {

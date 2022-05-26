@@ -78,17 +78,17 @@ export class Skills implements Data {
 export class Available implements Data {
   date: string;
   startTime: string;
-  end_time: string;
+  endTime: string;
   skills: number[];
   constructor(
     date: string,
     startTime: string,
-    end_time: string,
+    endTime: string,
     skills: number[]
   ) {
     this.date = date;
     this.startTime = startTime;
-    this.end_time = end_time;
+    this.endTime = endTime;
     this.skills = skills;
   }
 }
@@ -119,151 +119,148 @@ export class applicant implements Data {
 
 export class AvailabilityForInterviews implements Data {
   interviewer: string;
-  interviewer_id: number;
-  availability_id: number;
+  interviewerId: number;
+  availabilityId: number;
   date: string;
-  start_time: string;
-  end_time: string;
+  startTime: string;
+  endTime: string;
   constructor(
     interviewer: string,
-    interviewer_id: number,
-    availability_id: number,
+    interviewerId: number,
+    availabilityId: number,
     date: string,
-    start_time: string,
-    end_time: string
+    startTime: string,
+    endTime: string
   ) {
     this.interviewer = interviewer;
-    this.interviewer_id = interviewer_id;
+    this.interviewerId = interviewerId;
     this.date = date;
-    this.availability_id = availability_id;
-    this.start_time = start_time;
-    this.end_time = end_time;
+    this.availabilityId = availabilityId;
+    this.startTime = startTime;
+    this.endTime = endTime;
   }
 }
 
 export class Availability implements Data {
-  availability_id: number;
+  availabilityId: number;
   date: string;
-  start_time: string;
-  end_time: string;
+  startTime: string;
+  endTime: string;
   constructor(
-    availability_id: number,
+    availabilityId: number,
     dateStart: string,
-    start_time: string,
-    end_time: string
+    startTime: string,
+    endTime: string
   ) {
-    this.availability_id = availability_id;
+    this.availabilityId = availabilityId;
     this.date = dateStart;
-    this.start_time = start_time;
-    this.end_time = end_time;
+    this.startTime = startTime;
+    this.endTime = endTime;
   }
 }
 
 export class AvailabilityRange implements Data {
-  start_date: string;
-  end_date: string;
-  start_time: string;
-  end_time: string;
+  startDate: string;
+  endDate: string;
+  startTime: string;
+  endTime: string;
   constructor(
-    start_date: string,
-    end_date: string,
-    start_time: string,
-    end_time: string
+    startDate: string,
+    endDate: string,
+    startTime: string,
+    endTime: string
   ) {
-    this.start_date = start_date;
-    this.end_date = end_date;
-    this.start_time = start_time;
-    this.end_time = end_time;
+    this.startDate = startDate;
+    this.endDate = endDate;
+    this.startTime = startTime;
+    this.endTime = endTime;
   }
 }
 
 export class InterviewRange implements Data {
-  start_date: string;
-  end_date: string;
-  start_time: string;
-  end_time: string;
+  startDate: string;
+  endDate: string;
+  startTime: string;
+  endTime: string;
   skills: number[];
   constructor(
-    start_date: string,
-    end_date: string,
-    start_time: string,
-    end_time: string,
+    startDate: string,
+    endDate: string,
+    startTime: string,
+    endTime: string,
     skills: number[]
   ) {
-    this.start_date = start_date;
-    this.end_date = end_date;
-    this.start_time = start_time;
-    this.end_time = end_time;
+    this.startDate = startDate;
+    this.endDate = endDate;
+    this.startTime = startTime;
+    this.endTime = endTime;
     this.skills = skills;
   }
 }
 
 export class Interview implements Data {
-  interviewer_ids: number[];
+  interviewerIds: number[];
   //organiserId: number;
   // applicantId: number;
   //roleApplied: number;
   date: string;
-  start_time: string;
-  end_time: string;
-  additional_info: string;
+  startTime: string;
+  endTime: string;
+  additionalInfo: string;
   // skillID: number;
   //confirmed: number;
   constructor(
-    interviewer_ids: number[],
+    interviewerIds: number[],
     //organiserId: number,
     // applicantId: number,
     //roleApplied: number,
     date: string,
-    start_time: string,
-    end_time: string,
+    startTime: string,
+    endTime: string,
     //confirmed: number
     // skillID: number
-    additional_info: string
+    additionalInfo: string
   ) {
-    this.interviewer_ids = interviewer_ids;
+    this.interviewerIds = interviewerIds;
     //this.organiserId = organiserId;
     // this.applicantId = applicantId;
     //this.roleApplied = roleApplied;
     this.date = date;
-    this.start_time = start_time;
-    this.end_time = end_time;
+    this.startTime = startTime;
+    this.endTime = endTime;
     //this.confirmed =confirmed;
     // this.skillID = skillID;
-    this.additional_info = additional_info;
+    this.additionalInfo = additionalInfo;
   }
 }
 
 export class InterviewReturn implements Data {
-  interview_id: number;
-  interviewers: Array<string>;
+  interviewId: number;
+  interviewers: string[];
   date: string;
-  start_time: string;
-  end_time: string;
-  additional_info?: string;
+  startTime: string;
+  endTime: string;
+  additionalInfo?: string;
   status?: string;
   outcome?: string;
   organiser?: string;
   constructor(
-    interview_id
-: number,
-    interviewers: Array<string>,
+    interviewId: number,
+    interviewers: string[],
     date: string,
-    start_time: string,
-    end_time: string,
-    additional_info: string,
+    startTime: string,
+    endTime: string,
+    additionalInfo: string,
     status: string,
     outcome: string,
     organiser: string
   ) {
-    this.interview_id
- = interview_id
-;
+    this.interviewId = interviewId;
     this.interviewers = interviewers;
     this.date = date;
-    this.start_time = start_time;
-    this.end_time = end_time;
-    this.additional_info = additional_info;
+    this.startTime = startTime;
+    this.endTime = endTime;
+    this.additionalInfo = additionalInfo;
     this.status = status;
     this.outcome = outcome;
     this.organiser = organiser;

@@ -11,6 +11,7 @@ import { Observable, of } from 'rxjs';
 import { DataSource } from 'src/app/shared/models/data-service';
 import { Router } from '@angular/router';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
+import { LoggedInObject } from 'src/app/shared/models/user-model';
 
 const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_DEV;
 
@@ -38,6 +39,16 @@ const FakeDataSource = {
       }
     }
   }
+}
+const fakeSocialAuth = {
+  _authState: of(new SocialUser),
+  get authState(): Observable<SocialUser>{
+    return of(new SocialUser);
+  },
+  signIn(providerId: string){
+    return of(new SocialUser);
+  }
+
 }
 
 const fakeRouter = {
@@ -71,6 +82,7 @@ describe('LoginComponent', () => {
         {provide: BackendService, useValue: FakeBackendService},
         {provide: DataSourceService, useValue: FakeDataSource},
         {provide: Router, useValue: fakeRouter},
+        {provide: SocialAuthService, useValue: fakeSocialAuth},
         {
           provide: 'SocialAuthServiceConfig',
           useValue: {
@@ -109,12 +121,30 @@ describe('LoginComponent', () => {
   });
 
   //! not sure how to proceed with this one
-  it('ngOnInit calls various service methods', () => {
+  it('ngOnInit calls various service methods', fakeAsync(() => {
     dService.createDataSource();
+    sService.signIn(GoogleLoginProvider.PROVIDER_ID);
+    tick(3);
     let dSpy = spyOn(dService, "updateDataSource").and.callThrough();
+    let cSpy = spyOn(component, "validate").and.callThrough();
+    console.log('here we go again');
+    sService.authState.subscribe(ret=>{
+      console.log(ret);
+      if(ret ==null){
+        console.log('null');
+      }
+      else{
+        console.log('valid');
+      }
+    });
+    // sService.signIn(GoogleLoginProvider.PROVIDER_ID);
+    // let aSpy = spyOn(sService, 'authState').and.callFake(() =>of(new SocialUser));
+    let aSpy = spyOnProperty(sService, 'authState', 'get').and.returnValue(of(new SocialUser));
     component.ngOnInit();
+    tick(10);
     expect(dSpy).toHaveBeenCalled();
-  })
+    expect(cSpy).toHaveBeenCalled();
+  }));
 
 
   it('validate should call service methods', () => {
@@ -126,7 +156,7 @@ describe('LoginComponent', () => {
       email: 'thorfinn.manson@accolitedigital.com'
     }));
     let dummyStringInput = "Social";
-    component.validate(dummyStringInput, {type:"type"});
+    component.validate(dummyStringInput, <LoggedInObject><unknown>{ type: "type" });
     expect(dSpy).toHaveBeenCalled();
     expect(bSpy).toHaveBeenCalled();
     expect(localStorage.getItem('apiKey') == 'this is a token').toBeTruthy();
@@ -136,9 +166,13 @@ describe('LoginComponent', () => {
   });
 
   //! still trying to get the signIn function to call
-  // it('SSO should call service methods', fakeAsync(() => {
-  //   let sSpy = spyOn(sService, 'signIn').and.returnValue(<Promise<SocialUser>><unknown>'good');    
-  //   component.sso();
-  //   expect(sSpy).toHaveBeenCalled();
-  // }));
+  it('SSO should call service methods', fakeAsync(() => {
+    let sSpy = spyOn(sService, 'signIn').and.returnValue(new Promise<SocialUser>((resolve, reject) => {
+      resolve(new SocialUser());
+    }));  
+    tick(3)  ;
+    component.sso();
+    tick(3);
+    expect(sSpy).toHaveBeenCalled();
+  }));
 });

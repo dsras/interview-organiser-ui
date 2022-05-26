@@ -13,24 +13,24 @@ import { AvailabilityRequesterService } from './availability-requester.service';
 import { Requester } from './requester.service';
 
 const AvailabilityInfoFake: Availability = {
-  availability_id: 0,
+  availabilityId: 0,
   date: new Date().toString(),
-  start_time: new Date().toString(),
-  end_time: new Date().toString(),
+  startTime: new Date().toString(),
+  endTime: new Date().toString(),
 }
 
 const FakeAvailabilityReturn: Availability[] = [
   {
-    availability_id: 0,
+    availabilityId: 0,
     date: new Date().toString(),
-    start_time: new Date().toString(),
-    end_time: new Date().toString(),
+    startTime: new Date().toString(),
+    endTime: new Date().toString(),
   },
   {
-    availability_id: 0,
+    availabilityId: 0,
     date: new Date().toString(),
-    start_time: new Date().toString(),
-    end_time: new Date().toString(),
+    startTime: new Date().toString(),
+    endTime: new Date().toString(),
   },
 ]
 
@@ -40,8 +40,8 @@ const RequesterServiceStub = {
       interview_id: 0,
       interviewers: ["", ""],
       date: "1995-05-10",
-      start_time: "10:00",
-      end_time: "11:00",
+      startTime: "10:00",
+      endTime: "11:00",
       additional_info: "additional",
       status: "completed",
       outcome: "hired"
@@ -52,8 +52,8 @@ const RequesterServiceStub = {
       interview_id: 0,
       interviewers: ["", ""],
       date: "1995-05-10",
-      start_time: "10:00",
-      end_time: "11:00",
+      startTime: "10:00",
+      endTime: "11:00",
       additional_info: "additional",
       status: "completed",
       outcome: "hired"
@@ -64,8 +64,8 @@ const RequesterServiceStub = {
       interview_id: 0,
       interviewers: ["", ""],
       date: "1995-05-10",
-      start_time: "10:00",
-      end_time: "11:00",
+      startTime: "10:00",
+      endTime: "11:00",
       additional_info: "additional",
       status: "completed",
       outcome: "hired"
@@ -130,10 +130,10 @@ describe('AvailabilityRequesterService', () => {
 
   it('parseAvailabilityEvent formats correctly', () => {
     let retObj = service.parseAvailabilityEvent(AvailabilityInfoFake);
-    expect(retObj.id === AvailabilityInfoFake.availability_id).toBeTruthy();
+    expect(retObj.id === AvailabilityInfoFake.availabilityId).toBeTruthy();
 
     const start = new Date(AvailabilityInfoFake.date);
-    const times1 = AvailabilityInfoFake.start_time.split(':');
+    const times1 = AvailabilityInfoFake.startTime.split(':');
     start.setHours(parseInt(times1[0]), parseInt(times1[1]));
     expect(retObj.start.toString() === start.toString()).toBeTruthy();
   });
