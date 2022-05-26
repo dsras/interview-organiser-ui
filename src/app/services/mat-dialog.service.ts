@@ -10,7 +10,7 @@ export class MatDialogService {
   constructor(private dailogService: MatDialog) {}
 
   openDialog(template: TemplateRef<any>): void {
-    this.dialogRef = this.dailogService.open(template);
+    this.dialogRef = this.dailogService.open(template, mediumDialog);
   }
 
   openDialogLarge(template: TemplateRef<any>): void {
@@ -18,7 +18,7 @@ export class MatDialogService {
   }
 
   openDialogSmall(template: TemplateRef<any>): void {
-    this.dialogRef = this.dailogService.open(template, smallDialog)
+    this.dialogRef = this.dailogService.open(template, smallDialog);
   }
 
   closeDialog(): void {
@@ -29,11 +29,6 @@ interface DialogConfig {
   height: string;
   width: string;
 }
-const smallDialog: DialogConfig = {
-  height: '400px',
-  width: '600px',
-};
-const largeDialog: DialogConfig = {
-  height: '80%',
-  width: '80%',
-};
+const smallDialog: DialogConfig = { height: '60%%', width: '40%' };
+const mediumDialog: DialogConfig = { height: '70%', width: '50%' };
+const largeDialog: DialogConfig = { height: '80%', width: '80%' };
