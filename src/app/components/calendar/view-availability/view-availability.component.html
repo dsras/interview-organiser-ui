@@ -10,6 +10,9 @@
       <div *ngFor="let slot of availability">
         {{ slot.start | date: "HH:mm" }} =>
         {{ slot?.end | date: "HH:mm" }}
+        <div class='d-inline pull-right'>
+          <button class="btn btn-warning" (click)="onDelete(slot.id)">Delete</button>
+        </div>
       </div>
     </div>
   </div>
@@ -23,16 +26,18 @@
   </div>
   <div class="modal-body padded" id="interviewOutput">
     <div class="container-fluid">
-      <div class="row" *ngFor="let slot of interviews">
-        <div class="col-sm-3">
-          {{ slot.start | date: "HH:mm" }} =>
-          {{ slot?.end | date: "HH:mm" }}
-        </div>
-        <div class="col-sm-3">
-          Status: {{ slot.meta.interviewStatus?.toString() }}
-        </div>
-        <div class="col-sm-6">
-          <interview-status [slot]="slot"></interview-status>
+      <div class="card" id="interviewOutput">
+        <div class="row" *ngFor="let slot of interviews">
+          <div class="col-sm-3">
+            {{ slot.start | date: "HH:mm" }} =>
+            {{ slot?.end | date: "HH:mm" }}
+          </div>
+          <div class="col-sm-3 pull-right">
+            <div>Status: {{ slot.meta.interviewStatus?.toString() }}</div>
+          </div>
+          <div class="col-sm-6">
+            <interview-status [slot]="slot"></interview-status>
+          </div>
         </div>
       </div>
     </div>

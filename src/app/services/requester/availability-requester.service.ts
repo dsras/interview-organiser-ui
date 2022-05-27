@@ -5,6 +5,7 @@ import {
   InterviewRange,
   AvailabilityRange,
   AvailabilityForInterviews,
+  availIdOnly,
 } from '../../shared/models/types';
 import { APPCONSTANTS } from '../../shared/constants/app.constant';
 import { CalendarEvent } from 'angular-calendar';
@@ -23,6 +24,18 @@ export class AvailabilityRequesterService {
     private requester: Requester,
     private dateFormatter: DateToStringService
   ) {}
+
+  //! NEW CALL
+  deleteAvailability(id: string | number | any){
+    const url: string =
+    APPCONSTANTS.APICONSTANTS.BASE_URL + 
+    APPCONSTANTS.APICONSTANTS.AVAIL_DEL;
+    this.requester
+      .postRequest<availIdOnly>(url, id)
+      .subscribe((returnData) => {
+    });
+  }
+
 
   /**
    * Submit new availability slot(s) to database
@@ -275,7 +288,6 @@ export class AvailabilityRequesterService {
    * @returns a calendar event to be displayed in the calendar
    */
   parseAvailabilityEvent(availability: Availability): CalendarEventAvailability {
-    console.log(availability)
     const start = new Date(availability.date);
     const end = new Date(availability.date);
     const times1 = availability.startTime.split(':');

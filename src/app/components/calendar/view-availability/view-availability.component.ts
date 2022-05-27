@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 import {
   CalendarEventAvailability,
   CalendarEventInterview,
@@ -21,5 +22,9 @@ export class ViewAvailabilityComponent {
   @Input() interviews: Array<CalendarEventInterview> = [];
 
   /** @ignore */
-  constructor() {}
+  constructor(private ar: AvailabilityRequesterService) {}
+  onDelete(id: string | number | any){
+    console.log(id);
+    this.ar.deleteAvailability(id);
+  }
 }
