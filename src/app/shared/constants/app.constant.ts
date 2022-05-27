@@ -11,6 +11,7 @@ class API_CONSTANTS {
 
   AVAIL: string = 'availability';
   AVAIL_DEL: string = 'availability/delete';
+  AVAIL_RANGE: string = 'availability/username/range';
   AVAIL_ADD: string = 'availability/new';
   AVAIL_GET: string = 'availability/find';
   AVAIL_SKILL: string = 'availability/findBySkills?ids=';

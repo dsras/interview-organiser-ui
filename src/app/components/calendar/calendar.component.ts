@@ -200,4 +200,12 @@ export class CalendarComponent implements OnInit {
   closeOpenMonthViewDay(): void {
     this.activeDayIsOpen = false;
   }
+
+  //* obviously just a test function
+  test(){
+    let events: Array<CalendarEvent> = [];
+    let myStartDate: Date = new Date('2022-05-01');
+    let myEndDate: Date = new Date('2022-06-01');
+    this.aRequester.getMyAvailabilityInRange(events, 'thorfinn.manson@accolitedigital.com', '2022-05-01', '2022-06-01');
+  }
 }

@@ -11,6 +11,10 @@ export class availIdOnly implements Data {
     this.id = id;
   }
 }
+export class dateRange implements Data {
+  start!: string;
+  end!: string;
+}
 
 export class StatusUpdate implements Data {
   interview_id: number;

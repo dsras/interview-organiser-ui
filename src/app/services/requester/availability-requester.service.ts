@@ -6,6 +6,7 @@ import {
   AvailabilityRange,
   AvailabilityForInterviews,
   availIdOnly,
+  dateRange,
 } from '../../shared/models/types';
 import { APPCONSTANTS } from '../../shared/constants/app.constant';
 import { CalendarEvent } from 'angular-calendar';
@@ -36,6 +37,25 @@ export class AvailabilityRequesterService {
     });
   }
 
+  getMyAvailabilityInRange(events: CalendarEvent[], username: string, start:string, end:string): void {
+    const url =
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.AVAIL_RANGE.replace('username', username);
+    let out;
+
+    let myRange = new dateRange;
+    myRange.start = start;
+    myRange.end = end;
+
+    this.requester.postRequest<dateRange>(url, myRange).subscribe((returnData) => {
+      out = <Array<Availability>>(<unknown>returnData);
+      out.forEach((element) => {
+        console.log(element);
+        //events.push(this.parseAvailabilityEvent(element));
+      });
+      return out;
+    });
+  }
 
   /**
    * Submit new availability slot(s) to database
