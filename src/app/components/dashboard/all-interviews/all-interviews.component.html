@@ -52,13 +52,13 @@
         >
           <div class="container row">
             <div class="col-3 interview-detail">
-              Status: {{ interview.status || "N/A" }}
+              Status: {{ interview.status || "Pending" }}
             </div>
             <div class="col-3 interview-detail">
-              Outcome: {{ interview.outcome || "N/A" }}
+              Outcome: {{ interview.outcome || "Pending" }}
             </div>
             <div class="col-5 interview-detail">
-              Additional Information: {{ interview.additionalInfo || "N/A" }}
+              Additional Information: {{ interview.additionalInfo || "None" }}
             </div>
             <div class="col-1">
               <button mat-stroked-button (click)="message('click')">

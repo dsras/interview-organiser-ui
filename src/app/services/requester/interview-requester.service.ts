@@ -14,6 +14,7 @@ import { DateToStringService } from '../date-to-string.service';
 import { Observable } from 'rxjs';
 import { RequestCenterService } from './request-center.service';
 import { getUsername } from 'src/app/shared/functions/get-user-from-local.function';
+import { CreateInterviewFormValue } from 'src/app/shared/models/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -145,7 +146,6 @@ export class InterviewRequesterService {
     });
   }
 
-
   ///Old function calls some are still in use
   stringTimeAdd(input: string, add: number) {
     let splits = input.split(':');
@@ -166,34 +166,26 @@ export class InterviewRequesterService {
     return this.dateFormatter.dateToStringDate(date);
   }
 
-  // ? Is the formDecomp an array of the form values?
-  addInterviewForm(formInput: string, additional: string, startTime: Date) {
-    const formDecomp: string[] = formInput.split(' ');
-    const dateString: string = formDecomp[1];
+  addInterviewForm(form: CreateInterviewFormValue) {
     let startTimeString: string;
-    let endTimeString = '';
-    console.log(startTime.toString());
+    let endTimeString: string;
 
-    if (startTime.toString() != '') {
-      startTimeString = this.dateToStringTime(startTime);
-
-      startTime.setHours(startTime.getHours() + 1);
-
-      endTimeString = this.dateToStringTime(startTime);
+    if (form.startTime != '') {
+      //set end time to be an hour after start time
+      startTimeString = form.startTime;
+      endTimeString = this.stringTimeAdd(startTimeString, 1);
     } else {
-      startTimeString = formDecomp[3];
+      startTimeString = form.interviewSelected.startTime;
       endTimeString = this.stringTimeAdd(startTimeString, 1);
     }
 
-    const id = [Number.parseInt(formDecomp[12])];
-
     this.createInterview(
-      this.rs.getUsername(),
-      id,
-      dateString,
+      getUsername(),
+      [form.interviewSelected.interviewerId],
+      form.interviewSelected.date,
       startTimeString,
       endTimeString,
-      additional
+      form.additionalInformation
     );
   }
 

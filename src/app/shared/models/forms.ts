@@ -1,3 +1,5 @@
+import { AvailabilityForInterviews } from "./types";
+
 export interface AvailabilityFormValue {
   firstDate: string;
   lastDate: string;
@@ -6,7 +8,7 @@ export interface AvailabilityFormValue {
 }
 
 export interface CreateInterviewFormValue {
-  interviewSelected: string;
+  interviewSelected: AvailabilityForInterviews;
   additionalInformation: string;
   startTime: string;
 }

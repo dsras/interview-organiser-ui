@@ -1,7 +1,11 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
-import { SkillOptions, Skills } from '../../../shared/models/types';
+import {
+  AvailabilityForInterviews,
+  SkillOptions,
+  Skills,
+} from '../../../shared/models/types';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
@@ -22,7 +26,7 @@ export class CreateInterviewComponent implements OnInit {
   };
 
   /** Array of availability as strings to be used in form selection */
-  availableInterviews: Array<string> = [];
+  availableInterviews: Array<AvailabilityForInterviews> = [];
 
   /** Iterview creation from selected attributes form */
   createInterviewForm: FormGroup = this.fb.group({
@@ -88,7 +92,7 @@ export class CreateInterviewComponent implements OnInit {
         idArr.push(skillStore.id);
       }
     });
-    console.log(idArr)
+    console.log(idArr);
     this.availableInterviews = [];
 
     this.aRequester.getInterviewSlots(
@@ -106,11 +110,7 @@ export class CreateInterviewComponent implements OnInit {
    * @param form completed form of interview attributes
    */
   submitInterview(form: FormGroup): void {
-    this.iRequester.addInterviewForm(
-      form.value.interviewSelected,
-      form.value.additionalInformation,
-      form.value.startTime
-    );
+    this.iRequester.addInterviewForm(form.value);
     form.reset();
   }
 

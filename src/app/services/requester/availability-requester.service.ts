@@ -192,7 +192,7 @@ export class AvailabilityRequesterService {
   getInterviewSlots(
     form: FindSlotFormValue,
     skillsIDList: number[],
-    interviewsReturn: string[]
+    interviewsReturn: AvailabilityForInterviews[]
   ): void {
     const url: string =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
@@ -248,16 +248,17 @@ export class AvailabilityRequesterService {
           }
 
           interviewsReturn.push(
-            'On ' +
-              element.date +
-              ' between ' +
-              startInput +
-              ' -> ' +
-              endInput +
-              ' this is with: ' +
-              element.interviewer +
-              ' id: ' +
-              element.interviewerId
+            element
+            // 'On ' +
+            //   element.date +
+            //   ' between ' +
+            //   startInput +
+            //   ' -> ' +
+            //   endInput +
+            //   ' this is with: ' +
+            //   element.interviewer +
+            //   ' id: ' +
+            //   element.interviewerId
           );
         });
       });

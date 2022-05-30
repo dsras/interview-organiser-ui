@@ -31,9 +31,7 @@
       style="color: black"
     >
       <div class="text-center text-black">
-        <div
-          style="width: 100%; color: black; background-color: orange"
-        >
+        <div style="width: 100%; color: black; background-color: orange">
           <div class="container-fluid py-2 intro-section-color">
             <h4 class="text-black font-weight-bold text-center">
               Find Interview
@@ -148,7 +146,9 @@
             *ngFor="let interview of availableInterviews"
             [ngValue]="interview"
           >
-            {{ interview }}
+            On {{ interview.date }} between {{ interview.startTime }} ->
+            {{ interview.endTime }}, this is with:
+            {{ interview.interviewer }} id: {{ interview.interviewerId }}
           </option>
         </select>
       </div>
