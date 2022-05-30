@@ -272,6 +272,7 @@ export class AvailabilityRequesterService {
       .postRequestNoType<AvailabilityForInterviews>(url, newRange)
       .subscribe((returnData) => {
         let data = <Array<AvailabilityForInterviews>>returnData;
+        console.table(data)
         data.forEach((element) => {
           let refStart: Date = new Date(newStartTime);
           let refEnd: Date = new Date(newStartTime);
