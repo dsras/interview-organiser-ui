@@ -20,6 +20,4 @@ export class ViewAvailabilityComponent {
   /** Interview list for the day */
   @Input() interviews: Array<CalendarEventInterview> = [];
 
-  /** @ignore */
-  constructor() {}
 }

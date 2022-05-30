@@ -17,5 +17,9 @@ export const CalendarColors: any = {
   green: {
     primary: '#12872d',
     secondary: '#0ad138',
-  }
+  },
+  purple: {
+    primary: '#CD33FF',
+    secondary: '#FF33CB',
+  },
 };

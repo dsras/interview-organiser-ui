@@ -30,5 +30,5 @@ interface DialogConfig {
   width: string;
 }
 const smallDialog: DialogConfig = { height: '60%%', width: '40%' };
-const mediumDialog: DialogConfig = { height: '70%', width: '50%' };
+const mediumDialog: DialogConfig = { height: '75%', width: '40%' };
 const largeDialog: DialogConfig = { height: '80%', width: '80%' };

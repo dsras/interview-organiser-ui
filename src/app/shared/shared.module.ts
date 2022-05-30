@@ -14,6 +14,8 @@ import { StringToDatetimePipe } from '../pipes/string-to-datetime.pipe';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   imports: [
@@ -30,6 +32,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MatIconModule,
     MatButtonModule,
     MatSidenavModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   exports: [
     TimepickerModule,
@@ -45,6 +49,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MatIconModule,
     MatButtonModule,
     MatSidenavModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   declarations: [StringToDatetimePipe],
   providers: [{ provide: TimepickerConfig, useFactory: getTimepickerConfig }],

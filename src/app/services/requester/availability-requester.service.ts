@@ -12,6 +12,8 @@ import { CalendarColors } from '../../shared/constants/colours.constant';
 import { CalendarEventAvailability } from 'src/app/shared/models/calendar-event-detail';
 import { AvailabilityMetaData } from 'src/app/shared/models/event-meta-data';
 import { DateToStringService } from '../date-to-string.service';
+import { getUsername } from 'src/app/shared/functions/get-user-from-local.function';
+import { FormGroup } from '@angular/forms';
 
 /** A service to handle any requests made to the database regarding availability. */
 @Injectable({
@@ -29,7 +31,7 @@ export class AvailabilityRequesterService {
    * Slots are created on each day in the range from first date to last date,
    * with each slot having the same start and end time for each day.
    * If first and last are the same, one slot is created.
-   * 
+   *
    * @param  {string} first - First date of the slot(s)
    * @param  {string} last - Last date of the slot(s)
    * @param  {string} start - The start time of each slot
@@ -50,9 +52,10 @@ export class AvailabilityRequesterService {
       this.dateToStringTime(new Date(end))
     );
     const url: string =
-      APPCONSTANTS.APICONSTANTS.BASE_URL + 
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.AVAIL +
-      '/' + userName;
+      '/' +
+      userName;
     let out: AvailabilityRange;
 
     this.requester
@@ -61,9 +64,32 @@ export class AvailabilityRequesterService {
         out = <AvailabilityRange>(<unknown>returnData);
       });
   }
+
+  addAvailabilityForm(form: FormGroup): void {
+    const newAvail: AvailabilityRange = new AvailabilityRange(
+      this.dateToStringDate(form.value.startDate),
+      this.dateToStringDate(form.value.endDate),
+      this.dateToStringTime(form.value.startTime),
+      this.dateToStringTime(form.value.endTime)
+    );
+    const url: string = 
+    APPCONSTANTS.APICONSTANTS.BASE_URL +
+    APPCONSTANTS.APICONSTANTS.AVAIL +
+    '/' +
+    getUsername();
+
+    let out: AvailabilityRange;
+
+    this.requester
+    .postRequest<AvailabilityRange>(url, newAvail)
+    .subscribe((returnData) => {
+      out = <AvailabilityRange>(<unknown>returnData);
+    });
+  }
   /**
    * Takes the user's username and an array of calendar events and appends
    * all current availability of that user to the array.
+   * ! replaced below
    *
    * @param  {CalendarEvent[]} events - The array to push availability to
    * @param  {string} username - The name of the owner of the availability
@@ -72,15 +98,54 @@ export class AvailabilityRequesterService {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.AVAIL +
-      '/' + username;
+      '/' +
+      username;
     let out;
 
     this.requester.getRequest<Availability>(url).subscribe((returnData) => {
       out = <Array<Availability>>(<unknown>returnData);
       out.forEach((element) => {
-        events.push(this.parseAvailabilityEvent(element));
+        events.push(this.parseAvailabilityUser(element));
       });
       return out;
+    });
+  }
+
+  getUserAvailability(
+    events: Array<CalendarEvent>,
+    availability: Array<CalendarEvent>
+  ): void {
+    const url =
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.AVAIL +
+      '/' +
+      getUsername();
+
+    this.requester.getRequest<Availability>(url).subscribe((returnData) => {
+      let data = <Array<Availability>>(<unknown>returnData);
+      data.forEach((element) => {
+        let event = this.parseAvailabilityUser(element);
+        events.push(event);
+        availability.push(event);
+      });
+    });
+  }
+
+  getRecruiterAvailability(
+    events: Array<CalendarEvent>,
+    availability: Array<CalendarEventAvailability>
+  ): void {
+    const url =
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.INTER_INTER;
+
+    this.requester.getRequest<Availability>(url).subscribe((returnData) => {
+      let data = <Array<Availability>>(<unknown>returnData);
+      data.forEach((element) => {
+        let event = this.parseAvailabilityUser(element);
+        events.push(event);
+        availability.push(event);
+      });
     });
   }
 
@@ -95,7 +160,8 @@ export class AvailabilityRequesterService {
     let url: string =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.AVAIL +
-      '?ids=' + input.toString();
+      '?ids=' +
+      input.toString();
     let started: boolean = false;
     input.forEach((element) => {
       url += (started ? ',' : '') + element.toString();
@@ -123,7 +189,7 @@ export class AvailabilityRequesterService {
     this.requester.getRequest<Availability>(url).subscribe((returnData) => {
       out = <Array<Availability>>(<unknown>returnData);
       out.forEach((element) => {
-        events.push(this.parseAvailabilityEvent(element));
+        events.push(this.parseAvailabilityUser(element));
       });
       return out;
     });
@@ -249,7 +315,7 @@ export class AvailabilityRequesterService {
 
   /**
    * Retrives a string representation of the time from a Date object
-   * 
+   *
    * @param date the date to have the time represented as a string
    * @returns the string representation of the time
    */
@@ -259,7 +325,7 @@ export class AvailabilityRequesterService {
 
   /**
    * Retrives a string representation of the date from a Date object
-   * 
+   *
    * @param date the date to have the date represented as a string
    * @returns the string representation of the date
    */
@@ -268,13 +334,13 @@ export class AvailabilityRequesterService {
   }
 
   /**
-   * Takes an Availability object and outputs the information in an object to be 
+   * Takes an Availability object and outputs the information in an object to be
    * displayed in the calendar
-   * 
-   * @param availability the object to be converted to a calendar event 
+   *
+   * @param availability the object to be converted to a calendar event
    * @returns a calendar event to be displayed in the calendar
    */
-  parseAvailabilityEvent(availability: Availability): CalendarEventAvailability {
+  parseAvailabilityUser(availability: Availability): CalendarEventAvailability {
     const start = new Date(availability.date);
     const end = new Date(availability.date);
     const times1 = availability.startTime.split(':');
@@ -291,6 +357,30 @@ export class AvailabilityRequesterService {
       end: end,
       title: 'availability',
       color: CalendarColors.blue,
+      meta: data,
+    };
+    return newAvailability;
+  }
+
+  parseAvailabilityRecruiter(
+    availability: Availability
+  ): CalendarEventAvailability {
+    const start = new Date(availability.date);
+    const end = new Date(availability.date);
+    const times1 = availability.startTime.split(':');
+    const times2 = availability.endTime.split(':');
+
+    start.setHours(parseInt(times1[0]), parseInt(times1[1]));
+    end.setHours(parseInt(times2[0]), parseInt(times2[1]));
+
+    const data = new AvailabilityMetaData();
+
+    const newAvailability: CalendarEventAvailability = {
+      id: availability.availabilityId,
+      start: start,
+      end: end,
+      title: 'availability',
+      color: CalendarColors.purple,
       meta: data,
     };
     return newAvailability;

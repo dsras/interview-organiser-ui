@@ -207,6 +207,8 @@ export class Interview implements Data {
   startTime: string;
   endTime: string;
   additionalInfo: string;
+  status: string;
+  outcome: string;
   // skillID: number;
   //confirmed: number;
   constructor(
@@ -219,7 +221,9 @@ export class Interview implements Data {
     endTime: string,
     //confirmed: number
     // skillID: number
-    additionalInfo: string
+    additionalInfo: string,
+    status: string,
+    outcome: string
   ) {
     this.interviewerIds = interviewerIds;
     //this.organiserId = organiserId;
@@ -231,6 +235,8 @@ export class Interview implements Data {
     //this.confirmed =confirmed;
     // this.skillID = skillID;
     this.additionalInfo = additionalInfo;
+    this.status = status;
+    this.outcome = outcome;
   }
 }
 
@@ -290,3 +296,24 @@ export class AppRoles implements Data {
     this.name = name;
   }
 }
+const admin: AppRoles = {
+  id: 1,
+  description: 'ADMINISTRATOR',
+  name: 'ADMIN',
+};
+const user: AppRoles = {
+  id: 2,
+  description: 'EMPLOYEE/INTERVIEWER',
+  name: 'USER',
+};
+const recruiter: AppRoles = {
+  id: 3,
+  description: 'RECRUITER',
+  name: 'RECRUITER',
+};
+
+export const allRoles: Map<string, AppRoles> = new Map([
+  ['ADMIN', admin],
+  ['USER', user],
+  ['RECRUITER', recruiter],
+]);

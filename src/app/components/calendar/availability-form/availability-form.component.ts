@@ -2,7 +2,6 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
-import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 
 /**
  * Form for collecting interviewer availability data and posting to DB
@@ -19,14 +18,14 @@ export class AvailabilityFormComponent implements OnInit {
   createAvailabilityForm: FormGroup = this.fb.group({
     startTime: ['', Validators.required],
     endTime: ['', Validators.required],
-    dateRange: ['', Validators.required],
+    firstDate: ['', Validators.required],
+    lastDate: ['', Validators.required],
   });
   /** @ignore */
   constructor(
     private fb: FormBuilder,
     private _dialog: MatDialogService,
-    private aRequester: AvailabilityRequesterService,
-    private rs: RequestCenterService,
+    private aRequester: AvailabilityRequesterService
   ) {}
   /** @ignore */
   ngOnInit(): void {}
@@ -44,14 +43,8 @@ export class AvailabilityFormComponent implements OnInit {
    *
    * @param {FormGroup} form completed FormGroup to be submitted
    */
-  onSubmit(form: FormGroup | any): void {
-    this.aRequester.addAvailability(
-      this.rs.getUsername(),
-      form.value.dateRange[0],
-      form.value.dateRange[1],
-      form.value.startTime,
-      form.value.endTime
-    );
+  onSubmit(form: FormGroup): void {
+    this.aRequester.addAvailabilityForm(form);
     form.reset();
   }
 }

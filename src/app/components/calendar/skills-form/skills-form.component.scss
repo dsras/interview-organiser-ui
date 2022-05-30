@@ -35,9 +35,11 @@
   font-size: 40px;
 }
 
-::ng-deep.bs-datepicker-theming {
-  background-color: #ff9800;
-
+button:disabled,
+button[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
 }
 
 .container-fluid {

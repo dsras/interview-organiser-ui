@@ -37,7 +37,7 @@ export class RequestCenterService {
 
   getUsername(): string {
     let username: string = '';
-    let inString = <string>localStorage.getItem('ssoUser');
+    let inString = localStorage.getItem('ssoUser');
 
     if (inString != '' && inString != null) {
       let myObj = JSON.parse(inString);

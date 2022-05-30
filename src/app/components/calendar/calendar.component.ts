@@ -16,6 +16,8 @@ import {
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
+import { AppRoles } from 'src/app/shared/models/types';
+import { getUserRoles } from 'src/app/shared/functions/get-user-from-local.function';
 
 /**
  * The main component of the calendar, an implementation of angular-calendar
@@ -36,6 +38,9 @@ export class CalendarComponent implements OnInit {
    */
   @ViewChild('dayContent', { static: true }) dayContent!: TemplateRef<any>;
 
+  currentUser: string = '';
+  userRoles: Array<string> = [];
+
   /* 
   TODO implement this later to view/edit individual events on the calendar
   TODO See handleEvent() below
@@ -49,7 +54,7 @@ export class CalendarComponent implements OnInit {
   dayInterviews: Array<CalendarEventInterview> = [];
 
   /** This is where the local calendar events are stored */
-  events: Array<CalendarEventAvailability | CalendarEventInterview> = [];
+  events: Array<CalendarEvent> = [];
   /** Array of all availability. */
   availability: Array<CalendarEventAvailability> = [];
   /** Array of all interviews. */
@@ -65,7 +70,22 @@ export class CalendarComponent implements OnInit {
 
   /** @ignore */
   ngOnInit(): void {
-    this.populateCalendar();
+    this.currentUser = this.rs.getUsername();
+    this.userRoles = this.parseUserRoles();
+    this.resetEvents();
+    if (this.userRoles.includes('USER')) {
+      console.log('is user');
+      this.initUser();
+    }
+    if (this.userRoles.includes('RECRUITER')) {
+      console.log('is recruiter');
+      this.initRecruiter();
+    }
+    if (this.userRoles.includes('ADMIN')) {
+      console.log('is admin');
+      this.initAdmin();
+    }
+    this.delayedRefresh();
   }
 
   /** @ignore private? */
@@ -89,63 +109,28 @@ export class CalendarComponent implements OnInit {
       .catch();
   }
 
-  /**
-   * Populates events and interviews arrays with interviews
-   */
-  //! Probably depreciated
-  // getInterviewsByInter(): void {
-  //   this.iRequester.getInterviewByInterviewer(
-  //     this.events,
-  //     this.rs.getUsername()
-  //   );
-  //   this.iRequester.getInterviewByInterviewer(
-  //     this.interviews,
-  //     this.rs.getUsername()
-  //   );
-  // }
-
-  /** @ignore does nothing for now */
-  // getSkillsforUser(): void {
-  //   this.rs.getSkills(this.rs.getUsername());
-  // }
-
-  /** @ignore HUH? */
-  // getUser(): void {
-  //   this.rs.getUser(this.rs.getUsername());
-  // }
-
-  /** Called only on button press for now */
-  // populateViaRecruiter(): void {
-  //   this.resetEvents();
-  //   this.aRequester.getAllAvailability(this.events);
-  //   this.aRequester.getAllAvailability(this.availability);
-  //   this.delayedRefresh();
-  // }
-
   //* in test
-  /**
-   *  Populate the calendar with an interviewers events and availability.
-   *
-   * todo stremline by removing availability and interviews and using filtering of events
-   */
-  populateCalendar(): void {
-    this.resetEvents();
-    this.aRequester.getMyAvailability(this.events, this.rs.getUsername());
-    this.aRequester.getMyAvailability(this.availability, this.rs.getUsername());
-    this.iRequester.getInterviewByInterviewer(
-      this.events,
-      this.rs.getUsername()
-    );
-    this.iRequester.getInterviewByInterviewer(
-      this.interviews,
-      this.rs.getUsername()
-    );
-    this.delayedRefresh();
+  // todo streamline by removing availability and interviews and using filtering of events
+  /** Populate the calendar with a users events and availability. */
+  initUser(): void {
+    this.aRequester.getUserAvailability(this.events, this.availability);
+    this.iRequester.getUserInterviews(this.events, this.interviews);
   }
-  /** @ignore */
-  // buttonRefresh(): void {
-  //   this.refresh.next();
-  // }
+
+  initRecruiter(): void {
+    this.aRequester.getRecruiterAvailability(this.events, this.availability);
+    this.iRequester.getRecruiterInterviews(this.events, this.interviews);
+  }
+
+  initAdmin(): void {}
+
+  parseUserRoles(): Array<string> {
+    const userRoles: Array<AppRoles> = getUserRoles();
+    let roles: Array<string> = [];
+    userRoles.forEach((role) => roles.push(role.name));
+    console.log(roles);
+    return roles;
+  }
 
   // ! Calendar core functionality contained here, shouldn't need to touch it!
   // TODO openDayModal() may need corrected down the line.
@@ -182,14 +167,12 @@ export class CalendarComponent implements OnInit {
     }
 
     // this.ms.openModalLg(this.dayContent);
-    this._dialog.openDialogLarge(this.dayContent)
+    this._dialog.openDialogLarge(this.dayContent);
   }
   /** @ignore */
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    if (isSameMonth(date, this.viewDate)) {
-      if (events.length != 0) {
-        this.openDayModal(date);
-      }
+    if (isSameMonth(date, this.viewDate) && events.length != 0) {
+      this.openDayModal(date);
     }
   }
   /** @ignore */
