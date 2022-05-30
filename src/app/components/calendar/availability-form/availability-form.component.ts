@@ -44,7 +44,7 @@ export class AvailabilityFormComponent implements OnInit {
    * @param {FormGroup} form completed FormGroup to be submitted
    */
   onSubmit(form: FormGroup): void {
-    this.aRequester.addAvailabilityForm(form);
+    this.aRequester.addAvailabilityForm(form.value);
     form.reset();
   }
 }

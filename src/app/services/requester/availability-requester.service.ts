@@ -13,7 +13,7 @@ import { CalendarEventAvailability } from 'src/app/shared/models/calendar-event-
 import { AvailabilityMetaData } from 'src/app/shared/models/event-meta-data';
 import { DateToStringService } from '../date-to-string.service';
 import { getUsername } from 'src/app/shared/functions/get-user-from-local.function';
-import { FormGroup } from '@angular/forms';
+import { AvailabilityFormValue } from 'src/app/shared/models/forms';
 
 /** A service to handle any requests made to the database regarding availability. */
 @Injectable({
@@ -32,30 +32,21 @@ export class AvailabilityRequesterService {
    * with each slot having the same start and end time for each day.
    * If first and last are the same, one slot is created.
    *
-   * @param  {string} first - First date of the slot(s)
-   * @param  {string} last - Last date of the slot(s)
-   * @param  {string} start - The start time of each slot
-   * @param  {string} end - The end time of each slot.
-   * @returns void - The new range of availability is sent as a POST to database.
+   * @param {AvailabilityFormValue} form availability form submitted
    */
-  addAvailability(
-    userName: string,
-    first: string,
-    last: string,
-    start: string,
-    end: string
-  ): void {
+  addAvailabilityForm(form: AvailabilityFormValue): void {
     const newAvail: AvailabilityRange = new AvailabilityRange(
-      this.dateToStringDate(new Date(first)),
-      this.dateToStringDate(new Date(last)),
-      this.dateToStringTime(new Date(start)),
-      this.dateToStringTime(new Date(end))
+      this.dateToStringDate(new Date(form.firstDate)),
+      this.dateToStringDate(new Date(form.lastDate)),
+      this.dateToStringTime(new Date(form.startTime)),
+      this.dateToStringTime(new Date(form.endTime))
     );
     const url: string =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.AVAIL +
       '/' +
-      userName;
+      getUsername();
+
     let out: AvailabilityRange;
 
     this.requester
@@ -65,52 +56,13 @@ export class AvailabilityRequesterService {
       });
   }
 
-  addAvailabilityForm(form: FormGroup): void {
-    const newAvail: AvailabilityRange = new AvailabilityRange(
-      this.dateToStringDate(form.value.startDate),
-      this.dateToStringDate(form.value.endDate),
-      this.dateToStringTime(form.value.startTime),
-      this.dateToStringTime(form.value.endTime)
-    );
-    const url: string = 
-    APPCONSTANTS.APICONSTANTS.BASE_URL +
-    APPCONSTANTS.APICONSTANTS.AVAIL +
-    '/' +
-    getUsername();
-
-    let out: AvailabilityRange;
-
-    this.requester
-    .postRequest<AvailabilityRange>(url, newAvail)
-    .subscribe((returnData) => {
-      out = <AvailabilityRange>(<unknown>returnData);
-    });
-  }
   /**
-   * Takes the user's username and an array of calendar events and appends
-   * all current availability of that user to the array.
-   * ! replaced below
+   * Takes two arrays of calendar events and appends
+   * all current availability of the user to the arrays.
    *
-   * @param  {CalendarEvent[]} events - The array to push availability to
-   * @param  {string} username - The name of the owner of the availability
+   * @param { CalendarEvent[] } events - The array of events for the calendar to display
+   * @param { CalendarEventAvailability[] } availability - the array of availability
    */
-  getMyAvailability(events: CalendarEvent[], username: string): void {
-    const url =
-      APPCONSTANTS.APICONSTANTS.BASE_URL +
-      APPCONSTANTS.APICONSTANTS.AVAIL +
-      '/' +
-      username;
-    let out;
-
-    this.requester.getRequest<Availability>(url).subscribe((returnData) => {
-      out = <Array<Availability>>(<unknown>returnData);
-      out.forEach((element) => {
-        events.push(this.parseAvailabilityUser(element));
-      });
-      return out;
-    });
-  }
-
   getUserAvailability(
     events: Array<CalendarEvent>,
     availability: Array<CalendarEvent>
@@ -137,12 +89,13 @@ export class AvailabilityRequesterService {
   ): void {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
-      APPCONSTANTS.APICONSTANTS.INTER_INTER;
+      APPCONSTANTS.APICONSTANTS.AVAIL;
 
     this.requester.getRequest<Availability>(url).subscribe((returnData) => {
       let data = <Array<Availability>>(<unknown>returnData);
+      console.table(returnData);
       data.forEach((element) => {
-        let event = this.parseAvailabilityUser(element);
+        let event = this.parseAvailabilityRecruiter(element);
         events.push(event);
         availability.push(event);
       });
@@ -272,7 +225,6 @@ export class AvailabilityRequesterService {
       .postRequestNoType<AvailabilityForInterviews>(url, newRange)
       .subscribe((returnData) => {
         let data = <Array<AvailabilityForInterviews>>returnData;
-        console.table(data)
         data.forEach((element) => {
           let refStart: Date = new Date(newStartTime);
           let refEnd: Date = new Date(newStartTime);
@@ -341,7 +293,9 @@ export class AvailabilityRequesterService {
    * @param availability the object to be converted to a calendar event
    * @returns a calendar event to be displayed in the calendar
    */
-  parseAvailabilityUser(availability: Availability): CalendarEventAvailability {
+  private parseAvailabilityUser(
+    availability: Availability
+  ): CalendarEventAvailability {
     const start = new Date(availability.date);
     const end = new Date(availability.date);
     const times1 = availability.startTime.split(':');
@@ -363,7 +317,7 @@ export class AvailabilityRequesterService {
     return newAvailability;
   }
 
-  parseAvailabilityRecruiter(
+  private parseAvailabilityRecruiter(
     availability: Availability
   ): CalendarEventAvailability {
     const start = new Date(availability.date);

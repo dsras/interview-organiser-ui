@@ -87,6 +87,7 @@ export class CreateInterviewComponent implements OnInit {
         idArr.push(skillStore.id);
       }
     });
+    this.availableInterviews = [];
 
     this.aRequester.getAvailabilityByRange(
       form.value.dateRange[0],
@@ -121,7 +122,9 @@ export class CreateInterviewComponent implements OnInit {
     if (!disp || disp == '') {
       try {
         disp = find.style.display;
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     }
     switch (disp) {
       case 'none':
