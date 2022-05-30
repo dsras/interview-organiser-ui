@@ -5,6 +5,16 @@ export class skillIdOnly implements Data {
     this.skillId = skillId;
   }
 }
+export class availIdOnly implements Data {
+  id: number | string | any;
+  constructor(id: number) {
+    this.id = id;
+  }
+}
+export class dateRange implements Data {
+  start!: string;
+  end!: string;
+}
 
 export class StatusUpdate implements Data {
   interview_id: number;
