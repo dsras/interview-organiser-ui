@@ -35,7 +35,8 @@ export class CreateInterviewComponent implements OnInit {
   findInterviewsForm: FormGroup = this.fb.group({
     startTime: ['', Validators.required],
     endTime: ['', Validators.required],
-    dateRange: ['', Validators.required],
+    firstDate: ['', Validators.required],
+    lastDate: ['', Validators.required],
     skills: this.fb.group({
       skillType: ['', Validators.required],
       skillLevel: ['', Validators.required],
@@ -72,7 +73,7 @@ export class CreateInterviewComponent implements OnInit {
    *
    * @param form completed search criteria form
    */
-  findInterview(form: FormGroup | any): void {
+  findInterview(form: FormGroup): void {
     let idArr: Array<number> = [];
     let skillReq = {
       skillType: form.value.skills.skillType,
@@ -87,13 +88,11 @@ export class CreateInterviewComponent implements OnInit {
         idArr.push(skillStore.id);
       }
     });
+    console.log(idArr)
     this.availableInterviews = [];
 
-    this.aRequester.getAvailabilityByRange(
-      form.value.dateRange[0],
-      form.value.dateRange[1],
-      form.value.startTime,
-      form.value.endTime,
+    this.aRequester.getInterviewSlots(
+      form.value,
       idArr,
       this.availableInterviews
     );
@@ -106,7 +105,7 @@ export class CreateInterviewComponent implements OnInit {
    *
    * @param form completed form of interview attributes
    */
-  submitInterview(form: FormGroup | any): void {
+  submitInterview(form: FormGroup): void {
     this.iRequester.addInterviewForm(
       form.value.interviewSelected,
       form.value.additionalInformation,

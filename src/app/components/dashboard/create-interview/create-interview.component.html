@@ -30,76 +30,90 @@
       class="md-form"
       style="color: black"
     >
-      <div class="card" style="size: 1000px">
-        <div class="container text-center text-black pt-4 mt-4">
-          <div
-            class="modal-header"
-            style="width: 100%; color: black; background-color: orange"
-          >
-            <div class="container-fluid py-2 intro-section-color">
-              <h4 class="text-black font-weight-bold text-center">
-                Find Interview
-              </h4>
-            </div>
+      <div class="text-center text-black">
+        <div
+          style="width: 100%; color: black; background-color: orange"
+        >
+          <div class="container-fluid py-2 intro-section-color">
+            <h4 class="text-black font-weight-bold text-center">
+              Find Interview
+            </h4>
           </div>
-          <h3>Time picker here</h3>
-          <div class="row text-center">
-            <div class="col-md-6">
-              <label for="startTime">Start Time</label>
-              <timepicker
-                id="startTime"
-                type="time"
-                formControlName="startTime"
-              ></timepicker>
-            </div>
-            <div class="col-md-6">
-              <label for="endTime">End Time</label>
-              <timepicker
-                id="endTime"
-                type="time"
-                formControlName="endTime"
-              ></timepicker>
-            </div>
-          </div>
-          <br />
-          <div class="container-fluid">
-            <label for="dateRange">Date range</label>
-            <input
-              id="dateRange"
-              #dp
-              placeholder="Select Date(s)"
-              formControlName="dateRange"
-              bsDaterangepicker
-              [bsConfig]="{
-                containerClass: 'theme-orange',
-                adaptivePosition: true
-              }"
-            />
-          </div>
-          <div formArrayName="skills">
-            <h2>Skills</h2>
-            <select id="skillType" formControlName="skillType">
-              <option value="">Which skill is needed?</option>
-              <option
-                *ngFor="let skillName of skillOptions.skillNames"
-                [ngValue]="skillName"
-              >
-                {{ skillName }}
-              </option>
-            </select>
-            <select id="skillLevel" formControlName="skillLevel">
-              <option value="">Which level is needed?</option>
-              <option
-                *ngFor="let skillLevel of skillOptions.skillLevels"
-                [ngValue]="skillLevel"
-              >
-                {{ skillLevel }}
-              </option>
-            </select>
-          </div>
-          <br />
         </div>
+        <h3>Time picker here</h3>
+        <div class="row text-center">
+          <div class="col-md-6">
+            <label for="startTime">Start Time</label>
+            <timepicker
+              id="startTime"
+              type="time"
+              formControlName="startTime"
+            ></timepicker>
+          </div>
+          <div class="col-md-6">
+            <label for="endTime">End Time</label>
+            <timepicker
+              id="endTime"
+              type="time"
+              formControlName="endTime"
+            ></timepicker>
+          </div>
+        </div>
+        <br />
+        <div class="container-fluid">
+          <mat-form-field appearance="outline" color="accent">
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input
+              [formGroup]="findInterviewsForm"
+              [rangePicker]="picker"
+              disabled="true"
+            >
+              <input
+                matStartDate
+                formControlName="firstDate"
+                placeholder="Start date"
+              />
+              <input
+                matEndDate
+                formControlName="lastDate"
+                placeholder="End date"
+              />
+            </mat-date-range-input>
+            <mat-hint>MM/DD/YYYY - MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-date-range-picker
+              #picker
+              disabled="false"
+            ></mat-date-range-picker>
+          </mat-form-field>
+        </div>
+        <div formArrayName="skills">
+          <h2>Skills</h2>
+          <select id="skillType" formControlName="skillType">
+            <option value="">Which skill is needed?</option>
+            <option
+              *ngFor="let skillName of skillOptions.skillNames"
+              [ngValue]="skillName"
+            >
+              {{ skillName }}
+            </option>
+          </select>
+          <select id="skillLevel" formControlName="skillLevel">
+            <option value="">Which level is needed?</option>
+            <option
+              *ngFor="let skillLevel of skillOptions.skillLevels"
+              [ngValue]="skillLevel"
+            >
+              {{ skillLevel }}
+            </option>
+          </select>
+        </div>
+        <br />
       </div>
+
       <div class="modal-footer">
         <div class="col-12 col-md-12 mx-auto services">
           <div class="row text-center">
@@ -127,41 +141,39 @@
           <strong>Create Interview</strong>
         </h3>
       </div>
-      <div class="card padded">
-        <div class="row">
-          <select id="interviewSelected" formControlName="interviewSelected">
-            <option value="">Which interview slot?</option>
-            <option
-              *ngFor="let interview of availableInterviews"
-              [ngValue]="interview"
-            >
-              {{ interview }}
-            </option>
-          </select>
+      <div>
+        <select id="interviewSelected" formControlName="interviewSelected">
+          <option value="">Which interview slot?</option>
+          <option
+            *ngFor="let interview of availableInterviews"
+            [ngValue]="interview"
+          >
+            {{ interview }}
+          </option>
+        </select>
+      </div>
+      <br />
+      <div class="row text-center">
+        <div class="col-md-6">
+          <p>
+            This can be used to further specify a time within the above range if
+            it is more than 1 hour, if left blank it will auto select the first
+            hour.
+          </p>
+          <label for="startTime">Start Time</label>
+          <timepicker
+            id="startTime"
+            type="time"
+            formControlName="startTime"
+          ></timepicker>
         </div>
-        <br />
-        <div class="row text-center">
-          <div class="col-md-6">
-            <p>
-              This can be used to further specify a time within the above range
-              if it is more than 1 hour, if left blank it will auto select the
-              first hour.
-            </p>
-            <label for="startTime">Start Time</label>
-            <timepicker
-              id="startTime"
-              type="time"
-              formControlName="startTime"
-            ></timepicker>
-          </div>
-        </div>
-        <br />
-        <div class="row">
-          <textarea
-            placeholder="Additional information"
-            formControlName="additionalInformation"
-          ></textarea>
-        </div>
+      </div>
+      <br />
+      <div class="row">
+        <textarea
+          placeholder="Additional information"
+          formControlName="additionalInformation"
+        ></textarea>
       </div>
       <div class="container-padded"></div>
       <div class="modal-footer">

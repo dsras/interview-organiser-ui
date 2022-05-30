@@ -26,6 +26,7 @@ export class InterviewRequesterService {
   ) {}
 
   //New function calls using new URIs
+  //! Not used
   InterviewsFindAll() {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER;
@@ -39,6 +40,7 @@ export class InterviewRequesterService {
     });
   }
 
+  //! not used
   InterviewsFindCompleted(userName: string) {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
@@ -52,6 +54,8 @@ export class InterviewRequesterService {
       return returnData;
     });
   }
+
+  //! not used
   InterviewsFindConfirmed(userName: string) {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
@@ -65,6 +69,8 @@ export class InterviewRequesterService {
       return returnData;
     });
   }
+
+  //! not used
   InterviewsFindPanelNoShow(userName: string) {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
@@ -78,6 +84,8 @@ export class InterviewRequesterService {
       return returnData;
     });
   }
+
+  //! not used
   InterviewsFindCandidateNoShow(userName: string) {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
@@ -91,6 +99,8 @@ export class InterviewRequesterService {
       return returnData;
     });
   }
+
+  //! not used
   InterviewsFindProgressed(userName: string) {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
@@ -104,6 +114,8 @@ export class InterviewRequesterService {
       return returnData;
     });
   }
+
+  //! not used
   InterviewsFindNotProgressed(userName: string) {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
@@ -117,6 +129,8 @@ export class InterviewRequesterService {
       return returnData;
     });
   }
+
+  //! not used
   InterviewsFindHired(userName: string) {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
@@ -130,6 +144,8 @@ export class InterviewRequesterService {
       return returnData;
     });
   }
+
+
   ///Old function calls some are still in use
   stringTimeAdd(input: string, add: number) {
     let splits = input.split(':');
@@ -171,7 +187,7 @@ export class InterviewRequesterService {
 
     const id = [Number.parseInt(formDecomp[12])];
 
-    this.addInterview(
+    this.createInterview(
       this.rs.getUsername(),
       id,
       dateString,
@@ -181,7 +197,7 @@ export class InterviewRequesterService {
     );
   }
 
-  addInterview(
+  createInterview(
     userName: string,
     interviewerID: number[],
     interviewDate: string,
@@ -206,64 +222,6 @@ export class InterviewRequesterService {
     this.requester
       .postRequest<Interview>(url, newInterview)
       .subscribe((returnData) => {});
-  }
-
-  getInterviewByInterviewer(events: CalendarEvent[], username: string) {
-    const url =
-      APPCONSTANTS.APICONSTANTS.BASE_URL +
-      APPCONSTANTS.APICONSTANTS.INTER +
-      '/' +
-      username;
-    let out;
-    this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
-      out = <Array<InterviewReturn>>(<unknown>returnData);
-      out.forEach((element) => {
-        //additonal filtering on output, find a way to spoof this separately
-        events.push(this.parseInterviewUser(element));
-      });
-      return returnData;
-    });
-  }
-
-  //! Only for use in calendar app
-  getInterviewByRecruiter(events: CalendarEvent[], username: string) {
-    console.log(`getInterviewByRecruiter() called`);
-    const url =
-      APPCONSTANTS.APICONSTANTS.BASE_URL +
-      APPCONSTANTS.APICONSTANTS.INTER_BY_REC +
-      '/' +
-      username;
-    let out;
-    this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
-      out = <Array<InterviewReturn>>(<unknown>returnData);
-      out.forEach((element) => {
-        //additonal filtering on output, find a way to spoof this separately
-        events.push(this.parseInterviewUser(element));
-      });
-      return returnData;
-    });
-  }
-
-  getInterviewAll(interviews: Array<InterviewReturn>): void {
-    console.log(`getInterviewAll() called`);
-    const url =
-      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER;
-    this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
-      let dataArray = <Array<InterviewReturn>>(<unknown>returnData);
-      dataArray.forEach((element) => {
-        interviews.push(element);
-      });
-      return interviews;
-    });
-  }
-
-  getInterviewsDashboard() {
-    console.log(`getInterviewsDashboard() called`);
-    const url =
-      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER;
-    this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
-      return returnData;
-    });
   }
 
   updateInterviewStatus(id: number, status: string, isStatus: boolean) {
@@ -295,15 +253,6 @@ export class InterviewRequesterService {
     return this.requester.getRequest<Array<InterviewReturn>>(url);
   }
 
-  // ! NOT WORKING AS INTENDED
-  // getUserInterviews(): Observable<Array<InterviewReturn>> {
-  //   const url =
-  //     APPCONSTANTS.APICONSTANTS.BASE_URL +
-  //     APPCONSTANTS.APICONSTANTS.INTER +
-  //     '/' +
-  //     getUsername();
-  //   return this.requester.getRequest<Array<InterviewReturn>>(url)
-  // }
   getUserInterviews(
     events: Array<CalendarEvent>,
     interviews: Array<CalendarEventInterview>

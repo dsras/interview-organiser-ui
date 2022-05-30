@@ -13,7 +13,7 @@ import { CalendarEventAvailability } from 'src/app/shared/models/calendar-event-
 import { AvailabilityMetaData } from 'src/app/shared/models/event-meta-data';
 import { DateToStringService } from '../date-to-string.service';
 import { getUsername } from 'src/app/shared/functions/get-user-from-local.function';
-import { AvailabilityFormValue } from 'src/app/shared/models/forms';
+import { AvailabilityFormValue, FindSlotFormValue } from 'src/app/shared/models/forms';
 
 /** A service to handle any requests made to the database regarding availability. */
 @Injectable({
@@ -189,11 +189,8 @@ export class AvailabilityRequesterService {
    * @param {Array<string>} interviewsReturn
    * @returns {void} Modified interviewsReturn with all relevant availability
    */
-  getAvailabilityByRange(
-    startDate: string,
-    endDate: string,
-    startTime: string,
-    endTime: string,
+  getInterviewSlots(
+    form: FindSlotFormValue,
     skillsIDList: number[],
     interviewsReturn: string[]
   ): void {
@@ -201,10 +198,10 @@ export class AvailabilityRequesterService {
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.INTER_INTER;
 
-    const newStartDate: Date = new Date(startDate);
-    const newEndDate: Date = new Date(endDate);
-    const newStartTime: Date = new Date(startTime);
-    const newEndTime: Date = new Date(endTime);
+    const newStartDate: Date = new Date(form.firstDate);
+    const newEndDate: Date = new Date(form.lastDate);
+    const newStartTime: Date = new Date(form.startTime);
+    const newEndTime: Date = new Date(form.endTime);
 
     newStartTime.setDate(newStartDate.getDate());
     newEndTime.setDate(newStartDate.getDate());
