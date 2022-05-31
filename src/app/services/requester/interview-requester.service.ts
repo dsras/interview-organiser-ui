@@ -25,23 +25,30 @@ export class InterviewRequesterService {
     private dateFormatter: DateToStringService
   ) {}
 
-    getInterviewsPerMonthByInterviewer(events: CalendarEvent[], username: string, start:string, end:string){
-      const url =
-      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_INTER_RANGE.replace('username', username);
-      let out;
-      let myRange = new dateRange;
-      myRange.start = start;
-      myRange.end = end;
-      this.requester.postRequest<dateRange>(url, myRange).subscribe((returnData) => {
+  getInterviewsPerMonthByInterviewer(
+    events: CalendarEvent[],
+    username: string,
+    start: string,
+    end: string
+  ) {
+    const url =
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.INTER_INTER_RANGE.replace('username', username);
+    let out;
+    let myRange = new dateRange();
+    myRange.start = start;
+    myRange.end = end;
+    this.requester
+      .postRequest<dateRange>(url, myRange)
+      .subscribe((returnData) => {
         out = <Array<InterviewReturn>>(<unknown>returnData);
         out.forEach((element) => {
           //additonal filtering on output, find a way to spoof this separately
-          events.push(this.outputInterviewEvent(element));
+          events.push(this.parseInterviewUser(element));
         });
         return returnData;
       });
-    }
-
+  }
 
   //New function calls using new URIs
   //! Not used
