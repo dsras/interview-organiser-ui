@@ -3,10 +3,11 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { CalendarEventInterview } from 'src/app/shared/models/calendar-event-detail';
 import {
-  interviewOutcomeOptions,
-  interviewStatusOptions,
+  outcomeOptions,
+  statusOptions,
 } from 'src/app/shared/constants/interview-options.constant';
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
+import { getUserRoleNames } from 'src/app/shared/functions/get-user-from-local.function';
 
 /**
  * Component to view and modify interview status
@@ -22,23 +23,26 @@ import { MatDialogService } from 'src/app/services/mat-dialog.service';
 export class InterviewStatusComponent implements OnInit {
   /** The time slot being displayed */
   @Input() slot?: CalendarEventInterview;
+  userRoles!: string[];
 
   /** Form for updating interview status */
   statusForm: FormGroup = this.fb.group({
     status: [''],
   });
   /** Available status options */
-  statusList: Array<string> = interviewStatusOptions;
+  statusOptions = statusOptions;
   /** Available outcome options */
-  outcomeList: Array<string> = interviewOutcomeOptions;
+  outcomeOptions = outcomeOptions;
   /** Options for a recruiter to select */
-  interviewerOptions: Array<string> = [this.statusList[0], this.statusList[1]];
+  interviewerOptions: Array<string> = [
+    this.statusOptions.completed,
+    this.statusOptions.candidateNoShow,
+  ];
   /** Options for an interviewer to select */
   recruiterOptions: Array<string> = [
-    this.statusList[2],
-    this.outcomeList[0],
-    this.outcomeList[1],
-    this.outcomeList[2],
+    this.statusOptions.panelNoShow,
+    this.outcomeOptions.progressed,
+    this.outcomeOptions.didNotProgress,
   ];
 
   /** @ignore */
@@ -49,7 +53,9 @@ export class InterviewStatusComponent implements OnInit {
   ) {}
 
   /** @ignore */
-  ngOnInit() {}
+  ngOnInit() {
+    this.userRoles = getUserRoleNames();
+  }
 
   /** @ignore */
   openModal(template: TemplateRef<any>): void {
@@ -72,13 +78,10 @@ export class InterviewStatusComponent implements OnInit {
       id = Number(this.slot.id);
     }
     // TODO streamline this?
-    let isOutcome: boolean = true;
-    if (!this.statusList.includes(str) && !this.outcomeList.includes(str)) {
-      console.warn('no valid status given');
-      return;
-    }
-    console.log('made it to the requester');
-    this.iRequester.updateInterviewStatus(id, str, !isOutcome);
+    const isStatus: boolean = Object.values(this.statusOptions).includes(
+      f.value.status
+    );
+    this.iRequester.updateInterviewStatus(id, str, isStatus);
     f.reset();
   }
 }

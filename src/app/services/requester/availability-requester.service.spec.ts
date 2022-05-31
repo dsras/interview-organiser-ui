@@ -176,7 +176,7 @@ describe('AvailabilityRequesterService', () => {
     
   it('getAvailabilityByRange calls requester methods', fakeAsync(() => {
     spy = spyOn(rService, 'postRequestNoType').and.callThrough();
-    service.getAvailabilityByRange(new Date().toString(), new Date().toString(), new Date().toString(), new Date().toString(),[1],[]);
+    service.getInterviewSlots(new Date().toString(), new Date().toString(), new Date().toString(), new Date().toString(),[1],[]);
     tick(3);
     expect(spy).toHaveBeenCalled();
   }));

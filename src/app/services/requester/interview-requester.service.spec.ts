@@ -145,7 +145,7 @@ describe('InterviewRequesterService', () => {
   }));
 
   it('outputInterviewEvent formats correctly', () => {
-    let retObj = service.outputInterviewEvent(interRet);
+    let retObj = service.parseInterviewUser(interRet);
     expect(retObj.id === interRet.interviewId).toBeTruthy();
     expect(retObj.meta.interviewPanel === interRet.interviewers).toBeTruthy();
 
@@ -162,7 +162,7 @@ describe('InterviewRequesterService', () => {
     let timeEnd: string = "21:00";
     let additionalInfo: string = "";
     spy = spyOn(rService, 'postRequest').and.callThrough();
-    service.addInterview('name', interviewerID, interviewDate, timeStart, timeEnd, additionalInfo);
+    service.createInterview('name', interviewerID, interviewDate, timeStart, timeEnd, additionalInfo);
     expect(spy).toHaveBeenCalled();
   }));
 

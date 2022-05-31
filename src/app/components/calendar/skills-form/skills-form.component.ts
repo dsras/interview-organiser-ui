@@ -2,6 +2,7 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
+import { getUsername } from 'src/app/shared/functions/get-user-from-local.function';
 import { SkillOptions, Skills } from 'src/app/shared/models/types';
 
 /**
@@ -73,7 +74,7 @@ export class SkillsFormComponent implements OnInit {
         id = element.id;
       }
     });
-    this.rs.addSkills(id, this.rs.getUsername());
+    this.rs.addSkills(id, getUsername());
     form.reset();
   }
 }

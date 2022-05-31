@@ -3,7 +3,7 @@ import { Requester } from '../requester/requester.service';
 import { UserData, Skills, SkillOptions } from '../../shared/models/types';
 import { APPCONSTANTS } from '../../shared/constants/app.constant';
 import { DatePipe } from '@angular/common';
-
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -12,47 +12,33 @@ export class RequestCenterService {
   constructor(private requester: Requester, private pipe: DatePipe) {}
 
   getUser(username: string): void {
-    console.log('Calling')
+    console.log('Calling');
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.USER +
-      '/' + username;
+      '/' +
+      username;
     this.requester.getRequest<UserData>(url).subscribe((returnData) => {
       return returnData;
     });
   }
 
-  getUserData(username: string) {
-    let user: UserData;
+  getUserData(username: string): Observable<any> {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.USER +
-      '/' + username;
-    this.requester.getRequest<UserData>(url).subscribe((returnData: any) => {
-      user = returnData
-      localStorage.setItem('userData', JSON.stringify(user))
-    })  
-    
+      '/' +
+      username;
+    return this.requester.getRequest<UserData>(url);
   }
 
-  getUsername(): string {
-    let username: string = '';
-    let inString = <string>localStorage.getItem('ssoUser');
-
-    if (inString != '' && inString != null) {
-      let myObj = JSON.parse(inString);
-      username = myObj.email;
-    } else {
-      console.warn('No username was available');
-    }
-    return username;
-  }
   // ! not tested
   getSkills(username: string): Array<Skills> {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.SKILLS +
-      '/' + username;
+      '/' +
+      username;
     let out;
     this.requester.getRequest<Skills>(url).subscribe((returnData) => {
       out = returnData;
@@ -65,7 +51,8 @@ export class RequestCenterService {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.SKILLS +
-      '/' + username;
+      '/' +
+      username;
     const newSkillID = id;
     this.requester.postRequest<number>(url, id).subscribe((returnData) => {});
   }

@@ -6,6 +6,7 @@ import {
   AvailabilityRange,
   AvailabilityForInterviews,
   availIdOnly,
+  dateRange,
 } from '../../shared/models/types';
 import { APPCONSTANTS } from '../../shared/constants/app.constant';
 import { CalendarEvent } from 'angular-calendar';
@@ -13,6 +14,8 @@ import { CalendarColors } from '../../shared/constants/colours.constant';
 import { CalendarEventAvailability } from 'src/app/shared/models/calendar-event-detail';
 import { AvailabilityMetaData } from 'src/app/shared/models/event-meta-data';
 import { DateToStringService } from '../date-to-string.service';
+import { getUsername } from 'src/app/shared/functions/get-user-from-local.function';
+import { AvailabilityFormValue, FindSlotFormValue } from 'src/app/shared/models/forms';
 
 /** A service to handle any requests made to the database regarding availability. */
 @Injectable({
@@ -36,36 +39,47 @@ export class AvailabilityRequesterService {
     });
   }
 
+  getMyAvailabilityInRange(events: CalendarEvent[], username: string, start:string, end:string): void {
+    const url =
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.AVAIL_RANGE.replace('username', username);
+    let out;
+
+    let myRange = new dateRange;
+    myRange.start = start;
+    myRange.end = end;
+
+    this.requester.postRequest<dateRange>(url, myRange).subscribe((returnData) => {
+      out = <Array<Availability>>(<unknown>returnData);
+      out.forEach((element) => {
+        //console.log(element);
+        events.push(this.parseAvailabilityEvent(element));
+      });
+      return out;
+    });
+  }
 
   /**
    * Submit new availability slot(s) to database
    * Slots are created on each day in the range from first date to last date,
    * with each slot having the same start and end time for each day.
    * If first and last are the same, one slot is created.
-   * 
-   * @param  {string} first - First date of the slot(s)
-   * @param  {string} last - Last date of the slot(s)
-   * @param  {string} start - The start time of each slot
-   * @param  {string} end - The end time of each slot.
-   * @returns void - The new range of availability is sent as a POST to database.
+   *
+   * @param {AvailabilityFormValue} form availability form submitted
    */
-  addAvailability(
-    userName: string,
-    first: string,
-    last: string,
-    start: string,
-    end: string
-  ): void {
+  addAvailabilityForm(form: AvailabilityFormValue): void {
     const newAvail: AvailabilityRange = new AvailabilityRange(
-      this.dateToStringDate(new Date(first)),
-      this.dateToStringDate(new Date(last)),
-      this.dateToStringTime(new Date(start)),
-      this.dateToStringTime(new Date(end))
+      this.dateToStringDate(new Date(form.firstDate)),
+      this.dateToStringDate(new Date(form.lastDate)),
+      this.dateToStringTime(new Date(form.startTime)),
+      this.dateToStringTime(new Date(form.endTime))
     );
     const url: string =
-      APPCONSTANTS.APICONSTANTS.BASE_URL + 
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.AVAIL +
-      '/' + userName;
+      '/' +
+      getUsername();
+
     let out: AvailabilityRange;
 
     this.requester
@@ -74,26 +88,50 @@ export class AvailabilityRequesterService {
         out = <AvailabilityRange>(<unknown>returnData);
       });
   }
+
   /**
-   * Takes the user's username and an array of calendar events and appends
-   * all current availability of that user to the array.
+   * Takes two arrays of calendar events and appends
+   * all current availability of the user to the arrays.
    *
-   * @param  {CalendarEvent[]} events - The array to push availability to
-   * @param  {string} username - The name of the owner of the availability
+   * @param { CalendarEvent[] } events - The array of events for the calendar to display
+   * @param { CalendarEventAvailability[] } availability - the array of availability
    */
-  getMyAvailability(events: CalendarEvent[], username: string): void {
+  getUserAvailability(
+    events: Array<CalendarEvent>,
+    availability: Array<CalendarEvent>
+  ): void {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.AVAIL +
-      '/' + username;
-    let out;
+      '/' +
+      getUsername();
 
     this.requester.getRequest<Availability>(url).subscribe((returnData) => {
-      out = <Array<Availability>>(<unknown>returnData);
-      out.forEach((element) => {
-        events.push(this.parseAvailabilityEvent(element));
+      let data = <Array<Availability>>(<unknown>returnData);
+      data.forEach((element) => {
+        let event = this.parseAvailabilityUser(element);
+        events.push(event);
+        availability.push(event);
       });
-      return out;
+    });
+  }
+
+  getRecruiterAvailability(
+    events: Array<CalendarEvent>,
+    availability: Array<CalendarEventAvailability>
+  ): void {
+    const url =
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.AVAIL;
+
+    this.requester.getRequest<Availability>(url).subscribe((returnData) => {
+      let data = <Array<Availability>>(<unknown>returnData);
+      console.table(returnData);
+      data.forEach((element) => {
+        let event = this.parseAvailabilityRecruiter(element);
+        events.push(event);
+        availability.push(event);
+      });
     });
   }
 
@@ -108,7 +146,8 @@ export class AvailabilityRequesterService {
     let url: string =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.AVAIL +
-      '?ids=' + input.toString();
+      '?ids=' +
+      input.toString();
     let started: boolean = false;
     input.forEach((element) => {
       url += (started ? ',' : '') + element.toString();
@@ -136,7 +175,7 @@ export class AvailabilityRequesterService {
     this.requester.getRequest<Availability>(url).subscribe((returnData) => {
       out = <Array<Availability>>(<unknown>returnData);
       out.forEach((element) => {
-        events.push(this.parseAvailabilityEvent(element));
+        events.push(this.parseAvailabilityUser(element));
       });
       return out;
     });
@@ -183,22 +222,19 @@ export class AvailabilityRequesterService {
    * @param {Array<string>} interviewsReturn
    * @returns {void} Modified interviewsReturn with all relevant availability
    */
-  getAvailabilityByRange(
-    startDate: string,
-    endDate: string,
-    startTime: string,
-    endTime: string,
+  getInterviewSlots(
+    form: FindSlotFormValue,
     skillsIDList: number[],
-    interviewsReturn: string[]
+    interviewsReturn: AvailabilityForInterviews[]
   ): void {
     const url: string =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.INTER_INTER;
 
-    const newStartDate: Date = new Date(startDate);
-    const newEndDate: Date = new Date(endDate);
-    const newStartTime: Date = new Date(startTime);
-    const newEndTime: Date = new Date(endTime);
+    const newStartDate: Date = new Date(form.firstDate);
+    const newEndDate: Date = new Date(form.lastDate);
+    const newStartTime: Date = new Date(form.startTime);
+    const newEndTime: Date = new Date(form.endTime);
 
     newStartTime.setDate(newStartDate.getDate());
     newEndTime.setDate(newStartDate.getDate());
@@ -245,16 +281,17 @@ export class AvailabilityRequesterService {
           }
 
           interviewsReturn.push(
-            'On ' +
-              element.date +
-              ' between ' +
-              startInput +
-              ' -> ' +
-              endInput +
-              ' this is with: ' +
-              element.interviewer +
-              ' id: ' +
-              element.interviewerId
+            element
+            // 'On ' +
+            //   element.date +
+            //   ' between ' +
+            //   startInput +
+            //   ' -> ' +
+            //   endInput +
+            //   ' this is with: ' +
+            //   element.interviewer +
+            //   ' id: ' +
+            //   element.interviewerId
           );
         });
       });
@@ -262,7 +299,7 @@ export class AvailabilityRequesterService {
 
   /**
    * Retrives a string representation of the time from a Date object
-   * 
+   *
    * @param date the date to have the time represented as a string
    * @returns the string representation of the time
    */
@@ -272,7 +309,7 @@ export class AvailabilityRequesterService {
 
   /**
    * Retrives a string representation of the date from a Date object
-   * 
+   *
    * @param date the date to have the date represented as a string
    * @returns the string representation of the date
    */
@@ -281,13 +318,15 @@ export class AvailabilityRequesterService {
   }
 
   /**
-   * Takes an Availability object and outputs the information in an object to be 
+   * Takes an Availability object and outputs the information in an object to be
    * displayed in the calendar
-   * 
-   * @param availability the object to be converted to a calendar event 
+   *
+   * @param availability the object to be converted to a calendar event
    * @returns a calendar event to be displayed in the calendar
    */
-  parseAvailabilityEvent(availability: Availability): CalendarEventAvailability {
+  private parseAvailabilityUser(
+    availability: Availability
+  ): CalendarEventAvailability {
     const start = new Date(availability.date);
     const end = new Date(availability.date);
     const times1 = availability.startTime.split(':');
@@ -303,7 +342,31 @@ export class AvailabilityRequesterService {
       start: start,
       end: end,
       title: 'availability',
-      color: CalendarColors.blue,
+      color: CalendarColors.get('blue'),
+      meta: data,
+    };
+    return newAvailability;
+  }
+
+  private parseAvailabilityRecruiter(
+    availability: Availability
+  ): CalendarEventAvailability {
+    const start = new Date(availability.date);
+    const end = new Date(availability.date);
+    const times1 = availability.startTime.split(':');
+    const times2 = availability.endTime.split(':');
+
+    start.setHours(parseInt(times1[0]), parseInt(times1[1]));
+    end.setHours(parseInt(times2[0]), parseInt(times2[1]));
+
+    const data = new AvailabilityMetaData();
+
+    const newAvailability: CalendarEventAvailability = {
+      id: availability.availabilityId,
+      start: start,
+      end: end,
+      title: 'availability',
+      color: CalendarColors.get('purple'),
       meta: data,
     };
     return newAvailability;

@@ -11,6 +11,7 @@ class API_CONSTANTS {
 
   AVAIL: string = 'availability';
   AVAIL_DEL: string = 'availability/delete';
+  AVAIL_RANGE: string = 'availability/username/range';
   AVAIL_ADD: string = 'availability/new';
   AVAIL_GET: string = 'availability/find';
   AVAIL_SKILL: string = 'availability/findBySkills?ids=';
@@ -24,6 +25,7 @@ class API_CONSTANTS {
   APPLICANT_ALL: string = 'applicants/findAll';
 
   INTER: string = 'interviews';
+  INTER_INTER_RANGE: string = 'interviews/username/range'
   INTER_COMP: string = 'interviews/username/completed';
   INTER_CONF: string = 'interviews/username/status/confirmed'
   INTER_PNS: string = 'interviews/username/status/panel-no-show'
