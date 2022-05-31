@@ -155,14 +155,17 @@ export class CalendarComponent implements OnInit {
 
     //this.aRequester.getMyAvailability(this.events, this.rs.getUsername());
     // this.aRequester.getMyAvailability(this.availability, this.rs.getUsername());
-    this.iRequester.getInterviewByInterviewer(
-      this.events,
-      this.rs.getUsername()
-    );
-    this.iRequester.getInterviewByInterviewer(
-      this.interviews,
-      this.rs.getUsername()
-    );
+
+    this.iRequester.getInterviewsPerMonthByInterviewer(this.events, this.rs.getUsername(), this.dateString.dateToStringDate(this.startDate), this.dateString.dateToStringDate(this.endDate));
+    this.iRequester.getInterviewsPerMonthByInterviewer(this.interviews, this.rs.getUsername(), this.dateString.dateToStringDate(this.startDate), this.dateString.dateToStringDate(this.endDate));
+    // this.iRequester.getInterviewByInterviewer(
+    //   this.events,
+    //   this.rs.getUsername()
+    // );
+    // this.iRequester.getInterviewByInterviewer(
+    //   this.interviews,
+    //   this.rs.getUsername()
+    // );
     this.delayedRefresh();
   }
   populateAvail(){
@@ -239,7 +242,7 @@ export class CalendarComponent implements OnInit {
   /** @ignore */
   closeOpenMonthViewDay(): void {
     this.setDates();
-    this.populateAvail();
+    this.populateCalendar();
     this.activeDayIsOpen = false;
   }
 
@@ -248,7 +251,8 @@ export class CalendarComponent implements OnInit {
     let events: Array<CalendarEvent> = [];
     let myStartDate: Date = new Date('2022-05-01');
     let myEndDate: Date = new Date('2022-06-01');
-    this.aRequester.getMyAvailabilityInRange(events, 'thorfinn.manson@accolitedigital.com', '2022-05-01', '2022-06-01');
+    this.iRequester.getInterviewsPerMonthByInterviewer(events, 'thorfinn.manson@accolitedigital.com', '2022-05-01', '2022-06-01');
+    console.log(events);
   }
 
   testGetAll(){
