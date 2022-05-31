@@ -16,7 +16,9 @@ import {
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
-
+import { DatePipe } from '@angular/common';
+import { DateToStringService} from '../../services/date-to-string.service'
+import { Console } from 'console';
 /**
  * The main component of the calendar, an implementation of angular-calendar
  * {@link https://mattlewis92.github.io/angular-calendar/docs/ | angular-calendar}.
@@ -54,18 +56,33 @@ export class CalendarComponent implements OnInit {
   availability: Array<CalendarEventAvailability> = [];
   /** Array of all interviews. */
   interviews: Array<CalendarEventInterview> = [];
-
+  startDate = new Date();
+  endDate = new Date();
+  
   /** @ignore */
   constructor(
     private _dialog: MatDialogService,
     private rs: RequestCenterService,
     private iRequester: InterviewRequesterService,
-    private aRequester: AvailabilityRequesterService
+    private aRequester: AvailabilityRequesterService,
+    private dateString: DateToStringService,
   ) {}
 
   /** @ignore */
   ngOnInit(): void {
+
+    //setup dates
+    this.startDate = this.viewDate;
+    this.startDate.setDate(1);
+    this.startDate.setHours(0,0,0,0);
+    this.endDate.setDate(1);
+    this.endDate.setHours(0,0,0,0);
+    this.endDate.setMonth(this.endDate.getMonth()+1);
+    console.log("check here for the dates stuff");
+    console.log(this.dateString.dateToStringDate(this.startDate));
+    console.log(this.dateString.dateToStringDate(this.endDate));
     this.populateCalendar();
+
   }
 
   /** @ignore private? */
@@ -84,7 +101,7 @@ export class CalendarComponent implements OnInit {
   //* in test
   /** @ignore needed for implementation? */
   async delayedRefresh(): Promise<void> {
-    await this.sleep(2500)
+    await this.sleep(3000)
       .then(() => this.refresh.next())
       .catch();
   }
@@ -130,8 +147,14 @@ export class CalendarComponent implements OnInit {
    */
   populateCalendar(): void {
     this.resetEvents();
-    this.aRequester.getMyAvailability(this.events, this.rs.getUsername());
-    this.aRequester.getMyAvailability(this.availability, this.rs.getUsername());
+    
+    //console.log(this.dateString.dateToStringDate(this.startDate));
+    //console.log(this.dateString.dateToStringDate(this.endDate));
+    this.aRequester.getMyAvailabilityInRange(this.events, this.rs.getUsername(), this.dateString.dateToStringDate(this.startDate), this.dateString.dateToStringDate(this.endDate));
+    this.aRequester.getMyAvailabilityInRange(this.availability, this.rs.getUsername(), this.dateString.dateToStringDate(this.startDate), this.dateString.dateToStringDate(this.endDate));
+
+    //this.aRequester.getMyAvailability(this.events, this.rs.getUsername());
+    // this.aRequester.getMyAvailability(this.availability, this.rs.getUsername());
     this.iRequester.getInterviewByInterviewer(
       this.events,
       this.rs.getUsername()
@@ -140,6 +163,12 @@ export class CalendarComponent implements OnInit {
       this.interviews,
       this.rs.getUsername()
     );
+    this.delayedRefresh();
+  }
+  populateAvail(){
+    this.resetEvents();
+    this.aRequester.getMyAvailabilityInRange(this.events, this.rs.getUsername(), this.dateString.dateToStringDate(this.startDate), this.dateString.dateToStringDate(this.endDate));
+    this.aRequester.getMyAvailabilityInRange(this.availability, this.rs.getUsername(), this.dateString.dateToStringDate(this.startDate), this.dateString.dateToStringDate(this.endDate));
     this.delayedRefresh();
   }
   /** @ignore */
@@ -194,10 +223,23 @@ export class CalendarComponent implements OnInit {
   }
   /** @ignore */
   setView(view: CalendarView): void {
+    console.log('set view?');
     this.view = view;
   }
+
+  setDates(){
+    this.startDate.setMonth(this.viewDate.getMonth());
+    this.startDate.setDate(1);
+    this.startDate.setDate(1);
+    this.endDate.setMonth(this.viewDate.getMonth() + 1);
+    this.startDate.setHours(0,0,0,0);
+    this.endDate.setHours(0,0,0,0);
+  }
+
   /** @ignore */
   closeOpenMonthViewDay(): void {
+    this.setDates();
+    this.populateAvail();
     this.activeDayIsOpen = false;
   }
 
@@ -207,5 +249,13 @@ export class CalendarComponent implements OnInit {
     let myStartDate: Date = new Date('2022-05-01');
     let myEndDate: Date = new Date('2022-06-01');
     this.aRequester.getMyAvailabilityInRange(events, 'thorfinn.manson@accolitedigital.com', '2022-05-01', '2022-06-01');
+  }
+
+  testGetAll(){
+    let events: Array<CalendarEvent> = [];
+    let myStartDate: Date = new Date('2022-05-01');
+    let myEndDate: Date = new Date('2022-06-01');
+    this.aRequester.getAllAvailability(events);
+    console.log(events);
   }
 }

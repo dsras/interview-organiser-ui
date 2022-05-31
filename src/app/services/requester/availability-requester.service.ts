@@ -50,8 +50,8 @@ export class AvailabilityRequesterService {
     this.requester.postRequest<dateRange>(url, myRange).subscribe((returnData) => {
       out = <Array<Availability>>(<unknown>returnData);
       out.forEach((element) => {
-        console.log(element);
-        //events.push(this.parseAvailabilityEvent(element));
+        //console.log(element);
+        events.push(this.parseAvailabilityEvent(element));
       });
       return out;
     });
