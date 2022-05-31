@@ -19,6 +19,7 @@ export class LoginGuard implements CanActivate {
       null === localStorage.getItem('ssoUser') ||
       localStorage.getItem('ssoUser') === ''
     ) {
+      localStorage.clear()
       this.router.navigate(['login']);
       return false;
     } else if (
