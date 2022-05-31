@@ -19,6 +19,7 @@ import {
   getUsername,
   getUserRoleNames,
 } from 'src/app/shared/functions/get-user-from-local.function';
+import { DateToStringService } from '../../services/date-to-string.service';
 
 /**
  * The main component of the calendar, an implementation of angular-calendar
@@ -60,32 +61,29 @@ export class CalendarComponent implements OnInit {
   availability: Array<CalendarEventAvailability> = [];
   /** Array of all interviews. */
   interviews: Array<CalendarEventInterview> = [];
+  startDate = new Date();
+  endDate = new Date();
 
   /** @ignore */
   constructor(
     private _dialog: MatDialogService,
     private iRequester: InterviewRequesterService,
-    private aRequester: AvailabilityRequesterService
+    private aRequester: AvailabilityRequesterService,
+    private dateString: DateToStringService
   ) {}
 
   /** @ignore */
   ngOnInit(): void {
     this.currentUser = getUsername();
     this.userRoles = getUserRoleNames();
-    this.resetEvents();
-    if (this.userRoles.includes('USER')) {
-      console.log('is user');
-      this.initUser();
-    }
-    if (this.userRoles.includes('RECRUITER')) {
-      console.log('is recruiter');
-      this.initRecruiter();
-    }
-    if (this.userRoles.includes('ADMIN')) {
-      console.log('is admin');
-      this.initAdmin();
-    }
+    // put in populate
+
     this.delayedRefresh();
+
+    //setup dates
+    this.setDates();
+
+    this.populateCalendar();
   }
 
   /** @ignore private? */
@@ -104,7 +102,7 @@ export class CalendarComponent implements OnInit {
   //* in test
   /** @ignore needed for implementation? */
   async delayedRefresh(): Promise<void> {
-    await this.sleep(2500)
+    await this.sleep(3000)
       .then(() => this.refresh.next())
       .catch();
   }
@@ -112,9 +110,75 @@ export class CalendarComponent implements OnInit {
   //* in test
   // todo streamline by removing availability and interviews and using filtering of events
   /** Populate the calendar with a users events and availability. */
+
+  /**
+   *  Populate the calendar with an interviewers events and availability.
+   *
+   * todo stremline by removing availability and interviews and using filtering of events
+   */
+  populateCalendar(): void {
+    this.resetEvents();
+
+    // TODO make switch cases
+    if (this.userRoles.includes('USER')) {
+      console.log('is user');
+      this.initUser();
+    }
+    if (this.userRoles.includes('RECRUITER')) {
+      console.log('is recruiter');
+      this.initRecruiter();
+    }
+    if (this.userRoles.includes('ADMIN')) {
+      console.log('is admin');
+      this.initAdmin();
+    }
+    this.delayedRefresh();
+  }
+
+  populateAvail() {
+    this.resetEvents();
+    this.aRequester.getMyAvailabilityInRange(
+      this.events,
+      getUsername(),
+      this.dateString.dateToStringDate(this.startDate),
+      this.dateString.dateToStringDate(this.endDate)
+    );
+    this.aRequester.getMyAvailabilityInRange(
+      this.availability,
+      getUsername(),
+      this.dateString.dateToStringDate(this.startDate),
+      this.dateString.dateToStringDate(this.endDate)
+    );
+    this.delayedRefresh();
+  }
   initUser(): void {
-    this.aRequester.getUserAvailability(this.events, this.availability);
-    this.iRequester.getUserInterviews(this.events, this.interviews);
+    // this.aRequester.getUserAvailability(this.events, this.availability);
+    // this.iRequester.getUserInterviews(this.events, this.interviews);
+    this.aRequester.getMyAvailabilityInRange(
+      this.events,
+      getUsername(),
+      this.dateString.dateToStringDate(this.startDate),
+      this.dateString.dateToStringDate(this.endDate)
+    );
+    this.aRequester.getMyAvailabilityInRange(
+      this.availability,
+      getUsername(),
+      this.dateString.dateToStringDate(this.startDate),
+      this.dateString.dateToStringDate(this.endDate)
+    );
+
+    this.iRequester.getInterviewsPerMonthByInterviewer(
+      this.events,
+      getUsername(),
+      this.dateString.dateToStringDate(this.startDate),
+      this.dateString.dateToStringDate(this.endDate)
+    );
+    this.iRequester.getInterviewsPerMonthByInterviewer(
+      this.interviews,
+      getUsername(),
+      this.dateString.dateToStringDate(this.startDate),
+      this.dateString.dateToStringDate(this.endDate)
+    );
   }
 
   initRecruiter(): void {
@@ -123,7 +187,6 @@ export class CalendarComponent implements OnInit {
   }
 
   initAdmin(): void {}
-
 
   // ! Calendar core functionality contained here, shouldn't need to touch it!
   // TODO openDayModal() may need corrected down the line.
@@ -170,10 +233,23 @@ export class CalendarComponent implements OnInit {
   }
   /** @ignore */
   setView(view: CalendarView): void {
+    console.log('set view?');
     this.view = view;
   }
+
+  setDates() {
+    this.startDate.setMonth(this.viewDate.getMonth());
+    this.startDate.setDate(1);
+    this.startDate.setDate(1);
+    this.endDate.setMonth(this.viewDate.getMonth() + 1);
+    this.startDate.setHours(0, 0, 0, 0);
+    this.endDate.setHours(0, 0, 0, 0);
+  }
+
   /** @ignore */
   closeOpenMonthViewDay(): void {
+    this.setDates();
+    this.populateCalendar();
     this.activeDayIsOpen = false;
   }
 
@@ -182,11 +258,20 @@ export class CalendarComponent implements OnInit {
     let events: Array<CalendarEvent> = [];
     let myStartDate: Date = new Date('2022-05-01');
     let myEndDate: Date = new Date('2022-06-01');
-    this.aRequester.getMyAvailabilityInRange(
+    this.iRequester.getInterviewsPerMonthByInterviewer(
       events,
       'thorfinn.manson@accolitedigital.com',
       '2022-05-01',
       '2022-06-01'
     );
+    console.log(events);
+  }
+
+  testGetAll() {
+    let events: Array<CalendarEvent> = [];
+    let myStartDate: Date = new Date('2022-05-01');
+    let myEndDate: Date = new Date('2022-06-01');
+    this.aRequester.getAllAvailability(events);
+    console.log(events);
   }
 }

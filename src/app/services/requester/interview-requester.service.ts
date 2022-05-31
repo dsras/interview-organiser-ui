@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Requester } from '../requester/requester.service';
 import {
+  dateRange,
   Interview,
   InterviewReturn,
   StatusUpdate,
@@ -23,6 +24,24 @@ export class InterviewRequesterService {
     private requester: Requester,
     private dateFormatter: DateToStringService
   ) {}
+
+    getInterviewsPerMonthByInterviewer(events: CalendarEvent[], username: string, start:string, end:string){
+      const url =
+      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_INTER_RANGE.replace('username', username);
+      let out;
+      let myRange = new dateRange;
+      myRange.start = start;
+      myRange.end = end;
+      this.requester.postRequest<dateRange>(url, myRange).subscribe((returnData) => {
+        out = <Array<InterviewReturn>>(<unknown>returnData);
+        out.forEach((element) => {
+          //additonal filtering on output, find a way to spoof this separately
+          events.push(this.outputInterviewEvent(element));
+        });
+        return returnData;
+      });
+    }
+
 
   //New function calls using new URIs
   //! Not used
