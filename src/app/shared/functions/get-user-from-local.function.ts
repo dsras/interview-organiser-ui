@@ -1,7 +1,7 @@
 import { AppRoles, UserData } from '../models/types';
 
 export function getUsername(): string {
-  return JSON.parse('' + localStorage.getItem('userData')).username;
+  return JSON.parse('' + localStorage.getItem('ssoUser')).email;
 }
 
 export function getUserRoles(): Array<AppRoles> {
