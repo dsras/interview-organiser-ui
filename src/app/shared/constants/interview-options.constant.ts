@@ -13,12 +13,13 @@ export const interviewOutcomeOptions: Array<string> = [
 ];
 
 export enum statusOptions {
-  completed = 'completed',
+  completed = 'Completed',
   candidateNoShow = 'Candidate No Show' ,
   panelNoShow = 'Panel No Show',
   pending = 'Pending',
 }
 export enum outcomeOptions {
+  completed = 'Completed',
   progressed = 'Progressed',
   didNotProgress = "Didn't Progress",
   pending = 'Pending'
