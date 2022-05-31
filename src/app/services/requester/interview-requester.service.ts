@@ -25,6 +25,11 @@ export class InterviewRequesterService {
     private dateFormatter: DateToStringService
   ) {}
 
+    getInterviewsPerMonthByInterviewer(){
+      
+    }
+
+
   //New function calls using new URIs
   InterviewsFindAll() {
     const url =
