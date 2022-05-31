@@ -53,7 +53,7 @@ export class AvailabilityRequesterService {
       out = <Array<Availability>>(<unknown>returnData);
       out.forEach((element) => {
         //console.log(element);
-        events.push(this.parseAvailabilityEvent(element));
+        events.push(this.parseAvailabilityUser(element));
       });
       return out;
     });
