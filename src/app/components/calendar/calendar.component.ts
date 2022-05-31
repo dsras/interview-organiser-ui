@@ -8,7 +8,6 @@ import {
 import { isSameDay, isSameMonth } from 'date-fns';
 import { Subject } from 'rxjs';
 import { CalendarEvent, CalendarView } from 'angular-calendar';
-import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 import {
   CalendarEventAvailability,
   CalendarEventInterview,
@@ -16,8 +15,10 @@ import {
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
-import { AppRoles } from 'src/app/shared/models/types';
-import { getUserRoles } from 'src/app/shared/functions/get-user-from-local.function';
+import {
+  getUsername,
+  getUserRoleNames,
+} from 'src/app/shared/functions/get-user-from-local.function';
 
 /**
  * The main component of the calendar, an implementation of angular-calendar
@@ -63,15 +64,14 @@ export class CalendarComponent implements OnInit {
   /** @ignore */
   constructor(
     private _dialog: MatDialogService,
-    private rs: RequestCenterService,
     private iRequester: InterviewRequesterService,
     private aRequester: AvailabilityRequesterService
   ) {}
 
   /** @ignore */
   ngOnInit(): void {
-    this.currentUser = this.rs.getUsername();
-    this.userRoles = this.parseUserRoles();
+    this.currentUser = getUsername();
+    this.userRoles = getUserRoleNames();
     this.resetEvents();
     if (this.userRoles.includes('USER')) {
       console.log('is user');
@@ -124,13 +124,6 @@ export class CalendarComponent implements OnInit {
 
   initAdmin(): void {}
 
-  parseUserRoles(): Array<string> {
-    const userRoles: Array<AppRoles> = getUserRoles();
-    let roles: Array<string> = [];
-    userRoles.forEach((role) => roles.push(role.name));
-    console.log(roles);
-    return roles;
-  }
 
   // ! Calendar core functionality contained here, shouldn't need to touch it!
   // TODO openDayModal() may need corrected down the line.
@@ -185,10 +178,15 @@ export class CalendarComponent implements OnInit {
   }
 
   //* obviously just a test function
-  test(){
+  test() {
     let events: Array<CalendarEvent> = [];
     let myStartDate: Date = new Date('2022-05-01');
     let myEndDate: Date = new Date('2022-06-01');
-    this.aRequester.getMyAvailabilityInRange(events, 'thorfinn.manson@accolitedigital.com', '2022-05-01', '2022-06-01');
+    this.aRequester.getMyAvailabilityInRange(
+      events,
+      'thorfinn.manson@accolitedigital.com',
+      '2022-05-01',
+      '2022-06-01'
+    );
   }
 }

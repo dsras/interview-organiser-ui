@@ -342,7 +342,7 @@ export class AvailabilityRequesterService {
       start: start,
       end: end,
       title: 'availability',
-      color: CalendarColors.blue,
+      color: CalendarColors.get('blue'),
       meta: data,
     };
     return newAvailability;
@@ -366,7 +366,7 @@ export class AvailabilityRequesterService {
       start: start,
       end: end,
       title: 'availability',
-      color: CalendarColors.purple,
+      color: CalendarColors.get('purple'),
       meta: data,
     };
     return newAvailability;

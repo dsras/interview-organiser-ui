@@ -7,7 +7,19 @@ export const interviewStatusOptions: Array<string> = [
 
 export const interviewOutcomeOptions: Array<string> = [
   'Progressed',
-  'Didnt Progress',
+  "Didn't Progress",
   'Hired',
   'Pending'
 ];
+
+export enum statusOptions {
+  completed = 'completed',
+  candidateNoShow = 'Candidate No Show' ,
+  panelNoShow = 'Panel No Show',
+  pending = 'Pending',
+}
+export enum outcomeOptions {
+  progressed = 'Progressed',
+  didNotProgress = "Didn't Progress",
+  pending = 'Pending'
+}

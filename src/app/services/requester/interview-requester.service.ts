@@ -12,7 +12,6 @@ import { InterviewMetaData } from 'src/app/shared/models/event-meta-data';
 import { CalendarColors } from 'src/app/shared/constants/colours.constant';
 import { DateToStringService } from '../date-to-string.service';
 import { Observable } from 'rxjs';
-import { RequestCenterService } from './request-center.service';
 import { getUsername } from 'src/app/shared/functions/get-user-from-local.function';
 import { CreateInterviewFormValue } from 'src/app/shared/models/forms';
 
@@ -22,7 +21,6 @@ import { CreateInterviewFormValue } from 'src/app/shared/models/forms';
 export class InterviewRequesterService {
   constructor(
     private requester: Requester,
-    private rs: RequestCenterService,
     private dateFormatter: DateToStringService
   ) {}
 
@@ -307,7 +305,7 @@ export class InterviewRequesterService {
       start: start,
       end: end,
       title: 'interview',
-      color: CalendarColors.yellow,
+      color: CalendarColors.get('yellow'),
       meta: newInterviewData,
     };
     return newInterview;
@@ -335,7 +333,7 @@ export class InterviewRequesterService {
       start: start,
       end: end,
       title: 'interview',
-      color: CalendarColors.red,
+      color: CalendarColors.get('red'),
       meta: newInterviewData,
     };
     return newInterview;
