@@ -16,6 +16,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @NgModule({
   imports: [
@@ -34,6 +38,10 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatSidenavModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatCardModule,
+    MatExpansionModule,
+    MatListModule,
+    MatGridListModule,
   ],
   exports: [
     TimepickerModule,
@@ -51,6 +59,10 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatSidenavModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatCardModule,
+    MatExpansionModule,
+    MatListModule,
+    MatGridListModule,
   ],
   declarations: [StringToDatetimePipe],
   providers: [{ provide: TimepickerConfig, useFactory: getTimepickerConfig }],
