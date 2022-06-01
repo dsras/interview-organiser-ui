@@ -169,13 +169,13 @@ export class CalendarComponent implements OnInit {
 
     this.iRequester.getInterviewsPerMonthByInterviewer(
       this.events,
-      getUsername(),
+      false,
       this.dateString.dateToStringDate(this.startDate),
       this.dateString.dateToStringDate(this.endDate)
     );
     this.iRequester.getInterviewsPerMonthByInterviewer(
       this.interviews,
-      getUsername(),
+      false,
       this.dateString.dateToStringDate(this.startDate),
       this.dateString.dateToStringDate(this.endDate)
     );
@@ -183,7 +183,13 @@ export class CalendarComponent implements OnInit {
 
   initRecruiter(): void {
     this.aRequester.getRecruiterAvailability(this.events, this.availability);
-    this.iRequester.getRecruiterInterviews(this.events, this.interviews);
+    this.iRequester.getInterviewsPerMonthByInterviewer(
+      this.events,
+      true,
+      this.dateString.dateToStringDate(this.startDate),
+      this.dateString.dateToStringDate(this.endDate)
+    );
+    //this.iRequester.getRecruiterInterviews(this.events, this.interviews);
   }
 
   initAdmin(): void {}
@@ -256,13 +262,12 @@ export class CalendarComponent implements OnInit {
   //* obviously just a test function
   test() {
     let events: Array<CalendarEvent> = [];
-    let myStartDate: Date = new Date('2022-05-01');
-    let myEndDate: Date = new Date('2022-06-01');
+
     this.iRequester.getInterviewsPerMonthByInterviewer(
       events,
-      'thorfinn.manson@accolitedigital.com',
-      '2022-05-01',
-      '2022-06-01'
+      false,
+      this.dateString.dateToStringDate(this.startDate),
+      this.dateString.dateToStringDate(this.endDate)
     );
     console.log(events);
   }

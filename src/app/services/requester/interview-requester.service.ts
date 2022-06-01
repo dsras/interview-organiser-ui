@@ -27,13 +27,15 @@ export class InterviewRequesterService {
 
   getInterviewsPerMonthByInterviewer(
     events: CalendarEvent[],
-    username: string,
+    isRec: boolean,
     start: string,
     end: string
   ) {
-    const url =
+    let url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
-      APPCONSTANTS.APICONSTANTS.INTER_INTER_RANGE.replace('username', username);
+      APPCONSTANTS.APICONSTANTS.INTER_INTER_RANGE.replace('username', getUsername())+
+      '/'+isRec;
+      
     let out;
     let myRange = new dateRange();
     myRange.start = start;
