@@ -1,7 +1,11 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
-import { SkillOptions, Skills } from '../../../shared/models/types';
+import {
+  AvailabilityForInterviews,
+  SkillOptions,
+  Skills,
+} from '../../../shared/models/types';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
@@ -22,7 +26,7 @@ export class CreateInterviewComponent implements OnInit {
   };
 
   /** Array of availability as strings to be used in form selection */
-  availableInterviews: Array<string> = [];
+  availableInterviews: Array<AvailabilityForInterviews> = [];
 
   /** Iterview creation from selected attributes form */
   createInterviewForm: FormGroup = this.fb.group({
@@ -35,7 +39,8 @@ export class CreateInterviewComponent implements OnInit {
   findInterviewsForm: FormGroup = this.fb.group({
     startTime: ['', Validators.required],
     endTime: ['', Validators.required],
-    dateRange: ['', Validators.required],
+    firstDate: ['', Validators.required],
+    lastDate: ['', Validators.required],
     skills: this.fb.group({
       skillType: ['', Validators.required],
       skillLevel: ['', Validators.required],
@@ -72,7 +77,7 @@ export class CreateInterviewComponent implements OnInit {
    *
    * @param form completed search criteria form
    */
-  findInterview(form: FormGroup | any): void {
+  findInterview(form: FormGroup): void {
     let idArr: Array<number> = [];
     let skillReq = {
       skillType: form.value.skills.skillType,
@@ -87,12 +92,11 @@ export class CreateInterviewComponent implements OnInit {
         idArr.push(skillStore.id);
       }
     });
+    console.log(idArr);
+    this.availableInterviews = [];
 
-    this.aRequester.getAvailabilityByRange(
-      form.value.dateRange[0],
-      form.value.dateRange[1],
-      form.value.startTime,
-      form.value.endTime,
+    this.aRequester.getInterviewSlots(
+      form.value,
       idArr,
       this.availableInterviews
     );
@@ -105,12 +109,8 @@ export class CreateInterviewComponent implements OnInit {
    *
    * @param form completed form of interview attributes
    */
-  submitInterview(form: FormGroup | any): void {
-    this.iRequester.addInterviewForm(
-      form.value.interviewSelected,
-      form.value.additionalInformation,
-      form.value.startTime
-    );
+  submitInterview(form: FormGroup): void {
+    this.iRequester.addInterviewForm(form.value);
     form.reset();
   }
 
@@ -121,7 +121,9 @@ export class CreateInterviewComponent implements OnInit {
     if (!disp || disp == '') {
       try {
         disp = find.style.display;
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     }
     switch (disp) {
       case 'none':

@@ -1,6 +1,68 @@
 .bg-grey {
   background-color: #D8D8D8;
 }
+.bg-grey {
+  background-color: #D8D8D8;
+}
+
+.modal-org {
+  color: #000000;
+  background-color: #ff9800;
+}
+
+button:disabled,
+button[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
+
+.padded {
+  padding: 25px;
+}
+
+.btn-org {
+  color: #000000;
+  background-color: #ff9800;
+}
+
+.logo {
+  font-size: 200px;
+}
+
+.logo-med {
+  font-size: 80px;
+}
+
+.logo-small {
+  font-size: 40px;
+}
+
+.container-fluid {
+	background-size: cover;
+	background-position: center;
+}
+
+#startTime {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+}
+
+#endTime {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+}
+
+#dateRange {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 200px;
+}
 
 .modal-org {
   color: #000000;

@@ -13,8 +13,8 @@ import { InterviewMetaData } from 'src/app/shared/models/event-meta-data';
 import { CalendarColors } from 'src/app/shared/constants/colours.constant';
 import { DateToStringService } from '../date-to-string.service';
 import { Observable } from 'rxjs';
-import { RequestCenterService } from './request-center.service';
 import { getUsername } from 'src/app/shared/functions/get-user-from-local.function';
+import { CreateInterviewFormValue } from 'src/app/shared/models/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -22,29 +22,38 @@ import { getUsername } from 'src/app/shared/functions/get-user-from-local.functi
 export class InterviewRequesterService {
   constructor(
     private requester: Requester,
-    private rs: RequestCenterService,
     private dateFormatter: DateToStringService
   ) {}
 
-    getInterviewsPerMonthByInterviewer(events: CalendarEvent[], username: string, start:string, end:string){
-      const url =
-      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER_INTER_RANGE.replace('username', username);
-      let out;
-      let myRange = new dateRange;
-      myRange.start = start;
-      myRange.end = end;
-      this.requester.postRequest<dateRange>(url, myRange).subscribe((returnData) => {
+  getInterviewsPerMonthByInterviewer(
+    events: CalendarEvent[],
+    isRec: boolean,
+    start: string,
+    end: string
+  ) {
+    let url =
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.INTER_INTER_RANGE.replace('username', getUsername())+
+      '/'+isRec;
+      
+    let out;
+    let myRange = new dateRange();
+    myRange.start = start;
+    myRange.end = end;
+    this.requester
+      .postRequest<dateRange>(url, myRange)
+      .subscribe((returnData) => {
         out = <Array<InterviewReturn>>(<unknown>returnData);
         out.forEach((element) => {
           //additonal filtering on output, find a way to spoof this separately
-          events.push(this.outputInterviewEvent(element));
+          events.push(this.parseInterviewUser(element));
         });
         return returnData;
       });
-    }
-
+  }
 
   //New function calls using new URIs
+  //! Not used
   InterviewsFindAll() {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER;
@@ -58,6 +67,7 @@ export class InterviewRequesterService {
     });
   }
 
+  //! not used
   InterviewsFindCompleted(userName: string) {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
@@ -71,6 +81,8 @@ export class InterviewRequesterService {
       return returnData;
     });
   }
+
+  //! not used
   InterviewsFindConfirmed(userName: string) {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
@@ -84,6 +96,8 @@ export class InterviewRequesterService {
       return returnData;
     });
   }
+
+  //! not used
   InterviewsFindPanelNoShow(userName: string) {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
@@ -97,6 +111,8 @@ export class InterviewRequesterService {
       return returnData;
     });
   }
+
+  //! not used
   InterviewsFindCandidateNoShow(userName: string) {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
@@ -110,6 +126,8 @@ export class InterviewRequesterService {
       return returnData;
     });
   }
+
+  //! not used
   InterviewsFindProgressed(userName: string) {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
@@ -123,6 +141,8 @@ export class InterviewRequesterService {
       return returnData;
     });
   }
+
+  //! not used
   InterviewsFindNotProgressed(userName: string) {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
@@ -136,6 +156,8 @@ export class InterviewRequesterService {
       return returnData;
     });
   }
+
+  //! not used
   InterviewsFindHired(userName: string) {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
@@ -149,6 +171,7 @@ export class InterviewRequesterService {
       return returnData;
     });
   }
+
   ///Old function calls some are still in use
   stringTimeAdd(input: string, add: number) {
     let splits = input.split(':');
@@ -169,66 +192,30 @@ export class InterviewRequesterService {
     return this.dateFormatter.dateToStringDate(date);
   }
 
-  outputInterviewEvent(element: InterviewReturn): CalendarEventInterview {
-    const start = new Date(element.date);
-    const end = new Date(element.date);
-    const int_id = element.interviewId;
-    const times1 = element.startTime.split(':');
-    const times2 = element.endTime.split(':');
-
-    start.setHours(parseInt(times1[0]), parseInt(times1[1]));
-    end.setHours(parseInt(times2[0]), parseInt(times2[1]));
-
-    const newInterviewData = new InterviewMetaData({
-      panel: element.interviewers,
-      outcome: element.outcome,
-      status: element.status,
-      additional: element.additionalInfo,
-    });
-
-    const newInterview: CalendarEventInterview = {
-      id: int_id,
-      start: start,
-      end: end,
-      title: 'interview',
-      color: CalendarColors.yellow,
-      meta: newInterviewData,
-    };
-    return newInterview;
-  }
-
-  // ? Is the formDecomp an array of the form values?
-  addInterviewForm(formInput: string, additional: string, startTime: Date) {
-    const formDecomp: string[] = formInput.split(' ');
-    const dateString: string = formDecomp[1];
+  addInterviewForm(form: CreateInterviewFormValue) {
     let startTimeString: string;
-    let endTimeString = '';
-    console.log(startTime.toString());
+    let endTimeString: string;
 
-    if (startTime.toString() != '') {
-      startTimeString = this.dateToStringTime(startTime);
-
-      startTime.setHours(startTime.getHours() + 1);
-
-      endTimeString = this.dateToStringTime(startTime);
+    if (form.startTime != '') {
+      //set end time to be an hour after start time
+      startTimeString = form.startTime;
+      endTimeString = this.stringTimeAdd(startTimeString, 1);
     } else {
-      startTimeString = formDecomp[3];
+      startTimeString = form.interviewSelected.startTime;
       endTimeString = this.stringTimeAdd(startTimeString, 1);
     }
 
-    const id = [Number.parseInt(formDecomp[12])];
-
-    this.addInterview(
-      this.rs.getUsername(),
-      id,
-      dateString,
+    this.createInterview(
+      getUsername(),
+      [form.interviewSelected.interviewerId],
+      form.interviewSelected.date,
       startTimeString,
       endTimeString,
-      additional
+      form.additionalInformation
     );
   }
 
-  addInterview(
+  createInterview(
     userName: string,
     interviewerID: number[],
     interviewDate: string,
@@ -246,69 +233,13 @@ export class InterviewRequesterService {
       interviewDate,
       timeStart,
       timeEnd,
-      additionalInfo
+      additionalInfo,
+      'Pending',
+      'Pending'
     );
     this.requester
       .postRequest<Interview>(url, newInterview)
       .subscribe((returnData) => {});
-  }
-
-  getInterviewByInterviewer(events: CalendarEvent[], username: string) {
-    const url =
-      APPCONSTANTS.APICONSTANTS.BASE_URL +
-      APPCONSTANTS.APICONSTANTS.INTER +
-      '/' +
-      username;
-    let out;
-    this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
-      out = <Array<InterviewReturn>>(<unknown>returnData);
-      out.forEach((element) => {
-        //additonal filtering on output, find a way to spoof this separately
-        events.push(this.outputInterviewEvent(element));
-      });
-      return returnData;
-    });
-  }
-
-  //! Only for use in calendar app
-  getInterviewByRecruiter(events: CalendarEvent[], username: string) {
-    console.log(`getInterviewByRecruiter() called`);
-    const url =
-      APPCONSTANTS.APICONSTANTS.BASE_URL +
-      APPCONSTANTS.APICONSTANTS.INTER_BY_REC +
-      '/' +
-      username;
-    let out;
-    this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
-      out = <Array<InterviewReturn>>(<unknown>returnData);
-      out.forEach((element) => {
-        //additonal filtering on output, find a way to spoof this separately
-        events.push(this.outputInterviewEvent(element));
-      });
-      return returnData;
-    });
-  }
-
-  getInterviewAll(interviews: Array<InterviewReturn>): void {
-    console.log(`getInterviewAll() called`);
-    const url =
-      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER;
-    this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
-      let dataArray = <Array<InterviewReturn>>(<unknown>returnData);
-      dataArray.forEach((element) => {
-        interviews.push(element);
-      });
-      return interviews;
-    });
-  }
-
-  getInterviewsDashboard() {
-    console.log(`getInterviewsDashboard() called`);
-    const url =
-      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER;
-    this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
-      return returnData;
-    });
   }
 
   updateInterviewStatus(id: number, status: string, isStatus: boolean) {
@@ -331,12 +262,108 @@ export class InterviewRequesterService {
       });
   }
 
-  getAllInterviews(): Observable<InterviewReturn[]> {
+  getAllInterviews(): Observable<Array<InterviewReturn>> {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.INTER +
       '/organiser/' +
       getUsername();
-    return this.requester.getRequest<InterviewReturn[]>(url);
+    return this.requester.getRequest<Array<InterviewReturn>>(url);
+  }
+
+  getUserInterviews(
+    events: Array<CalendarEvent>,
+    interviews: Array<CalendarEventInterview>
+  ): void {
+    const url =
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.INTER +
+      '/' +
+      getUsername();
+    let out;
+    this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
+      out = <Array<InterviewReturn>>(<unknown>returnData);
+      out.forEach((element) => {
+        const interview = this.parseInterviewUser(element);
+        events.push(interview);
+        interviews.push(interview);
+      });
+    });
+  }
+
+  getRecruiterInterviews(
+    events: Array<CalendarEvent>,
+    interviews: Array<CalendarEventInterview>
+  ): void {
+    const url =
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.INTER +
+      '/organiser/' +
+      getUsername();
+    let out;
+    this.requester.getRequest<InterviewReturn>(url).subscribe((returnData) => {
+      out = <Array<InterviewReturn>>(<unknown>returnData);
+      out.forEach((element) => {
+        const interview = this.parseInterviewRecruiter(element);
+        events.push(interview);
+        interviews.push(interview);
+      });
+    });
+  }
+
+  parseInterviewUser(element: InterviewReturn): CalendarEventInterview {
+    const start = new Date(element.date);
+    const end = new Date(element.date);
+    const int_id = element.interviewId;
+    const times1 = element.startTime.split(':');
+    const times2 = element.endTime.split(':');
+
+    start.setHours(parseInt(times1[0]), parseInt(times1[1]));
+    end.setHours(parseInt(times2[0]), parseInt(times2[1]));
+
+    const newInterviewData = new InterviewMetaData({
+      panel: element.interviewers,
+      outcome: element.outcome,
+      status: element.status,
+      additional: element.additionalInfo,
+    });
+
+    const newInterview: CalendarEventInterview = {
+      id: int_id,
+      start: start,
+      end: end,
+      title: 'interview',
+      color: CalendarColors.get('yellow'),
+      meta: newInterviewData,
+    };
+    return newInterview;
+  }
+
+  parseInterviewRecruiter(element: InterviewReturn): CalendarEventInterview {
+    const start = new Date(element.date);
+    const end = new Date(element.date);
+    const int_id = element.interviewId;
+    const times1 = element.startTime.split(':');
+    const times2 = element.endTime.split(':');
+
+    start.setHours(parseInt(times1[0]), parseInt(times1[1]));
+    end.setHours(parseInt(times2[0]), parseInt(times2[1]));
+
+    const newInterviewData = new InterviewMetaData({
+      panel: element.interviewers,
+      outcome: element.outcome,
+      status: element.status,
+      additional: element.additionalInfo,
+    });
+
+    const newInterview: CalendarEventInterview = {
+      id: int_id,
+      start: start,
+      end: end,
+      title: 'interview',
+      color: CalendarColors.get('red'),
+      meta: newInterviewData,
+    };
+    return newInterview;
   }
 }

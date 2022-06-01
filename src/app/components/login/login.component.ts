@@ -7,6 +7,7 @@ import {
   SocialLoginModule,
 } from 'angularx-social-login';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
+import { getUsername, getUserRoleNames } from 'src/app/shared/functions/get-user-from-local.function';
 import { LoggedInObject, LoginUser } from 'src/app/shared/models/user-model';
 
 // [APP_LEVEL Imports]
@@ -75,10 +76,15 @@ export class LoginComponent implements OnInit {
     this._backEndService.login(user).subscribe((response: any) => {
       if (response && response.token) {
         localStorage.setItem('apiKey', response.token);
-        this._rs.getUserData(
-          JSON.parse('' + localStorage.getItem('ssoUser')).email
-        );
-        this._router.navigate(['calendar']);
+        this._rs.getUserData(getUsername()).subscribe((returnData: any) => {
+          user = returnData;
+          localStorage.setItem('userData', JSON.stringify(user));
+          if (getUserRoleNames().includes('RECRUITER')){
+            this._router.navigate(['/dashboard'])
+          } else {
+            this._router.navigate(['/calendar']);
+          }
+        });
       }
     });
   }

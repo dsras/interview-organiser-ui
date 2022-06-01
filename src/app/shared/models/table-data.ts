@@ -16,7 +16,7 @@ export class InterviewTableData extends DataSource<InterviewReturn> {
   }
 
   disconnect(): void {
-    this._dataStream.unsubscribe()
+    this._dataStream.unsubscribe();
   }
 
   setData(data: InterviewReturn[]): void {

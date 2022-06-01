@@ -59,7 +59,8 @@
                 background-size: cover;
                 background-position: center;
               "
-            ></div>
+            >
+          </div>
             <div class="blog-content">
               <button
                 type="button"
@@ -67,6 +68,42 @@
               >
                 <h5>
                   All Interviews
+                  <i
+                    class="fa fa-arrow-right"
+                    style="
+                      font-size: 18px;
+                      padding-top: 8px;
+                      padding-right: 7px;
+                    "
+                  ></i>
+                </h5>
+              </button>
+            </div>
+          </div>
+        </a>
+
+        <br> <br>
+
+        <a routerLink="/dashboard/completed-interviews">
+          <div class="blog-widget">
+            <div
+              class="col-lg-12 thumbnail-img"
+              data-aos="fade-left"
+              data-aos-delay="100"
+              style="
+                background-image: url(../../../assets/images/calendarBG.png);
+                background-size: cover;
+                background-position: center;
+              "
+            >
+          </div>
+            <div class="blog-content">
+              <button
+                type="button"
+                class="view-here-btn text-lefttext-black"
+              >
+                <h5>
+                  Completed Interviews
                   <i
                     class="fa fa-arrow-right"
                     style="
@@ -94,3 +131,7 @@
   </div>
 </div>
 
+
+<div class="card">
+  <interview-overview></interview-overview>
+</div>

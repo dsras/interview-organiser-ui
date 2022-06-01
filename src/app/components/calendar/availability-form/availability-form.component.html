@@ -1,77 +1,101 @@
-<!-- <button type="button" class="btn btn-org" (click)="openModal(form)">Add Availability</button> -->
-
 <div class="row justify-content-center">
-  <button type="button" class="view-here-btn text-center" (click)="openDialog(form)">Add Availability
-    <i class="fa fa-arrow-right" style="font-size: 18px; padding-top:8px; padding-right: 7px"></i>
+  <button
+    type="button"
+    class="view-here-btn text-center"
+    (click)="openDialog(form)"
+  >
+    Add Availability
+    <i
+      class="fa fa-arrow-right"
+      style="font-size: 18px; padding-top: 8px; padding-right: 7px"
+    ></i>
   </button>
 </div>
 
 <ng-template #form>
-  <form [formGroup]="createAvailabilityForm" (ngSubmit)="onSubmit(createAvailabilityForm)" class="md-form"
-    style="color: black;">
-
-    <!-- <div class="container text-center text-black pt-4 mt-4">
-  <div class="modal-header" style="padding: 10%; width: 100%; color: black; background-color: orange;">
-    <div class="container-fluid py-2 intro-section-color">
-      <h4 class="text-black font-weight-bold text-center">
-          Add Availability
-      </h4>
-    </div>
-  </div> -->
-
-    <div class="card">
-      <div class="container text-center text-black pt-4 mt-4">
-        <!-- padding: 10%;  -->
-        <div class="modal-header" style="width: 100%; color: black; background-color: orange;">
-          <div class="container-fluid py-2 intro-section-color">
-            <h4 class="text-black font-weight-bold text-center">
-              Add Availability
-            </h4>
-          </div>
+  <form
+    [formGroup]="createAvailabilityForm"
+    (ngSubmit)="onSubmit(createAvailabilityForm)"
+    class="md-form"
+    style="color: black"
+  >
+    <div class="container text-center text-black pt-4 mt-4">
+      <div
+        class="modal-header"
+        style="width: 100%; color: black; background-color: orange"
+      >
+        <div class="container-fluid py-2 intro-section-color">
+          <h4 class="text-black font-weight-bold text-center">
+            Add Availability
+          </h4>
         </div>
-        <div class="row text-center">
-          <div class="col-md-6">
-            <label for="startTime">Start Time</label>
-            <timepicker id="startTime" type="time" formControlName="startTime"></timepicker>
-          </div>
-          <div class="col-md-6">
-            <label for="endTime">End Time</label>
-            <timepicker id="endTime" type="time" formControlName="endTime"></timepicker>
-          </div>
-        </div>
-
-        <br>
-
-        <div class="container-fluid">
-          <label for="dateRange">Date range</label>
-          <input id="dateRange" #dp placeholder="Select Date(s)" formControlName="dateRange" bsDaterangepicker
-            [bsConfig]="{ containerClass: 'theme-orange', adaptivePosition: true}">
-        </div>
-        <br>
-        <!-- <div class="col-12 col-md-12 mx-auto services">
+      </div>
       <div class="row text-center">
-        <button type="submit" class="view-here-btn text-lefttext-black mx-auto"
-          [disabled]="!createAvailabilityForm.valid"
-          (click)="this.modalRef?.hide()">
-          <h6 class="mt-4 font-weight-normal">
-            Submit
-          </h6>
-        </button>
+        <div class="col-md-6">
+          <label for="startTime">Start Time</label>
+          <timepicker
+            id="startTime"
+            type="time"
+            formControlName="startTime"
+          ></timepicker>
+        </div>
+        <div class="col-md-6">
+          <label for="endTime">End Time</label>
+          <timepicker
+            id="endTime"
+            type="time"
+            formControlName="endTime"
+          ></timepicker>
+        </div>
       </div>
-    </div>
-  </div> -->
 
+      <br />
+
+      <div class="container-fluid">
+        <mat-form-field appearance="outline" color="accent">
+          <mat-label>Enter a date range</mat-label>
+          <mat-date-range-input
+            [formGroup]="createAvailabilityForm"
+            [rangePicker]="picker"
+            disabled="true"
+          >
+            <input
+              matStartDate
+              formControlName="firstDate"
+              placeholder="Start date"
+            />
+            <input
+              matEndDate
+              formControlName="lastDate"
+              placeholder="End date"
+            />
+          </mat-date-range-input>
+          <mat-hint>MM/DD/YYYY - MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker
+            #picker
+            disabled="false"
+          ></mat-date-range-picker>
+        </mat-form-field>
       </div>
-      <div class="modal-footer">
-        <div class="col-12 col-md-12 mx-auto services">
-          <div class="row text-center">
-            <button type="submit" class="view-here-btn text-lefttext-black text-center mx-auto d-inline-block"
-              [disabled]="!createAvailabilityForm.valid" (click)="closeDialog()">
-              <h6 class="mt-4 font-weight-normal">
-                Submit
-              </h6>
-            </button>
-          </div>
+      <br />
+    </div>
+    <div class="modal-footer">
+      <div class="col-12 col-md-12 mx-auto services">
+        <div class="row text-center">
+          <button
+            type="submit"
+            class="view-here-btn text-lefttext-black text-center mx-auto d-inline-block"
+            [disabled]="!createAvailabilityForm.valid"
+            (click)="closeDialog()"
+          >
+            <h6 class="mt-4 font-weight-normal" style="font-size: 100%;">
+              Submit<mat-icon>save</mat-icon>
+            </h6>
+          </button>
         </div>
       </div>
     </div>

@@ -113,7 +113,7 @@ describe('FindInterviewComponent', () => {
     aSpy = spyOn(aService, 'getAvailabilityByRange').and.callThrough();
     let formG = dummyFindForm;
     component.findInterview(formG);
-    expect(aService.getAvailabilityByRange).toHaveBeenCalled();
+    expect(aService.getInterviewSlots).toHaveBeenCalled();
 
     component.skillsAvailable.push({
       id:0,
@@ -122,7 +122,7 @@ describe('FindInterviewComponent', () => {
      });
 
     component.findInterview(formG);
-    expect(aService.getAvailabilityByRange).toHaveBeenCalled();
+    expect(aService.getInterviewSlots).toHaveBeenCalled();
   });
   
   it('submit interview makes service calls', () =>{
