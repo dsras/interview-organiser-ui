@@ -25,6 +25,8 @@ export class CreateInterviewComponent implements OnInit {
     skillLevels: new Set<string>(),
   };
 
+  panelOpenState = false;
+
   /** Array of availability as strings to be used in form selection */
   availableInterviews: Array<AvailabilityForInterviews> = [];
 
@@ -111,6 +113,7 @@ export class CreateInterviewComponent implements OnInit {
    */
   submitInterview(form: FormGroup): void {
     this.iRequester.addInterviewForm(form.value);
+    console.table(form.value)
     form.reset();
   }
 

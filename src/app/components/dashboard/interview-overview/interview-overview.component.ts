@@ -30,13 +30,12 @@ export class InterviewOverviewComponent implements OnInit {
       this.interviews = interviews;
       this.filterStatus();
       this.filterOutcome();
-      console.table(interviews);
     });
   }
 
   private filterStatus(): void {
     this.interviews.forEach((interview) => {
-      console.log(interview.status);
+      console.log(interview);
       switch (interview.status) {
         case statusOptions.candidateNoShow:
           this.candidateNoShow.push(interview);
@@ -64,6 +63,7 @@ export class InterviewOverviewComponent implements OnInit {
 
   private filterOutcome(): void {
     this.interviews.forEach((interview) => {
+      console.log(interview)
       switch (interview.outcome) {
         case outcomeOptions.completed:
           this.completed.push(interview);
