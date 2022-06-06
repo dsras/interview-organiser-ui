@@ -54,6 +54,7 @@ export class NavbarComponent implements OnInit {
 
   /** Logs out the user */
   logout(): void {
+    console.log('logout called');
     if (this.loginType === APPCONSTANTS.LOGIN_CONSTANTS.LOGIN_TYPE_SSO) {
       this.socialAuthService.signOut();
     }
