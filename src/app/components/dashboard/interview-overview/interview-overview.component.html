@@ -1,11 +1,18 @@
-<p>interview-overview works!</p>
-
-
-<p>Completed: {{ completed.length }}</p>
-<p>Panel No Show: {{ panelNoShow.length }}</p>
-<p>Candidate: {{ candidateNoShow.length }}</p>
-<p>Pending: {{ pending.length }}</p>
-<p>Confirmed: {{ confirmed.length }}</p>
-<p>Did Not Progress: {{ didNotProgress.length }}</p>
-<p>Progressed: {{ progressed.length }}</p>
-<p>Interviews: {{ interviews.length }}</p>
+<mat-expansion-panel hideToggle>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <p>Interview Overview</p>
+    </mat-panel-title>
+    <mat-panel-description>
+      This is a summary of all interviews
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <mat-list role="list">
+    <mat-list-item role="listitem">
+      Total Interviews: {{ interviews.length }}
+    </mat-list-item>
+    <mat-list-item role="listitem" *ngFor="let filteredList of allFilteredArrays | keyvalue">
+      {{ filteredList.key }}: {{ filteredList.value.length }}
+    </mat-list-item>
+  </mat-list>
+</mat-expansion-panel>
