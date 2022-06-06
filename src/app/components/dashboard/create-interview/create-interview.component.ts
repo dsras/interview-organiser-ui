@@ -79,8 +79,11 @@ export class CreateInterviewComponent implements OnInit {
    */
   findInterview(form: FormGroup): void {
     let idArr: Array<number> = [];
+    console.log(form.value.skills.skillName);
+    console.log(form.value.skills.skillLevel);
+    
     let skillReq = {
-      skillName: form.value.skills.skillType,
+      skillName: form.value.skills.skillName,
       skillLevel: form.value.skills.skillLevel,
     };
 

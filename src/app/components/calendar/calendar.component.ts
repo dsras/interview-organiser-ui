@@ -262,14 +262,9 @@ export class CalendarComponent implements OnInit {
   //* obviously just a test function
   test() {
     let events: Array<CalendarEvent> = [];
-
-    this.iRequester.getInterviewsPerMonthByInterviewer(
-      events,
-      false,
-      this.dateString.dateToStringDate(this.startDate),
-      this.dateString.dateToStringDate(this.endDate)
-    );
-    console.log(events);
+    this.iRequester.getAllInterviews().subscribe((interviews) => {
+      console.log(interviews);
+    });
   }
 
   testGetAll() {
