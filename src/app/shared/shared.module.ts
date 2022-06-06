@@ -51,6 +51,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatSidenavModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    //more
   ],
   declarations: [StringToDatetimePipe],
   providers: [{ provide: TimepickerConfig, useFactory: getTimepickerConfig }],
