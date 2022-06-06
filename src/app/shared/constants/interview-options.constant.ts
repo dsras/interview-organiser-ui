@@ -9,7 +9,7 @@ export const interviewOutcomeOptions: Array<string> = [
   'Progressed',
   "Didn't Progress",
   'Hired',
-  'Pending'
+  'Awaiting Completion'
 ];
 
 export enum statusOptions {
@@ -22,5 +22,5 @@ export enum outcomeOptions {
   completed = 'Completed',
   progressed = 'Progressed',
   didNotProgress = "Didn't Progress",
-  pending = 'Pending'
+  awaitingCompletion = 'Awaiting Completion'
 }

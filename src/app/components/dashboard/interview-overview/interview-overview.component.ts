@@ -19,6 +19,7 @@ export class InterviewOverviewComponent implements OnInit {
   confirmed: InterviewReturn[] = [];
   didNotProgress: InterviewReturn[] = [];
   progressed: InterviewReturn[] = [];
+  awaitingCompletion: InterviewReturn[] = []
   interviews: InterviewReturn[] = [];
 
   allFilteredArrays: Map<string, InterviewReturn[]> = new Map();
@@ -50,7 +51,6 @@ export class InterviewOverviewComponent implements OnInit {
           this.pending.push(interview);
           break;
         default:
-          this.pending.push(interview);
           break;
       }
     });
@@ -71,8 +71,8 @@ export class InterviewOverviewComponent implements OnInit {
         case outcomeOptions.didNotProgress:
           this.didNotProgress.push(interview);
           break;
-        case outcomeOptions.pending:
-          this.pending.push(interview);
+        case outcomeOptions.awaitingCompletion:
+          this.awaitingCompletion.push(interview);
           break;
         case outcomeOptions.progressed:
           this.progressed.push(interview);
@@ -84,6 +84,7 @@ export class InterviewOverviewComponent implements OnInit {
     this.allFilteredArrays
       .set('Completed', this.completed)
       .set('Did Not Progress', this.didNotProgress)
-      .set('Progressed', this.progressed);
+      .set('Progressed', this.progressed)
+      .set('Awaiting Completion', this.awaitingCompletion)
   }
 }

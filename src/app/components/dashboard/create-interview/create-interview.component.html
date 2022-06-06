@@ -127,7 +127,7 @@
       <div>
         <div class="container-padded">
           <h2>Select an interview slot</h2>
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="outline" class="full-width">
             <mat-label>Slot</mat-label>
             <mat-select
               formControlName="interviewSelected"
@@ -139,7 +139,7 @@
               >
                 On {{ interview.date }} between {{ interview.startTime }} ->
                 {{ interview.endTime }}, this is with:
-                {{ interview.interviewer }} id: {{ interview.interviewerId }}
+                {{ interview.interviewer }}.
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -155,7 +155,6 @@
               </mat-panel-title>
               <mat-panel-description>
                 If left blank, the earliest time will be auto-selected.
-                Currently I am {{ panelOpenState ? "open" : "closed" }}
               </mat-panel-description>
             </mat-expansion-panel-header>
             <label for="startTime">Start Time</label>
