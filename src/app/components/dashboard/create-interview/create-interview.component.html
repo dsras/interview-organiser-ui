@@ -38,6 +38,7 @@
             </h4>
           </div>
         </div>
+        <h3>Time picker here</h3>
         <div class="row text-center">
           <div class="col-md-6">
             <label for="startTime">Start Time</label>
@@ -58,7 +59,6 @@
         </div>
         <br />
         <div class="container-fluid">
-          <h2>Date(s) required</h2>
           <mat-form-field appearance="outline" color="accent">
             <mat-label>Enter a date range</mat-label>
             <mat-date-range-input
@@ -89,30 +89,25 @@
           </mat-form-field>
         </div>
         <div formArrayName="skills">
-          <h2>Skill required</h2>
-          <mat-form-field appearance="outline">
-            <mat-label>Skill</mat-label>
-            <mat-select formControlName="skillName" name="skillName">
-              <mat-option
-                *ngFor="let skillName of skillOptions.skillNames"
-                [value]="skillName"
-              >
-                {{ skillName }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>Level</mat-label>
-            <mat-select formControlName="skillLevel" name="skillLevel">
-              <mat-option
-                *ngFor="let skillLevel of skillOptions.skillLevels"
-                [value]="skillLevel"
-              >
-                {{ skillLevel }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+          <h2>Skills</h2>
+          <select id="skillType" formControlName="skillType">
+            <option value="">Which skill is needed?</option>
+            <option
+              *ngFor="let skillName of skillOptions.skillNames"
+              [ngValue]="skillName"
+            >
+              {{ skillName }}
+            </option>
+          </select>
+          <select id="skillLevel" formControlName="skillLevel">
+            <option value="">Which level is needed?</option>
+            <option
+              *ngFor="let skillLevel of skillOptions.skillLevels"
+              [ngValue]="skillLevel"
+            >
+              {{ skillLevel }}
+            </option>
+          </select>
         </div>
         <br />
       </div>
@@ -145,7 +140,7 @@
         </h3>
       </div>
       <div>
-        <!-- <select id="interviewSelected" formControlName="interviewSelected">
+        <select id="interviewSelected" formControlName="interviewSelected">
           <option value="">Which interview slot?</option>
           <option
             *ngFor="let interview of availableInterviews"
@@ -155,61 +150,32 @@
             {{ interview.endTime }}, this is with:
             {{ interview.interviewer }} id: {{ interview.interviewerId }}
           </option>
-        </select> -->
-        <div *ngIf="availableInterviews.length === 0">
-          <h2>There are no available interviews with these search criteria</h2>
-        </div>
-        <div class="container-padded" *ngIf="availableInterviews.length != 0">
-          <h2>Select an interview slot</h2>
-          <mat-form-field appearance="outline">
-            <mat-label>Slot</mat-label>
-            <mat-select
-              formControlName="interviewSelected"
-              name="interviewSelected"
-            >
-              <mat-option
-                *ngFor="let interview of availableInterviews"
-                [value]="interview"
-              >
-                On {{ interview.date }} between {{ interview.startTime }} ->
-                {{ interview.endTime }}, this is with:
-                {{ interview.interviewer }} id: {{ interview.interviewerId }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <br />
-          <mat-expansion-panel hideToggle>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <mat-icon>schedule</mat-icon>
-                Specify a time within the slot?
-              </mat-panel-title>
-              <mat-panel-description>
-                If left blank, the earliest time will be auto-selected.
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-            <label for="startTime">Start Time</label>
-            <timepicker
-              id="startTime"
-              type="time"
-              formControlName="startTime"
-            ></timepicker>
-          </mat-expansion-panel>
-          <br />
-          <mat-form-field appearance="outline">
-            <mat-label>Additional Information</mat-label>
-            <textarea
-              matInput
-              formControlName="additionalInformation"
-              name="additionalInformation"
-            >
-            </textarea>
-            <mat-error *ngIf="createInterviewForm.hasError('maxLength')">
-              Limited to 255 characters
-            </mat-error>
-          </mat-form-field>
+        </select>
+      </div>
+      <br />
+      <div class="row text-center">
+        <div class="col-md-6">
+          <p>
+            This can be used to further specify a time within the above range if
+            it is more than 1 hour, if left blank it will auto select the first
+            hour.
+          </p>
+          <label for="startTime">Start Time</label>
+          <timepicker
+            id="startTime"
+            type="time"
+            formControlName="startTime"
+          ></timepicker>
         </div>
       </div>
+      <br />
+      <div class="row">
+        <textarea
+          placeholder="Additional information"
+          formControlName="additionalInformation"
+        ></textarea>
+      </div>
+      <div class="container-padded"></div>
       <div class="modal-footer">
         <div class="col-12 col-md-12 mx-auto services">
           <div class="row text-center">

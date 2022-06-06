@@ -5,15 +5,11 @@
   </h2>
 
   <div class="col-3 mt-3 mx-auto orange-border"></div>
-
-  <br />
-
+  
   <div class="container text-center text-black">
     <div class="col-12 col-md-12 mx-auto mt-3">
       <div class="row justify-content-center">
         <div class="col-md-4 col-sm-6 my-3">
-          <interview-overview></interview-overview>
-          <br />
           <a routerLink="/calendar">
             <div class="blog-widget">
               <div
@@ -49,10 +45,8 @@
             </div>
           </a>
         </div>
-        <br />
-        <create-interview></create-interview>
-        
-        <br />
+        <br>
+        <create-interview></create-interview><br>
 
         <a routerLink="/dashboard/all-interviews">
           <div class="blog-widget">
@@ -65,9 +59,13 @@
                 background-size: cover;
                 background-position: center;
               "
-            ></div>
+            >
+          </div>
             <div class="blog-content">
-              <button type="button" class="view-here-btn text-lefttext-black">
+              <button
+                type="button"
+                class="view-here-btn text-lefttext-black"
+              >
                 <h5>
                   All Interviews
                   <i
@@ -84,8 +82,7 @@
           </div>
         </a>
 
-        <br />
-        <br />
+        <br> <br>
 
         <a routerLink="/dashboard/completed-interviews">
           <div class="blog-widget">
@@ -98,9 +95,13 @@
                 background-size: cover;
                 background-position: center;
               "
-            ></div>
+            >
+          </div>
             <div class="blog-content">
-              <button type="button" class="view-here-btn text-lefttext-black">
+              <button
+                type="button"
+                class="view-here-btn text-lefttext-black"
+              >
                 <h5>
                   Completed Interviews
                   <i
@@ -124,7 +125,13 @@
             </span>
           </a>
         </div>
+
       </div>
     </div>
   </div>
+</div>
+
+
+<div class="card">
+  <interview-overview></interview-overview>
 </div>

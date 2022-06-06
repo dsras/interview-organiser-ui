@@ -42,7 +42,7 @@ export class CreateInterviewComponent implements OnInit {
     firstDate: ['', Validators.required],
     lastDate: ['', Validators.required],
     skills: this.fb.group({
-      skillName: ['', Validators.required],
+      skillType: ['', Validators.required],
       skillLevel: ['', Validators.required],
     }),
   });
@@ -63,7 +63,7 @@ export class CreateInterviewComponent implements OnInit {
 
   /** @ignore */
   openModal(template: TemplateRef<any>): void {
-    this._dialog.openDailogTall(template);
+    this._dialog.openDialog(template);
   }
 
   /** @ignore */
@@ -80,13 +80,13 @@ export class CreateInterviewComponent implements OnInit {
   findInterview(form: FormGroup): void {
     let idArr: Array<number> = [];
     let skillReq = {
-      skillName: form.value.skills.skillType,
+      skillType: form.value.skills.skillType,
       skillLevel: form.value.skills.skillLevel,
     };
 
     this.skillsAvailable.forEach((skillStore) => {
       if (
-        skillStore.skillName === skillReq.skillName &&
+        skillStore.skillName === skillReq.skillType &&
         skillStore.skillLevel === skillReq.skillLevel
       ) {
         idArr.push(skillStore.id);

@@ -21,8 +21,6 @@ export class InterviewOverviewComponent implements OnInit {
   progressed: InterviewReturn[] = [];
   interviews: InterviewReturn[] = [];
 
-  allFilteredArrays: Map<string, InterviewReturn[]> = new Map();
-
   constructor(private iRequester: InterviewRequesterService) {}
 
   ngOnInit(): void {
@@ -30,13 +28,11 @@ export class InterviewOverviewComponent implements OnInit {
       this.interviews = interviews;
       this.filterStatus();
       this.filterOutcome();
-      console.table(interviews);
     });
   }
 
-  private filterStatus(): void {
+  filterStatus(): void {
     this.interviews.forEach((interview) => {
-      console.log(interview.status);
       switch (interview.status) {
         case statusOptions.candidateNoShow:
           this.candidateNoShow.push(interview);
@@ -51,18 +47,12 @@ export class InterviewOverviewComponent implements OnInit {
           this.pending.push(interview);
           break;
         default:
-          this.pending.push(interview);
           break;
       }
     });
-    this.allFilteredArrays
-      .set('Candidate No Show', this.candidateNoShow)
-      .set('Completed', this.completed)
-      .set('Panel No Show', this.panelNoShow)
-      .set('Pending', this.pending);
   }
 
-  private filterOutcome(): void {
+  filterOutcome(): void {
     this.interviews.forEach((interview) => {
       switch (interview.outcome) {
         case outcomeOptions.completed:
@@ -81,9 +71,5 @@ export class InterviewOverviewComponent implements OnInit {
           break;
       }
     });
-    this.allFilteredArrays
-      .set('Completed', this.completed)
-      .set('Did Not Progress', this.didNotProgress)
-      .set('Progressed', this.progressed);
   }
 }
