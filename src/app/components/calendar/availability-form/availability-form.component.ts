@@ -15,12 +15,29 @@ export class AvailabilityFormComponent implements OnInit {
   /**
    * Blank form to be populated by the user
    */
-  createAvailabilityForm: FormGroup = this.fb.group({
+  
+  dateRangeForm: FormGroup = this.fb.group({
     startTime: ['', Validators.required],
     endTime: ['', Validators.required],
     firstDate: ['', Validators.required],
     lastDate: ['', Validators.required],
   });
+
+  dateSelectForm: FormGroup = this.fb.group({
+    startTime: ['', Validators.required],
+    endTime: ['', Validators.required],
+    dates: [[], Validators.minLength(1)],
+  });
+
+  formSelector: FormGroup = this.fb.group({ range: [true] });
+
+  isChecked: boolean = false;
+
+  weekendFilter = (d: Date | null): boolean => {
+    const day = (d || new Date()).getDay();
+    // Prevent Saturday and Sunday from being selected.
+    return day !== 0 && day !== 6;
+  };
   /** @ignore */
   constructor(
     private fb: FormBuilder,
@@ -46,5 +63,9 @@ export class AvailabilityFormComponent implements OnInit {
   onSubmit(form: FormGroup): void {
     this.aRequester.addAvailabilityForm(form.value);
     form.reset();
+  }
+
+  test() {
+    console.log(this.isChecked)
   }
 }
