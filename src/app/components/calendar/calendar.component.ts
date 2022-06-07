@@ -262,9 +262,8 @@ export class CalendarComponent implements OnInit {
   //* obviously just a test function
   test() {
     let events: Array<CalendarEvent> = [];
-    this.iRequester.getAllInterviews().subscribe((interviews) => {
-      console.log(interviews);
-    });
+    this.aRequester.addAvailabilityOverRange('09:00', '11:00', 
+    ['2022-07-01', '2022-07-02', '2022-07-03', '2022-07-04', '2022-07-05', '2022-07-06']);
   }
 
   testGetAll() {
