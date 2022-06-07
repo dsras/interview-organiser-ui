@@ -7,6 +7,7 @@ import {
   AvailabilityForInterviews,
   availIdOnly,
   dateRange,
+  AvailabilityRangeRequest,
 } from '../../shared/models/types';
 import { APPCONSTANTS } from '../../shared/constants/app.constant';
 import { CalendarEvent } from 'angular-calendar';
@@ -97,6 +98,24 @@ export class AvailabilityRequesterService {
         out = <AvailabilityRange>(<unknown>returnData);
       });
   }
+
+  addAvailabilityOverRange(startTime: string, endTime:string, dates: string[]): void {
+    const newAvail: AvailabilityRangeRequest = new AvailabilityRangeRequest(
+      startTime,
+      endTime,
+      dates
+    );
+    const url: string =
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.AVAIL_REC_RANGE +
+      getUsername();
+
+    this.requester
+      .postRequest<AvailabilityRangeRequest>(url, newAvail)
+      .subscribe((returnData) => {
+      });
+  }
+
 
   /**
    * Takes two arrays of calendar events and appends
