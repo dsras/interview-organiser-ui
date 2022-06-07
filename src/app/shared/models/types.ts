@@ -208,6 +208,24 @@ export class InterviewRange implements Data {
   }
 }
 
+export class AvailabilityRangeRequest implements Data {
+  startTime: string;
+  endTime: string;
+  dates: string[];
+  constructor(
+    startTime: string,
+    endTime: string,
+    dates: string[]
+    ) {
+      this.startTime = startTime;
+      this.endTime = endTime;
+      this.dates = dates;
+    }
+}
+
+
+
+
 export class Interview implements Data {
   interviewerIds: number[];
   date: string;
