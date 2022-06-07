@@ -26,7 +26,7 @@ export class AvailabilityFormComponent implements OnInit {
   dateSelectForm: FormGroup = this.fb.group({
     startTime: ['', Validators.required],
     endTime: ['', Validators.required],
-    dates: [[], Validators.minLength(1)],
+    dates: [[], Validators.minLength(1), Validators.required],
   });
 
   formSelector: FormGroup = this.fb.group({ range: [true] });
