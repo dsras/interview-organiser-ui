@@ -11,6 +11,7 @@ import {
   CalendarEventInterview,
 } from 'src/app/shared/models/calendar-event-detail';
 import { AvailabilityTableData, InterviewTableData, InterviewTableDisplayData } from 'src/app/shared/models/table-data';
+import { MatDialogService } from 'src/app/services/mat-dialog.service';
 
 /**
  * Component that displays when a day is clicked on the calendar.
@@ -32,12 +33,13 @@ import { AvailabilityTableData, InterviewTableData, InterviewTableDisplayData } 
     ]),
   ],
 })
-export class ViewAvailabilityComponent {
+export class ViewAvailabilityComponent implements OnInit{
   /** Availabilty list for the day */
   @Input() availability: Array<CalendarEventAvailability> = [];
   /** Interview list for the day */
   @Input() interviews: Array<CalendarEventInterview> = [];
   @Input() userRoles: Array<string> = [];
+  @Input() callbackFunction!: (args: any) => void;
   recAuth: boolean = false;  
   tableData: AvailabilityTableData = new AvailabilityTableData(this.availability);
   iTableData: InterviewTableDisplayData = new InterviewTableDisplayData(this.interviews);
@@ -83,15 +85,20 @@ export class ViewAvailabilityComponent {
   }
   /** Request table data from the database */
   getAvailability(): void {
-    let events: CalendarEvent [];
     this.tableData.setData(this.availability);
     this.iTableData.setData(this.interviews);
   }
 
   /** @ignore */
-  constructor(private ar: AvailabilityRequesterService, private dt: DateToStringService) {}
+  constructor(
+    private ar: AvailabilityRequesterService, 
+    private dt: DateToStringService,
+    private _dialog: MatDialogService
+    ) {}
   onDelete(id: string | number | any){
     console.log(id);
     this.ar.deleteAvailability(id);
+    this.callbackFunction([]);
   }
+
 }

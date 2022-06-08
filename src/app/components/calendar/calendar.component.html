@@ -215,5 +215,10 @@
 </ng-template> -->
 
 <ng-template #dayContent>
-  <view-availability [availability]="dayAvailability" [interviews]="dayInterviews" [userRoles]="userRoles"></view-availability>
+  <view-availability 
+    [availability]="dayAvailability" 
+    [interviews]="dayInterviews" 
+    [userRoles]="userRoles"
+    [callbackFunction]="populateCalendar"
+    ></view-availability>
 </ng-template>

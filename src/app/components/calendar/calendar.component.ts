@@ -4,6 +4,7 @@ import {
   ChangeDetectionStrategy,
   ViewChild,
   TemplateRef,
+  ElementRef,
 } from '@angular/core';
 import { isSameDay, isSameMonth } from 'date-fns';
 import { Subject } from 'rxjs';
@@ -39,7 +40,7 @@ export class CalendarComponent implements OnInit {
    * when the day is clicked on the calendar
    */
   @ViewChild('dayContent', { static: true }) dayContent!: TemplateRef<any>;
-
+  //@ViewChild('closeBtn') closeBtn!: ElementRef;
 
   currentUser: string = '';
   userRoles: Array<string> = [];
@@ -71,7 +72,9 @@ export class CalendarComponent implements OnInit {
     private iRequester: InterviewRequesterService,
     private aRequester: AvailabilityRequesterService,
     private dateString: DateToStringService
-  ) {}
+  ) {
+    this.populateCalendar = this.populateCalendar.bind(this);
+  }
 
   /** @ignore */
   ngOnInit(): void {
@@ -79,7 +82,7 @@ export class CalendarComponent implements OnInit {
     this.userRoles = getUserRoleNames();
     // put in populate
 
-    this.delayedRefresh();
+    //this.delayedRefresh();
 
     //setup dates
     this.setDates();
@@ -100,12 +103,24 @@ export class CalendarComponent implements OnInit {
     this.interviews = [];
   }
 
+  // closeCurrentModal(){
+  //   this.closeModal();
+  // }
+  // private closeModal(): void {
+  //   this.closeBtn.nativeElement.click();
+  // }
   //* in test
   /** @ignore needed for implementation? */
   async delayedRefresh(): Promise<void> {
-    await this.sleep(2000)
+    console.log('sleep called');
+    await this.sleep(3000)
       .then(() => this.refresh.next())
       .catch();
+  }
+
+  fastRefresh(){
+    console.log('fastRefresh called');
+    this.refresh.next();
   }
 
   //* in test
