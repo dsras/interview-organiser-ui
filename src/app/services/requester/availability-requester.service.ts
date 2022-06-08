@@ -135,22 +135,11 @@ export class AvailabilityRequesterService {
     });
   }
 
-  getRecruiterAvailability(
-    events: Array<CalendarEvent>,
-    availability: Array<CalendarEventAvailability>
-  ): void {
+  getRecruiterAvailability(): Observable<Array<Availability>> {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL;
 
-    this.requester.getRequest<Availability>(url).subscribe((returnData) => {
-      let data = <Array<Availability>>(<unknown>returnData);
-      console.table(returnData);
-      data.forEach((element) => {
-        let event = this.parseAvailabilityRecruiter(element);
-        events.push(event);
-        availability.push(event);
-      });
-    });
+    return this.requester.getRequest<Availability[]>(url);
   }
 
   /**
@@ -397,7 +386,7 @@ export class AvailabilityRequesterService {
     return newAvailability;
   }
 
-  private parseAvailabilityRecruiter(
+  parseAvailabilityRecruiter(
     availability: Availability
   ): CalendarEventAvailability {
     const start = new Date(availability.date);

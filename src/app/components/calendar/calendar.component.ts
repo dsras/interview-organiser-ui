@@ -148,7 +148,7 @@ export class CalendarComponent implements OnInit {
       console.log('is admin');
       this.initAdmin();
     }
-    this.delayedRefresh();
+    //this.delayedRefresh();
   }
 
   populateAvail() {
@@ -184,6 +184,7 @@ export class CalendarComponent implements OnInit {
       ret.forEach(ele=>{
         this.events.push(this.aRequester.parseAvailabilityUser(ele));
       })
+      this.fastRefresh()
     });
     this.aRequester.getMyAvailabilityInRange(
       getUsername(),
@@ -193,6 +194,7 @@ export class CalendarComponent implements OnInit {
       ret.forEach(ele => {
         this.events.push(this.aRequester.parseAvailabilityUser(ele));
       })
+      this.fastRefresh()
     });
 
     this.iRequester.getInterviewsPerMonthByInterviewer(
@@ -203,6 +205,7 @@ export class CalendarComponent implements OnInit {
       ret.forEach(ele => {
         this.events.push(this.iRequester.parseInterviewUser(ele));
       })
+      this.fastRefresh()
     });
     this.iRequester.getInterviewsPerMonthByInterviewer(
       false,
@@ -212,11 +215,19 @@ export class CalendarComponent implements OnInit {
       ret.forEach(ele => {
         this.interviews.push(this.iRequester.parseInterviewUser(ele));
       })
+      this.fastRefresh()
     });
   }
 
   initRecruiter(): void {
-    this.aRequester.getRecruiterAvailability(this.events, this.availability);
+    this.aRequester.getRecruiterAvailability()
+    .subscribe(ret => {
+      ret.forEach(ele =>{
+        this.events.push(this.aRequester.parseAvailabilityRecruiter(ele))
+        this.availability.push(this.aRequester.parseAvailabilityRecruiter(ele))
+      })
+      this.fastRefresh();
+    });
     this.iRequester.getInterviewsPerMonthByInterviewer(
       false,
       this.dateString.dateToStringDate(this.startDate),
@@ -225,6 +236,7 @@ export class CalendarComponent implements OnInit {
       ret.forEach(ele => {
         this.events.push(this.iRequester.parseInterviewUser(ele));
       })
+      this.fastRefresh()
     });
     //this.iRequester.getRecruiterInterviews(this.events, this.interviews);
   }
