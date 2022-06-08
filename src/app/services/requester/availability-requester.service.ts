@@ -43,11 +43,10 @@ export class AvailabilityRequesterService {
   }
 
   getMyAvailabilityInRange(
-    events: CalendarEvent[],
     username: string,
     start: string,
     end: string
-  ): void {
+  ): Observable<Array<Availability>> {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.AVAIL_RANGE.replace('username', username);
@@ -57,16 +56,8 @@ export class AvailabilityRequesterService {
     myRange.start = start;
     myRange.end = end;
 
-    this.requester
-      .postRequest<dateRange>(url, myRange)
-      .subscribe((returnData) => {
-        out = <Array<Availability>>(<unknown>returnData);
-        out.forEach((element) => {
-          //console.log(element);
-          events.push(this.parseAvailabilityUser(element));
-        });
-        return out;
-      });
+    return this.requester.postRequestNoType<dateRange>(url, myRange);
+    
   }
 
   /**
@@ -382,7 +373,7 @@ export class AvailabilityRequesterService {
    * @param availability the object to be converted to a calendar event
    * @returns a calendar event to be displayed in the calendar
    */
-  private parseAvailabilityUser(
+  parseAvailabilityUser(
     availability: Availability
   ): CalendarEventAvailability {
     const start = new Date(availability.date);

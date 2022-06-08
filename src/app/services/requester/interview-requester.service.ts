@@ -26,11 +26,10 @@ export class InterviewRequesterService {
   ) {}
 
   getInterviewsPerMonthByInterviewer(
-    events: CalendarEvent[],
     isRec: boolean,
     start: string,
     end: string
-  ) {
+  ) : Observable<Array<InterviewReturn>> {
     let url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.INTER_INTER_RANGE.replace('username', getUsername())+
@@ -40,16 +39,7 @@ export class InterviewRequesterService {
     let myRange = new dateRange();
     myRange.start = start;
     myRange.end = end;
-    this.requester
-      .postRequest<dateRange>(url, myRange)
-      .subscribe((returnData: unknown) => {
-        out = <Array<InterviewReturn>>(<unknown>returnData);
-        out.forEach((element) => {
-          //additonal filtering on output, find a way to spoof this separately
-          events.push(this.parseInterviewUser(element));
-        });
-        return returnData;
-      });
+    return this.requester.postRequestNoType<dateRange>(url, myRange)
   }
 
   //New function calls using new URIs

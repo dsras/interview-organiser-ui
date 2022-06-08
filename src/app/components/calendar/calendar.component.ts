@@ -103,7 +103,7 @@ export class CalendarComponent implements OnInit {
   //* in test
   /** @ignore needed for implementation? */
   async delayedRefresh(): Promise<void> {
-    await this.sleep(3000)
+    await this.sleep(2000)
       .then(() => this.refresh.next())
       .catch();
   }
@@ -139,57 +139,78 @@ export class CalendarComponent implements OnInit {
   populateAvail() {
     this.resetEvents();
     this.aRequester.getMyAvailabilityInRange(
-      this.events,
       getUsername(),
       this.dateString.dateToStringDate(this.startDate),
       this.dateString.dateToStringDate(this.endDate)
-    );
+    ).subscribe(ret => {
+      ret.forEach(ele=>{
+        this.events.push(this.aRequester.parseAvailabilityUser(ele));
+      })
+    });
     this.aRequester.getMyAvailabilityInRange(
-      this.availability,
       getUsername(),
       this.dateString.dateToStringDate(this.startDate),
       this.dateString.dateToStringDate(this.endDate)
-    );
+    ).subscribe(ret => {
+      ret.forEach(ele => {
+        this.events.push(this.aRequester.parseAvailabilityUser(ele));
+      })
+    });
     this.delayedRefresh();
   }
   initUser(): void {
     // this.aRequester.getUserAvailability(this.events, this.availability);
     // this.iRequester.getUserInterviews(this.events, this.interviews);
     this.aRequester.getMyAvailabilityInRange(
-      this.events,
       getUsername(),
       this.dateString.dateToStringDate(this.startDate),
       this.dateString.dateToStringDate(this.endDate)
-    );
+    ).subscribe(ret => {
+      ret.forEach(ele=>{
+        this.events.push(this.aRequester.parseAvailabilityUser(ele));
+      })
+    });
     this.aRequester.getMyAvailabilityInRange(
-      this.availability,
       getUsername(),
       this.dateString.dateToStringDate(this.startDate),
       this.dateString.dateToStringDate(this.endDate)
-    );
+    ).subscribe(ret => {
+      ret.forEach(ele => {
+        this.events.push(this.aRequester.parseAvailabilityUser(ele));
+      })
+    });
 
     this.iRequester.getInterviewsPerMonthByInterviewer(
-      this.events,
       false,
       this.dateString.dateToStringDate(this.startDate),
       this.dateString.dateToStringDate(this.endDate)
-    );
+    ).subscribe(ret => {
+      ret.forEach(ele => {
+        this.events.push(this.iRequester.parseInterviewUser(ele));
+      })
+    });
     this.iRequester.getInterviewsPerMonthByInterviewer(
-      this.interviews,
       false,
       this.dateString.dateToStringDate(this.startDate),
       this.dateString.dateToStringDate(this.endDate)
-    );
+    ).subscribe(ret => {
+      ret.forEach(ele => {
+        this.interviews.push(this.iRequester.parseInterviewUser(ele));
+      })
+    });
   }
 
   initRecruiter(): void {
     this.aRequester.getRecruiterAvailability(this.events, this.availability);
     this.iRequester.getInterviewsPerMonthByInterviewer(
-      this.events,
-      true,
+      false,
       this.dateString.dateToStringDate(this.startDate),
       this.dateString.dateToStringDate(this.endDate)
-    );
+    ).subscribe(ret => {
+      ret.forEach(ele => {
+        this.events.push(this.iRequester.parseInterviewUser(ele));
+      })
+    });
     //this.iRequester.getRecruiterInterviews(this.events, this.interviews);
   }
 
