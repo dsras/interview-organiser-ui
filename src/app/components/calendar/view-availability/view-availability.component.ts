@@ -23,7 +23,8 @@ export class ViewAvailabilityComponent {
 
   /** @ignore */
   constructor(private ar: AvailabilityRequesterService) {}
-  onDelete(id: string | number | any){
+
+  onDelete(id: string | number | any) {
     console.log(id);
     this.ar.deleteAvailability(id);
   }

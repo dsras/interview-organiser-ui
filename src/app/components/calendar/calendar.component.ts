@@ -23,8 +23,8 @@ import { DateToStringService } from '../../services/date-to-string.service';
 
 /**
  * The main component of the calendar, an implementation of angular-calendar
+ * 
  * {@link https://mattlewis92.github.io/angular-calendar/docs/ | angular-calendar}.
- *
  *
  */
 @Component({
@@ -110,12 +110,6 @@ export class CalendarComponent implements OnInit {
   //* in test
   // todo streamline by removing availability and interviews and using filtering of events
   /** Populate the calendar with a users events and availability. */
-
-  /**
-   *  Populate the calendar with an interviewers events and availability.
-   *
-   * todo stremline by removing availability and interviews and using filtering of events
-   */
   populateCalendar(): void {
     this.resetEvents();
 
@@ -152,8 +146,6 @@ export class CalendarComponent implements OnInit {
     this.delayedRefresh();
   }
   initUser(): void {
-    // this.aRequester.getUserAvailability(this.events, this.availability);
-    // this.iRequester.getUserInterviews(this.events, this.interviews);
     this.aRequester.getMyAvailabilityInRange(
       this.events,
       getUsername(),
@@ -189,7 +181,6 @@ export class CalendarComponent implements OnInit {
       this.dateString.dateToStringDate(this.startDate),
       this.dateString.dateToStringDate(this.endDate)
     );
-    //this.iRequester.getRecruiterInterviews(this.events, this.interviews);
   }
 
   initAdmin(): void {}
@@ -227,8 +218,6 @@ export class CalendarComponent implements OnInit {
         this.dayInterviews.push(element);
       }
     }
-
-    // this.ms.openModalLg(this.dayContent);
     this._dialog.openDialogLarge(this.dayContent);
   }
   /** @ignore */

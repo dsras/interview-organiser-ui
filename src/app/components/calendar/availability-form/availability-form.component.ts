@@ -15,7 +15,7 @@ export class AvailabilityFormComponent implements OnInit {
   /**
    * Blank form to be populated by the user
    */
-  
+
   dateRangeForm: FormGroup = this.fb.group({
     startTime: ['', Validators.required],
     endTime: ['', Validators.required],
@@ -26,30 +26,34 @@ export class AvailabilityFormComponent implements OnInit {
   dateSelectForm: FormGroup = this.fb.group({
     startTime: ['', Validators.required],
     endTime: ['', Validators.required],
-    dates: [[], Validators.minLength(1), Validators.required],
+    dates: ['', [Validators.minLength(1), Validators.required]],
   });
 
   formSelector: FormGroup = this.fb.group({ range: [true] });
 
   isChecked: boolean = false;
 
-  weekendFilter = (d: Date | null): boolean => {
+  weekendFilter(d: Date | null): boolean {
     const day = (d || new Date()).getDay();
     // Prevent Saturday and Sunday from being selected.
     return day !== 0 && day !== 6;
-  };
+  }
+
   /** @ignore */
   constructor(
     private fb: FormBuilder,
     private _dialog: MatDialogService,
     private aRequester: AvailabilityRequesterService
   ) {}
+
   /** @ignore */
   ngOnInit(): void {}
+
   /** @ignore */
   openDialog(template: TemplateRef<any>): void {
-    this._dialog.openDialog(template);
+    this._dialog.openDialogTall(template);
   }
+
   /** @ignore */
   closeDialog(): void {
     this._dialog.closeDialog();
@@ -65,7 +69,12 @@ export class AvailabilityFormComponent implements OnInit {
     form.reset();
   }
 
+  dummySubmit(form: FormGroup): void {
+    console.log(form.value);
+    form.reset();
+  }
+
   test() {
-    console.log(this.isChecked)
+    console.log(this.isChecked);
   }
 }

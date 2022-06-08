@@ -81,9 +81,7 @@ export class CreateInterviewComponent implements OnInit {
    */
   findInterview(form: FormGroup): void {
     let idArr: Array<number> = [];
-    console.log(form.value.skills.skillName);
-    console.log(form.value.skills.skillLevel);
-    
+
     let skillReq = {
       skillName: form.value.skills.skillName,
       skillLevel: form.value.skills.skillLevel,
@@ -105,18 +103,19 @@ export class CreateInterviewComponent implements OnInit {
     //   idArr,
     //   this.availableInterviews
     // );
+    console.log(form.value);
+    console.log(idArr);
     this.aRequester.getSlots(form.value, idArr).subscribe((returnData) => {
-      console.log(returnData)
+      console.table(returnData);
       const newStartDate: Date = new Date(form.value.firstDate);
       const newStartTime: Date = new Date(form.value.startTime);
       const newEndTime: Date = new Date(form.value.endTime);
-  
+
       newStartTime.setDate(newStartDate.getDate());
       newEndTime.setDate(newStartDate.getDate());
-  
+
       let data = <Array<AvailabilityForInterviews>>returnData;
       data.forEach((element) => {
-        console.log(element)
         let refStart: Date = new Date(newStartTime);
         let refEnd: Date = new Date(newStartTime);
         refStart.setHours(
@@ -141,19 +140,7 @@ export class CreateInterviewComponent implements OnInit {
           endInput = this.aRequester.dateToStringTime(newEndTime);
         }
 
-        this.availableInterviews.push(
-          element
-          // 'On ' +
-          //   element.date +
-          //   ' between ' +
-          //   startInput +
-          //   ' -> ' +
-          //   endInput +
-          //   ' this is with: ' +
-          //   element.interviewer +
-          //   ' id: ' +
-          //   element.interviewerId
-        );
+        this.availableInterviews.push(element);
       });
     });
     // form.reset();
@@ -167,7 +154,7 @@ export class CreateInterviewComponent implements OnInit {
    */
   submitInterview(form: FormGroup): void {
     this.iRequester.addInterviewForm(form.value);
-    console.table(form.value)
+    console.table(form.value);
     form.reset();
   }
 
