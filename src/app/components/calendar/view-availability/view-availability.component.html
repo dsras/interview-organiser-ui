@@ -1,3 +1,5 @@
+
+
 <div *ngIf="availability.length > 0">
   <div
     class="card-header info-color white-text text-center py-4"
@@ -5,19 +7,95 @@
   >
     <h5>{{ availability[0].start | date }} availability.</h5>
   </div>
-  <div class="row padded">
+
+
+  <table
+  style="width: 100%"
+    mat-table
+    class="interview-table mat-elevation-z8"
+    [dataSource]="tableData"
+    multiTemplateDataRows
+  >
+    <ng-container matColumnDef="AvailabilityId">
+      <th mat-header-cell *matHeaderCellDef>ID No.</th>
+      <td mat-cell *matCellDef="let availability">{{ availability.id }}</td>
+    </ng-container>
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef>Date</th>
+      <td mat-cell *matCellDef="let availability">{{ availability.start | date }}</td>
+    </ng-container>
+    <ng-container matColumnDef="time">
+      <th mat-header-cell *matHeaderCellDef>Time</th>
+      <td mat-cell *matCellDef="let availability">
+        {{ availability.start | DateToTimePipe}} -
+        {{ availability.end | DateToTimePipe}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef>Delete</th>
+      <td mat-cell *matCellDef="let availability">
+        <div>
+          <button class="btn btn-warning" (click)="onDelete(availability.id)">Delete</button>
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="expandedDetail">
+      <td
+        mat-cell
+        *matCellDef="let availability"
+        [attr.colspan]="displayedColumns.length"
+      >
+        <div
+          class="interview-expanded"
+          [@detailExpand]="
+          availability == expandedAvailability ? 'expanded' : 'collapsed'
+          "
+        >
+          <div class="container row">
+            <!-- <div class="col-3 interview-detail">
+              Status: {{ availability.status || "Pending" }}
+            </div>
+            <div class="col-3 interview-detail">
+              Outcome: {{ availability.outcome || "Pending" }}
+            </div>
+            <div class="col-5 interview-detail">
+              Additional Information: {{ availability.additionalInfo || "None" }}
+            </div> -->
+            <div class="col-1">
+              <button mat-stroked-button (click)="message('click')">
+                Update
+                <mat-icon>save</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let availability; columns: displayedColumns"
+      class="example-element-row"
+    ></tr>
+
+  </table>
+
+  <!-- <div class="row padded">
     <div class="card" id="availabilityOutput">
       <div *ngFor="let slot of availability">
-        {{ slot.start | date: "HH:mm" }} =>
-        {{ slot?.end | date: "HH:mm" }}
+        {{ slot.start}} =>
+        {{ slot?.end}}
         <div class='d-inline pull-right'>
           <button class="btn btn-warning" (click)="onDelete(slot.id)">Delete</button>
         </div>
       </div>
     </div>
   </div>
-</div>
-<div *ngIf="interviews.length > 0">
+</div> -->
+
+<!-- <div *ngIf="interviews.length > 0">
   <div
     class="card-header info-color white-text text-center py-4"
     style="width: 100%; color: black; background-color: orange"
@@ -28,8 +106,8 @@
     <div class="container-fluid">
       <div class="row" *ngFor="let slot of interviews">
         <div class="col-sm-2">
-          {{ slot.start | date: "HH:mm" }} =>
-          {{ slot.end | date: "HH:mm" }}
+          {{ slot.start}} =>
+          {{ slot.end}}
         </div>
         <div class="col-sm-2" *ngIf="slot.meta.interviewStatus">
           Status: {{ slot.meta.interviewStatus.toString() }}
@@ -42,5 +120,5 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>

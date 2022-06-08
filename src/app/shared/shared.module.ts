@@ -23,6 +23,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule } from '@angular/forms';
 import { MatChipsModule } from '@angular/material/chips';
+import { DateToTimePipe } from '../pipes/DateToTimePipe';
 
 @NgModule({
   imports: [
@@ -73,7 +74,11 @@ import { MatChipsModule } from '@angular/material/chips';
     FormsModule,
     MatChipsModule,
   ],
-  declarations: [StringToDatetimePipe],
-  providers: [{ provide: TimepickerConfig, useFactory: getTimepickerConfig }],
+  declarations: [
+    StringToDatetimePipe,
+  ],
+  providers: [
+    { provide: TimepickerConfig, useFactory: getTimepickerConfig },
+  ],
 })
 export class SharedModule {}

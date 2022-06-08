@@ -14,6 +14,7 @@ import { InterviewStatusComponent } from './interview-status/interview-status.co
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
 import { CalendarHeaderComponent } from './calendar-header/calendar-header.component';
+import { DateToTimePipe } from 'src/app/pipes/DateToTimePipe';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,10 @@ import { CalendarHeaderComponent } from './calendar-header/calendar-header.compo
     ViewAvailabilityComponent,
     InterviewStatusComponent,
     CalendarHeaderComponent,
+    DateToTimePipe
+  ],
+  providers: [
+    DateToTimePipe,
   ],
   imports: [
     SharedModule,
