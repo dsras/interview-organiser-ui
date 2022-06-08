@@ -7,6 +7,7 @@ import {
   AvailabilityForInterviews,
   availIdOnly,
   dateRange,
+  AvailabilityRangeRequest,
 } from '../../shared/models/types';
 import { APPCONSTANTS } from '../../shared/constants/app.constant';
 import { CalendarEvent } from 'angular-calendar';
@@ -15,7 +16,11 @@ import { CalendarEventAvailability } from 'src/app/shared/models/calendar-event-
 import { AvailabilityMetaData } from 'src/app/shared/models/event-meta-data';
 import { DateToStringService } from '../date-to-string.service';
 import { getUsername } from 'src/app/shared/functions/get-user-from-local.function';
-import { AvailabilityFormValue, FindSlotFormValue } from 'src/app/shared/models/forms';
+import {
+  AvailabilityFormValue,
+  FindSlotFormValue,
+} from 'src/app/shared/models/forms';
+import { Observable } from 'rxjs';
 
 /** A service to handle any requests made to the database regarding availability. */
 @Injectable({
@@ -29,34 +34,39 @@ export class AvailabilityRequesterService {
   ) {}
 
   //! NEW CALL
-  deleteAvailability(id: string | number | any){
+  deleteAvailability(id: string | number | any) {
     const url: string =
-    APPCONSTANTS.APICONSTANTS.BASE_URL + 
-    APPCONSTANTS.APICONSTANTS.AVAIL_DEL;
+      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_DEL;
     this.requester
       .postRequest<availIdOnly>(url, id)
-      .subscribe((returnData) => {
-    });
+      .subscribe((returnData) => {});
   }
 
-  getMyAvailabilityInRange(events: CalendarEvent[], username: string, start:string, end:string): void {
+  getMyAvailabilityInRange(
+    events: CalendarEvent[],
+    username: string,
+    start: string,
+    end: string
+  ): void {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.AVAIL_RANGE.replace('username', username);
     let out;
 
-    let myRange = new dateRange;
+    let myRange = new dateRange();
     myRange.start = start;
     myRange.end = end;
 
-    this.requester.postRequest<dateRange>(url, myRange).subscribe((returnData) => {
-      out = <Array<Availability>>(<unknown>returnData);
-      out.forEach((element) => {
-        //console.log(element);
-        events.push(this.parseAvailabilityUser(element));
+    this.requester
+      .postRequest<dateRange>(url, myRange)
+      .subscribe((returnData) => {
+        out = <Array<Availability>>(<unknown>returnData);
+        out.forEach((element) => {
+          //console.log(element);
+          events.push(this.parseAvailabilityUser(element));
+        });
+        return out;
       });
-      return out;
-    });
   }
 
   /**
@@ -88,6 +98,24 @@ export class AvailabilityRequesterService {
         out = <AvailabilityRange>(<unknown>returnData);
       });
   }
+
+  addAvailabilityOverRange(startTime: string, endTime:string, dates: string[]): void {
+    const newAvail: AvailabilityRangeRequest = new AvailabilityRangeRequest(
+      startTime,
+      endTime,
+      dates
+    );
+    const url: string =
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.AVAIL_REC_RANGE +
+      getUsername();
+
+    this.requester
+      .postRequest<AvailabilityRangeRequest>(url, newAvail)
+      .subscribe((returnData) => {
+      });
+  }
+
 
   /**
    * Takes two arrays of calendar events and appends
@@ -121,8 +149,7 @@ export class AvailabilityRequesterService {
     availability: Array<CalendarEventAvailability>
   ): void {
     const url =
-      APPCONSTANTS.APICONSTANTS.BASE_URL +
-      APPCONSTANTS.APICONSTANTS.AVAIL;
+      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL;
 
     this.requester.getRequest<Availability>(url).subscribe((returnData) => {
       let data = <Array<Availability>>(<unknown>returnData);
@@ -295,6 +322,37 @@ export class AvailabilityRequesterService {
           );
         });
       });
+  }
+
+  getSlots(form: FindSlotFormValue, skills: number[]): Observable<any> {
+    const url: string =
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.INTER_INTER;
+
+    const newStartDate: Date = new Date(form.firstDate);
+    const newEndDate: Date = new Date(form.lastDate);
+    const newStartTime: Date = new Date(form.startTime);
+    const newEndTime: Date = new Date(form.endTime);
+
+    newStartTime.setDate(newStartDate.getDate());
+    newEndTime.setDate(newStartDate.getDate());
+
+    const startDateString: string = this.dateToStringDate(newStartDate);
+    const endDateString: string = this.dateToStringDate(newEndDate);
+    const startString: string = this.dateToStringTime(newStartTime);
+    const endString: string = this.dateToStringTime(newEndTime);
+
+    const newRange: InterviewRange = new InterviewRange(
+      startDateString,
+      endDateString,
+      startString,
+      endString,
+      skills
+    );
+    return this.requester.postRequestNoType<AvailabilityForInterviews>(
+      url,
+      newRange
+    );
   }
 
   /**

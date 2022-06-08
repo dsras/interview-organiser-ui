@@ -17,6 +17,8 @@ export class ToolbarComponent implements OnInit {
   loginType: string = '';
   /** User */
   user: any = null;
+  currentView:string = '';
+  showData: boolean = true;
 
   /** @ignore */
   constructor(
@@ -30,11 +32,11 @@ export class ToolbarComponent implements OnInit {
     this._dataSourceService
       .getDataSource('route')
       .subscribe((value: string) => {
-        // this.selectedMenu = value;
+        // this.currentView = value
         // if (value === 'login') {
-        //   this.isHeader = false;
+        //   this.showData = false
         // } else {
-        //   this.isHeader = true;
+        //   this.showData = true
         // }
         const user = localStorage.getItem('ssoUser');
         if (user) {

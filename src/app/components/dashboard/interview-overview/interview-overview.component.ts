@@ -19,7 +19,10 @@ export class InterviewOverviewComponent implements OnInit {
   confirmed: InterviewReturn[] = [];
   didNotProgress: InterviewReturn[] = [];
   progressed: InterviewReturn[] = [];
+  awaitingCompletion: InterviewReturn[] = []
   interviews: InterviewReturn[] = [];
+
+  allFilteredArrays: Map<string, InterviewReturn[]> = new Map();
 
   constructor(private iRequester: InterviewRequesterService) {}
 
@@ -31,8 +34,9 @@ export class InterviewOverviewComponent implements OnInit {
     });
   }
 
-  filterStatus(): void {
+  private filterStatus(): void {
     this.interviews.forEach((interview) => {
+      console.log(interview);
       switch (interview.status) {
         case statusOptions.candidateNoShow:
           this.candidateNoShow.push(interview);
@@ -50,10 +54,16 @@ export class InterviewOverviewComponent implements OnInit {
           break;
       }
     });
+    this.allFilteredArrays
+      .set('Candidate No Show', this.candidateNoShow)
+      .set('Completed', this.completed)
+      .set('Panel No Show', this.panelNoShow)
+      .set('Pending', this.pending);
   }
 
-  filterOutcome(): void {
+  private filterOutcome(): void {
     this.interviews.forEach((interview) => {
+      console.log(interview)
       switch (interview.outcome) {
         case outcomeOptions.completed:
           this.completed.push(interview);
@@ -61,8 +71,8 @@ export class InterviewOverviewComponent implements OnInit {
         case outcomeOptions.didNotProgress:
           this.didNotProgress.push(interview);
           break;
-        case outcomeOptions.pending:
-          this.pending.push(interview);
+        case outcomeOptions.awaitingCompletion:
+          this.awaitingCompletion.push(interview);
           break;
         case outcomeOptions.progressed:
           this.progressed.push(interview);
@@ -71,5 +81,10 @@ export class InterviewOverviewComponent implements OnInit {
           break;
       }
     });
+    this.allFilteredArrays
+      .set('Completed', this.completed)
+      .set('Did Not Progress', this.didNotProgress)
+      .set('Progressed', this.progressed)
+      .set('Awaiting Completion', this.awaitingCompletion)
   }
 }
