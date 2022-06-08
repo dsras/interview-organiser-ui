@@ -2,7 +2,7 @@
   <button
     type="button"
     class="view-here-btn text-center"
-    (click)="openDialog(form)"
+    (click)="openDialog(dialog)"
   >
     Add Availability
     <i
@@ -12,24 +12,34 @@
   </button>
 </div>
 
-<ng-template #form>
+<ng-template #dialog>
+  <div
+    class="modal-header"
+    style="width: 100%; color: black; background-color: orange"
+  >
+    <div class="container-fluid py-2 intro-section-color">
+      <h4 class="text-black font-weight-bold text-center">Add Availability</h4>
+    </div>
+  </div>
+  <h2>Range or selection?</h2>
+
+
+  <mat-slide-toggle
+    [(ngModel)]="isChecked"
+    [ngModelOptions]="{ standalone: true }"
+  >
+  <p *ngIf="isChecked">Range</p>
+  <p *ngIf="!isChecked">Individual</p>
+  </mat-slide-toggle>
+
   <form
-    [formGroup]="createAvailabilityForm"
-    (ngSubmit)="onSubmit(createAvailabilityForm)"
+    [formGroup]="dateRangeForm"
+    (ngSubmit)="onSubmit(dateRangeForm)"
     class="md-form"
     style="color: black"
+    *ngIf="isChecked"
   >
     <div class="container text-center text-black pt-4 mt-4">
-      <div
-        class="modal-header"
-        style="width: 100%; color: black; background-color: orange"
-      >
-        <div class="container-fluid py-2 intro-section-color">
-          <h4 class="text-black font-weight-bold text-center">
-            Add Availability
-          </h4>
-        </div>
-      </div>
       <div class="row text-center">
         <div class="col-md-6">
           <label for="startTime">Start Time</label>
@@ -52,11 +62,14 @@
       <br />
 
       <div class="container-fluid">
+        <h2>Range or selection?</h2>
+
         <mat-form-field appearance="outline" color="accent">
           <mat-label>Enter a date range</mat-label>
           <mat-date-range-input
-            [formGroup]="createAvailabilityForm"
+            [formGroup]="dateRangeForm"
             [rangePicker]="picker"
+            [dateFilter]="weekendFilter"
             disabled="true"
           >
             <input
@@ -89,10 +102,66 @@
           <button
             type="submit"
             class="view-here-btn text-lefttext-black text-center mx-auto d-inline-block"
-            [disabled]="!createAvailabilityForm.valid"
+            [disabled]="!dateRangeForm.valid"
             (click)="closeDialog()"
           >
-            <h6 class="mt-4 font-weight-normal" style="font-size: 100%;">
+            <h6 class="mt-4 font-weight-normal" style="font-size: 100%">
+              Submit<mat-icon>save</mat-icon>
+            </h6>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <form
+    [formGroup]="dateSelectForm"
+    (ngSubmit)="onSubmit(dateSelectForm)"
+    class="md-form"
+    style="color: black"
+    *ngIf="!isChecked"
+  >
+    <div class="container text-center text-black pt-4 mt-4">
+      <div class="row text-center">
+        <div class="col-md-6">
+          <label for="startTime">Start Time</label>
+          <timepicker
+            id="startTime"
+            type="time"
+            formControlName="startTime"
+          ></timepicker>
+        </div>
+        <div class="col-md-6">
+          <label for="endTime">End Time</label>
+          <timepicker
+            id="endTime"
+            type="time"
+            formControlName="endTime"
+          ></timepicker>
+        </div>
+      </div>
+
+      <br />
+
+      <div class="container-fluid">
+
+        <mat-form-field appearance="outline" color="accent">
+          
+
+        </mat-form-field>
+      </div>
+      <br />
+    </div>
+    <div class="modal-footer">
+      <div class="col-12 col-md-12 mx-auto services">
+        <div class="row text-center">
+          <button
+            type="submit"
+            class="view-here-btn text-lefttext-black text-center mx-auto d-inline-block"
+            [disabled]="!dateSelectForm.valid"
+            (click)="closeDialog()"
+          >
+            <h6 class="mt-4 font-weight-normal" style="font-size: 100%">
               Submit<mat-icon>save</mat-icon>
             </h6>
           </button>
