@@ -10,7 +10,7 @@ import {
   CalendarEventAvailability,
   CalendarEventInterview,
 } from 'src/app/shared/models/calendar-event-detail';
-import { AvailabilityTableData } from 'src/app/shared/models/table-data';
+import { AvailabilityTableData, InterviewTableData, InterviewTableDisplayData } from 'src/app/shared/models/table-data';
 
 /**
  * Component that displays when a day is clicked on the calendar.
@@ -37,8 +37,11 @@ export class ViewAvailabilityComponent {
   @Input() availability: Array<CalendarEventAvailability> = [];
   /** Interview list for the day */
   @Input() interviews: Array<CalendarEventInterview> = [];
-
+  @Input() userRoles: Array<string> = [];
+  recAuth: boolean = false;  
   tableData: AvailabilityTableData = new AvailabilityTableData(this.availability);
+  iTableData: InterviewTableDisplayData = new InterviewTableDisplayData(this.interviews);
+
 
   displayedColumns: Array<string> = [
     'AvailabilityId',
@@ -47,8 +50,16 @@ export class ViewAvailabilityComponent {
     'delete'
     // 'outcome',
     // 'status',
+  ]; 
+  iDisplayedColumns: Array<string> = [
+    'InterviewId',
+    'date',
+    'time'
+    // 'outcome',
+    // 'status',
   ];
   expandedAvailability!: CalendarEventAvailability | null;
+  expandedInterview!: CalendarEventAvailability | null;
   /** @ignore test method to be removed when completed */
   message(text: string): void {
     console.log(text);
@@ -56,11 +67,25 @@ export class ViewAvailabilityComponent {
 
   ngOnInit(){
     this.getAvailability();
+    if (this.userRoles.includes('RECRUITER')) {
+      this.recAuth = true;
+      console.log('rec true');
+    }  
+    if(this.recAuth){
+      this.iDisplayedColumns = [    
+        'InterviewId',
+        'date',
+        'time',
+        'delete'
+      ]
+
+    }
   }
   /** Request table data from the database */
   getAvailability(): void {
     let events: CalendarEvent [];
     this.tableData.setData(this.availability);
+    this.iTableData.setData(this.interviews);
   }
 
   /** @ignore */

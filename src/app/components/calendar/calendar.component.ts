@@ -40,6 +40,7 @@ export class CalendarComponent implements OnInit {
    */
   @ViewChild('dayContent', { static: true }) dayContent!: TemplateRef<any>;
 
+
   currentUser: string = '';
   userRoles: Array<string> = [];
 

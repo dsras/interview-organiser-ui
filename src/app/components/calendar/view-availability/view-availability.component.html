@@ -5,14 +5,14 @@
     class="card-header info-color white-text text-center py-4"
     style="width: 100%; color: black; background-color: orange; font-size: 100%"
   >
-    <h5>{{ availability[0].start | date }} availability.</h5>
+    <h2>{{ availability[0].start | date }} availability.</h2>
   </div>
 
 
   <table
   style="width: 100%"
     mat-table
-    class="interview-table mat-elevation-z8"
+    class="availability-table mat-elevation-z8"
     [dataSource]="tableData"
     multiTemplateDataRows
   >
@@ -35,7 +35,7 @@
       <th mat-header-cell *matHeaderCellDef>Delete</th>
       <td mat-cell *matCellDef="let availability">
         <div>
-          <button class="btn btn-warning" (click)="onDelete(availability.id)">Delete</button>
+          <button class="btn btn-warning noHover" (click)="onDelete(availability.id)">Delete</button>
         </div>
       </td>
     </ng-container>
@@ -92,15 +92,93 @@
         </div>
       </div>
     </div>
-  </div>
-</div> -->
-
-<!-- <div *ngIf="interviews.length > 0">
+  </div> -->
+</div>
+<br/>
+<div *ngIf="interviews.length > 0">
   <div
     class="card-header info-color white-text text-center py-4"
     style="width: 100%; color: black; background-color: orange"
   >
-    <h5>{{ interviews[0].start | date }} interviews.</h5>
+    <h2>{{ interviews[0].start | date }} interviews.</h2>
+  </div>
+  <table
+  style="width: 100%"
+    mat-table
+    class="interview-table mat-elevation-z8"
+    [dataSource]="iTableData"
+    multiTemplateDataRows
+  >
+    <ng-container matColumnDef="InterviewId">
+      <th mat-header-cell *matHeaderCellDef>ID No.</th>
+      <td mat-cell *matCellDef="let interview">{{ interview.id }}</td>
+    </ng-container>
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef>Date</th>
+      <td mat-cell *matCellDef="let interview">{{ interview.start | date }}</td>
+    </ng-container>
+    <ng-container matColumnDef="time">
+      <th mat-header-cell *matHeaderCellDef>Time</th>
+      <td mat-cell *matCellDef="let interview">
+        {{ interview.start | DateToTimePipe}} -
+        {{ interview.end | DateToTimePipe}}
+      </td>
+    </ng-container>
+    <ng-container *ngIf="userRoles.includes('RECRUITER')" matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef>Delete</th>
+      <td mat-cell *matCellDef="let interview">
+        <div>
+          <button class="btn btn-warning noHover" (click)="onDelete(interview.id)">Delete</button>
+        </div>
+      </td>
+    </ng-container>
+    
+
+    <ng-container matColumnDef="expandedDetail">
+      <td
+        mat-cell
+        *matCellDef="let interview"
+        [attr.colspan]="iDisplayedColumns.length"
+      >
+        <div
+          class="interview-expanded"
+          [@detailExpand]="
+          interview == expandedInterview ? 'expanded' : 'collapsed'
+          "
+        >
+          <div class="container row">
+            <!-- <div class="col-3 interview-detail">
+              Status: {{ availability.status || "Pending" }}
+            </div>
+            <div class="col-3 interview-detail">
+              Outcome: {{ availability.outcome || "Pending" }}
+            </div>
+            <div class="col-5 interview-detail">
+              Additional Information: {{ availability.additionalInfo || "None" }}
+            </div> -->
+            <div class="col-1">
+              <button mat-stroked-button (click)="message('click')">
+                Update
+                <mat-icon>save</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="iDisplayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let interview; columns: iDisplayedColumns"
+      class="example-element-row"
+    ></tr>
+
+  </table>
+
+
+
+   <!-- <h2>{{ interviews[0].start | date }} interviews.</h2>
   </div>
   <div class="modal-body padded" id="interviewOutput">
     <div class="container-fluid">

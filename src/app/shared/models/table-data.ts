@@ -1,6 +1,6 @@
 import { DataSource } from '@angular/cdk/collections';
 import { Observable, ReplaySubject } from 'rxjs';
-import { CalendarEventAvailability } from './calendar-event-detail';
+import { CalendarEventAvailability, CalendarEventInterview } from './calendar-event-detail';
 import { Availability, AvailabilityReturn, InterviewReturn, SkillReturn } from './types';
 
 export class AvailabilityTableData extends DataSource<CalendarEventAvailability> {
@@ -21,6 +21,28 @@ export class AvailabilityTableData extends DataSource<CalendarEventAvailability>
   }
 
   setData(data: CalendarEventAvailability[]): void {
+    this._dataStream.next(data);
+  }
+}
+
+export class InterviewTableDisplayData extends DataSource<CalendarEventInterview>{
+  private _dataStream = new ReplaySubject<CalendarEventInterview[]>();
+  filter!: string;
+
+  constructor(initialData: CalendarEventInterview[]) {
+    super();
+    this.setData(initialData);
+  }
+
+  connect(): Observable<CalendarEventInterview[]> {
+    return this._dataStream;
+  }
+
+  disconnect(): void {
+    this._dataStream.unsubscribe();
+  }
+
+  setData(data: CalendarEventInterview[]): void {
     this._dataStream.next(data);
   }
 }
