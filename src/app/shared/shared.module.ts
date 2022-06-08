@@ -20,6 +20,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { FormsModule } from '@angular/forms';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
   imports: [
@@ -42,6 +45,9 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatExpansionModule,
     MatListModule,
     MatGridListModule,
+    MatSlideToggleModule,
+    FormsModule,
+    MatChipsModule,
   ],
   exports: [
     TimepickerModule,
@@ -63,6 +69,9 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatExpansionModule,
     MatListModule,
     MatGridListModule,
+    MatSlideToggleModule,
+    FormsModule,
+    MatChipsModule,
   ],
   declarations: [StringToDatetimePipe],
   providers: [{ provide: TimepickerConfig, useFactory: getTimepickerConfig }],

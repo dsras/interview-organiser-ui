@@ -1,25 +1,5 @@
-<button type="button" class="blog-widget" (click)="openModal(form)">
-  <div
-    class="col-lg-12 thumbnail-img"
-    data-aos="fade-left"
-    data-aos-delay="100"
-    style="
-      background-image: url(../../../../assets/images/findInterviewBG.png);
-      background-size: cover;
-      background-position: center;
-    "
-  ></div>
-  <div class="blog-content">
-    <button class="view-here-btn text-lefttext-black">
-      <h5>
-        Create Interview
-        <i
-          class="fa fa-arrow-right"
-          style="font-size: 18px; padding-top: 8px; padding-right: 7px"
-        ></i>
-      </h5>
-    </button>
-  </div>
+<button class="big-tile" (click)="openModal(form)">
+  Create Interview <mat-icon>add_circle</mat-icon>
 </button>
 
 <ng-template #form>
@@ -145,23 +125,9 @@
         </h3>
       </div>
       <div>
-        <!-- <select id="interviewSelected" formControlName="interviewSelected">
-          <option value="">Which interview slot?</option>
-          <option
-            *ngFor="let interview of availableInterviews"
-            [ngValue]="interview"
-          >
-            On {{ interview.date }} between {{ interview.startTime }} ->
-            {{ interview.endTime }}, this is with:
-            {{ interview.interviewer }} id: {{ interview.interviewerId }}
-          </option>
-        </select> -->
-        <div *ngIf="availableInterviews.length === 0">
-          <h2>There are no available interviews with these search criteria</h2>
-        </div>
-        <div class="container-padded" *ngIf="availableInterviews.length != 0">
+        <div class="container-padded">
           <h2>Select an interview slot</h2>
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="outline" class="full-width">
             <mat-label>Slot</mat-label>
             <mat-select
               formControlName="interviewSelected"
@@ -173,12 +139,15 @@
               >
                 On {{ interview.date }} between {{ interview.startTime }} ->
                 {{ interview.endTime }}, this is with:
-                {{ interview.interviewer }} id: {{ interview.interviewerId }}
+                {{ interview.interviewer }}.
               </mat-option>
             </mat-select>
           </mat-form-field>
           <br />
-          <mat-expansion-panel hideToggle>
+          <mat-expansion-panel
+            (opened)="panelOpenState = true"
+            (closed)="panelOpenState = false"
+          >
             <mat-expansion-panel-header>
               <mat-panel-title>
                 <mat-icon>schedule</mat-icon>
