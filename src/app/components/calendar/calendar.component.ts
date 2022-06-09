@@ -16,11 +16,8 @@ import {
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
-import {
-  getUsername,
-  getUserRoleNames,
-} from 'src/app/shared/functions/get-user-from-local.function';
 import { DateToStringService } from '../../services/date-to-string.service';
+import { GetUserDataService } from 'src/app/services/get-user-data.service';
 
 /**
  * The main component of the calendar, an implementation of angular-calendar
@@ -71,14 +68,15 @@ export class CalendarComponent implements OnInit {
     private _dialog: MatDialogService,
     private iRequester: InterviewRequesterService,
     private aRequester: AvailabilityRequesterService,
-    private dateString: DateToStringService
+    private dateString: DateToStringService,
+    private userService: GetUserDataService
   ) {
     this.populateCalendar = this.populateCalendar.bind(this);
   }
 
   /** @ignore */
   ngOnInit(): void {
-    this.currentUser = getUsername();
+    this.currentUser = this.userService.getUsername();
     this.userRoles = getUserRoleNames();
     // put in populate
 
@@ -154,7 +152,7 @@ export class CalendarComponent implements OnInit {
   populateAvail() {
     this.resetEvents();
     this.aRequester.getMyAvailabilityInRange(
-      getUsername(),
+      this.userService.getUsername(),
       this.dateString.dateToStringDate(this.startDate),
       this.dateString.dateToStringDate(this.endDate)
     ).subscribe(ret => {
@@ -163,7 +161,7 @@ export class CalendarComponent implements OnInit {
       })
     });
     this.aRequester.getMyAvailabilityInRange(
-      getUsername(),
+      this.userService.getUsername(),
       this.dateString.dateToStringDate(this.startDate),
       this.dateString.dateToStringDate(this.endDate)
     ).subscribe(ret => {
@@ -177,7 +175,7 @@ export class CalendarComponent implements OnInit {
     // this.aRequester.getUserAvailability(this.events, this.availability);
     // this.iRequester.getUserInterviews(this.events, this.interviews);
     this.aRequester.getMyAvailabilityInRange(
-      getUsername(),
+      this.userService.getUsername(),
       this.dateString.dateToStringDate(this.startDate),
       this.dateString.dateToStringDate(this.endDate)
     ).subscribe(ret => {
@@ -187,7 +185,7 @@ export class CalendarComponent implements OnInit {
       this.fastRefresh()
     });
     this.aRequester.getMyAvailabilityInRange(
-      getUsername(),
+      this.userService.getUsername(),
       this.dateString.dateToStringDate(this.startDate),
       this.dateString.dateToStringDate(this.endDate)
     ).subscribe(ret => {

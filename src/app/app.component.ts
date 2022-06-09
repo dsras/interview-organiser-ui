@@ -9,7 +9,7 @@ import { DataSourceService } from './services/data-source.service';
 })
 export class AppComponent implements OnInit {
   /** Title of the app */
-  title = 'inteview-organiser';
+  title = 'interview-organiser';
   /** @ignore */
   constructor(private _dataSourceService: DataSourceService) {}
   /** @ignore */

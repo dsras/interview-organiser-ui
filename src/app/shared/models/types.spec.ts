@@ -86,7 +86,9 @@ describe('model classes pass init test', () => {
       'date1',
       'time1',
       'time2',
-      'additional'
+      'additional',
+      'pending',
+      'pending'
     );
     interviewReturn = new types.InterviewReturn(
       10,

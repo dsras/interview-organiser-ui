@@ -2,7 +2,7 @@ import { Overlay } from '@angular/cdk/overlay';
 import { DatePipe } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
@@ -64,9 +64,9 @@ describe('AvailabilityFormComponent', () => {
 
   
   it('Submit should call service methods', () => {
-    let aSpy = spyOn(aService, 'addAvailability').and.callThrough();
+    let aSpy = spyOn(aService, 'addAvailabilityForm').and.callThrough();
     let formG = dummyAvailForm;
-    component.onSubmit(formG);
-    expect(aService.addAvailability).toHaveBeenCalled();
+    component.onSubmit(<FormGroup>formG);
+    expect(aSpy).toHaveBeenCalled();
   })
 });

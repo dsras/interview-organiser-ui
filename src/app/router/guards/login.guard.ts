@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { LoginComponent } from 'src/app/components/login/login.component';
+import { GetUserDataService } from 'src/app/services/get-user-data.service';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
-import { getUsername } from 'src/app/shared/functions/get-user-from-local.function';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +11,8 @@ export class LoginGuard implements CanActivate {
   constructor(
     public auth: LoginComponent,
     public router: Router,
-    private requester: RequestCenterService
+    private requester: RequestCenterService,
+    private userService: GetUserDataService
   ) {}
 
   canActivate(): boolean {
@@ -26,8 +27,10 @@ export class LoginGuard implements CanActivate {
       null === localStorage.getItem('userData') ||
       localStorage.getItem('userData') === ''
     ) {
-      this.requester.getUserData(getUsername()).subscribe((returnData: any) => {
-        localStorage.setItem('userData', JSON.stringify(returnData));
+      this.requester.getUserData(this.userService.getUsername()).subscribe((returnData: any) => {
+        console.log("USer data return");
+        console.log(returnData);
+        localStorage.setItem('userData', returnData);
       });
       return true;
     } else {

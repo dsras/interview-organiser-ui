@@ -7,8 +7,8 @@ import {
   SocialLoginModule,
 } from 'angularx-social-login';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
-import { getUsername, getUserRoleNames } from 'src/app/shared/functions/get-user-from-local.function';
 import { LoggedInObject, LoginUser } from 'src/app/shared/models/user-model';
+import { GetUserDataService } from 'src/app/services/get-user-data.service';
 
 // [APP_LEVEL Imports]
 import { BackendService } from '../../services/backend.service';
@@ -34,8 +34,9 @@ export class LoginComponent implements OnInit {
     private _rs: RequestCenterService,
     private _dataSourceService: DataSourceService,
     private _backEndService: BackendService,
-    private _socialAuthService: SocialAuthService
-  ) {}
+    private _socialAuthService: SocialAuthService,
+    private userService: GetUserDataService
+    ) {}
 
   /** @ignore */
   ngOnInit(): void {
@@ -76,10 +77,10 @@ export class LoginComponent implements OnInit {
     this._backEndService.login(user).subscribe((response: any) => {
       if (response && response.token) {
         localStorage.setItem('apiKey', response.token);
-        this._rs.getUserData(getUsername()).subscribe((returnData: any) => {
+        this._rs.getUserData(this.userService.getUsername()).subscribe((returnData: any) => {
           user = returnData;
           localStorage.setItem('userData', JSON.stringify(user));
-          if (getUserRoleNames().includes('RECRUITER')){
+          if (this.userService.getUserRoleNames().includes('RECRUITER')){
             this._router.navigate(['/dashboard'])
           } else {
             this._router.navigate(['/calendar']);

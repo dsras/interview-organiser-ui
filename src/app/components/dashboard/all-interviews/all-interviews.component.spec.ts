@@ -8,7 +8,6 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { of } from 'rxjs';
-import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { AllInterviewsComponent } from './all-interviews.component';
 
@@ -44,7 +43,6 @@ describe('AllInterviewsComponent', () => {
   let component: AllInterviewsComponent;
   let fixture: ComponentFixture<AllInterviewsComponent>;
   let iService: InterviewRequesterService;
-  let mService: ModalControllerService;
   let mockMService: any;
   let iSpy: any;
 
@@ -61,7 +59,6 @@ describe('AllInterviewsComponent', () => {
         DatePipe,
         FormBuilder,       
         //ModalControllerService,
-        {provide: ModalControllerService, useValue: ModalControllerServiceStub},
        
       ],
       declarations: [ AllInterviewsComponent ]
@@ -72,8 +69,7 @@ describe('AllInterviewsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AllInterviewsComponent);
     iService = TestBed.inject(InterviewRequesterService);
-    mService = TestBed.inject(ModalControllerService);
-    mockMService = TestBed.inject(ModalControllerService);
+
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

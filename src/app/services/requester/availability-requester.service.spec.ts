@@ -7,7 +7,8 @@ import { CalendarEvent, CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { Observable, of } from 'rxjs';
-import { Availability } from '../../shared/models/types';
+import { AvailabilityFormValue, FindSlotFormValue } from 'src/app/shared/models/forms';
+import { Availability, AvailabilityForInterviews, InterviewReturn } from '../../shared/models/types';
 
 import { AvailabilityRequesterService } from './availability-requester.service';
 import { Requester } from './requester.service';
@@ -112,24 +113,26 @@ describe('AvailabilityRequesterService', () => {
 
   it('parseAvailabilityEvent gets called', () => {
     let interviewerID: Availability= new Availability(0,"","","");
-    spy = spyOn(service, 'parseAvailabilityEvent').and.callThrough();
-    service.parseAvailabilityEvent(interviewerID);
-    expect(service.parseAvailabilityEvent).toHaveBeenCalled();
+    spy = spyOn(service, 'parseAvailabilityUser').and.callThrough();
+    service.parseAvailabilityUser(interviewerID);
+    expect(service.parseAvailabilityUser).toHaveBeenCalled();
   });
 
   it('addAvailability calls requester methods', () => {
-    let first: string = "1995-12-17T03:24:00";
-    let last: string = "1995-12-19T03:24:00";
-    let start: string = "1995-12-17T09:24:00";
-    let end: string = "1995-12-19T12:24:00";
+    let form: AvailabilityFormValue = {
+      firstDate: "1995-12-17T03:24:00",
+      lastDate:  "1995-12-19T03:24:00",
+      startTime:  "1995-12-17T09:24:00",
+      endTime:  "1995-12-19T12:24:00",
+    }
     spy = spyOn(rService, 'postRequest').and.callThrough();
-    service.addAvailability('name',first, last, start, end);
+    service.addAvailabilityForm(form);
     expect(spy).toHaveBeenCalled();
   });
 
 
   it('parseAvailabilityEvent formats correctly', () => {
-    let retObj = service.parseAvailabilityEvent(AvailabilityInfoFake);
+    let retObj = service.parseAvailabilityUser(AvailabilityInfoFake);
     expect(retObj.id === AvailabilityInfoFake.availabilityId).toBeTruthy();
 
     const start = new Date(AvailabilityInfoFake.date);
@@ -141,9 +144,9 @@ describe('AvailabilityRequesterService', () => {
 
   it('getMyAvailability calls requester methods', fakeAsync(() => {
     let events: CalendarEvent[] = [];
-    let userName: string = "";
+    let dates: string[]=['2022-06-01','2022-06-02','2022-06-03',];
     spy = spyOn(rService, 'getRequest').and.callThrough();
-    service.getMyAvailability(events, userName);
+    service.addAvailabilityOverRange('09:00', '17:00', dates);
     tick(3);
     expect(spy).toHaveBeenCalled();
   }));
@@ -176,7 +179,19 @@ describe('AvailabilityRequesterService', () => {
     
   it('getAvailabilityByRange calls requester methods', fakeAsync(() => {
     spy = spyOn(rService, 'postRequestNoType').and.callThrough();
-    service.getInterviewSlots(new Date().toString(), new Date().toString(), new Date().toString(), new Date().toString(),[1],[]);
+    let form: FindSlotFormValue = {
+      startTime: '13:00',
+      endTime: '17:00',
+      firstDate: '2022-05-20',
+      lastDate: "2022-05-25",
+      skills: { 
+        skillType: 'Java', 
+        skillLevel: 'Senior' 
+      }
+    }
+    let events: AvailabilityForInterviews[] = [];
+
+    service.getInterviewSlots(form, [3], events);
     tick(3);
     expect(spy).toHaveBeenCalled();
   }));

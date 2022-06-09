@@ -8,7 +8,8 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { fn } from 'moment';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { Observable, of } from 'rxjs';
-import { InterviewReturn } from '../../shared/models/types';
+import { CreateInterviewFormValue } from 'src/app/shared/models/forms';
+import { AvailabilityForInterviews, InterviewReturn } from '../../shared/models/types';
 
 import { InterviewRequesterService } from './interview-requester.service';
 import { Requester } from './requester.service';
@@ -122,25 +123,20 @@ describe('InterviewRequesterService', () => {
     expect(spy).toHaveBeenCalled();
   });
   it('getInterviewByInterviewer gets called', () => {
-    let events: CalendarEvent[] = [];
-    let userName = "username";
     spy = spyOn(rService, 'getRequest').and.returnValue(of([interRet]));
-    service.getInterviewByInterviewer(events, userName);
+    let returnObj: Observable<Array<InterviewReturn>> = service.getInterviewsPerMonthByInterviewer(false, "09:00", '17:00');
     expect(spy).toHaveBeenCalled();
   });
   
   it('getInterviewByRecruiter gets called', () => {
-    let events: CalendarEvent[] = [];
-    let userName = "username";
     spy = spyOn(rService, 'getRequest').and.returnValue(of([interRet]));
-    service.getInterviewByRecruiter(events, userName);
+    service.getInterviewsPerMonthByInterviewer(true, "09:00", '17:00');
     expect(spy).toHaveBeenCalled();
   });
 
   it('getInterviewsAll calls requester methods', fakeAsync(() => {
     spy = spyOn(rService, 'getRequest').and.callThrough();
-    let events: InterviewReturn[] = [];
-    service.getInterviewAll(events);
+    service.InterviewsFindAll();
     expect(spy).toHaveBeenCalled();
   }));
 
@@ -168,16 +164,29 @@ describe('InterviewRequesterService', () => {
 
 
   it('addInterviewForm calls requester methods', () => {
-    let formInput: string = "On 2022-04-19 between 13:00 -> 14:00 this is with: Emer Sweeney id: 19";
-    let additional: string = "";
+    let form: CreateInterviewFormValue  ={
+      interviewSelected: {
+        interviewer:"Emer Sweeny",
+        interviewerId: 19,
+        availabilityId: 1,
+        date: "2022-04-19",
+        startTime: "13:00",
+        endTime: "14:00"
+      },
+      additionalInformation: 'urm',
+      startTime: "13:00"
+    };
+
+
+
     let startTime: Date = new Date();
-    spy = spyOn(service, 'addInterview').and.callThrough();
-    service.addInterviewForm(formInput, additional, startTime);
+    spy = spyOn(service, 'addInterviewForm').and.callThrough();
+    service.addInterviewForm(form);
     expect(spy).toHaveBeenCalled();
 
-    let startTimeNull: any = <Date><unknown>'';
-    service.addInterviewForm(formInput, additional, startTimeNull);
-    expect(spy).toHaveBeenCalled();
+    // let startTimeNull: any = <Date><unknown>'';
+    // service.addInterviewForm(form);
+    // expect(spy).toHaveBeenCalled();
   });
 
   

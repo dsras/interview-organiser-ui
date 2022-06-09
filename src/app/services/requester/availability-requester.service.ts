@@ -15,12 +15,12 @@ import { CalendarColors } from '../../shared/constants/colours.constant';
 import { CalendarEventAvailability } from 'src/app/shared/models/calendar-event-detail';
 import { AvailabilityMetaData } from 'src/app/shared/models/event-meta-data';
 import { DateToStringService } from '../date-to-string.service';
-import { getUsername } from 'src/app/shared/functions/get-user-from-local.function';
 import {
   AvailabilityFormValue,
   FindSlotFormValue,
 } from 'src/app/shared/models/forms';
 import { Observable } from 'rxjs';
+import { GetUserDataService } from 'src/app/services/get-user-data.service';
 
 /** A service to handle any requests made to the database regarding availability. */
 @Injectable({
@@ -30,7 +30,9 @@ export class AvailabilityRequesterService {
   /** @ignore */
   constructor(
     private requester: Requester,
-    private dateFormatter: DateToStringService
+    private dateFormatter: DateToStringService,
+    private userService: GetUserDataService
+
   ) {}
 
   //! NEW CALL
@@ -79,7 +81,7 @@ export class AvailabilityRequesterService {
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.AVAIL +
       '/' +
-      getUsername();
+      this.userService.getUsername();
 
     let out: AvailabilityRange;
 
@@ -99,7 +101,7 @@ export class AvailabilityRequesterService {
     const url: string =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.AVAIL_REC_RANGE +
-      getUsername();
+      this.userService.getUsername();
 
     this.requester
       .postRequest<AvailabilityRangeRequest>(url, newAvail)
@@ -123,7 +125,7 @@ export class AvailabilityRequesterService {
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.AVAIL +
       '/' +
-      getUsername();
+      this.userService.getUsername();
 
     this.requester.getRequest<Availability>(url).subscribe((returnData) => {
       let data = <Array<Availability>>(<unknown>returnData);

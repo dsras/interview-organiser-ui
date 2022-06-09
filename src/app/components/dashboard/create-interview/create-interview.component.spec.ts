@@ -8,9 +8,9 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { of } from 'rxjs';
-import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
+import { MatDialogService } from 'src/app/services/mat-dialog.service';
 
 import { CreateInterviewComponent } from './create-interview.component';
 
@@ -69,6 +69,8 @@ describe('FindInterviewComponent', () => {
   let component: CreateInterviewComponent;
   let fixture: ComponentFixture<CreateInterviewComponent>;
   let aService: AvailabilityRequesterService;
+  let mService: MatDialogService;
+
   let aSpy: any;
   let iService: InterviewRequesterService;
   let iSpy: any;
@@ -86,8 +88,8 @@ describe('FindInterviewComponent', () => {
         BsModalService,
         DatePipe,
         FormBuilder,    
-        {provide: ModalControllerService, useValue: ModalControllerServiceStub},
-          
+        MatDialogService
+
       ],
       declarations: [ CreateInterviewComponent ]
     })
@@ -100,7 +102,6 @@ describe('FindInterviewComponent', () => {
     fixture = TestBed.createComponent(CreateInterviewComponent);
     iService = TestBed.inject(InterviewRequesterService);
     aService = TestBed.inject(AvailabilityRequesterService);
-    mockMService = TestBed.inject(ModalControllerService);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -110,8 +111,8 @@ describe('FindInterviewComponent', () => {
   });
 
   it('find interview makes service calls', () =>{
-    aSpy = spyOn(aService, 'getAvailabilityByRange').and.callThrough();
-    let formG = dummyFindForm;
+    aSpy = spyOn(aService, 'getMyAvailabilityInRange').and.callThrough();
+    let formG = <FormGroup> dummyFindForm;
     component.findInterview(formG);
     expect(aService.getInterviewSlots).toHaveBeenCalled();
 
@@ -127,7 +128,7 @@ describe('FindInterviewComponent', () => {
   
   it('submit interview makes service calls', () =>{
     iSpy = spyOn(iService, 'addInterviewForm').and.callThrough();
-    let formG = dummySubmitForm;
+    let formG = <FormGroup>dummySubmitForm;
     component.submitInterview(formG);
     expect(iService.addInterviewForm).toHaveBeenCalled();
   });

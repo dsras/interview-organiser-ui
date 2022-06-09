@@ -13,7 +13,7 @@ import { InterviewMetaData } from 'src/app/shared/models/event-meta-data';
 import { CalendarColors } from 'src/app/shared/constants/colours.constant';
 import { DateToStringService } from '../date-to-string.service';
 import { Observable } from 'rxjs';
-import { getUsername } from 'src/app/shared/functions/get-user-from-local.function';
+import { GetUserDataService } from 'src/app/services/get-user-data.service';
 import { CreateInterviewFormValue } from 'src/app/shared/models/forms';
 
 @Injectable({
@@ -22,7 +22,9 @@ import { CreateInterviewFormValue } from 'src/app/shared/models/forms';
 export class InterviewRequesterService {
   constructor(
     private requester: Requester,
-    private dateFormatter: DateToStringService
+    private dateFormatter: DateToStringService,
+    private userService: GetUserDataService
+
   ) {}
 
   getInterviewsPerMonthByInterviewer(
@@ -32,7 +34,7 @@ export class InterviewRequesterService {
   ) : Observable<Array<InterviewReturn>> {
     let url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
-      APPCONSTANTS.APICONSTANTS.INTER_INTER_RANGE.replace('username', getUsername())+
+      APPCONSTANTS.APICONSTANTS.INTER_INTER_RANGE.replace('username', this.userService.getUsername())+
       '/'+isRec;
       
     let out;
@@ -200,7 +202,7 @@ export class InterviewRequesterService {
     }
 
     this.createInterview(
-      getUsername(),
+      this.userService.getUsername(),
       [form.interviewSelected.interviewerId],
       form.interviewSelected.date,
       startTimeString,
@@ -261,7 +263,7 @@ export class InterviewRequesterService {
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.INTER +
       '/organiser/' +
-      getUsername();
+      this.userService.getUsername();
     return this.requester.getRequest<Array<InterviewReturn>>(url);
   }
 
@@ -273,7 +275,7 @@ export class InterviewRequesterService {
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.INTER +
       '/' +
-      getUsername();
+      this.userService.getUsername();
     let out;
     this.requester.getRequest<InterviewReturn>(url).subscribe((returnData: unknown) => {
       out = <Array<InterviewReturn>>(<unknown>returnData);
@@ -293,7 +295,7 @@ export class InterviewRequesterService {
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.INTER +
       '/organiser/' +
-      getUsername();
+      this.userService.getUsername();
     let out;
     this.requester.getRequest<InterviewReturn>(url).subscribe((returnData: unknown) => {
       out = <Array<InterviewReturn>>(<unknown>returnData);
