@@ -1,5 +1,11 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 
@@ -23,10 +29,16 @@ export class AvailabilityFormComponent implements OnInit {
     lastDate: ['', Validators.required],
   });
 
-  dateSelectForm: FormGroup = this.fb.group({
+  multiDayForm: FormGroup = this.fb.group({
     startTime: ['', Validators.required],
     endTime: ['', Validators.required],
-    dates: ['', [Validators.minLength(1), Validators.required]],
+    recurringDays: this.fb.array(
+      [
+        this.fb.group({ weekday: ['', Validators.required] }),
+      ],
+      Validators.minLength(1)
+    ),
+    occurences: ['1', [Validators.required, Validators.min(1)]],
   });
 
   formSelector: FormGroup = this.fb.group({ range: [true] });
@@ -67,6 +79,22 @@ export class AvailabilityFormComponent implements OnInit {
   onSubmit(form: FormGroup): void {
     this.aRequester.addAvailabilityForm(form.value);
     form.reset();
+  }
+
+  get recurringDays() {
+    return this.multiDayForm.controls['recurringDays'] as FormArray;
+  }
+
+  addRecurringDay() {
+    const dayForm = this.fb.group({
+      weekday: ['', Validators.required],
+    });
+
+    this.recurringDays.push(dayForm);
+  }
+
+  deleteRecurringDay(lessonIndex: number) {
+    this.recurringDays.removeAt(lessonIndex);
   }
 
   dummySubmit(form: FormGroup): void {
