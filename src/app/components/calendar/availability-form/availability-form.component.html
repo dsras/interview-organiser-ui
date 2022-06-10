@@ -19,15 +19,13 @@
     class="md-form"
     style="color: black"
   >
-    <div class="container text-center text-black pt-4 mt-4">
+    <div class="container text-center text-black">
       <div
-        class="modal-header"
-        style="width: 100%; color: black; background-color: orange"
-      >
+        class="modal-header">
         <div class="container-fluid py-2 intro-section-color">
-          <h4 class="text-black font-weight-bold text-center">
+          <h3 class="text-black font-weight-bold text-center">
             Add Availability
-          </h4>
+          </h3>
         </div>
       </div>
       <div class="row text-center">
@@ -85,16 +83,18 @@
     </div>
     <div class="modal-footer">
       <div class="col-12 col-md-12 mx-auto services">
-        <div class="row text-center">
+        <div class="row justify-content-center">
           <button
             type="submit"
-            class="view-here-btn text-lefttext-black text-center mx-auto d-inline-block"
+            class="view-here-btn text-center d-inline-block"
             [disabled]="!createAvailabilityForm.valid"
             (click)="closeDialog()"
           >
-            <h6 class="mt-4 font-weight-normal" style="font-size: 100%;">
-              Submit<mat-icon>save</mat-icon>
-            </h6>
+          Submit
+          <i
+            class="fa fa-arrow-right"
+            style="font-size: 18px; padding-top: 8px; padding-right: 7px"
+          ></i>
           </button>
         </div>
       </div>

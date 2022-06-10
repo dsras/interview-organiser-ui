@@ -20,9 +20,9 @@
     style="color: black"
   >
     <div class="container text-center text-black">
-      <div class="modal-header" style="color: black; background-color: orange">
+      <div class="modal-header">
         <div class="container-fluid py-2 intro-section-color">
-          <h4 class="text-black font-weight-bold text-center">Add Skill</h4>
+          <h3 class="text-black font-weight-bold text-center">Add Skill</h3>
         </div>
       </div>
     </div>
@@ -60,17 +60,19 @@
     <br />
     <div class="modal-footer">
       <div class="col-12 col-md-12 mx-auto services">
-        <div class="row text-center">
+        <div class="row justify-content-center">
           <button
-            class="view-here-btn text-lefttext-black mx-auto d-inline-block"
+            class="view-here-btn text-center d-inline-block"
             type="submit"
             id="submit"
             [disabled]="!addSkillsForm.valid"
             (click)="closeDialog()"
           >
-            <h6 class="mt-4 font-weight-normal" style="font-size: 100%">
-              Submit<mat-icon>save</mat-icon>
-            </h6>
+            Submit
+            <i
+            class="fa fa-arrow-right"
+            style="font-size: 18px; padding-top: 8px; padding-right: 7px"
+          ></i>
           </button>
         </div>
       </div>

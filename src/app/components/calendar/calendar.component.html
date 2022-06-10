@@ -28,43 +28,43 @@
 </div>
 
 <div class="container-fluid py-5 intro-section-color">
-  <h2 class="text-black font-weight-bold text-center">
+  <h1 class="text-black font-weight-bold text-center">
     Calendar
-  </h2>
+  </h1>
   <div class="col-1 mt-3 mx-auto orange-border"></div>
 </div>
 <br>
 <div>
   <div class="row" style="width:100%">
     <div class=" col-sm">
-      <div class="btn-group pl-3">
+      <div class="btn-group pl-3 col-8">
         <div class="btn btn-warning" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
           (viewDateChange)="closeOpenMonthViewDay()">
-          <h6 class="text-center">Previous</h6>
+          <h5 class="text-center">Previous</h5>
         </div>
         <div class="btn btn-outline-warning" mwlCalendarToday [(viewDate)]="viewDate">
-          <h6 class="text-black text-center">Today</h6>
+          <h5 class="text-black text-center">Today</h5>
         </div>
         <div class="btn btn-warning" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
           (viewDateChange)="closeOpenMonthViewDay()">
-          <h6 class="text-center">Next</h6>
+          <h5 class="text-center">Next</h5>
         </div>
       </div>
     </div>
     <div class=" text-center col-sm">
-      <h3 class="text-black font-weight-bold text-center">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+      <h2 class="text-black font-weight-bold text-center pl-3">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h2>
     </div>
     <div class=" col-sm" style="position:relative; text-align: end;">
-      <div class="btn-group">
+      <div class="btn-group col-8">
         <div class="btn btn-warning" (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month">
-          <h6 class="text-center">Month</h6>
+          <h5 class="text-center">Month</h5>
         </div>
         <div class="btn btn-outline-warning" (click)="setView(CalendarView.Week)"
           [class.active]="view === CalendarView.Week">
-          <h6 class="text-black text-center">Week</h6>
+          <h5 class="text-black text-center">Week</h5>
         </div>
         <div class="btn btn-warning" (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">
-          <h6 class="text-center">Day</h6>
+          <h5 class="text-center">Day</h5>
         </div>
       </div>
     </div>
