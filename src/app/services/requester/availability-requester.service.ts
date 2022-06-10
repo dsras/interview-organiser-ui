@@ -7,7 +7,7 @@ import {
   AvailabilityForInterviews,
   availIdOnly,
   dateRange,
-  AvailabilityRangeRequest,
+  AvailabilityArray,
 } from '../../shared/models/types';
 import { APPCONSTANTS } from '../../shared/constants/app.constant';
 import { CalendarEvent } from 'angular-calendar';
@@ -17,8 +17,10 @@ import { AvailabilityMetaData } from 'src/app/shared/models/event-meta-data';
 import { DateToStringService } from '../date-to-string.service';
 import { getUsername } from 'src/app/shared/functions/get-user-from-local.function';
 import {
-  AvailabilityFormValue,
+  AvailabilityArrayFormValue,
+  AvailabilityRangeFormValue,
   FindSlotFormValue,
+  Weekday,
 } from 'src/app/shared/models/forms';
 import { Observable } from 'rxjs';
 
@@ -75,9 +77,9 @@ export class AvailabilityRequesterService {
    * with each slot having the same start and end time for each day.
    * If first and last are the same, one slot is created.
    *
-   * @param {AvailabilityFormValue} form availability form submitted
+   * @param {AvailabilityRangeFormValue} form availability form submitted
    */
-  addAvailabilityForm(form: AvailabilityFormValue): void {
+  addAvailabilityRange(form: AvailabilityRangeFormValue): void {
     const newAvail: AvailabilityRange = new AvailabilityRange(
       this.dateToStringDate(new Date(form.firstDate)),
       this.dateToStringDate(new Date(form.lastDate)),
@@ -99,23 +101,25 @@ export class AvailabilityRequesterService {
       });
   }
 
-  addAvailabilityOverRange(startTime: string, endTime:string, dates: string[]): void {
-    const newAvail: AvailabilityRangeRequest = new AvailabilityRangeRequest(
-      startTime,
-      endTime,
-      dates
-    );
+  addAvailabilityArray(form: AvailabilityArrayFormValue) {
     const url: string =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.AVAIL_REC_RANGE +
       getUsername();
 
-    this.requester
-      .postRequest<AvailabilityRangeRequest>(url, newAvail)
-      .subscribe((returnData) => {
-      });
-  }
+    const startTime = new Date(form.startTime);
+    const endTime = new Date(form.endTime);
 
+    const newAvail: AvailabilityArray = new AvailabilityArray(
+      this.dateFormatter.dateToStringTime(startTime),
+      this.dateFormatter.dateToStringTime(endTime),
+      this.generateDateArray(form.days, form.weeks)
+    );
+
+    this.requester
+      .postRequest<AvailabilityArray>(url, newAvail)
+      .subscribe((returnData) => {});
+  }
 
   /**
    * Takes two arrays of calendar events and appends
@@ -153,7 +157,6 @@ export class AvailabilityRequesterService {
 
     this.requester.getRequest<Availability>(url).subscribe((returnData) => {
       let data = <Array<Availability>>(<unknown>returnData);
-      console.table(returnData);
       data.forEach((element) => {
         let event = this.parseAvailabilityRecruiter(element);
         events.push(event);
@@ -307,19 +310,7 @@ export class AvailabilityRequesterService {
             endInput = this.dateToStringTime(newEndTime);
           }
 
-          interviewsReturn.push(
-            element
-            // 'On ' +
-            //   element.date +
-            //   ' between ' +
-            //   startInput +
-            //   ' -> ' +
-            //   endInput +
-            //   ' this is with: ' +
-            //   element.interviewer +
-            //   ' id: ' +
-            //   element.interviewerId
-          );
+          interviewsReturn.push(element);
         });
       });
   }
@@ -373,6 +364,23 @@ export class AvailabilityRequesterService {
    */
   dateToStringDate(date: Date): string {
     return this.dateFormatter.dateToStringDate(date);
+  }
+
+  /**
+   * Takes an array of dates and duplicates them for the number of weeks
+   * before converting to strings "YYY-MM-DD" and returning.
+   */
+  generateDateArray(days: Array<Weekday>, weeks: number): string[] {
+    let outputArray: string[] = [];
+    days.forEach((day) => {
+      let outputDate = new Date(day.weekday);
+      const date = outputDate.getDate();
+      for (let i = 0; i < weeks; i++) {
+        outputDate.setDate(7 * i + date);
+        outputArray.push(this.dateToStringDate(outputDate));
+      }
+    });
+    return outputArray;
   }
 
   /**

@@ -1,11 +1,5 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 
@@ -32,13 +26,10 @@ export class AvailabilityFormComponent implements OnInit {
   multiDayForm: FormGroup = this.fb.group({
     startTime: ['', Validators.required],
     endTime: ['', Validators.required],
-    recurringDays: this.fb.array(
-      [
-        this.fb.group({ weekday: ['', Validators.required] }),
-      ],
-      Validators.minLength(1)
-    ),
-    occurences: ['1', [Validators.required, Validators.min(1)]],
+    days: this.fb.array([
+      this.fb.group({ weekday: ['', Validators.required] }),
+    ]),
+    weeks: ['1', [Validators.required, Validators.min(1)]],
   });
 
   formSelector: FormGroup = this.fb.group({ range: [true] });
@@ -77,12 +68,18 @@ export class AvailabilityFormComponent implements OnInit {
    * @param {FormGroup} form completed FormGroup to be submitted
    */
   onSubmit(form: FormGroup): void {
-    this.aRequester.addAvailabilityForm(form.value);
-    form.reset();
+    if (this.isChecked) {
+      this.aRequester.addAvailabilityRange(form.value);
+      form.reset();
+    } else {
+      console.log(form.value);
+      this.aRequester.addAvailabilityArray(form.value);
+      form.reset();
+    }
   }
 
-  get recurringDays() {
-    return this.multiDayForm.controls['recurringDays'] as FormArray;
+  get days() {
+    return this.multiDayForm.controls['days'] as FormArray;
   }
 
   addRecurringDay() {
@@ -90,11 +87,11 @@ export class AvailabilityFormComponent implements OnInit {
       weekday: ['', Validators.required],
     });
 
-    this.recurringDays.push(dayForm);
+    this.days.push(dayForm);
   }
 
   deleteRecurringDay(lessonIndex: number) {
-    this.recurringDays.removeAt(lessonIndex);
+    this.days.removeAt(lessonIndex);
   }
 
   dummySubmit(form: FormGroup): void {

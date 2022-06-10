@@ -115,15 +115,12 @@ export class CalendarComponent implements OnInit {
 
     // TODO make switch cases
     if (this.userRoles.includes('USER')) {
-      console.log('is user');
       this.initUser();
     }
     if (this.userRoles.includes('RECRUITER')) {
-      console.log('is recruiter');
       this.initRecruiter();
     }
     if (this.userRoles.includes('ADMIN')) {
-      console.log('is admin');
       this.initAdmin();
     }
     this.delayedRefresh();
@@ -246,13 +243,6 @@ export class CalendarComponent implements OnInit {
     this.setDates();
     this.populateCalendar();
     this.activeDayIsOpen = false;
-  }
-
-  //* obviously just a test function
-  test() {
-    let events: Array<CalendarEvent> = [];
-    this.aRequester.addAvailabilityOverRange('09:00', '11:00', 
-    ['2022-07-01', '2022-07-02', '2022-07-03', '2022-07-04', '2022-07-05', '2022-07-06']);
   }
 
   testGetAll() {

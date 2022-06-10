@@ -208,7 +208,7 @@ export class InterviewRange implements Data {
   }
 }
 
-export class AvailabilityRangeRequest implements Data {
+export class AvailabilityArray implements Data {
   startTime: string;
   endTime: string;
   dates: string[];
