@@ -32,7 +32,7 @@
       role="button"
       aria-haspopup="true"
       aria-expanded="false"
-      [hidden]="!user"
+      [hidden]="!loggedIn"
       >Dashboard</a
     >
   </span>
@@ -46,16 +46,17 @@
       role="button"
       aria-haspopup="true"
       aria-expanded="false"
-      [hidden]="!user"
+      [hidden]="!loggedIn"
       >Calendar</a
     >
   </span>
   <span class="spacer"></span>
+
   <button
     mat-button
     class="icon"
     aria-label="Example icon-button with share icon"
-    [hidden]="!user"
+    [hidden]="!loggedIn"
     (click)="logout()"
   >
     Logout
@@ -63,10 +64,10 @@
       [src]="user.photoUrl"
       class="rounded-circle"
       style="height: 30px; width: 30px"
-      *ngIf="user"
+      *ngIf="(loggedIn && user)"
     />
-    <i class="fa fa-user-circle" aria-hidden="true" *ngIf="!user"></i>
   </button>
+  <!-- <i class="fa fa-user-circle" aria-hidden="true" *ngIf="!loggedIn"></i> -->
 </mat-toolbar>
 
 <!-- <div class="example-container" [class.example-is-mobile]="mobileQuery.matches" *ngIf="shouldRun">
