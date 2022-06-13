@@ -5,17 +5,17 @@ import { LoginComponent } from './login.component';
 import { SocialAuthService, GoogleLoginProvider, SocialUser, SocialAuthServiceConfig } from 'angularx-social-login';
 import { APPCONSTANTS, prodEnv } from '../../shared/constants/app.constant';
 import { DataSourceService } from 'src/app/services/data-source.service';
-import { BackendService } from 'src/app/services/backend.service';
 import { DatePipe } from '@angular/common';
 import { Observable, of } from 'rxjs';
 import { DataSource } from 'src/app/shared/models/data-service';
 import { Router } from '@angular/router';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 import { LoggedInObject } from 'src/app/shared/models/user-model';
+import { LoginService } from 'src/app/services/login/login.service';
 
 const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_DEV;
 
-const FakeBackendService = {
+const FakeLoginService = {
   login(input:string){
     return of({
       token: "this is a token",
@@ -59,7 +59,7 @@ const fakeRouter = {
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  let bService: BackendService;
+  let lService: LoginService;
   let dService: DataSourceService;
   let sService: SocialAuthService;
   let googleUser: any;
@@ -79,7 +79,7 @@ describe('LoginComponent', () => {
         SocialAuthService,
         DatePipe,
         RequestCenterService,
-        {provide: BackendService, useValue: FakeBackendService},
+        {provide: LoginService, useValue: FakeLoginService},
         {provide: DataSourceService, useValue: FakeDataSource},
         {provide: Router, useValue: fakeRouter},
         {provide: SocialAuthService, useValue: fakeSocialAuth},
@@ -109,7 +109,7 @@ describe('LoginComponent', () => {
     component = fixture.componentInstance;
     router = TestBed.inject(Router);
     rcService = TestBed.inject(RequestCenterService);
-    bService = TestBed.inject(BackendService);
+    lService = TestBed.inject(LoginService);
     dService = TestBed.inject(DataSourceService);
     sService = TestBed.inject(SocialAuthService);
     googleUser = GoogleLoginProvider.PROVIDER_ID;
@@ -149,7 +149,7 @@ describe('LoginComponent', () => {
 
   it('validate should call service methods', () => {
     let dSpy = spyOn(dService, 'updateDataSource').and.callThrough();
-    let bSpy = spyOn(bService, 'login').and.callThrough();
+    let bSpy = spyOn(lService, 'login').and.callThrough();
     let rSpy = spyOn(router, 'navigate').and.callThrough();
     let rcSpy = spyOn(rcService, 'getUserData').and.callThrough();
     localStorage.setItem('ssoUser', JSON.stringify({

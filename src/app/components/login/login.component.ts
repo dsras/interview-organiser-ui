@@ -6,6 +6,7 @@ import {
   SocialUser,
   SocialLoginModule,
 } from 'angularx-social-login';
+import { LoginService } from 'src/app/services/login/login.service';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 import { getUsername, getUserRoleNames } from 'src/app/shared/functions/get-user-from-local.function';
 import { LoggedInObject, LoginUser } from 'src/app/shared/models/user-model';
@@ -33,8 +34,8 @@ export class LoginComponent implements OnInit {
     private _router: Router,
     private _rs: RequestCenterService,
     private _dataSourceService: DataSourceService,
-    private _backEndService: BackendService,
-    private _socialAuthService: SocialAuthService
+    private _socialAuthService: SocialAuthService,
+    private _login: LoginService
   ) {}
 
   /** @ignore */
@@ -73,7 +74,7 @@ export class LoginComponent implements OnInit {
       user = loginObj;
     }
     this._dataSourceService.updateDataSource('loginType', loginType);
-    this._backEndService.login(user).subscribe((response: any) => {
+    this._login.login(user).subscribe((response: any) => {
       if (response && response.token) {
         localStorage.setItem('apiKey', response.token);
         this._rs.getUserData(getUsername()).subscribe((returnData: any) => {
