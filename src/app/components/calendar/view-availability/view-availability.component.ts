@@ -5,13 +5,13 @@ import { StringToDatetimePipe } from 'src/app/pipes/string-to-datetime.pipe';
 import { DateToTimePipe } from 'src/app/pipes/DateToTimePipe';
 import { DateToStringService } from 'src/app/services/date-to-string.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
-import { getUsername } from 'src/app/shared/functions/get-user-from-local.function';
 import {
   CalendarEventAvailability,
   CalendarEventInterview,
 } from 'src/app/shared/models/calendar-event-detail';
 import { AvailabilityTableData, InterviewTableData, InterviewTableDisplayData } from 'src/app/shared/models/table-data';
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
+import { GetUserDataService } from 'src/app/services/get-user-data.service';
 
 /**
  * Component that displays when a day is clicked on the calendar.
@@ -93,7 +93,8 @@ export class ViewAvailabilityComponent implements OnInit{
   constructor(
     private ar: AvailabilityRequesterService, 
     private dt: DateToStringService,
-    private _dialog: MatDialogService
+    private _dialog: MatDialogService,
+    private userService: GetUserDataService
     ) {}
   onDelete(id: string | number | any){
     console.log(id);

@@ -9,9 +9,19 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { Observable, of } from 'rxjs';
 import { AvailabilityFormValue, FindSlotFormValue } from 'src/app/shared/models/forms';
 import { Availability, AvailabilityForInterviews, InterviewReturn } from '../../shared/models/types';
+import { GetUserDataService } from '../get-user-data.service';
 
 import { AvailabilityRequesterService } from './availability-requester.service';
 import { Requester } from './requester.service';
+
+const FakeUserDataService = {
+  getUsername(){
+    return 'thorfinn.manson@accolite.digital.com';
+  },
+  getUserRoleNames(){
+    return ['Recruiter', 'User'];
+  }
+}
 
 const AvailabilityInfoFake: Availability = {
   availabilityId: 0,
@@ -78,6 +88,7 @@ describe('AvailabilityRequesterService', () => {
   let service: AvailabilityRequesterService;
   let spy;
   let rService: Requester;
+  let uService: GetUserDataService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -92,11 +103,17 @@ describe('AvailabilityRequesterService', () => {
         DatePipe,
         FormBuilder,      
         {provide: Requester, useValue: RequesterServiceStub},
+        {
+          provide: GetUserDataService,
+          useValue: FakeUserDataService
+        },
         
       ],
     });
     service = TestBed.inject(AvailabilityRequesterService);
     rService = TestBed.inject(Requester);
+    uService = TestBed.inject(GetUserDataService);
+
   });
 
   it('should be created', () => {
@@ -145,7 +162,7 @@ describe('AvailabilityRequesterService', () => {
   it('getMyAvailability calls requester methods', fakeAsync(() => {
     let events: CalendarEvent[] = [];
     let dates: string[]=['2022-06-01','2022-06-02','2022-06-03',];
-    spy = spyOn(rService, 'getRequest').and.callThrough();
+    spy = spyOn(rService, 'postRequest').and.callThrough();
     service.addAvailabilityOverRange('09:00', '17:00', dates);
     tick(3);
     expect(spy).toHaveBeenCalled();

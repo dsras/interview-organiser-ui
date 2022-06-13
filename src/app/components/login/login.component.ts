@@ -44,18 +44,26 @@ export class LoginComponent implements OnInit {
       APPCONSTANTS.DATA_SOURCE_CONSTANTS.ROUTE,
       'login'
     );
+    console.log('pre-sub');
     this._socialAuthService.authState.subscribe((user) => {
+      console.log('post-sub');
+
       if (user === null) {
         localStorage.removeItem('ssoUser');
+        console.log('localstorage remove and close');
         return;
       }
       localStorage.setItem('ssoUser', JSON.stringify(user));
       if (!localStorage.getItem('userType')) {
+        console.log('localstorage get usertype and return');
         return;
       }
+      console.log('MidTest');
       this.socialUser = user;
       this.isLoggedin = user != null;
       if (user) {
+        console.log('made it to validate');
+
         const loggedInObj: LoggedInObject = {
           username: user.email,
           password: user.idToken,

@@ -13,6 +13,28 @@ import { InterviewRequesterService } from 'src/app/services/requester/interview-
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
 
 import { CreateInterviewComponent } from './create-interview.component';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { RequestCenterService } from 'src/app/services/requester/request-center.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+const MockRequestCenterService = {
+  getAllSkills(){
+    return '';
+  }
+}
+
+const MockaRequestCenterService = {
+  getSlots(){
+    return of('');
+  },
+
+}
+
+const MockiRequesterService = {
+  addInterviewForm(){
+    return of('');
+  }
+}
 
 const ModalControllerServiceStub  = {
   openModal(template: TemplateRef<any>) {
@@ -65,7 +87,7 @@ const dummySubmitForm = {
   },
   reset(){}
 }
-describe('FindInterviewComponent', () => {
+describe('Create Interview Component', () => {
   let component: CreateInterviewComponent;
   let fixture: ComponentFixture<CreateInterviewComponent>;
   let aService: AvailabilityRequesterService;
@@ -74,21 +96,40 @@ describe('FindInterviewComponent', () => {
   let aSpy: any;
   let iService: InterviewRequesterService;
   let iSpy: any;
-  let mockMService: any;
-
+  let rService: any;
+  let dService: any;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports:[
         ReactiveFormsModule,
         HttpClientTestingModule,
         RouterTestingModule,
-        CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
+        CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
+        MatDialogModule,
+        BrowserAnimationsModule
       ],
       providers: [
         BsModalService,
         DatePipe,
         FormBuilder,    
-        MatDialogService
+        MatDialogService,
+        {
+          provide: MatDialogRef,
+          useValue: {}
+        },
+        {
+          provide: RequestCenterService,
+          useValue: MockRequestCenterService
+        },
+        {
+          provide: AvailabilityRequesterService,
+          useValue: MockaRequestCenterService
+        },
+        {
+          provide: InterviewRequesterService,
+          useValue: MockiRequesterService
+        }
+
 
       ],
       declarations: [ CreateInterviewComponent ]
@@ -102,19 +143,22 @@ describe('FindInterviewComponent', () => {
     fixture = TestBed.createComponent(CreateInterviewComponent);
     iService = TestBed.inject(InterviewRequesterService);
     aService = TestBed.inject(AvailabilityRequesterService);
+    rService = TestBed.inject(RequestCenterService);
+    dService = TestBed.inject(MatDialogService);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
   it('should create', () => {
+    let spy = spyOn(rService, 'getAllSkills').and.callThrough();
     expect(component).toBeTruthy();
   });
 
   it('find interview makes service calls', () =>{
-    aSpy = spyOn(aService, 'getMyAvailabilityInRange').and.callThrough();
+    aSpy = spyOn(aService, 'getSlots').and.callThrough();
     let formG = <FormGroup> dummyFindForm;
     component.findInterview(formG);
-    expect(aService.getInterviewSlots).toHaveBeenCalled();
+    expect(aSpy).toHaveBeenCalled();
 
     component.skillsAvailable.push({
       id:0,
@@ -123,26 +167,26 @@ describe('FindInterviewComponent', () => {
      });
 
     component.findInterview(formG);
-    expect(aService.getInterviewSlots).toHaveBeenCalled();
+    expect(aSpy).toHaveBeenCalled();
   });
   
   it('submit interview makes service calls', () =>{
     iSpy = spyOn(iService, 'addInterviewForm').and.callThrough();
     let formG = <FormGroup>dummySubmitForm;
     component.submitInterview(formG);
-    expect(iService.addInterviewForm).toHaveBeenCalled();
+    expect(iSpy).toHaveBeenCalled();
   });
   
   it('openModal should call open template', () => {
-    iSpy = spyOn(mockMService, 'openModal').and.callThrough();
+    iSpy = spyOn(dService, 'openDialogTall').and.returnValue('');
     component.openModal(new MockTemplateRef());
-    expect(mockMService.openModal).toHaveBeenCalled();
+    expect(iSpy).toHaveBeenCalled();
   });  
 
   it('close modal should call close template', () => {
-    iSpy = spyOn(mockMService, 'closeModal').and.callThrough();
+    iSpy = spyOn(dService, 'closeDialog').and.callThrough();
     component.closeModal();
-    expect(mockMService.closeModal).toHaveBeenCalled();
+    expect(iSpy).toHaveBeenCalled();
   });
 
 });

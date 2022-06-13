@@ -10,9 +10,19 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { Observable, of } from 'rxjs';
 import { CreateInterviewFormValue } from 'src/app/shared/models/forms';
 import { AvailabilityForInterviews, InterviewReturn } from '../../shared/models/types';
+import { GetUserDataService } from '../get-user-data.service';
 
 import { InterviewRequesterService } from './interview-requester.service';
 import { Requester } from './requester.service';
+
+const FakeUserDataService = {
+  getUsername(){
+    return 'thorfinn.manson@accolite.digital.com';
+  },
+  getUserRoleNames(){
+    return ['Recruiter', 'User'];
+  }
+}
 
 const RequesterServiceStub = {
   getRequest<Type>(reqestURL: string): Observable<any> {
@@ -28,6 +38,9 @@ const RequesterServiceStub = {
       }]);
   },
   postRequest<Type>(reqestURL: string, obj: Type): Observable<any> {
+    return of('POST');
+  },
+  postRequestNoType<Type>(reqestURL: string, obj: any): Observable<any> {
     return of('POST');
   },
 }
@@ -47,6 +60,7 @@ describe('InterviewRequesterService', () => {
   let service: InterviewRequesterService;
   let spy: any;
   let rService: Requester;
+  let uService: GetUserDataService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -61,11 +75,16 @@ describe('InterviewRequesterService', () => {
         DatePipe,
         FormBuilder,  
         {provide: Requester, useValue: RequesterServiceStub},
-            
+        {
+          provide: GetUserDataService,
+          useValue: FakeUserDataService
+        },
       ],
     });
     service = TestBed.inject(InterviewRequesterService);
     rService = TestBed.inject(Requester);
+    uService = TestBed.inject(GetUserDataService);
+
   });
   
 
@@ -122,14 +141,10 @@ describe('InterviewRequesterService', () => {
     service.InterviewsFindHired(userName);
     expect(spy).toHaveBeenCalled();
   });
-  it('getInterviewByInterviewer gets called', () => {
-    spy = spyOn(rService, 'getRequest').and.returnValue(of([interRet]));
-    let returnObj: Observable<Array<InterviewReturn>> = service.getInterviewsPerMonthByInterviewer(false, "09:00", '17:00');
-    expect(spy).toHaveBeenCalled();
-  });
+
   
-  it('getInterviewByRecruiter gets called', () => {
-    spy = spyOn(rService, 'getRequest').and.returnValue(of([interRet]));
+  it('getInterviewsPerMonthByInterviewer gets called', () => {
+    spy = spyOn(rService, 'postRequestNoType').and.returnValue(of([interRet]));
     service.getInterviewsPerMonthByInterviewer(true, "09:00", '17:00');
     expect(spy).toHaveBeenCalled();
   });

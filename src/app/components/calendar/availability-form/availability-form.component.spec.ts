@@ -15,12 +15,10 @@ import { AvailabilityFormComponent } from './availability-form.component';
 
 const dummyAvailForm = {
   value: {
-    dateRange: [
-      new Date(),
-      new Date()
-    ],
-    startTime: new Date(),
-    endTime: new Date()
+    firstDate: '2022-06-01',
+    lastDate:  '2022-06-07',
+    startTime: '09:00',
+    endTime: '17:00'
   },
   reset(){}
 }
@@ -64,7 +62,7 @@ describe('AvailabilityFormComponent', () => {
 
   
   it('Submit should call service methods', () => {
-    let aSpy = spyOn(aService, 'addAvailabilityForm').and.callThrough();
+    let aSpy = spyOn(aService, 'addAvailabilityForm').and.returnValue();
     let formG = dummyAvailForm;
     component.onSubmit(<FormGroup>formG);
     expect(aSpy).toHaveBeenCalled();

@@ -77,7 +77,7 @@ export class CalendarComponent implements OnInit {
   /** @ignore */
   ngOnInit(): void {
     this.currentUser = this.userService.getUsername();
-    this.userRoles = getUserRoleNames();
+    this.userRoles = this.userService.getUserRoleNames();
     // put in populate
 
     //this.delayedRefresh();

@@ -190,7 +190,11 @@ export class InterviewRequesterService {
 
     if (form.startTime != '') {
       //set end time to be an hour after start time
-      startTimeString = this.dateFormatter.dateToStringTime(new Date(form.startTime));
+      let myTime = new Date();
+      let times1 = form.startTime.split(':');
+      myTime.setHours(parseInt(times1[0]),parseInt(times1[1]));
+      
+      startTimeString = this.dateFormatter.dateToStringTime(myTime);
       console.log('Start time good: ' + startTimeString);
 
       endTimeString = this.stringTimeAdd(startTimeString, 1);
