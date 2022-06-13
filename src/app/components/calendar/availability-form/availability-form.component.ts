@@ -64,8 +64,4 @@ export class AvailabilityFormComponent implements OnInit {
     this.aRequester.addAvailabilityForm(form.value);
     form.reset();
   }
-
-  test() {
-    console.log(this.isChecked)
-  }
 }

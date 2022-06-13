@@ -7,7 +7,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
@@ -16,6 +16,7 @@ import { CreateInterviewComponent } from './create-interview.component';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AvailabilityForInterviews } from 'src/app/shared/models/types';
 
 const MockRequestCenterService = {
   getAllSkills(){
@@ -155,7 +156,10 @@ describe('Create Interview Component', () => {
   });
 
   it('find interview makes service calls', () =>{
-    aSpy = spyOn(aService, 'getSlots').and.callThrough();
+    aSpy = spyOn(aService, 'getSlots').and.returnValue(of([<AvailabilityForInterviews>{
+      startTime: '19:00',
+      endTime: '20:00'
+    }]));
     let formG = <FormGroup> dummyFindForm;
     component.findInterview(formG);
     expect(aSpy).toHaveBeenCalled();

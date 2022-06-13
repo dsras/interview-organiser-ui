@@ -149,28 +149,6 @@ export class CalendarComponent implements OnInit {
     //this.delayedRefresh();
   }
 
-  populateAvail() {
-    this.resetEvents();
-    this.aRequester.getMyAvailabilityInRange(
-      this.userService.getUsername(),
-      this.dateString.dateToStringDate(this.startDate),
-      this.dateString.dateToStringDate(this.endDate)
-    ).subscribe(ret => {
-      ret.forEach(ele=>{
-        this.events.push(this.aRequester.parseAvailabilityUser(ele));
-      })
-    });
-    this.aRequester.getMyAvailabilityInRange(
-      this.userService.getUsername(),
-      this.dateString.dateToStringDate(this.startDate),
-      this.dateString.dateToStringDate(this.endDate)
-    ).subscribe(ret => {
-      ret.forEach(ele => {
-        this.events.push(this.aRequester.parseAvailabilityUser(ele));
-      })
-    });
-    this.delayedRefresh();
-  }
   initUser(): void {
     // this.aRequester.getUserAvailability(this.events, this.availability);
     // this.iRequester.getUserInterviews(this.events, this.interviews);

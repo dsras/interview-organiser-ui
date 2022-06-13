@@ -8,6 +8,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { fn } from 'moment';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { Observable, of } from 'rxjs';
+import { CalendarEventInterview } from 'src/app/shared/models/calendar-event-detail';
 import { CreateInterviewFormValue } from 'src/app/shared/models/forms';
 import { AvailabilityForInterviews, InterviewReturn } from '../../shared/models/types';
 import { GetUserDataService } from '../get-user-data.service';
@@ -191,20 +192,42 @@ describe('InterviewRequesterService', () => {
       additionalInformation: 'urm',
       startTime: "13:00"
     };
-
-
-
-    let startTime: Date = new Date();
     spy = spyOn(service, 'addInterviewForm').and.callThrough();
     service.addInterviewForm(form);
     expect(spy).toHaveBeenCalled();
 
-    // let startTimeNull: any = <Date><unknown>'';
-    // service.addInterviewForm(form);
-    // expect(spy).toHaveBeenCalled();
+    form ={
+      interviewSelected: {
+        interviewer:"Emer Sweeny",
+        interviewerId: 19,
+        availabilityId: 1,
+        date: "2022-04-19",
+        startTime: "13:00",
+        endTime: "14:00"
+      },
+      additionalInformation: 'urm',
+      startTime: ""
+    };
+    service.addInterviewForm(form);
+    expect(spy).toHaveBeenCalled();
   });
 
-  
+  it('GetUserInterviews calls service methods', () => {
+    let spy = spyOn(rService, 'getRequest').and.callThrough();
+    let ints: CalendarEventInterview[]=[];
+    let avail: CalendarEvent[]=[];
+    service.getUserInterviews(avail, ints);
+    expect(spy).toHaveBeenCalled();
+
+  });
+  it('getRecruiterInterviews calls service methods', () => {
+    let spy = spyOn(rService, 'getRequest').and.callThrough();
+    let ints: CalendarEventInterview[]=[];
+    let avail: CalendarEvent[]=[];
+    service.getRecruiterInterviews(avail, ints);
+    expect(spy).toHaveBeenCalled();
+
+  });
   
   it('date should be formatted to YYYY-MM-DD', () => {
     let tempDate = new Date('1995-12-17T03:24:00');

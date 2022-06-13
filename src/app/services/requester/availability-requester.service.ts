@@ -327,11 +327,14 @@ export class AvailabilityRequesterService {
 
     const newStartDate: Date = new Date(form.firstDate);
     const newEndDate: Date = new Date(form.lastDate);
-    const newStartTime: Date = new Date(form.startTime);
-    const newEndTime: Date = new Date(form.endTime);
+    const newStartTime: Date = new Date();
+    const newEndTime: Date = new Date();
+    let times1 = form.startTime.split(':');
+    let times2 = form.endTime.split(':');
 
-    newStartTime.setDate(newStartDate.getDate());
-    newEndTime.setDate(newStartDate.getDate());
+
+    newStartTime.setHours(parseInt(times1[0]),parseInt(times1[1]));
+    newEndTime.setHours(parseInt(times2[0]),parseInt(times2[1]));
 
     const startDateString: string = this.dateToStringDate(newStartDate);
     const endDateString: string = this.dateToStringDate(newEndDate);

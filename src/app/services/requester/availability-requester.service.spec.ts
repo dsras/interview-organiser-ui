@@ -7,6 +7,7 @@ import { CalendarEvent, CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { Observable, of } from 'rxjs';
+import { CalendarEventInterview } from 'src/app/shared/models/calendar-event-detail';
 import { AvailabilityFormValue, FindSlotFormValue } from 'src/app/shared/models/forms';
 import { Availability, AvailabilityForInterviews, InterviewReturn } from '../../shared/models/types';
 import { GetUserDataService } from '../get-user-data.service';
@@ -44,6 +45,17 @@ const FakeAvailabilityReturn: Availability[] = [
     endTime: new Date().toString(),
   },
 ]
+
+class FakeSlotForm{
+  startTime: string = '19:00';
+  endTime: string ='20:00';
+  firstDate: string = '2022-06-01';
+  lastDate: string = '2022-06-07';
+  skills = { 
+    skillType: 'Java',
+    skillLevel: 'Junior',
+  };
+}
 
 const RequesterServiceStub = {
   getRequest<Type>(reqestURL: string): Observable<any> {
@@ -116,6 +128,24 @@ describe('AvailabilityRequesterService', () => {
 
   });
 
+  it('delete Availability should call delete service method', () => {
+    spy = spyOn(rService, 'postRequest').and.callThrough();
+    service.deleteAvailability(1);
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('getSlots should call service method', () => {
+    spy = spyOn(rService, 'postRequestNoType').and.callThrough();
+    service.getSlots(new FakeSlotForm, [1]);
+    expect(spy).toHaveBeenCalled();
+  });
+  it('getUserAvailability should call service method', () => {
+    spy = spyOn(rService, 'getRequest').and.callThrough();
+    let myEvents: CalendarEvent[]=[];
+    let myInts: CalendarEventInterview[]=[];
+    service.getUserAvailability(myEvents,myInts);
+    expect(spy).toHaveBeenCalled();
+  });
   it('should be created', () => {
     expect(service).toBeTruthy();
   });

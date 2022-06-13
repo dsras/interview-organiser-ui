@@ -199,7 +199,11 @@ export class InterviewRequesterService {
 
       endTimeString = this.stringTimeAdd(startTimeString, 1);
     } else {
-      startTimeString = this.dateFormatter.dateToStringTime(new Date(form.interviewSelected.startTime));
+      let times1 = form.interviewSelected.startTime.split(':');
+      let myTime = new Date();
+      myTime.setHours(parseInt(times1[0]),parseInt(times1[1]));
+
+      startTimeString = this.dateFormatter.dateToStringTime(myTime);
       console.log('Start time bad: ' + startTimeString);
 
       endTimeString = this.stringTimeAdd(startTimeString, 1);

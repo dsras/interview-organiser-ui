@@ -97,66 +97,15 @@ export class CreateInterviewComponent implements OnInit {
         idArr.push(skillStore.id);
       }
     });
-    console.log(idArr);
     this.availableInterviews = [];
-
-    // this.aRequester.getInterviewSlots(
-    //   form.value,
-    //   idArr,
-    //   this.availableInterviews
-    // );
     this.aRequester.getSlots(form.value, idArr).subscribe((returnData) => {
-      console.log(returnData)
-      const newStartDate: Date = new Date(form.value.firstDate);
-      const newStartTime: Date = new Date(form.value.startTime);
-      const newEndTime: Date = new Date(form.value.endTime);
-  
-      newStartTime.setDate(newStartDate.getDate());
-      newEndTime.setDate(newStartDate.getDate());
-  
       let data = <Array<AvailabilityForInterviews>>returnData;
       data.forEach((element) => {
-        console.log(element)
-        let refStart: Date = new Date(newStartTime);
-        let refEnd: Date = new Date(newStartTime);
-        refStart.setHours(
-          Number.parseInt(element.startTime.split(':')[0]),
-          Number.parseInt(element.startTime.split(':')[1])
-        );
-        refEnd.setHours(
-          Number.parseInt(element.endTime.split(':')[0]),
-          Number.parseInt(element.endTime.split(':')[1])
-        );
-
-        let startInput: string = '';
-        let endInput: string = '';
-        if (refStart.getTime() > newStartTime.getTime()) {
-          startInput = this.aRequester.dateToStringTime(refStart);
-        } else {
-          startInput = this.aRequester.dateToStringTime(newStartTime);
-        }
-        if (refEnd.getTime() < newEndTime.getTime()) {
-          endInput = this.aRequester.dateToStringTime(refEnd);
-        } else {
-          endInput = this.aRequester.dateToStringTime(newEndTime);
-        }
-
         this.availableInterviews.push(
           element
-          // 'On ' +
-          //   element.date +
-          //   ' between ' +
-          //   startInput +
-          //   ' -> ' +
-          //   endInput +
-          //   ' this is with: ' +
-          //   element.interviewer +
-          //   ' id: ' +
-          //   element.interviewerId
         );
       });
     });
-    // form.reset();
     this.switchView('');
   }
 
