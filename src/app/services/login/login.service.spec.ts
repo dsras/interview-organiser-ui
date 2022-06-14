@@ -1,16 +1,16 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { Observable, of } from 'rxjs';
-import { APPCONSTANTS } from '../shared/constants/app.constant';
-import { BackendService } from './backend.service';
-import { Requester } from './requester/requester.service';
+import { Requester } from '../requester/requester.service';
+
+import { LoginService } from './login.service';
 
 const RequesterServiceStub = {
   getRequest<Type>(reqestURL: string): Observable<any> {
@@ -33,8 +33,9 @@ const RequesterServiceStub = {
   }
 }
 
-describe('BackendService', () => {
-  let service: BackendService;
+describe('LoginService', () => {
+  let service: LoginService;
+
   let rService: Requester; 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -53,7 +54,7 @@ describe('BackendService', () => {
    
       ],
     });
-    service = TestBed.inject(BackendService);
+    service = TestBed.inject(LoginService);
     rService = TestBed.inject(Requester);
   });
 

@@ -1,41 +1,42 @@
-
-
-.services a .image-container>img {
-	height: 70px;
-}
-
-.services a{
+.services a .image-container > img {
+    height: 70px;
+  }
+  
+  .services a {
     transition: all 0.5s ease;
-}
-
-.services a:hover
-{
+  }
+  
+  .services a:hover {
     transform: scale(1.05);
-}
-
-
-// .big-tile {
-// 	margin: 20px;
-// 	border-radius: 50px;
-// 	width: 90% !important;
-//     height: 90%;
-// 	background-color: white;
-// 	border: 2px solid #ff8500;
-// 	color: #292929;
-// 	padding: 4px 20px;
-// 	line-height: 30px;
-// 	font-size: 30px !important;
-// 	font-weight: normal;
-//     transition-duration: 1s;
-// }
-
-// .big-tile:hover {
-//     transform: scale(1.1);
-//     color: #ff8500;
-//     background-color: #bbbbbb;
-// }
-
-
-
-
-
+  }
+  
+  .big-btn {
+    text-justify: distribute;
+    text-align: justify;
+  }
+  
+  .tile-icon {
+    vertical-align: text-top;
+  }
+  
+  // .big-tile {
+  // 	margin: 20px;
+  // 	border-radius: 50px;
+  // 	width: 90% !important;
+  //     height: 90%;
+  // 	background-color: white;
+  // 	border: 2px solid #ff8500;
+  // 	color: #292929;
+  // 	padding: 4px 20px;
+  // 	line-height: 30px;
+  // 	font-size: 30px !important;
+  // 	font-weight: normal;
+  //     transition-duration: 1s;
+  // }
+  
+  // .big-tile:hover {
+  //     transform: scale(1.1);
+  //     color: #ff8500;
+  //     background-color: #bbbbbb;
+  // }
+  
