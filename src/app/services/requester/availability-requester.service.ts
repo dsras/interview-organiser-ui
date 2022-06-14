@@ -53,11 +53,8 @@ export class AvailabilityRequesterService {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.AVAIL_RANGE.replace('username', username);
-    let out;
 
-    let myRange = new dateRange();
-    myRange.start = start;
-    myRange.end = end;
+    let myRange = new dateRange(start, end);
 
     return this.requester.postRequestNoType<dateRange>(url, myRange);
   }
@@ -88,7 +85,7 @@ export class AvailabilityRequesterService {
     this.requester
       .postRequest<AvailabilityRange>(url, newAvail)
       .subscribe((returnData) => {
-        out = <AvailabilityRange>(<unknown>returnData);
+        // out = <AvailabilityRange>(<unknown>returnData);
       });
   }
 
@@ -192,113 +189,7 @@ export class AvailabilityRequesterService {
     });
   }
 
-  /**
-   * TODO still required?
-   * @param {Array<string>} events
-   */
-  getAllAvailabilityUI(events: string[]): void {
-    const url: string =
-      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL;
-    let out: Array<Availability>;
-
-    this.requester.getRequest<Availability>(url).subscribe((returnData) => {
-      out = <Array<Availability>>(<unknown>returnData);
-      out.forEach((element) => {
-        const start: Date = new Date(element.date);
-        const end: Date = new Date(element.date);
-        const times1: string[] = element.startTime.split(':');
-        const times2: string[] = element.endTime.split(':');
-
-        start.setHours(parseInt(times1[0]), parseInt(times1[1]));
-        end.setHours(parseInt(times2[0]), parseInt(times2[1]));
-
-        const startTime: string = this.dateToStringTime(start);
-        const endTime: string = this.dateToStringTime(end);
-
-        events.push(startTime + ' -> ' + endTime + '\n');
-      });
-      return out;
-    });
-  }
-
-  /**
-   * Populates an input array with availability in a specified range that can
-   * be used to create interviews.
-   *
-   * @param {string} startDate
-   * @param {string} endDate
-   * @param {string} startTime
-   * @param {string} endTime
-   * @param {Array<number>} skillsIDList
-   * @param {Array<string>} interviewsReturn
-   * @returns {void} Modified interviewsReturn with all relevant availability
-   */
-  getInterviewSlots(
-    form: FindSlotFormValue,
-    skillsIDList: number[],
-    interviewsReturn: AvailabilityForInterviews[]
-  ): void {
-    const url: string =
-      APPCONSTANTS.APICONSTANTS.BASE_URL +
-      APPCONSTANTS.APICONSTANTS.INTER_INTER;
-
-    const newStartDate: Date = new Date(form.firstDate);
-    const newEndDate: Date = new Date(form.lastDate);
-    const newStartTime: Date = new Date();
-    const newEndTime: Date = new Date();
-    let times1 = form.startTime.split(':');
-    let times2 = form.endTime.split(':');
-
-    newStartTime.setHours(parseInt(times1[0]), parseInt(times1[1]));
-    newEndTime.setHours(parseInt(times2[0]), parseInt(times2[1]));
-
-    const startDateString: string = this.dateToStringDate(newStartDate);
-    const endDateString: string = this.dateToStringDate(newEndDate);
-    const startString: string = this.dateToStringTime(newStartTime);
-    const endString: string = this.dateToStringTime(newEndTime);
-
-    const newRange: InterviewRange = new InterviewRange(
-      startDateString,
-      endDateString,
-      startString,
-      endString,
-      skillsIDList
-    );
-    this.requester
-      .postRequestNoType<AvailabilityForInterviews>(url, newRange)
-      .subscribe((returnData) => {
-        let data = <Array<AvailabilityForInterviews>>returnData;
-        data.forEach((element) => {
-          let refStart: Date = new Date(newStartTime);
-          let refEnd: Date = new Date(newStartTime);
-          refStart.setHours(
-            Number.parseInt(element.startTime.split(':')[0]),
-            Number.parseInt(element.startTime.split(':')[1])
-          );
-          refEnd.setHours(
-            Number.parseInt(element.endTime.split(':')[0]),
-            Number.parseInt(element.endTime.split(':')[1])
-          );
-
-          let startInput: string = '';
-          let endInput: string = '';
-          if (refStart.getTime() > newStartTime.getTime()) {
-            startInput = this.dateToStringTime(refStart);
-          } else {
-            startInput = this.dateToStringTime(newStartTime);
-          }
-          if (refEnd.getTime() < newEndTime.getTime()) {
-            endInput = this.dateToStringTime(refEnd);
-          } else {
-            endInput = this.dateToStringTime(newEndTime);
-          }
-
-          interviewsReturn.push(element);
-        });
-      });
-  }
-
-  getSlots(form: FindSlotFormValue, skills: number[]):Observable<any> {
+  getSlots(form: FindSlotFormValue, skills: number[]): Observable<any> {
     const url: string =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.INTER_INTER;

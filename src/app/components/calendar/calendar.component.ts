@@ -271,11 +271,4 @@ export class CalendarComponent implements OnInit {
     this.activeDayIsOpen = false;
   }
 
-  testGetAll() {
-    let events: Array<CalendarEvent> = [];
-    let myStartDate: Date = new Date('2022-05-01');
-    let myEndDate: Date = new Date('2022-06-01');
-    this.aRequester.getAllAvailability(events);
-    console.log(events);
-  }
 }
