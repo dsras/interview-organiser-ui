@@ -9,20 +9,12 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { SocialAuthService, GoogleLoginProvider, SocialAuthServiceConfig } from 'angularx-social-login';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { LoginComponent } from 'src/app/components/login/login.component';
-import { GetUserDataService } from 'src/app/services/get-user-data.service';
 import { prodEnv, APPCONSTANTS } from 'src/app/shared/constants/app.constant';
 
 import { LoginGuard } from './login.guard';
 
 const CLIENT_ID = (prodEnv) ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD : APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_DEV;
-const FakeUserDataService = {
-  getUsername(){
-    return 'thorfinn.manson@accolite.digital.com';
-  },
-  getUserRoleNames(){
-    return ['Recruiter', 'User'];
-  }
-}
+
 const fakeRouter = {
   navigate(input: Array<any>){
     return <Promise<void>>input[0];
@@ -31,7 +23,6 @@ const fakeRouter = {
 describe('LoginGuard', () => {
   let guard: LoginGuard;
   let router: Router;
-  let uService: GetUserDataService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -58,10 +49,6 @@ describe('LoginGuard', () => {
               ]
           } as SocialAuthServiceConfig,
         },
-        {
-          provide: GetUserDataService,
-          useValue: FakeUserDataService
-        },
         LoginComponent,
         BsModalService,
         DatePipe,
@@ -70,8 +57,6 @@ describe('LoginGuard', () => {
       ],
     });
     guard = TestBed.inject(LoginGuard);
-    
-    uService = TestBed.inject(GetUserDataService);
     router = TestBed.inject(Router);
   });
 

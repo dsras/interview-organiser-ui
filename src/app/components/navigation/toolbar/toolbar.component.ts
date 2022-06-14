@@ -1,55 +1,33 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { SocialAuthService } from 'angularx-social-login';
-import { DataSourceService } from 'src/app/services/data-source.service';
 import { APPCONSTANTS } from 'src/app/shared/constants/app.constant';
+import { SSOUser } from 'src/app/shared/models/user-model';
 
 @Component({
   selector: 'toolbar',
   templateUrl: './toolbar.component.html',
-  styleUrls: ['./toolbar.component.scss']
+  styleUrls: ['./toolbar.component.scss'],
 })
 export class ToolbarComponent implements OnInit {
-
-//   isHeader: boolean = true;
-  //   selectedMenu: string = '';
   /** Login type */
   loginType: string = '';
-  /** User */
-  user: any = null;
-  currentView:string = '';
-  showData: boolean = true;
+  user: SSOUser | null = null;
+  loggedIn: boolean = false;
 
   /** @ignore */
   constructor(
-    private _dataSourceService: DataSourceService,
     private router: Router,
     private socialAuthService: SocialAuthService
   ) {}
 
   /** @ignore */
   ngOnInit(): void {
-    this._dataSourceService
-      .getDataSource('route')
-      .subscribe((value: string) => {
-        // this.currentView = value
-        // if (value === 'login') {
-        //   this.showData = false
-        // } else {
-        //   this.showData = true
-        // }
-        const user = localStorage.getItem('ssoUser');
-        if (user) {
-          this.user = JSON.parse(user);
-        }
-      });
-    this._dataSourceService
-      .getDataSource('loginType')
-      .subscribe((value: string) => {
-        if (value) {
-          this.loginType = value;
-        }
-      });
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.setRoute(event);
+      }
+    });
   }
 
   /** Logs out the user */
@@ -59,31 +37,19 @@ export class ToolbarComponent implements OnInit {
     }
     localStorage.clear();
     this.user = null;
-    this.router.navigate(['login']);
+    // this.router.navigate(['login']);
   }
 
-  /**
-   * Gets the current navigation state of the app
-   * 
-   * @returns {boolean} True if currently on '/login', otherwise false.
-   */
-  onLoginPage(): boolean {
-    if (this.router.url === '/login') {
-      return true;
+  private setRoute(currentRoute: NavigationEnd): void {
+    if (currentRoute.url !== '/login') {
+      this.loggedIn = true;
+      const user = localStorage.getItem('ssoUser');
+      if (user) {
+        this.user = JSON.parse(user);
+      }
+    } else {
+      this.loggedIn = false;
+      this.user = null;
     }
-    return false;
   }
-
-  /**
-   * Gets the logged in status of the user
-   * 
-   * @returns {boolean} True if the user is logged in
-   */
-  loggedIn(): boolean {
-    return this.user != null;
-  }
-  click(message: string): void {
-    console.log(message)
-  }
-
 }

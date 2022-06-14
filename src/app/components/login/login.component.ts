@@ -6,12 +6,15 @@ import {
   SocialUser,
   SocialLoginModule,
 } from 'angularx-social-login';
+import { LoginService } from 'src/app/services/login/login.service';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
+import {
+  getUsername,
+  getUserRoleNames,
+} from 'src/app/shared/functions/get-user-from-local.function';
 import { LoggedInObject, LoginUser } from 'src/app/shared/models/user-model';
-import { GetUserDataService } from 'src/app/services/get-user-data.service';
 
 // [APP_LEVEL Imports]
-import { BackendService } from '../../services/backend.service';
 import { DataSourceService } from '../../services/data-source.service';
 import { APPCONSTANTS } from '../../shared/constants/app.constant';
 
@@ -33,10 +36,9 @@ export class LoginComponent implements OnInit {
     private _router: Router,
     private _rs: RequestCenterService,
     private _dataSourceService: DataSourceService,
-    private _backEndService: BackendService,
     private _socialAuthService: SocialAuthService,
-    private userService: GetUserDataService
-    ) {}
+    private _login: LoginService
+  ) {}
 
   /** @ignore */
   ngOnInit(): void {
@@ -44,26 +46,18 @@ export class LoginComponent implements OnInit {
       APPCONSTANTS.DATA_SOURCE_CONSTANTS.ROUTE,
       'login'
     );
-    console.log('pre-sub');
     this._socialAuthService.authState.subscribe((user) => {
-      console.log('post-sub');
-
       if (user === null) {
         localStorage.removeItem('ssoUser');
-        console.log('localstorage remove and close');
         return;
       }
       localStorage.setItem('ssoUser', JSON.stringify(user));
       if (!localStorage.getItem('userType')) {
-        console.log('localstorage get usertype and return');
         return;
       }
-      console.log('MidTest');
       this.socialUser = user;
       this.isLoggedin = user != null;
       if (user) {
-        console.log('made it to validate');
-
         const loggedInObj: LoggedInObject = {
           username: user.email,
           password: user.idToken,
@@ -82,14 +76,14 @@ export class LoginComponent implements OnInit {
       user = loginObj;
     }
     this._dataSourceService.updateDataSource('loginType', loginType);
-    this._backEndService.login(user).subscribe((response: any) => {
+    this._login.login(user).subscribe((response: any) => {
       if (response && response.token) {
         localStorage.setItem('apiKey', response.token);
-        this._rs.getUserData(this.userService.getUsername()).subscribe((returnData: any) => {
+        this._rs.getUserData(getUsername()).subscribe((returnData: any) => {
           user = returnData;
           localStorage.setItem('userData', JSON.stringify(user));
-          if (this.userService.getUserRoleNames().includes('RECRUITER')){
-            this._router.navigate(['/dashboard'])
+          if (getUserRoleNames().includes('RECRUITER')) {
+            this._router.navigate(['/dashboard']);
           } else {
             this._router.navigate(['/calendar']);
           }

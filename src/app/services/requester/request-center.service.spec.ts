@@ -9,7 +9,6 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { of } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
-import { GetUserDataService } from 'src/app/services/get-user-data.service';
 import { Skills, SkillOptions } from 'src/app/shared/models/types';
 
 import { RequestCenterService } from './request-center.service';
@@ -92,13 +91,13 @@ describe('RequestCenterService', () => {
     //clean cache on entry
     localStorage.setItem('ssoUser', '');
 
-    // let initString = localStorage.getItem('ssoUser');
-    // initString = initString ? initString : '';
-    // expect(this.userService.getUsername() === initString).toBeTruthy();
+    let initString = localStorage.getItem('ssoUser');
+    initString = initString ? initString : '';
+    expect(service.getUsername() === initString).toBeTruthy();
 
-    // localStorage.setItem('ssoUser', '{"email": "myName"}');
-    // initString = <string>localStorage.getItem('ssoUser');
-    // expect(this.userService.getUsername() === 'myName').toBeTruthy();
+    localStorage.setItem('ssoUser', '{"email": "myName"}');
+    initString = <string>localStorage.getItem('ssoUser');
+    expect(service.getUsername() === 'myName').toBeTruthy();
 
     //clean the cache for other tests
     localStorage.setItem('ssoUser', '');

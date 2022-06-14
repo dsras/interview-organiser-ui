@@ -13,7 +13,7 @@ import { InterviewMetaData } from 'src/app/shared/models/event-meta-data';
 import { CalendarColors } from 'src/app/shared/constants/colours.constant';
 import { DateToStringService } from '../date-to-string.service';
 import { Observable } from 'rxjs';
-import { GetUserDataService } from 'src/app/services/get-user-data.service';
+import { getUsername } from 'src/app/shared/functions/get-user-from-local.function';
 import { CreateInterviewFormValue } from 'src/app/shared/models/forms';
 
 @Injectable({
@@ -22,26 +22,34 @@ import { CreateInterviewFormValue } from 'src/app/shared/models/forms';
 export class InterviewRequesterService {
   constructor(
     private requester: Requester,
-    private dateFormatter: DateToStringService,
-    private userService: GetUserDataService
-
+    private dateFormatter: DateToStringService
   ) {}
 
   getInterviewsPerMonthByInterviewer(
+    events: CalendarEvent[],
     isRec: boolean,
     start: string,
     end: string
-  ) : Observable<Array<InterviewReturn>> {
+  ) {
     let url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
-      APPCONSTANTS.APICONSTANTS.INTER_INTER_RANGE.replace('username', this.userService.getUsername())+
+      APPCONSTANTS.APICONSTANTS.INTER_INTER_RANGE.replace('username', getUsername())+
       '/'+isRec;
       
     let out;
     let myRange = new dateRange();
     myRange.start = start;
     myRange.end = end;
-    return this.requester.postRequestNoType<dateRange>(url, myRange)
+    this.requester
+      .postRequest<dateRange>(url, myRange)
+      .subscribe((returnData: unknown) => {
+        out = <Array<InterviewReturn>>(<unknown>returnData);
+        out.forEach((element) => {
+          //additonal filtering on output, find a way to spoof this separately
+          events.push(this.parseInterviewUser(element));
+        });
+        return returnData;
+      });
   }
 
   //New function calls using new URIs
@@ -190,11 +198,7 @@ export class InterviewRequesterService {
 
     if (form.startTime != '') {
       //set end time to be an hour after start time
-      let myTime = new Date();
-      let times1 = form.startTime.split(':');
-      myTime.setHours(parseInt(times1[0]),parseInt(times1[1]));
-      
-      startTimeString = this.dateFormatter.dateToStringTime(myTime);
+      startTimeString = this.dateFormatter.dateToStringTime(new Date(form.startTime));
       console.log('Start time good: ' + startTimeString);
 
       endTimeString = this.stringTimeAdd(startTimeString, 1);
@@ -210,7 +214,7 @@ export class InterviewRequesterService {
     }
 
     this.createInterview(
-      this.userService.getUsername(),
+      getUsername(),
       [form.interviewSelected.interviewerId],
       form.interviewSelected.date,
       startTimeString,
@@ -271,7 +275,7 @@ export class InterviewRequesterService {
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.INTER +
       '/organiser/' +
-      this.userService.getUsername();
+      getUsername();
     return this.requester.getRequest<Array<InterviewReturn>>(url);
   }
 
@@ -283,7 +287,7 @@ export class InterviewRequesterService {
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.INTER +
       '/' +
-      this.userService.getUsername();
+      getUsername();
     let out;
     this.requester.getRequest<InterviewReturn>(url).subscribe((returnData: unknown) => {
       out = <Array<InterviewReturn>>(<unknown>returnData);
@@ -303,7 +307,7 @@ export class InterviewRequesterService {
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.INTER +
       '/organiser/' +
-      this.userService.getUsername();
+      getUsername();
     let out;
     this.requester.getRequest<InterviewReturn>(url).subscribe((returnData: unknown) => {
       out = <Array<InterviewReturn>>(<unknown>returnData);

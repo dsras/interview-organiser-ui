@@ -18,7 +18,6 @@
   <button mdbBtn color="primary" (click)="getInterviewsByInter()">get inter ints</button>
   <button mdbBtn color="primary" (click)="getApplicants()">get appls</button>-->
   <button mdbBtn color="primary" (click)="testGetAll()">testGetAll</button>
-  <button mdbBtn color="primary" (click)="test()">test</button>
   <!-- <div class="container-fluid p-0 banner-img text-white"> -->
   <div class="row">
     <availability-form></availability-form>
@@ -28,56 +27,96 @@
 </div>
 
 <div class="container-fluid py-5 intro-section-color">
-  <h2 class="text-black font-weight-bold text-center">
-    Calendar
-  </h2>
+  <h2 class="text-black font-weight-bold text-center">Calendar</h2>
   <div class="col-1 mt-3 mx-auto orange-border"></div>
 </div>
-<br>
+<br />
 <div>
-  <div class="row" style="width:100%">
-    <div class=" col-sm">
+  <div class="row calendar-controls" style="width: 100%;">
+    <div class="col-sm" style="text-align: start;">
       <div class="btn-group pl-3">
-        <div class="btn btn-warning" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
-          (viewDateChange)="closeOpenMonthViewDay()">
-          <h6 class="text-center">Previous</h6>
-        </div>
-        <div class="btn btn-outline-warning" mwlCalendarToday [(viewDate)]="viewDate">
-          <h6 class="text-black text-center">Today</h6>
-        </div>
-        <div class="btn btn-warning" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
-          (viewDateChange)="closeOpenMonthViewDay()">
-          <h6 class="text-center">Next</h6>
-        </div>
+        <button
+          class="btn btn-warning padded-btn"
+          mwlCalendarPreviousView
+          [view]="view"
+          [(viewDate)]="viewDate"
+          (viewDateChange)="closeOpenMonthViewDay()"
+        >
+          <span>Previous</span>
+        </button>
+        <button
+          class="btn btn-outline-warning padded-btn"
+          mwlCalendarToday
+          [(viewDate)]="viewDate"
+        >
+          <span class="text-black">Today</span>
+        </button>
+        <button
+          class="btn btn-warning padded-btn"
+          mwlCalendarNextView
+          [view]="view"
+          [(viewDate)]="viewDate"
+          (viewDateChange)="closeOpenMonthViewDay()"
+        >
+          <span>Next</span>
+        </button>
       </div>
     </div>
-    <div class=" text-center col-sm">
-      <h3 class="text-black font-weight-bold text-center">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+    <div class="col-sm">
+      <h3 class="text-black font-weight-bold text-center">
+        {{ viewDate | calendarDate: view + "ViewTitle":"en" }}
+      </h3>
     </div>
-    <div class=" col-sm" style="position:relative; text-align: end;">
+    <div class="col-sm" style="text-align: end">
       <div class="btn-group">
-        <div class="btn btn-warning" (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month">
-          <h6 class="text-center">Month</h6>
-        </div>
-        <div class="btn btn-outline-warning" (click)="setView(CalendarView.Week)"
-          [class.active]="view === CalendarView.Week">
-          <h6 class="text-black text-center">Week</h6>
-        </div>
-        <div class="btn btn-warning" (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">
-          <h6 class="text-center">Day</h6>
-        </div>
+        <button
+          class="btn btn-warning padded-btn"
+          (click)="setView(CalendarView.Month)"
+          [class.active]="view === CalendarView.Month"
+        >
+          <span class="text-center">Month</span>
+        </button>
+        <button
+          class="btn btn-outline-warning padded-btn"
+          (click)="setView(CalendarView.Week)"
+          [class.active]="view === CalendarView.Week"
+        >
+          <span class="text-black text-center">Week</span>
+        </button>
+        <button
+          class="btn btn-warning padded-btn"
+          (click)="setView(CalendarView.Day)"
+          [class.active]="view === CalendarView.Day"
+        >
+          <span>Day</span>
+        </button>
       </div>
     </div>
   </div>
   <br />
   <div [ngSwitch]="view">
-    <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events"
-      [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)">
+    <mwl-calendar-month-view
+      *ngSwitchCase="CalendarView.Month"
+      [viewDate]="viewDate"
+      [events]="events"
+      [refresh]="refresh"
+      [activeDayIsOpen]="activeDayIsOpen"
+      (dayClicked)="dayClicked($event.day)"
+    >
     </mwl-calendar-month-view>
-    <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events"
-      [refresh]="refresh">
+    <mwl-calendar-week-view
+      *ngSwitchCase="CalendarView.Week"
+      [viewDate]="viewDate"
+      [events]="events"
+      [refresh]="refresh"
+    >
     </mwl-calendar-week-view>
-    <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events" [refresh]="refresh">
+    <mwl-calendar-day-view
+      *ngSwitchCase="CalendarView.Day"
+      [viewDate]="viewDate"
+      [events]="events"
+      [refresh]="refresh"
+    >
     </mwl-calendar-day-view>
   </div>
 </div>
@@ -215,10 +254,8 @@
 </ng-template> -->
 
 <ng-template #dayContent>
-  <view-availability 
-    [availability]="dayAvailability" 
-    [interviews]="dayInterviews" 
-    [userRoles]="userRoles"
-    [callbackFunction]="populateCalendar"
-    ></view-availability>
+  <view-availability
+    [availability]="dayAvailability"
+    [interviews]="dayInterviews"
+  ></view-availability>
 </ng-template>

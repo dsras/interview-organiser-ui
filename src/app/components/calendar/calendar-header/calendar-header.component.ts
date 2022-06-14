@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { CalendarMonthViewComponent, CalendarView } from 'angular-calendar';
+import { CalendarView } from 'angular-calendar';
 
 /** @ignore */
 @Component({
@@ -7,9 +7,9 @@ import { CalendarMonthViewComponent, CalendarView } from 'angular-calendar';
   templateUrl: './calendar-header.component.html',
 })
 export class CalendarHeaderComponent {
-  @Input() view: CalendarView = CalendarView.Month;
+  @Input() view!: CalendarView;
 
-  @Input() viewDate: Date = new Date();
+  @Input() viewDate!: Date;
 
   @Input() locale: string = 'en';
 

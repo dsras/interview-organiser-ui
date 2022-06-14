@@ -10,22 +10,9 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { Router } from '@angular/router';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
-import { MatDialogService } from 'src/app/services/mat-dialog.service';
+import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import { CalendarEventAvailability, CalendarEventInterview } from 'src/app/shared/models/calendar-event-detail';
 import { InterviewMetaData } from 'src/app/shared/models/event-meta-data';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { GetUserDataService } from 'src/app/services/get-user-data.service';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-const FakeUserDataService = {
-  getUsername(){
-    return 'thorfinn.manson@accolite.digital.com';
-  },
-  getUserRoleNames(){
-    return ['Recruiter', 'User'];
-  }
-}
-
 
 describe('CalendarComponent', () => {
   let component: CalendarComponent;
@@ -34,8 +21,7 @@ describe('CalendarComponent', () => {
   let router: Router;
   let aService: AvailabilityRequesterService;
   let iService: InterviewRequesterService;
-  let mService: MatDialogService;
-  let uService: GetUserDataService;
+  let mService: ModalControllerService;
   let iSpy: any;
   let aSpy: any;
 
@@ -51,8 +37,6 @@ describe('CalendarComponent', () => {
             {path: 'add', component: CalendarComponent, pathMatch: 'full'}
           ]
         ),
-        MatDialogModule,
-        BrowserAnimationsModule
         
       ],
       providers: [
@@ -62,15 +46,7 @@ describe('CalendarComponent', () => {
         Location,
         InterviewRequesterService,
         AvailabilityRequesterService,
-        {
-          provide: MatDialogRef,
-          useValue: {}
-        },
-        {
-          provide: GetUserDataService,
-          useValue: FakeUserDataService
-        },
-        MatDialogService,
+        ModalControllerService
       ],
       declarations: [ CalendarComponent ]
     })
@@ -81,8 +57,7 @@ describe('CalendarComponent', () => {
     fixture = TestBed.createComponent(CalendarComponent);
     aService = TestBed.inject(AvailabilityRequesterService);
     iService = TestBed.inject(InterviewRequesterService);
-    mService = TestBed.inject(MatDialogService);
-    uService = TestBed.inject(GetUserDataService);
+    mService = TestBed.inject(ModalControllerService);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -100,25 +75,13 @@ describe('CalendarComponent', () => {
   });
 
   it('populate should call service methods', () => { 
-    component.userRoles=['USER'];
     let spy = spyOn(component, 'resetEvents').and.callThrough()
-    aSpy = spyOn(aService, 'getMyAvailabilityInRange').and.callThrough();
-    iSpy = spyOn(iService, 'getInterviewsPerMonthByInterviewer').and.callThrough();
+    iSpy = spyOn(iService, 'getInterviewByInterviewer').and.callThrough();
+    aSpy = spyOn(aService, 'getMyAvailability').and.callThrough();
     component.populateCalendar();
+    expect(iSpy).toHaveBeenCalled();
+    expect(aSpy).toHaveBeenCalled();
     expect(spy).toHaveBeenCalled();
-    expect(aSpy).toHaveBeenCalled();
-    expect(iSpy).toHaveBeenCalled();
-
-    component.userRoles=['RECRUITER'];
-    aSpy = spyOn(aService, 'getRecruiterAvailability').and.callThrough();
-    component.populateCalendar();
-    expect(aSpy).toHaveBeenCalled();
-    expect(iSpy).toHaveBeenCalled();
-
-    component.userRoles=['ADMIN'];
-    let spy2 = spyOn(component, 'initAdmin').and.callThrough()
-    component.populateCalendar();
-    expect(spy2).toHaveBeenCalled();
   });
 
   it('delayed refresh should sleep and refresh', fakeAsync(() => {
@@ -134,7 +97,7 @@ describe('CalendarComponent', () => {
   it('open day modal should open the correct date', () => {
     aSpy = spyOn(component.dayAvailability, 'push').and.callThrough();
     let bSpy = spyOn(component.dayInterviews, 'push').and.callThrough();
-    let cSpy = spyOn(mService, 'openDialogLarge').and.callThrough();
+    let cSpy = spyOn(mService, 'openModalLg').and.callThrough();
     let myDate = new Date();
     let myEvent = <CalendarEvent> {
       start: myDate,

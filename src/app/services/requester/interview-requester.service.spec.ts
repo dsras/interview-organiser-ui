@@ -16,15 +16,6 @@ import { GetUserDataService } from '../get-user-data.service';
 import { InterviewRequesterService } from './interview-requester.service';
 import { Requester } from './requester.service';
 
-const FakeUserDataService = {
-  getUsername(){
-    return 'thorfinn.manson@accolite.digital.com';
-  },
-  getUserRoleNames(){
-    return ['Recruiter', 'User'];
-  }
-}
-
 const RequesterServiceStub = {
   getRequest<Type>(reqestURL: string): Observable<any> {
     return of([{
@@ -39,9 +30,6 @@ const RequesterServiceStub = {
       }]);
   },
   postRequest<Type>(reqestURL: string, obj: Type): Observable<any> {
-    return of('POST');
-  },
-  postRequestNoType<Type>(reqestURL: string, obj: any): Observable<any> {
     return of('POST');
   },
 }
@@ -61,7 +49,6 @@ describe('InterviewRequesterService', () => {
   let service: InterviewRequesterService;
   let spy: any;
   let rService: Requester;
-  let uService: GetUserDataService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -76,16 +63,11 @@ describe('InterviewRequesterService', () => {
         DatePipe,
         FormBuilder,  
         {provide: Requester, useValue: RequesterServiceStub},
-        {
-          provide: GetUserDataService,
-          useValue: FakeUserDataService
-        },
+            
       ],
     });
     service = TestBed.inject(InterviewRequesterService);
     rService = TestBed.inject(Requester);
-    uService = TestBed.inject(GetUserDataService);
-
   });
   
 
@@ -142,17 +124,26 @@ describe('InterviewRequesterService', () => {
     service.InterviewsFindHired(userName);
     expect(spy).toHaveBeenCalled();
   });
-
+  it('getInterviewByInterviewer gets called', () => {
+    let events: CalendarEvent[] = [];
+    let userName = "username";
+    spy = spyOn(rService, 'getRequest').and.returnValue(of([interRet]));
+    service.getInterviewByInterviewer(events, userName);
+    expect(spy).toHaveBeenCalled();
+  });
   
-  it('getInterviewsPerMonthByInterviewer gets called', () => {
-    spy = spyOn(rService, 'postRequestNoType').and.returnValue(of([interRet]));
-    service.getInterviewsPerMonthByInterviewer(true, "09:00", '17:00');
+  it('getInterviewByRecruiter gets called', () => {
+    let events: CalendarEvent[] = [];
+    let userName = "username";
+    spy = spyOn(rService, 'getRequest').and.returnValue(of([interRet]));
+    service.getInterviewByRecruiter(events, userName);
     expect(spy).toHaveBeenCalled();
   });
 
   it('getInterviewsAll calls requester methods', fakeAsync(() => {
     spy = spyOn(rService, 'getRequest').and.callThrough();
-    service.InterviewsFindAll();
+    let events: InterviewReturn[] = [];
+    service.getInterviewAll(events);
     expect(spy).toHaveBeenCalled();
   }));
 

@@ -15,15 +15,6 @@ import { GetUserDataService } from '../get-user-data.service';
 import { AvailabilityRequesterService } from './availability-requester.service';
 import { Requester } from './requester.service';
 
-const FakeUserDataService = {
-  getUsername(){
-    return 'thorfinn.manson@accolite.digital.com';
-  },
-  getUserRoleNames(){
-    return ['Recruiter', 'User'];
-  }
-}
-
 const AvailabilityInfoFake: Availability = {
   availabilityId: 0,
   date: new Date().toString(),
@@ -100,7 +91,6 @@ describe('AvailabilityRequesterService', () => {
   let service: AvailabilityRequesterService;
   let spy;
   let rService: Requester;
-  let uService: GetUserDataService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -115,17 +105,11 @@ describe('AvailabilityRequesterService', () => {
         DatePipe,
         FormBuilder,      
         {provide: Requester, useValue: RequesterServiceStub},
-        {
-          provide: GetUserDataService,
-          useValue: FakeUserDataService
-        },
         
       ],
     });
     service = TestBed.inject(AvailabilityRequesterService);
     rService = TestBed.inject(Requester);
-    uService = TestBed.inject(GetUserDataService);
-
   });
 
   it('delete Availability should call delete service method', () => {
@@ -160,26 +144,24 @@ describe('AvailabilityRequesterService', () => {
 
   it('parseAvailabilityEvent gets called', () => {
     let interviewerID: Availability= new Availability(0,"","","");
-    spy = spyOn(service, 'parseAvailabilityUser').and.callThrough();
-    service.parseAvailabilityUser(interviewerID);
-    expect(service.parseAvailabilityUser).toHaveBeenCalled();
+    spy = spyOn(service, 'parseAvailabilityEvent').and.callThrough();
+    service.parseAvailabilityEvent(interviewerID);
+    expect(service.parseAvailabilityEvent).toHaveBeenCalled();
   });
 
   it('addAvailability calls requester methods', () => {
-    let form: AvailabilityFormValue = {
-      firstDate: "1995-12-17T03:24:00",
-      lastDate:  "1995-12-19T03:24:00",
-      startTime:  "1995-12-17T09:24:00",
-      endTime:  "1995-12-19T12:24:00",
-    }
+    let first: string = "1995-12-17T03:24:00";
+    let last: string = "1995-12-19T03:24:00";
+    let start: string = "1995-12-17T09:24:00";
+    let end: string = "1995-12-19T12:24:00";
     spy = spyOn(rService, 'postRequest').and.callThrough();
-    service.addAvailabilityForm(form);
+    service.addAvailability('name',first, last, start, end);
     expect(spy).toHaveBeenCalled();
   });
 
 
   it('parseAvailabilityEvent formats correctly', () => {
-    let retObj = service.parseAvailabilityUser(AvailabilityInfoFake);
+    let retObj = service.parseAvailabilityEvent(AvailabilityInfoFake);
     expect(retObj.id === AvailabilityInfoFake.availabilityId).toBeTruthy();
 
     const start = new Date(AvailabilityInfoFake.date);
@@ -191,9 +173,9 @@ describe('AvailabilityRequesterService', () => {
 
   it('getMyAvailability calls requester methods', fakeAsync(() => {
     let events: CalendarEvent[] = [];
-    let dates: string[]=['2022-06-01','2022-06-02','2022-06-03',];
-    spy = spyOn(rService, 'postRequest').and.callThrough();
-    service.addAvailabilityOverRange('09:00', '17:00', dates);
+    let userName: string = "";
+    spy = spyOn(rService, 'getRequest').and.callThrough();
+    service.getMyAvailability(events, userName);
     tick(3);
     expect(spy).toHaveBeenCalled();
   }));
@@ -226,19 +208,7 @@ describe('AvailabilityRequesterService', () => {
     
   it('getAvailabilityByRange calls requester methods', fakeAsync(() => {
     spy = spyOn(rService, 'postRequestNoType').and.callThrough();
-    let form: FindSlotFormValue = {
-      startTime: '13:00',
-      endTime: '17:00',
-      firstDate: '2022-05-20',
-      lastDate: "2022-05-25",
-      skills: { 
-        skillType: 'Java', 
-        skillLevel: 'Senior' 
-      }
-    }
-    let events: AvailabilityForInterviews[] = [];
-
-    service.getInterviewSlots(form, [3], events);
+    service.getInterviewSlots(new Date().toString(), new Date().toString(), new Date().toString(), new Date().toString(),[1],[]);
     tick(3);
     expect(spy).toHaveBeenCalled();
   }));

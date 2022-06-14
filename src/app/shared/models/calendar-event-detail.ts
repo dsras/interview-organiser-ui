@@ -62,7 +62,7 @@ export class CalendarEventAvailability implements CalendarEvent {
   start: Date;
   end?: Date | undefined;
   title: string;
-  interviewer?:string;
+  interviewPanel?: Array<string>;
   color?: EventColor | undefined;
   actions?: EventAction[] | undefined;
   allDay?: boolean | undefined;

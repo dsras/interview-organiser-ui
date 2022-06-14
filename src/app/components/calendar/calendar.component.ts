@@ -4,7 +4,6 @@ import {
   ChangeDetectionStrategy,
   ViewChild,
   TemplateRef,
-  ElementRef,
 } from '@angular/core';
 import { isSameDay, isSameMonth } from 'date-fns';
 import { Subject } from 'rxjs';
@@ -16,13 +15,16 @@ import {
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
+import {
+  getUsername,
+  getUserRoleNames,
+} from 'src/app/shared/functions/get-user-from-local.function';
 import { DateToStringService } from '../../services/date-to-string.service';
-import { GetUserDataService } from 'src/app/services/get-user-data.service';
 
 /**
  * The main component of the calendar, an implementation of angular-calendar
+ * 
  * {@link https://mattlewis92.github.io/angular-calendar/docs/ | angular-calendar}.
- *
  *
  */
 @Component({
@@ -37,7 +39,6 @@ export class CalendarComponent implements OnInit {
    * when the day is clicked on the calendar
    */
   @ViewChild('dayContent', { static: true }) dayContent!: TemplateRef<any>;
-  //@ViewChild('closeBtn') closeBtn!: ElementRef;
 
   currentUser: string = '';
   userRoles: Array<string> = [];
@@ -68,19 +69,16 @@ export class CalendarComponent implements OnInit {
     private _dialog: MatDialogService,
     private iRequester: InterviewRequesterService,
     private aRequester: AvailabilityRequesterService,
-    private dateString: DateToStringService,
-    private userService: GetUserDataService
-  ) {
-    this.populateCalendar = this.populateCalendar.bind(this);
-  }
+    private dateString: DateToStringService
+  ) {}
 
   /** @ignore */
   ngOnInit(): void {
-    this.currentUser = this.userService.getUsername();
-    this.userRoles = this.userService.getUserRoleNames();
+    this.currentUser = getUsername();
+    this.userRoles = getUserRoleNames();
     // put in populate
 
-    //this.delayedRefresh();
+    this.delayedRefresh();
 
     //setup dates
     this.setDates();
@@ -101,120 +99,85 @@ export class CalendarComponent implements OnInit {
     this.interviews = [];
   }
 
-  // closeCurrentModal(){
-  //   this.closeModal();
-  // }
-  // private closeModal(): void {
-  //   this.closeBtn.nativeElement.click();
-  // }
   //* in test
   /** @ignore needed for implementation? */
   async delayedRefresh(): Promise<void> {
-    console.log('sleep called');
     await this.sleep(3000)
       .then(() => this.refresh.next())
       .catch();
   }
 
-  fastRefresh(){
-    console.log('fastRefresh called');
-    this.refresh.next();
-  }
-
   //* in test
   // todo streamline by removing availability and interviews and using filtering of events
   /** Populate the calendar with a users events and availability. */
-
-  /**
-   *  Populate the calendar with an interviewers events and availability.
-   *
-   * todo stremline by removing availability and interviews and using filtering of events
-   */
   populateCalendar(): void {
     this.resetEvents();
 
     // TODO make switch cases
     if (this.userRoles.includes('USER')) {
-      console.log('is user');
       this.initUser();
     }
     if (this.userRoles.includes('RECRUITER')) {
-      console.log('is recruiter');
       this.initRecruiter();
     }
     if (this.userRoles.includes('ADMIN')) {
-      console.log('is admin');
       this.initAdmin();
     }
-    //this.delayedRefresh();
+    this.delayedRefresh();
   }
 
+  populateAvail() {
+    this.resetEvents();
+    this.aRequester.getMyAvailabilityInRange(
+      this.events,
+      getUsername(),
+      this.dateString.dateToStringDate(this.startDate),
+      this.dateString.dateToStringDate(this.endDate)
+    );
+    this.aRequester.getMyAvailabilityInRange(
+      this.availability,
+      getUsername(),
+      this.dateString.dateToStringDate(this.startDate),
+      this.dateString.dateToStringDate(this.endDate)
+    );
+    this.delayedRefresh();
+  }
   initUser(): void {
-    // this.aRequester.getUserAvailability(this.events, this.availability);
-    // this.iRequester.getUserInterviews(this.events, this.interviews);
     this.aRequester.getMyAvailabilityInRange(
-      this.userService.getUsername(),
+      this.events,
+      getUsername(),
       this.dateString.dateToStringDate(this.startDate),
       this.dateString.dateToStringDate(this.endDate)
-    ).subscribe(ret => {
-      ret.forEach(ele=>{
-        this.events.push(this.aRequester.parseAvailabilityUser(ele));
-      })
-      this.fastRefresh()
-    });
+    );
     this.aRequester.getMyAvailabilityInRange(
-      this.userService.getUsername(),
+      this.availability,
+      getUsername(),
       this.dateString.dateToStringDate(this.startDate),
       this.dateString.dateToStringDate(this.endDate)
-    ).subscribe(ret => {
-      ret.forEach(ele => {
-        this.events.push(this.aRequester.parseAvailabilityUser(ele));
-      })
-      this.fastRefresh()
-    });
+    );
 
     this.iRequester.getInterviewsPerMonthByInterviewer(
+      this.events,
       false,
       this.dateString.dateToStringDate(this.startDate),
       this.dateString.dateToStringDate(this.endDate)
-    ).subscribe(ret => {
-      ret.forEach(ele => {
-        this.events.push(this.iRequester.parseInterviewUser(ele));
-      })
-      this.fastRefresh()
-    });
+    );
     this.iRequester.getInterviewsPerMonthByInterviewer(
+      this.interviews,
       false,
       this.dateString.dateToStringDate(this.startDate),
       this.dateString.dateToStringDate(this.endDate)
-    ).subscribe(ret => {
-      ret.forEach(ele => {
-        this.interviews.push(this.iRequester.parseInterviewUser(ele));
-      })
-      this.fastRefresh()
-    });
+    );
   }
 
   initRecruiter(): void {
-    this.aRequester.getRecruiterAvailability()
-    .subscribe(ret => {
-      ret.forEach(ele =>{
-        this.events.push(this.aRequester.parseAvailabilityRecruiter(ele))
-        this.availability.push(this.aRequester.parseAvailabilityRecruiter(ele))
-      })
-      this.fastRefresh();
-    });
+    this.aRequester.getRecruiterAvailability(this.events, this.availability);
     this.iRequester.getInterviewsPerMonthByInterviewer(
-      false,
+      this.events,
+      true,
       this.dateString.dateToStringDate(this.startDate),
       this.dateString.dateToStringDate(this.endDate)
-    ).subscribe(ret => {
-      ret.forEach(ele => {
-        this.events.push(this.iRequester.parseInterviewUser(ele));
-      })
-      this.fastRefresh()
-    });
-    //this.iRequester.getRecruiterInterviews(this.events, this.interviews);
+    );
   }
 
   initAdmin(): void {}
@@ -252,8 +215,6 @@ export class CalendarComponent implements OnInit {
         this.dayInterviews.push(element);
       }
     }
-
-    // this.ms.openModalLg(this.dayContent);
     this._dialog.openDialogLarge(this.dayContent);
   }
   /** @ignore */
@@ -282,13 +243,6 @@ export class CalendarComponent implements OnInit {
     this.setDates();
     this.populateCalendar();
     this.activeDayIsOpen = false;
-  }
-
-  //* obviously just a test function
-  test() {
-    let events: Array<CalendarEvent> = [];
-    this.aRequester.addAvailabilityOverRange('09:00', '11:00', 
-    ['2022-07-01', '2022-07-02', '2022-07-03', '2022-07-04', '2022-07-05', '2022-07-06']);
   }
 
   testGetAll() {

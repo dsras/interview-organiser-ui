@@ -29,10 +29,12 @@ class MockTemplateRef extends TemplateRef<any>{
 
 const dummyAvailForm = {
   value: {
-    firstDate: '2022-06-01',
-    lastDate:  '2022-06-07',
-    startTime: '09:00',
-    endTime: '17:00'
+    dateRange: [
+      new Date(),
+      new Date()
+    ],
+    startTime: new Date(),
+    endTime: new Date()
   },
   reset(){}
 }
@@ -85,7 +87,7 @@ describe('AvailabilityFormComponent', () => {
 
   
   it('Submit should call service methods', () => {
-    let aSpy = spyOn(aService, 'addAvailabilityForm').and.returnValue();
+    let aSpy = spyOn(aService, 'addAvailability').and.callThrough();
     let formG = dummyAvailForm;
     component.onSubmit(<FormGroup>formG);
     expect(aSpy).toHaveBeenCalled();

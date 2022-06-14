@@ -81,9 +81,7 @@ export class CreateInterviewComponent implements OnInit {
    */
   findInterview(form: FormGroup): void {
     let idArr: Array<number> = [];
-    console.log(form.value.skills.skillName);
-    console.log(form.value.skills.skillLevel);
-    
+
     let skillReq = {
       skillName: form.value.skills.skillName,
       skillLevel: form.value.skills.skillLevel,
@@ -116,7 +114,7 @@ export class CreateInterviewComponent implements OnInit {
    */
   submitInterview(form: FormGroup): void {
     this.iRequester.addInterviewForm(form.value);
-    console.table(form.value)
+    console.table(form.value);
     form.reset();
   }
 
