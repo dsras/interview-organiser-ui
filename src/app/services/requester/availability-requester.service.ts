@@ -36,7 +36,7 @@ export class AvailabilityRequesterService {
   ) {}
 
   //! NEW CALL
-  deleteAvailability(id: string | number | any) {
+  deleteAvailability(id: string | number | any): void {
     const url: string =
       APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_DEL;
     this.requester
@@ -92,16 +92,19 @@ export class AvailabilityRequesterService {
       '/' +
       getUsername();
 
-    let out: AvailabilityRange;
-
     this.requester
       .postRequest<AvailabilityRange>(url, newAvail)
-      .subscribe((returnData) => {
-        out = <AvailabilityRange>(<unknown>returnData);
-      });
+      .subscribe((returnData) => {});
   }
 
-  addAvailabilityArray(form: AvailabilityArrayFormValue) {
+  /**
+   * Submit new availability slot(s) to database
+   * Slots are created on each day in the array then duplicated for the number of
+   * weeks, with each slot having the same start and end time for each day.
+   *
+   * @param {AvailabilityArrayFormValue} form availability form submitted
+   */
+  addAvailabilityArray(form: AvailabilityArrayFormValue): void {
     const url: string =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.AVAIL_REC_RANGE +
@@ -322,14 +325,11 @@ export class AvailabilityRequesterService {
 
     const newStartDate: Date = new Date(form.firstDate);
     const newEndDate: Date = new Date(form.lastDate);
-    const newStartTime: Date = new Date();
-    const newEndTime: Date = new Date();
-    let times1 = form.startTime.split(':');
-    let times2 = form.endTime.split(':');
+    const newStartTime: Date = new Date(form.startTime);
+    const newEndTime: Date = new Date(form.endTime);
 
-
-    newStartTime.setHours(parseInt(times1[0]),parseInt(times1[1]));
-    newEndTime.setHours(parseInt(times2[0]),parseInt(times2[1]));
+    newStartTime.setDate(newStartDate.getDate());
+    newEndTime.setDate(newStartDate.getDate());
 
     const startDateString: string = this.dateToStringDate(newStartDate);
     const endDateString: string = this.dateToStringDate(newEndDate);
