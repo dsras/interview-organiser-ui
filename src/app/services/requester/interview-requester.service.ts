@@ -38,9 +38,7 @@ export class InterviewRequesterService {
       '/'+isRec;
       
     let out;
-    let myRange = new dateRange();
-    myRange.start = start;
-    myRange.end = end;
+    let myRange = new dateRange(start,end);
     return this.requester.postRequestNoType<dateRange>(url, myRange)
   }
 

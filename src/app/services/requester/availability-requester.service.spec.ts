@@ -8,7 +8,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { Observable, of } from 'rxjs';
 import { CalendarEventInterview } from 'src/app/shared/models/calendar-event-detail';
-import { AvailabilityFormValue, FindSlotFormValue } from 'src/app/shared/models/forms';
+import { AvailabilityArrayFormValue, FindSlotFormValue } from 'src/app/shared/models/forms';
 import { Availability, AvailabilityForInterviews, InterviewReturn } from '../../shared/models/types';
 import { GetUserDataService } from '../get-user-data.service';
 
@@ -47,10 +47,10 @@ const FakeAvailabilityReturn: Availability[] = [
 ]
 
 class FakeSlotForm{
-  startTime: string = '19:00';
-  endTime: string ='20:00';
-  firstDate: string = '2022-06-01';
-  lastDate: string = '2022-06-07';
+  startTime: string = '2022-06-01T09:00:00.000Z';
+  endTime: string = '2022-06-01T13:00:00.000Z';
+  firstDate: string = '2022-06-01T09:00:00.000Z';
+  lastDate: string = '2022-06-07T09:00:00.000Z';
   skills = { 
     skillType: 'Java',
     skillLevel: 'Junior',
@@ -150,12 +150,12 @@ describe('AvailabilityRequesterService', () => {
     expect(service).toBeTruthy();
   });
   it('date should be formatted to YYYY-MM-DD', () => {
-    let tempDate = new Date('1995-12-17T03:24:00');
-    expect(service.dateToStringDate(tempDate) === "1995-12-17").toBeTruthy();
+    let tempDate = new Date('2022-06-01T09:00:00.000Z');
+    expect(service.dateToStringDate(tempDate) === "2022-06-01").toBeTruthy();
   });
   it('time should be formatted to HH:MM', () => {
-    let tempDate = new Date('1995-12-17T03:24:00');
-    expect(service.dateToStringTime(tempDate) === "03:24").toBeTruthy();
+    let tempDate = new Date('2022-06-01T09:00:00.000Z');
+    expect(service.dateToStringTime(tempDate) === "09:00").toBeTruthy();
   });
 
   it('parseAvailabilityEvent gets called', () => {
@@ -166,14 +166,17 @@ describe('AvailabilityRequesterService', () => {
   });
 
   it('addAvailability calls requester methods', () => {
-    let form: AvailabilityFormValue = {
-      firstDate: "1995-12-17T03:24:00",
-      lastDate:  "1995-12-19T03:24:00",
-      startTime:  "1995-12-17T09:24:00",
-      endTime:  "1995-12-19T12:24:00",
+    let form: AvailabilityArrayFormValue = {
+      startTime:  "2022-06-01T09:00:00.000Z",
+      endTime:  "2022-06-01T13:00:00.000Z",
+      weeks: 1,
+      days:[
+        {weekday: 'Monday'},
+        {weekday: 'Tuesday'},
+      ]
     }
     spy = spyOn(rService, 'postRequest').and.callThrough();
-    service.addAvailabilityForm(form);
+    service.addAvailabilityArray(form);
     expect(spy).toHaveBeenCalled();
   });
 
@@ -191,9 +194,9 @@ describe('AvailabilityRequesterService', () => {
 
   it('getMyAvailability calls requester methods', fakeAsync(() => {
     let events: CalendarEvent[] = [];
-    let dates: string[]=['2022-06-01','2022-06-02','2022-06-03',];
+    let dates: string[]=['2022-06-01T09:00:00.000Z','2022-06-04T09:00:00.000Z','2022-06-07T09:00:00.000Z',];
     spy = spyOn(rService, 'postRequest').and.callThrough();
-    service.addAvailabilityOverRange('09:00', '17:00', dates);
+    service.addAvailabilityRange(new FakeSlotForm());
     tick(3);
     expect(spy).toHaveBeenCalled();
   }));
@@ -207,38 +210,11 @@ describe('AvailabilityRequesterService', () => {
     expect(events.length != 0).toBeTruthy();
   }));
   
-  it('getAllAvailabilityUI calls the requester methods', fakeAsync(() => {
-    let events: string[] = [];
-    spy = spyOn(rService, 'getRequest').and.callThrough();
-    service.getAllAvailabilityUI(events);
-    tick(3);
-    expect(spy).toHaveBeenCalled();
-    expect(events.length != 0).toBeTruthy();
-  }));
-  
-  it('getAvailabilityOnSkill calls requester methods', fakeAsync(() => {
-    let numbers: number[] = [];
-    spy = spyOn(rService, 'getRequest').and.callThrough();
-    service.getAvailabilityOnSkill(numbers);
-    tick(3);
-    expect(spy).toHaveBeenCalled();
-  }));
+
     
   it('getAvailabilityByRange calls requester methods', fakeAsync(() => {
     spy = spyOn(rService, 'postRequestNoType').and.callThrough();
-    let form: FindSlotFormValue = {
-      startTime: '13:00',
-      endTime: '17:00',
-      firstDate: '2022-05-20',
-      lastDate: "2022-05-25",
-      skills: { 
-        skillType: 'Java', 
-        skillLevel: 'Senior' 
-      }
-    }
-    let events: AvailabilityForInterviews[] = [];
-
-    service.getInterviewSlots(form, [3], events);
+    service.getSlots(new FakeSlotForm, [1,2,3]);
     tick(3);
     expect(spy).toHaveBeenCalled();
   }));

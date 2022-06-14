@@ -85,7 +85,7 @@ describe('AvailabilityFormComponent', () => {
 
   
   it('Submit should call service methods', () => {
-    let aSpy = spyOn(aService, 'addAvailabilityForm').and.returnValue();
+    let aSpy = spyOn(aService, 'addAvailabilityArray').and.returnValue();
     let formG = dummyAvailForm;
     component.onSubmit(<FormGroup>formG);
     expect(aSpy).toHaveBeenCalled();
@@ -93,7 +93,7 @@ describe('AvailabilityFormComponent', () => {
 
     
   it('openModal should call open template', () => {
-    let Spy = spyOn(dService, 'openDialog').and.returnValue();
+    let Spy = spyOn(dService, 'openDialogTall').and.returnValue();
     component.openDialog(new MockTemplateRef());
     expect(Spy).toHaveBeenCalled();
   });  
