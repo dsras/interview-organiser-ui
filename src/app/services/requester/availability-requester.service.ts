@@ -34,7 +34,6 @@ export class AvailabilityRequesterService {
     private requester: Requester,
     private dateFormatter: DateToStringService,
     private userService: GetUserDataService
-
   ) {}
 
   //! NEW CALL
@@ -61,7 +60,6 @@ export class AvailabilityRequesterService {
     myRange.end = end;
 
     return this.requester.postRequestNoType<dateRange>(url, myRange);
-    
   }
 
   /**
@@ -251,8 +249,8 @@ export class AvailabilityRequesterService {
     let times1 = form.startTime.split(':');
     let times2 = form.endTime.split(':');
 
-    newStartTime.setHours(parseInt(times1[0]),parseInt(times1[1]));
-    newEndTime.setHours(parseInt(times2[0]),parseInt(times2[1]));
+    newStartTime.setHours(parseInt(times1[0]), parseInt(times1[1]));
+    newEndTime.setHours(parseInt(times2[0]), parseInt(times2[1]));
 
     const startDateString: string = this.dateToStringDate(newStartDate);
     const endDateString: string = this.dateToStringDate(newEndDate);
@@ -300,32 +298,16 @@ export class AvailabilityRequesterService {
       });
   }
 
-  getSlots(form: FindSlotFormValue, skills: number[]): Observable<any> {
+  getSlots(form: FindSlotFormValue, skills: number[]):Observable<any> {
     const url: string =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.INTER_INTER;
 
-    const newStartDate: Date = new Date(form.firstDate);
-    const newEndDate: Date = new Date(form.lastDate);
-    const newStartTime: Date = new Date();
-    const newEndTime: Date = new Date();
-    let times1 = form.startTime.split(':');
-    let times2 = form.endTime.split(':');
-
-
-    newStartTime.setHours(parseInt(times1[0]),parseInt(times1[1]));
-    newEndTime.setHours(parseInt(times2[0]),parseInt(times2[1]));
-
-    const startDateString: string = this.dateToStringDate(newStartDate);
-    const endDateString: string = this.dateToStringDate(newEndDate);
-    const startString: string = this.dateToStringTime(newStartTime);
-    const endString: string = this.dateToStringTime(newEndTime);
-
     const newRange: InterviewRange = new InterviewRange(
-      startDateString,
-      endDateString,
-      startString,
-      endString,
+      this.dateToStringDate(new Date(form.firstDate)),
+      this.dateToStringDate(new Date(form.lastDate)),
+      this.dateToStringTime(new Date(form.startTime)),
+      this.dateToStringTime(new Date(form.endTime)),
       skills
     );
     return this.requester.postRequestNoType<AvailabilityForInterviews>(
@@ -378,9 +360,7 @@ export class AvailabilityRequesterService {
    * @param availability the object to be converted to a calendar event
    * @returns a calendar event to be displayed in the calendar
    */
-  parseAvailabilityUser(
-    availability: Availability
-  ): CalendarEventAvailability {
+  parseAvailabilityUser(availability: Availability): CalendarEventAvailability {
     const start = new Date(availability.date);
     const end = new Date(availability.date);
     const times1 = availability.startTime.split(':');

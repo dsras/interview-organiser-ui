@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { SocialAuthService } from 'angularx-social-login';
 import { APPCONSTANTS } from 'src/app/shared/constants/app.constant';
 import { SSOUser } from 'src/app/shared/models/user-model';
@@ -38,7 +38,7 @@ export class ToolbarComponent implements OnInit {
     }
     localStorage.clear();
     this.user = null;
-    // this.router.navigate(['login']);
+    this.router.navigate(['login']);
   }
 
   private setRoute(currentRoute: NavigationEnd): void {
