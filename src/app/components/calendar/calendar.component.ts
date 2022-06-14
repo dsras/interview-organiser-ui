@@ -21,8 +21,8 @@ import { GetUserDataService } from 'src/app/services/get-user-data.service';
 
 /**
  * The main component of the calendar, an implementation of angular-calendar
+ * 
  * {@link https://mattlewis92.github.io/angular-calendar/docs/ | angular-calendar}.
- *
  *
  */
 @Component({
@@ -124,34 +124,23 @@ export class CalendarComponent implements OnInit {
   //* in test
   // todo streamline by removing availability and interviews and using filtering of events
   /** Populate the calendar with a users events and availability. */
-
-  /**
-   *  Populate the calendar with an interviewers events and availability.
-   *
-   * todo stremline by removing availability and interviews and using filtering of events
-   */
   populateCalendar(): void {
     this.resetEvents();
 
     // TODO make switch cases
     if (this.userRoles.includes('USER')) {
-      console.log('is user');
       this.initUser();
     }
     if (this.userRoles.includes('RECRUITER')) {
-      console.log('is recruiter');
       this.initRecruiter();
     }
     if (this.userRoles.includes('ADMIN')) {
-      console.log('is admin');
       this.initAdmin();
     }
     //this.delayedRefresh();
   }
 
   initUser(): void {
-    // this.aRequester.getUserAvailability(this.events, this.availability);
-    // this.iRequester.getUserInterviews(this.events, this.interviews);
     this.aRequester.getMyAvailabilityInRange(
       this.userService.getUsername(),
       this.dateString.dateToStringDate(this.startDate),
@@ -252,8 +241,6 @@ export class CalendarComponent implements OnInit {
         this.dayInterviews.push(element);
       }
     }
-
-    // this.ms.openModalLg(this.dayContent);
     this._dialog.openDialogLarge(this.dayContent);
   }
   /** @ignore */
@@ -282,13 +269,6 @@ export class CalendarComponent implements OnInit {
     this.setDates();
     this.populateCalendar();
     this.activeDayIsOpen = false;
-  }
-
-  //* obviously just a test function
-  test() {
-    let events: Array<CalendarEvent> = [];
-    this.aRequester.addAvailabilityOverRange('09:00', '11:00', 
-    ['2022-07-01', '2022-07-02', '2022-07-03', '2022-07-04', '2022-07-05', '2022-07-06']);
   }
 
   testGetAll() {

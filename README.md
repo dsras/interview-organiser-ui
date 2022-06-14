@@ -10,7 +10,7 @@ The application can be run from the base directory in a terminal by executing th
 
 2. `ng serve`
 
-** Requires NVM install, follow steps below on linux
+*Requires NVM install, follow steps below on linux*
 
 1. `sudo apt install curl`
 
@@ -21,6 +21,14 @@ The application can be run from the base directory in a terminal by executing th
 4. `nvm install --lts`
 
 From this point follow the application shoulda be available to run by following the first set of instructions
+
+## Source Map errors on compile
+
+In the case of an error when trying to serve the application again clear the .angular directory using
+
+- Unix `rm -rf .angular`
+
+- Powershell `rm -r \.angular`
 
 ## Documentation Generation
 
