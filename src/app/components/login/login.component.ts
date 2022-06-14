@@ -8,11 +8,13 @@ import {
 } from 'angularx-social-login';
 import { LoginService } from 'src/app/services/login/login.service';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
-import { getUsername, getUserRoleNames } from 'src/app/shared/functions/get-user-from-local.function';
+import {
+  getUsername,
+  getUserRoleNames,
+} from 'src/app/shared/functions/get-user-from-local.function';
 import { LoggedInObject, LoginUser } from 'src/app/shared/models/user-model';
 
 // [APP_LEVEL Imports]
-import { BackendService } from '../../services/backend.service';
 import { DataSourceService } from '../../services/data-source.service';
 import { APPCONSTANTS } from '../../shared/constants/app.constant';
 
@@ -80,8 +82,8 @@ export class LoginComponent implements OnInit {
         this._rs.getUserData(getUsername()).subscribe((returnData: any) => {
           user = returnData;
           localStorage.setItem('userData', JSON.stringify(user));
-          if (getUserRoleNames().includes('RECRUITER')){
-            this._router.navigate(['/dashboard'])
+          if (getUserRoleNames().includes('RECRUITER')) {
+            this._router.navigate(['/dashboard']);
           } else {
             this._router.navigate(['/calendar']);
           }
