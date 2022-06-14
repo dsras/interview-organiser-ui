@@ -24,24 +24,25 @@ export class InterviewRequesterService {
     private requester: Requester,
     private dateFormatter: DateToStringService,
     private userService: GetUserDataService
-
   ) {}
 
   getInterviewsPerMonthByInterviewer(
     isRec: boolean,
     start: string,
     end: string
-  ) : Observable<Array<InterviewReturn>> {
+  ): Observable<Array<InterviewReturn>> {
     let url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
-      APPCONSTANTS.APICONSTANTS.INTER_INTER_RANGE.replace('username', this.userService.getUsername())+
-      '/'+isRec;
-      
-    let out;
-    let myRange = new dateRange();
-    myRange.start = start;
-    myRange.end = end;
-    return this.requester.postRequestNoType<dateRange>(url, myRange)
+      APPCONSTANTS.APICONSTANTS.INTER_INTER_RANGE.replace(
+        'username',
+        this.userService.getUsername()
+      ) +
+      '/' +
+      isRec;
+
+    let myRange = new dateRange(start, end);
+
+    return this.requester.postRequestNoType<dateRange>(url, myRange);
   }
 
   //New function calls using new URIs
@@ -50,13 +51,15 @@ export class InterviewRequesterService {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.INTER;
     let out;
-    this.requester.getRequest<InterviewReturn>(url).subscribe((returnData: unknown) => {
-      out = <Array<InterviewReturn>>(<unknown>returnData);
-      out.forEach((element) => {
-        //additonal filtering on output, find a way to spoof this separately
+    this.requester
+      .getRequest<InterviewReturn>(url)
+      .subscribe((returnData: unknown) => {
+        out = <Array<InterviewReturn>>(<unknown>returnData);
+        out.forEach((element) => {
+          //additonal filtering on output, find a way to spoof this separately
+        });
+        return returnData;
       });
-      return returnData;
-    });
   }
 
   //! not used
@@ -65,13 +68,13 @@ export class InterviewRequesterService {
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.INTER_COMP.replace('username', userName);
     let out;
-    this.requester.getRequest<InterviewReturn>(url).subscribe((returnData: unknown) => {
-      out = <Array<InterviewReturn>>(<unknown>returnData);
-      out.forEach((element) => {
-        //additonal filtering on output, find a way to spoof this separately
+    this.requester
+      .getRequest<InterviewReturn>(url)
+      .subscribe((returnData: unknown) => {
+        out = <Array<InterviewReturn>>(<unknown>returnData);
+        out.forEach((element) => {});
+        return returnData;
       });
-      return returnData;
-    });
   }
 
   //! not used
@@ -80,13 +83,15 @@ export class InterviewRequesterService {
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.INTER_CONF.replace('username', userName);
     let out;
-    this.requester.getRequest<InterviewReturn>(url).subscribe((returnData: unknown) => {
-      out = <Array<InterviewReturn>>(<unknown>returnData);
-      out.forEach((element) => {
-        //additonal filtering on output, find a way to spoof this separately
+    this.requester
+      .getRequest<InterviewReturn>(url)
+      .subscribe((returnData: unknown) => {
+        out = <Array<InterviewReturn>>(<unknown>returnData);
+        out.forEach((element) => {
+          //additonal filtering on output, find a way to spoof this separately
+        });
+        return returnData;
       });
-      return returnData;
-    });
   }
 
   //! not used
@@ -95,13 +100,15 @@ export class InterviewRequesterService {
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.INTER_PNS.replace('username', userName);
     let out;
-    this.requester.getRequest<InterviewReturn>(url).subscribe((returnData: unknown) => {
-      out = <Array<InterviewReturn>>(<unknown>returnData);
-      out.forEach((element) => {
-        //additonal filtering on output, find a way to spoof this separately
+    this.requester
+      .getRequest<InterviewReturn>(url)
+      .subscribe((returnData: unknown) => {
+        out = <Array<InterviewReturn>>(<unknown>returnData);
+        out.forEach((element) => {
+          //additonal filtering on output, find a way to spoof this separately
+        });
+        return returnData;
       });
-      return returnData;
-    });
   }
 
   //! not used
@@ -110,13 +117,15 @@ export class InterviewRequesterService {
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.INTER_CNS.replace('username', userName);
     let out;
-    this.requester.getRequest<InterviewReturn>(url).subscribe((returnData: unknown) => {
-      out = <Array<InterviewReturn>>(<unknown>returnData);
-      out.forEach((element) => {
-        //additonal filtering on output, find a way to spoof this separately
+    this.requester
+      .getRequest<InterviewReturn>(url)
+      .subscribe((returnData: unknown) => {
+        out = <Array<InterviewReturn>>(<unknown>returnData);
+        out.forEach((element) => {
+          //additonal filtering on output, find a way to spoof this separately
+        });
+        return returnData;
       });
-      return returnData;
-    });
   }
 
   //! not used
@@ -125,13 +134,15 @@ export class InterviewRequesterService {
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.INTER_PROG.replace('username', userName);
     let out;
-    this.requester.getRequest<InterviewReturn>(url).subscribe((returnData: unknown) => {
-      out = <Array<InterviewReturn>>(<unknown>returnData);
-      out.forEach((element) => {
-        //additonal filtering on output, find a way to spoof this separately
+    this.requester
+      .getRequest<InterviewReturn>(url)
+      .subscribe((returnData: unknown) => {
+        out = <Array<InterviewReturn>>(<unknown>returnData);
+        out.forEach((element) => {
+          //additonal filtering on output, find a way to spoof this separately
+        });
+        return returnData;
       });
-      return returnData;
-    });
   }
 
   //! not used
@@ -140,13 +151,15 @@ export class InterviewRequesterService {
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.INTER_NOPROG.replace('username', userName);
     let out;
-    this.requester.getRequest<InterviewReturn>(url).subscribe((returnData: unknown) => {
-      out = <Array<InterviewReturn>>(<unknown>returnData);
-      out.forEach((element) => {
-        //additonal filtering on output, find a way to spoof this separately
+    this.requester
+      .getRequest<InterviewReturn>(url)
+      .subscribe((returnData: unknown) => {
+        out = <Array<InterviewReturn>>(<unknown>returnData);
+        out.forEach((element) => {
+          //additonal filtering on output, find a way to spoof this separately
+        });
+        return returnData;
       });
-      return returnData;
-    });
   }
 
   //! not used
@@ -155,13 +168,15 @@ export class InterviewRequesterService {
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.INTER_HIRE.replace('username', userName);
     let out;
-    this.requester.getRequest<InterviewReturn>(url).subscribe((returnData: unknown) => {
-      out = <Array<InterviewReturn>>(<unknown>returnData);
-      out.forEach((element) => {
-        //additonal filtering on output, find a way to spoof this separately
+    this.requester
+      .getRequest<InterviewReturn>(url)
+      .subscribe((returnData: unknown) => {
+        out = <Array<InterviewReturn>>(<unknown>returnData);
+        out.forEach((element) => {
+          //additonal filtering on output, find a way to spoof this separately
+        });
+        return returnData;
       });
-      return returnData;
-    });
   }
 
   ///Old function calls some are still in use
@@ -192,8 +207,8 @@ export class InterviewRequesterService {
       //set end time to be an hour after start time
       let myTime = new Date();
       let times1 = form.startTime.split(':');
-      myTime.setHours(parseInt(times1[0]),parseInt(times1[1]));
-      
+      myTime.setHours(parseInt(times1[0]), parseInt(times1[1]));
+
       startTimeString = this.dateFormatter.dateToStringTime(myTime);
       console.log('Start time good: ' + startTimeString);
 
@@ -201,7 +216,7 @@ export class InterviewRequesterService {
     } else {
       let times1 = form.interviewSelected.startTime.split(':');
       let myTime = new Date();
-      myTime.setHours(parseInt(times1[0]),parseInt(times1[1]));
+      myTime.setHours(parseInt(times1[0]), parseInt(times1[1]));
 
       startTimeString = this.dateFormatter.dateToStringTime(myTime);
       console.log('Start time bad: ' + startTimeString);
@@ -232,6 +247,7 @@ export class InterviewRequesterService {
       APPCONSTANTS.APICONSTANTS.INTER +
       '/' +
       userName;
+
     const newInterview: Interview = new Interview(
       interviewerID,
       interviewDate,
@@ -241,6 +257,7 @@ export class InterviewRequesterService {
       'Pending',
       'Pending'
     );
+
     this.requester
       .postRequest<Interview>(url, newInterview)
       .subscribe((returnData: any) => {});
@@ -261,9 +278,7 @@ export class InterviewRequesterService {
     let newStatus = new StatusUpdate(id, status);
     this.requester
       .postRequest<StatusUpdate>(url, newStatus)
-      .subscribe((returnData: any) => {
-        return returnData;
-      });
+      .subscribe((returnData: any) => {});
   }
 
   getAllInterviews(): Observable<Array<InterviewReturn>> {
@@ -272,6 +287,7 @@ export class InterviewRequesterService {
       APPCONSTANTS.APICONSTANTS.INTER +
       '/organiser/' +
       this.userService.getUsername();
+      
     return this.requester.getRequest<Array<InterviewReturn>>(url);
   }
 
@@ -285,14 +301,16 @@ export class InterviewRequesterService {
       '/' +
       this.userService.getUsername();
     let out;
-    this.requester.getRequest<InterviewReturn>(url).subscribe((returnData: unknown) => {
-      out = <Array<InterviewReturn>>(<unknown>returnData);
-      out.forEach((element) => {
-        const interview = this.parseInterviewUser(element);
-        events.push(interview);
-        interviews.push(interview);
+    this.requester
+      .getRequest<InterviewReturn>(url)
+      .subscribe((returnData: unknown) => {
+        out = <Array<InterviewReturn>>(<unknown>returnData);
+        out.forEach((element) => {
+          const interview = this.parseInterviewUser(element);
+          events.push(interview);
+          interviews.push(interview);
+        });
       });
-    });
   }
 
   getRecruiterInterviews(
@@ -305,14 +323,16 @@ export class InterviewRequesterService {
       '/organiser/' +
       this.userService.getUsername();
     let out;
-    this.requester.getRequest<InterviewReturn>(url).subscribe((returnData: unknown) => {
-      out = <Array<InterviewReturn>>(<unknown>returnData);
-      out.forEach((element) => {
-        const interview = this.parseInterviewRecruiter(element);
-        events.push(interview);
-        interviews.push(interview);
+    this.requester
+      .getRequest<InterviewReturn>(url)
+      .subscribe((returnData: unknown) => {
+        out = <Array<InterviewReturn>>(<unknown>returnData);
+        out.forEach((element) => {
+          const interview = this.parseInterviewRecruiter(element);
+          events.push(interview);
+          interviews.push(interview);
+        });
       });
-    });
   }
 
   parseInterviewUser(element: InterviewReturn): CalendarEventInterview {
