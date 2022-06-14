@@ -7,7 +7,7 @@ import {
   statusOptions,
 } from 'src/app/shared/constants/interview-options.constant';
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
-import { getUserRoleNames } from 'src/app/shared/functions/get-user-from-local.function';
+import { GetUserDataService } from 'src/app/services/get-user-data.service';
 
 /**
  * Component to view and modify interview status
@@ -49,12 +49,13 @@ export class InterviewStatusComponent implements OnInit {
   constructor(
     private _dialog: MatDialogService,
     private fb: FormBuilder,
-    private iRequester: InterviewRequesterService
+    private iRequester: InterviewRequesterService,
+    private userService: GetUserDataService
   ) {}
 
   /** @ignore */
   ngOnInit() {
-    this.userRoles = getUserRoleNames();
+    this.userRoles = this.userService.getUserRoleNames();
   }
 
   /** @ignore */

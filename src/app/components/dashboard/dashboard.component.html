@@ -10,12 +10,8 @@
 
   <div class="container text-center text-black">
     <div class="col-12 col-md-12 mx-auto mt-3">
-
       <mat-grid-list cols="4" rowHeight="100px">
-
-        <mat-grid-tile
-          colspan="1"
-          rowspan="6">
+        <mat-grid-tile colspan="1" rowspan="6">
           <div class="tile">
             <interview-overview></interview-overview>
           </div>
@@ -29,17 +25,21 @@
 
         <a routerLink="/dashboard/all-interviews">
           <mat-grid-tile colspan="3" rowspan="2">
-            <button class="big-tile">
-              All Interviews
-              <!-- <i
+            <button class="big-tile text-center">
+              <span class="big-btn">
+                Interviews
+                <!-- <i
                 class="fa fa-arrow-right"
                 style="font-size: 18px; padding-top: 8px; padding-right: 7px"
               ></i> -->
-              <mat-icon class="tile-icon">list</mat-icon>
+                <mat-icon class="tile-icon" style="position: sticky"
+                  >list</mat-icon
+                ></span
+              >
             </button>
           </mat-grid-tile>
         </a>
-        
+
         <!-- <a routerLink="/dashboard/completed-interviews">
           <mat-grid-tile
             data-aos="fade-center"
@@ -52,7 +52,6 @@
             </button>
           </mat-grid-tile>
         </a> -->
-
       </mat-grid-list>
     </div>
   </div>

@@ -1,14 +1,16 @@
 .bg-grey {
   background-color: #D8D8D8;
 }
-
+.noHover{
+  pointer-events: none;
+}
 .modal-org {
   color: #000000;
   background-color: #ff9800;
 }
 
 .padded {
-  padding: 25px;
+  //padding: 25px;
 }
 
 .btn-org {

@@ -1,6 +1,6 @@
-import { AvailabilityForInterviews } from "./types";
+import { AvailabilityForInterviews } from './types';
 
-export interface AvailabilityFormValue {
+export interface AvailabilityRangeFormValue {
   firstDate: string;
   lastDate: string;
   startTime: string;
@@ -19,4 +19,15 @@ export interface FindSlotFormValue {
   firstDate: string;
   lastDate: string;
   skills: { skillType: string; skillLevel: string };
+}
+
+export interface AvailabilityArrayFormValue {
+  startTime: string;
+  endTime: string;
+  weeks: number;
+  days: Array<{weekday: string}>;
+}
+
+export interface Weekday {
+  weekday: string;
 }

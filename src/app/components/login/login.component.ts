@@ -6,12 +6,12 @@ import {
   SocialUser,
   SocialLoginModule,
 } from 'angularx-social-login';
+import { GetUserDataService } from 'src/app/services/get-user-data.service';
+import { LoginService } from 'src/app/services/login/login.service';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
-import { getUsername, getUserRoleNames } from 'src/app/shared/functions/get-user-from-local.function';
 import { LoggedInObject, LoginUser } from 'src/app/shared/models/user-model';
 
 // [APP_LEVEL Imports]
-import { BackendService } from '../../services/backend.service';
 import { DataSourceService } from '../../services/data-source.service';
 import { APPCONSTANTS } from '../../shared/constants/app.constant';
 
@@ -33,8 +33,9 @@ export class LoginComponent implements OnInit {
     private _router: Router,
     private _rs: RequestCenterService,
     private _dataSourceService: DataSourceService,
-    private _backEndService: BackendService,
-    private _socialAuthService: SocialAuthService
+    private _socialAuthService: SocialAuthService,
+    private _login: LoginService,
+    private _user: GetUserDataService
   ) {}
 
   /** @ignore */
@@ -73,13 +74,13 @@ export class LoginComponent implements OnInit {
       user = loginObj;
     }
     this._dataSourceService.updateDataSource('loginType', loginType);
-    this._backEndService.login(user).subscribe((response: any) => {
+    this._login.login(user).subscribe((response: any) => {
       if (response && response.token) {
         localStorage.setItem('apiKey', response.token);
-        this._rs.getUserData(getUsername()).subscribe((returnData: any) => {
+        this._rs.getUserData(this._user.getUsername()).subscribe((returnData: any) => {
           user = returnData;
           localStorage.setItem('userData', JSON.stringify(user));
-          if (getUserRoleNames().includes('RECRUITER')){
+          if (this._user.getUserRoleNames().includes('RECRUITER')){
             this._router.navigate(['/dashboard'])
           } else {
             this._router.navigate(['/calendar']);

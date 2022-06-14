@@ -8,9 +8,11 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { of } from 'rxjs';
-import { ModalControllerService } from 'src/app/services/modal-controller.service';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { AllInterviewsComponent } from './all-interviews.component';
+import { MatDialogService } from 'src/app/services/mat-dialog.service';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { InterviewReturn } from 'src/app/shared/models/types';
 
 
 const ModalControllerServiceStub  = {
@@ -40,11 +42,16 @@ class MockTemplateRef extends TemplateRef<any>{
 
 }
 
+const MockIRequesterService = {
+  getAllInterviews(){
+    return of([new InterviewReturn(10,['1', '2'], '2022-06-01', '19:00', '20:00', 'ahasf','Completed','Hired', 'Me')])
+  }
+}
+
 describe('AllInterviewsComponent', () => {
   let component: AllInterviewsComponent;
   let fixture: ComponentFixture<AllInterviewsComponent>;
   let iService: InterviewRequesterService;
-  let mService: ModalControllerService;
   let mockMService: any;
   let iSpy: any;
 
@@ -54,14 +61,23 @@ describe('AllInterviewsComponent', () => {
         ReactiveFormsModule,
         HttpClientTestingModule,
         RouterTestingModule,
-        CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
+        CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
+        MatDialogModule
       ],
       providers: [
         BsModalService,
         DatePipe,
         FormBuilder,       
         //ModalControllerService,
-        {provide: ModalControllerService, useValue: ModalControllerServiceStub},
+        {
+          provide: MatDialogRef,
+          useValue: {}
+        },
+        {
+          provide: InterviewRequesterService,
+          useValue: MockIRequesterService
+        },
+        MatDialogService,
        
       ],
       declarations: [ AllInterviewsComponent ]
@@ -72,31 +88,27 @@ describe('AllInterviewsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AllInterviewsComponent);
     iService = TestBed.inject(InterviewRequesterService);
-    mService = TestBed.inject(ModalControllerService);
-    mockMService = TestBed.inject(ModalControllerService);
+    mockMService = TestBed.inject(MatDialogService)
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
 
   it('ngOnInit should call API request', () => {
-    iSpy = spyOn(iService, 'getAllInterviews').and.callThrough();
+    iSpy = spyOn(iService, 'getAllInterviews').and.returnValue(of([]));
     component.ngOnInit();
     expect(iSpy).toHaveBeenCalled();
   });
   
   it('openModal should call open template', () => {
-    iSpy = spyOn(mockMService, 'openModal').and.callThrough();
+    iSpy = spyOn(mockMService, 'openDialog').and.returnValue('');
     component.openModal(new MockTemplateRef());
-    expect(mockMService.openModal).toHaveBeenCalled();
+    expect(iSpy).toHaveBeenCalled();
   });  
 
   it('close modal should call close template', () => {
-    iSpy = spyOn(mockMService, 'closeModal').and.callThrough();
+    iSpy = spyOn(mockMService, 'closeDialog').and.callThrough();
     component.closeModal();
-    expect(mockMService.closeModal).toHaveBeenCalled();
+    expect(iSpy).toHaveBeenCalled();
   });
 });

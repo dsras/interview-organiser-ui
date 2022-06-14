@@ -8,10 +8,22 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { fn } from 'moment';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { Observable, of } from 'rxjs';
-import { InterviewReturn } from '../../shared/models/types';
+import { CalendarEventInterview } from 'src/app/shared/models/calendar-event-detail';
+import { CreateInterviewFormValue } from 'src/app/shared/models/forms';
+import { AvailabilityForInterviews, InterviewReturn } from '../../shared/models/types';
+import { GetUserDataService } from '../get-user-data.service';
 
 import { InterviewRequesterService } from './interview-requester.service';
 import { Requester } from './requester.service';
+
+const FakeUserDataService = {
+  getUsername(){
+    return 'thorfinn.manson@accolite.digital.com';
+  },
+  getUserRoleNames(){
+    return ['Recruiter', 'User'];
+  }
+}
 
 const RequesterServiceStub = {
   getRequest<Type>(reqestURL: string): Observable<any> {
@@ -27,6 +39,9 @@ const RequesterServiceStub = {
       }]);
   },
   postRequest<Type>(reqestURL: string, obj: Type): Observable<any> {
+    return of('POST');
+  },
+  postRequestNoType<Type>(reqestURL: string, obj: any): Observable<any> {
     return of('POST');
   },
 }
@@ -46,6 +61,7 @@ describe('InterviewRequesterService', () => {
   let service: InterviewRequesterService;
   let spy: any;
   let rService: Requester;
+  let uService: GetUserDataService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -60,11 +76,16 @@ describe('InterviewRequesterService', () => {
         DatePipe,
         FormBuilder,  
         {provide: Requester, useValue: RequesterServiceStub},
-            
+        {
+          provide: GetUserDataService,
+          useValue: FakeUserDataService
+        },
       ],
     });
     service = TestBed.inject(InterviewRequesterService);
     rService = TestBed.inject(Requester);
+    uService = TestBed.inject(GetUserDataService);
+
   });
   
 
@@ -121,26 +142,17 @@ describe('InterviewRequesterService', () => {
     service.InterviewsFindHired(userName);
     expect(spy).toHaveBeenCalled();
   });
-  it('getInterviewByInterviewer gets called', () => {
-    let events: CalendarEvent[] = [];
-    let userName = "username";
-    spy = spyOn(rService, 'getRequest').and.returnValue(of([interRet]));
-    service.getInterviewByInterviewer(events, userName);
-    expect(spy).toHaveBeenCalled();
-  });
+
   
-  it('getInterviewByRecruiter gets called', () => {
-    let events: CalendarEvent[] = [];
-    let userName = "username";
-    spy = spyOn(rService, 'getRequest').and.returnValue(of([interRet]));
-    service.getInterviewByRecruiter(events, userName);
+  it('getInterviewsPerMonthByInterviewer gets called', () => {
+    spy = spyOn(rService, 'postRequestNoType').and.returnValue(of([interRet]));
+    service.getInterviewsPerMonthByInterviewer(true, "09:00", '17:00');
     expect(spy).toHaveBeenCalled();
   });
 
   it('getInterviewsAll calls requester methods', fakeAsync(() => {
     spy = spyOn(rService, 'getRequest').and.callThrough();
-    let events: InterviewReturn[] = [];
-    service.getInterviewAll(events);
+    service.InterviewsFindAll();
     expect(spy).toHaveBeenCalled();
   }));
 
@@ -168,19 +180,54 @@ describe('InterviewRequesterService', () => {
 
 
   it('addInterviewForm calls requester methods', () => {
-    let formInput: string = "On 2022-04-19 between 13:00 -> 14:00 this is with: Emer Sweeney id: 19";
-    let additional: string = "";
-    let startTime: Date = new Date();
-    spy = spyOn(service, 'addInterview').and.callThrough();
-    service.addInterviewForm(formInput, additional, startTime);
+    let form: CreateInterviewFormValue  ={
+      interviewSelected: {
+        interviewer:"Emer Sweeny",
+        interviewerId: 19,
+        availabilityId: 1,
+        date: "2022-04-19",
+        startTime: "13:00",
+        endTime: "14:00"
+      },
+      additionalInformation: 'urm',
+      startTime: "13:00"
+    };
+    spy = spyOn(service, 'addInterviewForm').and.callThrough();
+    service.addInterviewForm(form);
     expect(spy).toHaveBeenCalled();
 
-    let startTimeNull: any = <Date><unknown>'';
-    service.addInterviewForm(formInput, additional, startTimeNull);
+    form ={
+      interviewSelected: {
+        interviewer:"Emer Sweeny",
+        interviewerId: 19,
+        availabilityId: 1,
+        date: "2022-04-19",
+        startTime: "13:00",
+        endTime: "14:00"
+      },
+      additionalInformation: 'urm',
+      startTime: ""
+    };
+    service.addInterviewForm(form);
     expect(spy).toHaveBeenCalled();
   });
 
-  
+  it('GetUserInterviews calls service methods', () => {
+    let spy = spyOn(rService, 'getRequest').and.callThrough();
+    let ints: CalendarEventInterview[]=[];
+    let avail: CalendarEvent[]=[];
+    service.getUserInterviews(avail, ints);
+    expect(spy).toHaveBeenCalled();
+
+  });
+  it('getRecruiterInterviews calls service methods', () => {
+    let spy = spyOn(rService, 'getRequest').and.callThrough();
+    let ints: CalendarEventInterview[]=[];
+    let avail: CalendarEvent[]=[];
+    service.getRecruiterInterviews(avail, ints);
+    expect(spy).toHaveBeenCalled();
+
+  });
   
   it('date should be formatted to YYYY-MM-DD', () => {
     let tempDate = new Date('1995-12-17T03:24:00');

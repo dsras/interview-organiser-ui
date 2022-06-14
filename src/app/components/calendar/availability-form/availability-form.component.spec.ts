@@ -1,26 +1,38 @@
 import { Overlay } from '@angular/cdk/overlay';
 import { DatePipe } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TemplateRef, ElementRef, EmbeddedViewRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { BsModalService } from 'ngx-bootstrap/modal';
+import { MatDialogService } from 'src/app/services/mat-dialog.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 
 import { AvailabilityFormComponent } from './availability-form.component';
+class MockTemplateRef extends TemplateRef<any>{
+  constructor(){
+    super();
+  }
+  get elementRef(): ElementRef<any> {
+    throw new Error('Method not implemented.');
+  }
+  createEmbeddedView(context: any): EmbeddedViewRef<any> {
+    throw new Error('Method not implemented.');
+  }
 
+}
 
 const dummyAvailForm = {
   value: {
-    dateRange: [
-      new Date(),
-      new Date()
-    ],
-    startTime: new Date(),
-    endTime: new Date()
+    firstDate: '2022-06-01',
+    lastDate:  '2022-06-07',
+    startTime: '09:00',
+    endTime: '17:00'
   },
   reset(){}
 }
@@ -29,6 +41,7 @@ describe('AvailabilityFormComponent', () => {
   let component: AvailabilityFormComponent;
   let fixture: ComponentFixture<AvailabilityFormComponent>;
   let aService: AvailabilityRequesterService;
+  let dService: MatDialogService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -38,6 +51,7 @@ describe('AvailabilityFormComponent', () => {
         RouterTestingModule,
         CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
         MatDialogModule,
+        BrowserAnimationsModule
       ],
       providers: [
         BsModalService,
@@ -45,6 +59,11 @@ describe('AvailabilityFormComponent', () => {
         FormBuilder,              
         MatDialog,
         Overlay,
+        {
+          provide: MatDialogRef,
+          useValue: {}
+        },
+        MatDialogService
       ],
       declarations: [ AvailabilityFormComponent ]
     })
@@ -55,6 +74,8 @@ describe('AvailabilityFormComponent', () => {
     fixture = TestBed.createComponent(AvailabilityFormComponent);
     component = fixture.componentInstance;
     aService = TestBed.inject(AvailabilityRequesterService);
+    dService = TestBed.inject(MatDialogService)
+
     fixture.detectChanges();
   });
 
@@ -64,9 +85,23 @@ describe('AvailabilityFormComponent', () => {
 
   
   it('Submit should call service methods', () => {
-    let aSpy = spyOn(aService, 'addAvailability').and.callThrough();
+    let aSpy = spyOn(aService, 'addAvailabilityArray').and.returnValue();
     let formG = dummyAvailForm;
-    component.onSubmit(formG);
-    expect(aService.addAvailability).toHaveBeenCalled();
-  })
+    component.onSubmit(<FormGroup>formG);
+    expect(aSpy).toHaveBeenCalled();
+  });
+
+    
+  it('openModal should call open template', () => {
+    let Spy = spyOn(dService, 'openDialogTall').and.returnValue();
+    component.openDialog(new MockTemplateRef());
+    expect(Spy).toHaveBeenCalled();
+  });  
+
+    
+  it('closeDialog should call service methods', () => {
+    let Spy = spyOn(dService, 'closeDialog').and.callThrough();
+    component.closeDialog();
+    expect(Spy).toHaveBeenCalled();
+  });
 });

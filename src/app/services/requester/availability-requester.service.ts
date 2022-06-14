@@ -7,7 +7,7 @@ import {
   AvailabilityForInterviews,
   availIdOnly,
   dateRange,
-  AvailabilityRangeRequest,
+  AvailabilityArray,
 } from '../../shared/models/types';
 import { APPCONSTANTS } from '../../shared/constants/app.constant';
 import { CalendarEvent } from 'angular-calendar';
@@ -15,12 +15,14 @@ import { CalendarColors } from '../../shared/constants/colours.constant';
 import { CalendarEventAvailability } from 'src/app/shared/models/calendar-event-detail';
 import { AvailabilityMetaData } from 'src/app/shared/models/event-meta-data';
 import { DateToStringService } from '../date-to-string.service';
-import { getUsername } from 'src/app/shared/functions/get-user-from-local.function';
 import {
-  AvailabilityFormValue,
+  AvailabilityArrayFormValue,
+  AvailabilityRangeFormValue,
   FindSlotFormValue,
+  Weekday,
 } from 'src/app/shared/models/forms';
 import { Observable } from 'rxjs';
+import { GetUserDataService } from 'src/app/services/get-user-data.service';
 
 /** A service to handle any requests made to the database regarding availability. */
 @Injectable({
@@ -30,7 +32,8 @@ export class AvailabilityRequesterService {
   /** @ignore */
   constructor(
     private requester: Requester,
-    private dateFormatter: DateToStringService
+    private dateFormatter: DateToStringService,
+    private userService: GetUserDataService
   ) {}
 
   //! NEW CALL
@@ -43,30 +46,17 @@ export class AvailabilityRequesterService {
   }
 
   getMyAvailabilityInRange(
-    events: CalendarEvent[],
     username: string,
     start: string,
     end: string
-  ): void {
+  ): Observable<Array<Availability>> {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.AVAIL_RANGE.replace('username', username);
-    let out;
 
-    let myRange = new dateRange();
-    myRange.start = start;
-    myRange.end = end;
+    let myRange = new dateRange(start, end);
 
-    this.requester
-      .postRequest<dateRange>(url, myRange)
-      .subscribe((returnData) => {
-        out = <Array<Availability>>(<unknown>returnData);
-        out.forEach((element) => {
-          //console.log(element);
-          events.push(this.parseAvailabilityUser(element));
-        });
-        return out;
-      });
+    return this.requester.postRequestNoType<dateRange>(url, myRange);
   }
 
   /**
@@ -75,9 +65,9 @@ export class AvailabilityRequesterService {
    * with each slot having the same start and end time for each day.
    * If first and last are the same, one slot is created.
    *
-   * @param {AvailabilityFormValue} form availability form submitted
+   * @param {AvailabilityRangeFormValue} form availability form submitted
    */
-  addAvailabilityForm(form: AvailabilityFormValue): void {
+  addAvailabilityRange(form: AvailabilityRangeFormValue): void {
     const newAvail: AvailabilityRange = new AvailabilityRange(
       this.dateToStringDate(new Date(form.firstDate)),
       this.dateToStringDate(new Date(form.lastDate)),
@@ -88,34 +78,36 @@ export class AvailabilityRequesterService {
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.AVAIL +
       '/' +
-      getUsername();
+      this.userService.getUsername();
 
     let out: AvailabilityRange;
 
     this.requester
       .postRequest<AvailabilityRange>(url, newAvail)
       .subscribe((returnData) => {
-        out = <AvailabilityRange>(<unknown>returnData);
+        // out = <AvailabilityRange>(<unknown>returnData);
       });
   }
 
-  addAvailabilityOverRange(startTime: string, endTime:string, dates: string[]): void {
-    const newAvail: AvailabilityRangeRequest = new AvailabilityRangeRequest(
-      startTime,
-      endTime,
-      dates
-    );
+  addAvailabilityArray(form: AvailabilityArrayFormValue) {
     const url: string =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.AVAIL_REC_RANGE +
-      getUsername();
+      this.userService.getUsername();
+
+    const startTime = new Date(form.startTime);
+    const endTime = new Date(form.endTime);
+
+    const newAvail: AvailabilityArray = new AvailabilityArray(
+      this.dateFormatter.dateToStringTime(startTime),
+      this.dateFormatter.dateToStringTime(endTime),
+      this.generateDateArray(form.days, form.weeks)
+    );
 
     this.requester
-      .postRequest<AvailabilityRangeRequest>(url, newAvail)
-      .subscribe((returnData) => {
-      });
+      .postRequest<AvailabilityArray>(url, newAvail)
+      .subscribe((returnData) => {});
   }
-
 
   /**
    * Takes two arrays of calendar events and appends
@@ -132,7 +124,7 @@ export class AvailabilityRequesterService {
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.AVAIL +
       '/' +
-      getUsername();
+      this.userService.getUsername();
 
     this.requester.getRequest<Availability>(url).subscribe((returnData) => {
       let data = <Array<Availability>>(<unknown>returnData);
@@ -144,22 +136,11 @@ export class AvailabilityRequesterService {
     });
   }
 
-  getRecruiterAvailability(
-    events: Array<CalendarEvent>,
-    availability: Array<CalendarEventAvailability>
-  ): void {
+  getRecruiterAvailability(): Observable<Array<Availability>> {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL;
 
-    this.requester.getRequest<Availability>(url).subscribe((returnData) => {
-      let data = <Array<Availability>>(<unknown>returnData);
-      console.table(returnData);
-      data.forEach((element) => {
-        let event = this.parseAvailabilityRecruiter(element);
-        events.push(event);
-        availability.push(event);
-      });
-    });
+    return this.requester.getRequest<Availability[]>(url);
   }
 
   /**
@@ -208,145 +189,16 @@ export class AvailabilityRequesterService {
     });
   }
 
-  /**
-   * TODO still required?
-   * @param {Array<string>} events
-   */
-  getAllAvailabilityUI(events: string[]): void {
-    const url: string =
-      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL;
-    let out: Array<Availability>;
-
-    this.requester.getRequest<Availability>(url).subscribe((returnData) => {
-      out = <Array<Availability>>(<unknown>returnData);
-      out.forEach((element) => {
-        const start: Date = new Date(element.date);
-        const end: Date = new Date(element.date);
-        const times1: string[] = element.startTime.split(':');
-        const times2: string[] = element.endTime.split(':');
-
-        start.setHours(parseInt(times1[0]), parseInt(times1[1]));
-        end.setHours(parseInt(times2[0]), parseInt(times2[1]));
-
-        const startTime: string = this.dateToStringTime(start);
-        const endTime: string = this.dateToStringTime(end);
-
-        events.push(startTime + ' -> ' + endTime + '\n');
-      });
-      return out;
-    });
-  }
-
-  /**
-   * Populates an input array with availability in a specified range that can
-   * be used to create interviews.
-   *
-   * @param {string} startDate
-   * @param {string} endDate
-   * @param {string} startTime
-   * @param {string} endTime
-   * @param {Array<number>} skillsIDList
-   * @param {Array<string>} interviewsReturn
-   * @returns {void} Modified interviewsReturn with all relevant availability
-   */
-  getInterviewSlots(
-    form: FindSlotFormValue,
-    skillsIDList: number[],
-    interviewsReturn: AvailabilityForInterviews[]
-  ): void {
-    const url: string =
-      APPCONSTANTS.APICONSTANTS.BASE_URL +
-      APPCONSTANTS.APICONSTANTS.INTER_INTER;
-
-    const newStartDate: Date = new Date(form.firstDate);
-    const newEndDate: Date = new Date(form.lastDate);
-    const newStartTime: Date = new Date(form.startTime);
-    const newEndTime: Date = new Date(form.endTime);
-
-    newStartTime.setDate(newStartDate.getDate());
-    newEndTime.setDate(newStartDate.getDate());
-
-    const startDateString: string = this.dateToStringDate(newStartDate);
-    const endDateString: string = this.dateToStringDate(newEndDate);
-    const startString: string = this.dateToStringTime(newStartTime);
-    const endString: string = this.dateToStringTime(newEndTime);
-
-    const newRange: InterviewRange = new InterviewRange(
-      startDateString,
-      endDateString,
-      startString,
-      endString,
-      skillsIDList
-    );
-    this.requester
-      .postRequestNoType<AvailabilityForInterviews>(url, newRange)
-      .subscribe((returnData) => {
-        let data = <Array<AvailabilityForInterviews>>returnData;
-        data.forEach((element) => {
-          let refStart: Date = new Date(newStartTime);
-          let refEnd: Date = new Date(newStartTime);
-          refStart.setHours(
-            Number.parseInt(element.startTime.split(':')[0]),
-            Number.parseInt(element.startTime.split(':')[1])
-          );
-          refEnd.setHours(
-            Number.parseInt(element.endTime.split(':')[0]),
-            Number.parseInt(element.endTime.split(':')[1])
-          );
-
-          let startInput: string = '';
-          let endInput: string = '';
-          if (refStart.getTime() > newStartTime.getTime()) {
-            startInput = this.dateToStringTime(refStart);
-          } else {
-            startInput = this.dateToStringTime(newStartTime);
-          }
-          if (refEnd.getTime() < newEndTime.getTime()) {
-            endInput = this.dateToStringTime(refEnd);
-          } else {
-            endInput = this.dateToStringTime(newEndTime);
-          }
-
-          interviewsReturn.push(
-            element
-            // 'On ' +
-            //   element.date +
-            //   ' between ' +
-            //   startInput +
-            //   ' -> ' +
-            //   endInput +
-            //   ' this is with: ' +
-            //   element.interviewer +
-            //   ' id: ' +
-            //   element.interviewerId
-          );
-        });
-      });
-  }
-
   getSlots(form: FindSlotFormValue, skills: number[]): Observable<any> {
     const url: string =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.INTER_INTER;
 
-    const newStartDate: Date = new Date(form.firstDate);
-    const newEndDate: Date = new Date(form.lastDate);
-    const newStartTime: Date = new Date(form.startTime);
-    const newEndTime: Date = new Date(form.endTime);
-
-    newStartTime.setDate(newStartDate.getDate());
-    newEndTime.setDate(newStartDate.getDate());
-
-    const startDateString: string = this.dateToStringDate(newStartDate);
-    const endDateString: string = this.dateToStringDate(newEndDate);
-    const startString: string = this.dateToStringTime(newStartTime);
-    const endString: string = this.dateToStringTime(newEndTime);
-
     const newRange: InterviewRange = new InterviewRange(
-      startDateString,
-      endDateString,
-      startString,
-      endString,
+      this.dateToStringDate(new Date(form.firstDate)),
+      this.dateToStringDate(new Date(form.lastDate)),
+      this.dateToStringTime(new Date(form.startTime)),
+      this.dateToStringTime(new Date(form.endTime)),
       skills
     );
     return this.requester.postRequestNoType<AvailabilityForInterviews>(
@@ -376,15 +228,30 @@ export class AvailabilityRequesterService {
   }
 
   /**
+   * Takes an array of dates and duplicates them for the number of weeks
+   * before converting to strings "YYY-MM-DD" and returning.
+   */
+  generateDateArray(days: Array<Weekday>, weeks: number): string[] {
+    let outputArray: string[] = [];
+    days.forEach((day) => {
+      let outputDate = new Date(day.weekday);
+      const date = outputDate.getDate();
+      for (let i = 0; i < weeks; i++) {
+        outputDate.setDate(7 * i + date);
+        outputArray.push(this.dateToStringDate(outputDate));
+      }
+    });
+    return outputArray;
+  }
+
+  /**
    * Takes an Availability object and outputs the information in an object to be
    * displayed in the calendar
    *
    * @param availability the object to be converted to a calendar event
    * @returns a calendar event to be displayed in the calendar
    */
-  private parseAvailabilityUser(
-    availability: Availability
-  ): CalendarEventAvailability {
+  parseAvailabilityUser(availability: Availability): CalendarEventAvailability {
     const start = new Date(availability.date);
     const end = new Date(availability.date);
     const times1 = availability.startTime.split(':');
@@ -406,7 +273,7 @@ export class AvailabilityRequesterService {
     return newAvailability;
   }
 
-  private parseAvailabilityRecruiter(
+  parseAvailabilityRecruiter(
     availability: Availability
   ): CalendarEventAvailability {
     const start = new Date(availability.date);
