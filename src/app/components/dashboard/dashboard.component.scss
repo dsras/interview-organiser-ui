@@ -1,18 +1,23 @@
-
-
-.services a .image-container>img {
-	height: 70px;
+.services a .image-container > img {
+  height: 70px;
 }
 
-.services a{
-    transition: all 0.5s ease;
+.services a {
+  transition: all 0.5s ease;
 }
 
-.services a:hover
-{
-    transform: scale(1.05);
+.services a:hover {
+  transform: scale(1.05);
 }
 
+.big-btn {
+  text-justify: distribute;
+  text-align: justify;
+}
+
+.tile-icon {
+  vertical-align: text-top;
+}
 
 // .big-tile {
 // 	margin: 20px;
@@ -34,8 +39,3 @@
 //     color: #ff8500;
 //     background-color: #bbbbbb;
 // }
-
-
-
-
-

@@ -10,7 +10,6 @@ import { SSOUser } from 'src/app/shared/models/user-model';
   styleUrls: ['./toolbar.component.scss'],
 })
 export class ToolbarComponent implements OnInit {
-
   /** Login type */
   loginType: string = '';
   user: SSOUser | null = null;
@@ -47,7 +46,6 @@ export class ToolbarComponent implements OnInit {
       const user = localStorage.getItem('ssoUser');
       if (user) {
         this.user = JSON.parse(user);
-        console.log(this.user);
       }
     } else {
       this.loggedIn = false;
