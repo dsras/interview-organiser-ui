@@ -5,19 +5,21 @@
   </h2>
 
   <div class="col-3 mt-3 mx-auto orange-border"></div>
-  
-  <div class="container text-center text-black">
+
+  <br> <br>
+
+  <!-- <div class="container text-center text-black">
     <div class="col-12 col-md-12 mx-auto mt-3">
-      <div class="row justify-content-center">
+      <div class="justify-content-center">
         <div class="col-md-4 col-sm-6 my-3">
           <a routerLink="/calendar">
-            <div class="blog-widget">
+            <div class="blog-widget justify-content-center">
               <div
                 class="col-lg-12 thumbnail-img"
                 data-aos="fade-left"
                 data-aos-delay="100"
                 style="
-                  background-image: url(../../../assets/images/calendarBG.png);
+                  background-image: url(../../../assets/images/calendar.png);
                   background-size: cover;
                   background-position: center;
                 "
@@ -25,7 +27,7 @@
               <div class="blog-content">
                 <button
                   type="button"
-                  class="view-here-btn text-lefttext-black"
+                  class="view-here-btn text-center d-inline-block"
                   routerLink="calendar"
                   routerLinkActive="active"
                 >
@@ -129,8 +131,71 @@
       </div>
     </div>
   </div>
+</div> -->
+
+
+<div class="container text-center text-black">
+  <mat-drawer-container class="example-container">
+    <mat-drawer mode="side" opened>
+
+      <div class="dropdown">
+        <button class="dropbtn">Dropdown</button>
+        <div class="dropdown-content">
+          <a href="#">Link 1</a>
+          <a href="#">Link 2</a>
+          <a href="#">Link 3</a>
+        </div>
+      </div>
+
+    </mat-drawer>
+    <mat-drawer-content>
+
+        <div class="col-12 col-md-12 mx-auto services">
+          <div class="row text-center">
+
+            <button
+            type="button"
+            class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx-auto d-inline-block"
+            routerLink="calendar"
+            routerLinkActive="active">
+              <img width="auto" height="70px" src="../../../assets/images/calendar.png">
+              <h6 class="mt-4 font-weight-normal">
+                Calendar
+              </h6>
+              <i class="fa fa-arrow-right" style="font-size: 18px; padding-top:8px; padding-right: 7px"></i>
+            </button>
+
+            <button type="button" class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx-auto d-inline-block">
+              <img width="auto" height="70px" src="../../../assets/images/getData.png">
+              <h6 class="mt-4 font-weight-normal">
+                All Interviews
+              </h6>
+              <i class="fa fa-arrow-right" style="font-size: 18px; padding-top:8px; padding-right: 7px"></i>
+            </button>
+
+            <button type="button" class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx-auto d-inline-block">
+              <img width="auto" height="70px" src="../../../assets/images/logData.png">
+              <h6 class="mt-4 font-weight-normal">
+                Completed Interviews
+              </h6>
+              <i class="fa fa-arrow-right" style="font-size: 18px; padding-top:8px; padding-right: 7px"></i>
+            </button>
+
+            <button type="button" class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx-auto d-inline-block">
+              <img width="auto" height="70px" src="../../../assets/images/createInterview.png">
+              <h6 class="mt-4 font-weight-normal">
+                Create Interviews
+              </h6>
+              <i class="fa fa-arrow-right" style="font-size: 18px; padding-top:8px; padding-right: 7px"></i>
+            </button>
+
+          </div>
+        </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
 </div>
 
+<br> <br>
 
 <div class="card">
   <interview-overview></interview-overview>
