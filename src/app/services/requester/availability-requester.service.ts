@@ -67,7 +67,7 @@ export class AvailabilityRequesterService {
    *
    * @param {AvailabilityRangeFormValue} form availability form submitted
    */
-  addAvailabilityRange(form: AvailabilityRangeFormValue): void {
+  addAvailabilityRange(form: AvailabilityRangeFormValue): Observable<AvailabilityRange> {
     const newAvail: AvailabilityRange = new AvailabilityRange(
       this.dateToStringDate(new Date(form.firstDate)),
       this.dateToStringDate(new Date(form.lastDate)),
@@ -82,14 +82,12 @@ export class AvailabilityRequesterService {
 
     let out: AvailabilityRange;
 
-    this.requester
+    return this.requester
       .postRequest<AvailabilityRange>(url, newAvail)
-      .subscribe((returnData) => {
-        // out = <AvailabilityRange>(<unknown>returnData);
-      });
+      
   }
 
-  addAvailabilityArray(form: AvailabilityArrayFormValue) {
+  addAvailabilityArray(form: AvailabilityArrayFormValue): Observable<AvailabilityArray> {
     const url: string =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.AVAIL_REC_RANGE +
@@ -104,9 +102,8 @@ export class AvailabilityRequesterService {
       this.generateDateArray(form.days, form.weeks)
     );
 
-    this.requester
+    return this.requester
       .postRequest<AvailabilityArray>(url, newAvail)
-      .subscribe((returnData) => {});
   }
 
   /**
@@ -259,7 +256,6 @@ export class AvailabilityRequesterService {
 
     start.setHours(parseInt(times1[0]), parseInt(times1[1]));
     end.setHours(parseInt(times2[0]), parseInt(times2[1]));
-
     const data = new AvailabilityMetaData();
 
     const newAvailability: CalendarEventAvailability = {
@@ -293,6 +289,7 @@ export class AvailabilityRequesterService {
       end: end,
       title: 'availability',
       color: CalendarColors.get('purple'),
+      interviewer: availability.interviewer,
       meta: data,
     };
     return newAvailability;

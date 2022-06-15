@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
@@ -15,7 +15,7 @@ export class AvailabilityFormComponent implements OnInit {
   /**
    * Blank form to be populated by the user
    */
-   @Input() callbackFunction!: (args: any) => void;
+   @Output() callbackEmitter: EventEmitter<any> = new EventEmitter();
 
   dateRangeForm: FormGroup = this.fb.group({
     startTime: ['', Validators.required],
@@ -70,12 +70,18 @@ export class AvailabilityFormComponent implements OnInit {
    */
   onSubmit(form: FormGroup): void {
     if (this.isChecked) {
-      this.aRequester.addAvailabilityRange(form.value);
-      form.reset();
+      this.aRequester.addAvailabilityRange(form.value).subscribe(()=>{
+        this.callbackEmitter.emit();
+        form.reset();
+
+      });
     } else {
       console.log(form.value);
-      this.aRequester.addAvailabilityArray(form.value);
-      form.reset();
+      this.aRequester.addAvailabilityArray(form.value).subscribe(()=>{
+        this.callbackEmitter.emit();
+        form.reset();
+
+      });
     }
   }
 

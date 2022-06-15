@@ -13,7 +13,7 @@ import { InterviewMetaData } from 'src/app/shared/models/event-meta-data';
 import { CalendarColors } from 'src/app/shared/constants/colours.constant';
 import { DateToStringService } from '../date-to-string.service';
 import { Observable } from 'rxjs';
-import { GetUserDataService } from 'src/app/services/get-user-data.service';
+import { GetUserDataService } from '../get-user-data.service';
 import { CreateInterviewFormValue } from 'src/app/shared/models/forms';
 
 @Injectable({
@@ -205,10 +205,8 @@ export class InterviewRequesterService {
 
     if (form.startTime != '') {
       //set end time to be an hour after start time
-      let myTime = new Date();
-      let times1 = form.startTime.split(':');
-      myTime.setHours(parseInt(times1[0]), parseInt(times1[1]));
-
+      let myTime = new Date(form.startTime);
+      
       startTimeString = this.dateFormatter.dateToStringTime(myTime);
       console.log('Start time good: ' + startTimeString);
 
