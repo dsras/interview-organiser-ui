@@ -6,8 +6,8 @@ import {
   SocialUser,
   SocialLoginModule,
 } from 'angularx-social-login';
-import { GetUserDataService } from 'src/app/services/get-user-data.service';
-import { LoginService } from 'src/app/services/login/login.service';
+import { GetUserDataService } from '../../services/get-user-data.service';
+import { LoginService } from '../../services/login/login.service';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 import { LoggedInObject, LoginUser } from 'src/app/shared/models/user-model';
 
