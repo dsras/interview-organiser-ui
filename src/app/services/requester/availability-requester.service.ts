@@ -269,6 +269,7 @@ export class AvailabilityRequesterService {
       title: 'availability',
       color: CalendarColors.get('blue'),
       meta: data,
+      interviewer: availability.interviewer
     };
     return newAvailability;
   }

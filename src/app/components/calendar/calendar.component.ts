@@ -166,6 +166,7 @@ export class CalendarComponent implements OnInit {
       this.dateString.dateToStringDate(this.endDate)
     ).subscribe(ret => {
       ret.forEach(ele=>{
+        console.log(ele)
         this.events.push(this.aRequester.parseAvailabilityUser(ele));
       })
       this.fastRefresh()
@@ -211,6 +212,8 @@ export class CalendarComponent implements OnInit {
     this.aRequester.getRecruiterAvailability()
     .subscribe(ret => {
       ret.forEach(ele =>{
+        console.log(ele)
+
         this.events.push(this.aRequester.parseAvailabilityRecruiter(ele))
         this.availability.push(this.aRequester.parseAvailabilityRecruiter(ele))
       })
@@ -222,6 +225,8 @@ export class CalendarComponent implements OnInit {
       this.dateString.dateToStringDate(this.endDate)
     ).subscribe(ret => {
       ret.forEach(ele => {
+        console.log(ele)
+
         this.events.push(this.iRequester.parseInterviewUser(ele));
         this.interviews.push(this.iRequester.parseInterviewUser(ele));
       })

@@ -44,11 +44,20 @@ export class ViewAvailabilityComponent implements OnInit{
   iTableData: InterviewTableDisplayData = new InterviewTableDisplayData(this.interviews);
 
 
-  displayedColumns: Array<string> = [
+  displayedColumnsUser: Array<string> = [
     'AvailabilityId',
     'date',
     'time',
     'delete'
+    // 'outcome',
+    // 'status',
+  ]; 
+  
+  displayedColumnsRec: Array<string> = [
+    'AvailabilityId',
+    'date',
+    'time',
+    'name'
     // 'outcome',
     // 'status',
   ]; 
@@ -63,11 +72,13 @@ export class ViewAvailabilityComponent implements OnInit{
     'InterviewId',
     'date',
     'time',
+    'name',
     'delete'
     // 'outcome',
     // 'status',
   ];
   iDisplayedColumns: Array<string>=[];
+  displayedColumns: Array<string>=[];
   expandedAvailability!: CalendarEventAvailability | null;
   expandedInterview!: CalendarEventAvailability | null;
   /** @ignore test method to be removed when completed */
@@ -77,21 +88,14 @@ export class ViewAvailabilityComponent implements OnInit{
 
   ngOnInit(){
     this.iDisplayedColumns = this.isRecruiter?this.iDisplayedColumnsRec:this.iDisplayedColumnsUser;
+    this.displayedColumns = this.isRecruiter?this.displayedColumnsRec:this.displayedColumnsUser;
 
     this.getAvailability();
     if (this.userRoles.includes('RECRUITER')) {
       this.recAuth = true;
       console.log('rec true');
     }  
-    if(this.recAuth){
-      this.iDisplayedColumns = [    
-        'InterviewId',
-        'date',
-        'time',
-        'delete'
-      ]
-
-    }
+  
   }
   /** Request table data from the database */
   getAvailability(): void {

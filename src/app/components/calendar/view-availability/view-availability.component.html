@@ -32,6 +32,12 @@
         {{ availability.end | DateToTimePipe}}
       </td>
     </ng-container>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let availability">
+        {{ availability.interviewer}}
+      </td>
+    </ng-container>
     <ng-container matColumnDef="delete">
       <th mat-header-cell *matHeaderCellDef>Delete</th>
       <td mat-cell *matCellDef="let availability">
@@ -102,6 +108,12 @@
       <td mat-cell *matCellDef="let interview">
         {{ interview.start | DateToTimePipe}} -
         {{ interview.end | DateToTimePipe}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let interview">
+        {{ interview.meta.interviewPanel}}
       </td>
     </ng-container>
     <ng-container matColumnDef="delete">

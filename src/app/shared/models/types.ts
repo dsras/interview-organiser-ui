@@ -160,6 +160,7 @@ export class Availability implements Data {
   date: string;
   startTime: string;
   endTime: string;
+  interviewer?: string;
   constructor(
     availabilityId: number,
     dateStart: string,
