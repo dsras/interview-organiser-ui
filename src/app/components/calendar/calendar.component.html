@@ -20,12 +20,18 @@
   <button mdbBtn color="primary" (click)="testGetAll()">testGetAll</button>
   <button mdbBtn color="primary" (click)="test()">test</button>
   <!-- <div class="container-fluid p-0 banner-img text-white"> -->
-  <div class="row">
-    <availability-form></availability-form>
-    <skills-form></skills-form>
+
+  <br> <br>
+  <div class="container text-center text-black">
+    <div class="col-12 col-md-12 mx-auto services">
+
+        <availability-form></availability-form>
+        <skills-form></skills-form>
+
+      </div>
+    </div>
   </div>
   <!-- </div> -->
-</div>
 
 <div class="container-fluid py-5 intro-section-color">
   <h1 class="text-black font-weight-bold text-center">
@@ -52,7 +58,7 @@
       </div>
     </div>
     <div class=" text-center col-sm">
-      <h2 class="text-black font-weight-bold text-center pl-3">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h2>
+      <h2 class="text-black font-weight-bold text-center pl-4">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h2>
     </div>
     <div class=" col-sm" style="position:relative; text-align: end;">
       <div class="btn-group col-8">
