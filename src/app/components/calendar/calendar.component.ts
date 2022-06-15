@@ -17,7 +17,7 @@ import { InterviewRequesterService } from 'src/app/services/requester/interview-
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
 import { DateToStringService } from '../../services/date-to-string.service';
-import { GetUserDataService } from 'src/app/services/get-user-data.service';
+import { GetUserDataService } from '../../services/get-user-data.service';
 
 /**
  * The main component of the calendar, an implementation of angular-calendar
@@ -117,7 +117,6 @@ export class CalendarComponent implements OnInit {
   }
 
   fastRefresh(){
-    console.log('fastRefresh called');
     this.refresh.next();
   }
 
@@ -129,9 +128,11 @@ export class CalendarComponent implements OnInit {
 
     // TODO make switch cases
     if (this.userRoles.includes('USER')) {
+      console.log('is user');
       this.initUser();
     }
     if (this.userRoles.includes('RECRUITER')) {
+      console.log('is recruiter');
       this.initRecruiter();
     }
     if (this.userRoles.includes('ADMIN')) {

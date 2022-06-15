@@ -20,7 +20,10 @@ export class GetUserDataService {
   getUserRoleNames(): Array<string> {
     const userRoles: Array<AppRoles> = this.getUserRoles();
     let roles: Array<string> = [];
-    userRoles.forEach((role) => roles.push(role.name));
+    userRoles.forEach((role) => {
+      roles.push(role.name);
+    });
+    console.log(roles);
     return roles;
   }
   
