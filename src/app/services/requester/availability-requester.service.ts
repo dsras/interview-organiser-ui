@@ -22,7 +22,7 @@ import {
   Weekday,
 } from 'src/app/shared/models/forms';
 import { Observable } from 'rxjs';
-import { GetUserDataService } from 'src/app/services/get-user-data.service';
+import { GetUserDataService } from '../get-user-data.service';
 
 /** A service to handle any requests made to the database regarding availability. */
 @Injectable({
