@@ -37,12 +37,12 @@ export class AvailabilityRequesterService {
   ) {}
 
   //! NEW CALL
-  deleteAvailability(id: string | number | any) {
+  deleteAvailability(id: string | number | any): Observable<availIdOnly> {
     const url: string =
       APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_DEL;
-    this.requester
+    return this.requester
       .postRequest<availIdOnly>(url, id)
-      .subscribe((returnData) => {});
+      
   }
 
   getMyAvailabilityInRange(

@@ -256,5 +256,7 @@
   <view-availability
     [availability]="dayAvailability"
     [interviews]="dayInterviews"
+    [isRecruiter]="isRecruiter"
+    (callbackEmitter)="callbackFunction()"
   ></view-availability>
 </ng-template>

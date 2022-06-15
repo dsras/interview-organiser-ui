@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
@@ -15,6 +15,7 @@ export class AvailabilityFormComponent implements OnInit {
   /**
    * Blank form to be populated by the user
    */
+   @Input() callbackFunction!: (args: any) => void;
 
   dateRangeForm: FormGroup = this.fb.group({
     startTime: ['', Validators.required],

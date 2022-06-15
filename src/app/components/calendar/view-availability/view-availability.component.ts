@@ -1,8 +1,7 @@
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CalendarEvent } from 'angular-calendar';
 import { StringToDatetimePipe } from 'src/app/pipes/string-to-datetime.pipe';
-import { DateToTimePipe } from 'src/app/pipes/DateToTimePipe';
 import { DateToStringService } from 'src/app/services/date-to-string.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 import {
@@ -11,7 +10,6 @@ import {
 } from 'src/app/shared/models/calendar-event-detail';
 import { AvailabilityTableData, InterviewTableData, InterviewTableDisplayData } from 'src/app/shared/models/table-data';
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
-import { GetUserDataService } from 'src/app/services/get-user-data.service';
 
 /**
  * Component that displays when a day is clicked on the calendar.
@@ -39,7 +37,8 @@ export class ViewAvailabilityComponent implements OnInit{
   /** Interview list for the day */
   @Input() interviews: Array<CalendarEventInterview> = [];
   @Input() userRoles: Array<string> = [];
-  @Input() callbackFunction!: (args: any) => void;
+  @Output() callbackEmitter: EventEmitter<any> = new EventEmitter();
+  @Input() isRecruiter:boolean=false;
   recAuth: boolean = false;  
   tableData: AvailabilityTableData = new AvailabilityTableData(this.availability);
   iTableData: InterviewTableDisplayData = new InterviewTableDisplayData(this.interviews);
@@ -53,13 +52,22 @@ export class ViewAvailabilityComponent implements OnInit{
     // 'outcome',
     // 'status',
   ]; 
-  iDisplayedColumns: Array<string> = [
+  iDisplayedColumnsUser: Array<string> = [
     'InterviewId',
     'date',
-    'time'
+    'time',
     // 'outcome',
     // 'status',
   ];
+  iDisplayedColumnsRec: Array<string> = [
+    'InterviewId',
+    'date',
+    'time',
+    'delete'
+    // 'outcome',
+    // 'status',
+  ];
+  iDisplayedColumns: Array<string>=[];
   expandedAvailability!: CalendarEventAvailability | null;
   expandedInterview!: CalendarEventAvailability | null;
   /** @ignore test method to be removed when completed */
@@ -68,6 +76,8 @@ export class ViewAvailabilityComponent implements OnInit{
   }
 
   ngOnInit(){
+    this.iDisplayedColumns = this.isRecruiter?this.iDisplayedColumnsRec:this.iDisplayedColumnsUser;
+
     this.getAvailability();
     if (this.userRoles.includes('RECRUITER')) {
       this.recAuth = true;
@@ -94,12 +104,12 @@ export class ViewAvailabilityComponent implements OnInit{
     private ar: AvailabilityRequesterService, 
     private dt: DateToStringService,
     private _dialog: MatDialogService,
-    private userService: GetUserDataService
     ) {}
   onDelete(id: string | number | any){
     console.log(id);
-    this.ar.deleteAvailability(id);
-    this.callbackFunction([]);
+    this.ar.deleteAvailability(id).subscribe(()=>{
+      this.callbackEmitter.emit();
+    });
   }
 
 }

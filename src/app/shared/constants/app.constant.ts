@@ -41,6 +41,7 @@ class API_CONSTANTS {
   INTER_BY_REC: string = 'interviews/organiser';
   INTER_ALL: string = 'interviews/findAll';
 
+  ROLES_GET: string = 'users/username/roles';
   SKILLS: string = 'user-skills';
   SKILLS_GET: string = 'users/findSkills';
   SKILLS_ADD: string = 'users/addSkill';
