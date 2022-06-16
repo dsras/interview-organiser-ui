@@ -168,21 +168,10 @@ export class CalendarComponent implements OnInit {
       ret.forEach(ele=>{
         console.log(ele)
         this.events.push(this.aRequester.parseAvailabilityUser(ele));
-      })
-      this.fastRefresh()
-      console.log('user refresh1');
-
-    });
-    this.aRequester.getMyAvailabilityInRange(
-      this.userService.getUsername(),
-      this.dateString.dateToStringDate(this.startDate),
-      this.dateString.dateToStringDate(this.endDate)
-    ).subscribe(ret => {
-      ret.forEach(ele => {
         this.availability.push(this.aRequester.parseAvailabilityUser(ele));
       })
       this.fastRefresh()
-      console.log('user refresh2');
+      console.log('user refresh1');
 
     });
 
@@ -193,18 +182,11 @@ export class CalendarComponent implements OnInit {
     ).subscribe(ret => {
       ret.forEach(ele => {
         this.events.push(this.iRequester.parseInterviewUser(ele));
-      })
-      this.fastRefresh()
-    });
-    this.iRequester.getInterviewsPerMonthByInterviewer(
-      false,
-      this.dateString.dateToStringDate(this.startDate),
-      this.dateString.dateToStringDate(this.endDate)
-    ).subscribe(ret => {
-      ret.forEach(ele => {
         this.interviews.push(this.iRequester.parseInterviewUser(ele));
       })
       this.fastRefresh()
+      console.log('user refresh3');
+
     });
   }
 
@@ -212,8 +194,6 @@ export class CalendarComponent implements OnInit {
     this.aRequester.getRecruiterAvailability()
     .subscribe(ret => {
       ret.forEach(ele =>{
-        console.log(ele)
-
         this.events.push(this.aRequester.parseAvailabilityRecruiter(ele))
         this.availability.push(this.aRequester.parseAvailabilityRecruiter(ele))
       })
@@ -225,8 +205,6 @@ export class CalendarComponent implements OnInit {
       this.dateString.dateToStringDate(this.endDate)
     ).subscribe(ret => {
       ret.forEach(ele => {
-        console.log(ele)
-
         this.events.push(this.iRequester.parseInterviewUser(ele));
         this.interviews.push(this.iRequester.parseInterviewUser(ele));
       })
