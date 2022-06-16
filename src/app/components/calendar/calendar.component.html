@@ -19,7 +19,9 @@
   <button mdbBtn color="primary" (click)="getApplicants()">get appls</button>-->
   <!-- <div class="container-fluid p-0 banner-img text-white"> -->
   <div class="row">
-    <availability-form></availability-form>
+    <availability-form
+      (callbackEmitter)="callbackFunction()"
+    ></availability-form>
     <skills-form></skills-form>
   </div>
   <!-- </div> -->

@@ -102,8 +102,7 @@ export class AvailabilityRequesterService {
       this.generateDateArray(form.days, form.weeks)
     );
 
-    return this.requester
-      .postRequest<AvailabilityArray>(url, newAvail)
+    return this.requester.postRequest<AvailabilityArray>(url, newAvail);
   }
 
   /**
