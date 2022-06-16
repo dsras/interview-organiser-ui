@@ -140,9 +140,11 @@ class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx
           />
         </mat-form-field>
 
+        <br>
         <div class="text-center">
         <button mat-raised-button (click)="addRecurringDay()">Add a day</button>
         </div>
+        <br>
 
         <ng-container formArrayName="days">
           <div *ngFor="let _ of days.controls; let i = index">
