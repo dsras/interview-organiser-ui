@@ -110,12 +110,6 @@ export class CalendarComponent implements OnInit {
     this.interviews = [];
   }
 
-  // closeCurrentModal(){
-  //   this.closeModal();
-  // }
-  // private closeModal(): void {
-  //   this.closeBtn.nativeElement.click();
-  // }
   //* in test
   /** @ignore needed for implementation? */
   async delayedRefresh(): Promise<void> {
@@ -143,14 +137,14 @@ export class CalendarComponent implements OnInit {
     this.resetEvents();
 
     // TODO make switch cases
-    if (this.userRoles.includes('USER')) {
-      console.log('is user');
-      this.initUser();
-    }
     if (this.userRoles.includes('RECRUITER')) {
       console.log('is recruiter');
       this.isRecruiter=true;
       this.initRecruiter();
+    }
+    if (this.userRoles.includes('USER') && !this.userRoles.includes('RECRUITER')) {
+      console.log('is user');
+      this.initUser();
     }
     if (this.userRoles.includes('ADMIN')) {
       this.initAdmin();

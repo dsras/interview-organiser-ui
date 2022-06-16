@@ -22,6 +22,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule } from '@angular/forms';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatTabsModule } from '@angular/material/tabs';
 import { DateToTimePipe } from '../pipes/DateToTimePipe';
 import { NgxMultipleDatesModule } from 'ngx-multiple-dates';
 
@@ -49,6 +50,7 @@ import { NgxMultipleDatesModule } from 'ngx-multiple-dates';
     FormsModule,
     MatChipsModule,
     NgxMultipleDatesModule,
+    MatTabsModule,
   ],
   exports: [
     TimepickerModule,
@@ -73,13 +75,12 @@ import { NgxMultipleDatesModule } from 'ngx-multiple-dates';
     FormsModule,
     MatChipsModule,
     NgxMultipleDatesModule,
+    MatTabsModule,
   ],
-  declarations: [
-    StringToDatetimePipe,
-  ],
+  declarations: [StringToDatetimePipe],
   providers: [
     { provide: TimepickerConfig, useFactory: getTimepickerConfig },
-    DateToTimePipe
+    DateToTimePipe,
   ],
 })
 export class SharedModule {}
