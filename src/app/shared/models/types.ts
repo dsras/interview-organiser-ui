@@ -14,6 +14,10 @@ export class availIdOnly implements Data {
 export class dateRange implements Data {
   start!: string;
   end!: string;
+  constructor(start: string, end: string) {
+    this.start = start;
+    this.end = end;
+  }
 }
 
 export class StatusUpdate implements Data {
@@ -208,42 +212,38 @@ export class InterviewRange implements Data {
   }
 }
 
+export class AvailabilityArray implements Data {
+  startTime: string;
+  endTime: string;
+  dates: string[];
+  constructor(startTime: string, endTime: string, dates: string[]) {
+    this.startTime = startTime;
+    this.endTime = endTime;
+    this.dates = dates;
+  }
+}
+
 export class Interview implements Data {
   interviewerIds: number[];
-  //organiserId: number;
-  // applicantId: number;
-  //roleApplied: number;
   date: string;
   startTime: string;
   endTime: string;
   additionalInfo: string;
   status: string;
   outcome: string;
-  // skillID: number;
-  //confirmed: number;
   constructor(
     interviewerIds: number[],
-    //organiserId: number,
-    // applicantId: number,
-    //roleApplied: number,
     date: string,
     startTime: string,
     endTime: string,
-    //confirmed: number
-    // skillID: number
     additionalInfo: string,
     status: string,
     outcome: string
   ) {
     this.interviewerIds = interviewerIds;
-    //this.organiserId = organiserId;
-    // this.applicantId = applicantId;
-    //this.roleApplied = roleApplied;
     this.date = date;
     this.startTime = startTime;
     this.endTime = endTime;
-    //this.confirmed =confirmed;
-    // this.skillID = skillID;
     this.additionalInfo = additionalInfo;
     this.status = status;
     this.outcome = outcome;
@@ -284,6 +284,7 @@ export class InterviewReturn implements Data {
 }
 
 export class SkillReturn implements Data {}
+export class AvailabilityReturn implements Data {}
 
 export class SkillOptions implements Data {
   skillNames: Set<string>;

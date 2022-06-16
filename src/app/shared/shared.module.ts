@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TimepickerConfig, TimepickerModule } from 'ngx-bootstrap/timepicker';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { getTimepickerConfig } from './functions/get-timepicker-config';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
@@ -16,12 +15,20 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { FormsModule } from '@angular/forms';
+import { MatChipsModule } from '@angular/material/chips';
+import { DateToTimePipe } from '../pipes/DateToTimePipe';
+import { NgxMultipleDatesModule } from 'ngx-multiple-dates';
 
 @NgModule({
   imports: [
     CommonModule,
     TimepickerModule,
-    BsDatepickerModule,
     MatSelectModule,
     MatTableModule,
     MatSortModule,
@@ -34,10 +41,17 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatSidenavModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatCardModule,
+    MatExpansionModule,
+    MatListModule,
+    MatGridListModule,
+    MatSlideToggleModule,
+    FormsModule,
+    MatChipsModule,
+    NgxMultipleDatesModule,
   ],
   exports: [
     TimepickerModule,
-    BsDatepickerModule,
     MatSelectModule,
     MatTableModule,
     MatSortModule,
@@ -51,8 +65,21 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatSidenavModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatCardModule,
+    MatExpansionModule,
+    MatListModule,
+    MatGridListModule,
+    MatSlideToggleModule,
+    FormsModule,
+    MatChipsModule,
+    NgxMultipleDatesModule,
   ],
-  declarations: [StringToDatetimePipe],
-  providers: [{ provide: TimepickerConfig, useFactory: getTimepickerConfig }],
+  declarations: [
+    StringToDatetimePipe,
+  ],
+  providers: [
+    { provide: TimepickerConfig, useFactory: getTimepickerConfig },
+    DateToTimePipe
+  ],
 })
 export class SharedModule {}

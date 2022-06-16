@@ -50,6 +50,13 @@ button[disabled]{
   width: fit-content;
 }
 
+#startTime1 {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+}
+
 #endTime {
   display: block;
   margin-left: auto;
@@ -128,3 +135,8 @@ button[disabled]{
 .container {
   padding: 2px 16px;
 }
+
+.full-width {
+  width: 90%;
+}
+

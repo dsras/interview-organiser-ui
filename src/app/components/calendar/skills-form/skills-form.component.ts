@@ -2,8 +2,8 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
-import { getUsername } from 'src/app/shared/functions/get-user-from-local.function';
 import { SkillOptions, Skills } from 'src/app/shared/models/types';
+import { GetUserDataService } from 'src/app/services/get-user-data.service';
 
 /**
  * Component for submiting new skills to users skill set
@@ -33,7 +33,9 @@ export class SkillsFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private rs: RequestCenterService,
-    private _dialog: MatDialogService
+    private _dialog: MatDialogService,
+    private userService: GetUserDataService
+
   ) {}
 
   /** @ignore */
@@ -74,7 +76,7 @@ export class SkillsFormComponent implements OnInit {
         id = element.id;
       }
     });
-    this.rs.addSkills(id, getUsername());
+    this.rs.addSkills(id, this.userService.getUsername());
     form.reset();
   }
 }

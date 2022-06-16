@@ -10,6 +10,7 @@ class API_CONSTANTS {
   USER_FIND: string = 'users/findUser';
 
   AVAIL: string = 'availability';
+  AVAIL_REC_RANGE: string = 'availabilityRange/';
   AVAIL_DEL: string = 'availability/delete';
   AVAIL_RANGE: string = 'availability/username/range';
   AVAIL_ADD: string = 'availability/new';
@@ -40,6 +41,7 @@ class API_CONSTANTS {
   INTER_BY_REC: string = 'interviews/organiser';
   INTER_ALL: string = 'interviews/findAll';
 
+  ROLES_GET: string = 'users/username/roles';
   SKILLS: string = 'user-skills';
   SKILLS_GET: string = 'users/findSkills';
   SKILLS_ADD: string = 'users/addSkill';

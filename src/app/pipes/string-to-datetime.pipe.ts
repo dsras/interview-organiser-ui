@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { timeout } from 'rxjs';
 
 @Pipe({
   name: 'stringToDatetime',
@@ -10,4 +11,5 @@ export class StringToDatetimePipe implements PipeTransform {
     returnDate.setHours(parseInt(timeArray[0]), parseInt(timeArray[1]));
     return returnDate;
   }
+
 }

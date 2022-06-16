@@ -6,135 +6,55 @@
 
   <div class="col-3 mt-3 mx-auto orange-border"></div>
 
-  <br> <br>
+  <br />
 
-  <!-- <div class="container text-center text-black">
+  <div class="container text-center text-black">
     <div class="col-12 col-md-12 mx-auto mt-3">
-      <div class="justify-content-center">
-        <div class="col-md-4 col-sm-6 my-3">
-          <a routerLink="/calendar">
-            <div class="blog-widget justify-content-center">
-              <div
-                class="col-lg-12 thumbnail-img"
-                data-aos="fade-left"
-                data-aos-delay="100"
-                style="
-                  background-image: url(../../../assets/images/calendar.png);
-                  background-size: cover;
-                  background-position: center;
-                "
-              ></div>
-              <div class="blog-content">
-                <button
-                  type="button"
-                  class="view-here-btn text-center d-inline-block"
-                  routerLink="calendar"
-                  routerLinkActive="active"
-                >
-                  <h5>
-                    Calendar
-                    <i
-                      class="fa fa-arrow-right"
-                      style="
-                        font-size: 18px;
-                        padding-top: 8px;
-                        padding-right: 7px;
-                      "
-                    ></i>
-                  </h5>
-                </button>
-              </div>
-            </div>
-          </a>
-        </div>
-        <br>
-        <create-interview></create-interview><br>
+      <mat-grid-list cols="4" rowHeight="100px">
+        <mat-grid-tile colspan="1" rowspan="6">
+          <div class="tile">
+            <interview-overview></interview-overview>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="3" rowspan="2">
+          <mat-card class="tile">
+            <create-interview></create-interview>
+          </mat-card>
+        </mat-grid-tile>
 
         <a routerLink="/dashboard/all-interviews">
-          <div class="blog-widget">
-            <div
-              class="col-lg-12 thumbnail-img"
-              data-aos="fade-left"
-              data-aos-delay="100"
-              style="
-                background-image: url(../../../assets/images/calendarBG.png);
-                background-size: cover;
-                background-position: center;
-              "
-            >
-          </div>
-            <div class="blog-content">
-              <button
-                type="button"
-                class="view-here-btn text-lefttext-black"
+          <mat-grid-tile colspan="3" rowspan="2">
+            <button class="big-tile text-center">
+              <span class="big-btn">
+                Interviews
+                <mat-icon class="tile-icon" style="position: sticky"
+                  >list</mat-icon
+                ></span
               >
-                <h5>
-                  All Interviews
-                  <i
-                    class="fa fa-arrow-right"
-                    style="
-                      font-size: 18px;
-                      padding-top: 8px;
-                      padding-right: 7px;
-                    "
-                  ></i>
-                </h5>
-              </button>
-            </div>
-          </div>
+            </button>
+          </mat-grid-tile>
         </a>
 
-        <br> <br>
-
-        <a routerLink="/dashboard/completed-interviews">
-          <div class="blog-widget">
-            <div
-              class="col-lg-12 thumbnail-img"
-              data-aos="fade-left"
-              data-aos-delay="100"
-              style="
-                background-image: url(../../../assets/images/calendarBG.png);
-                background-size: cover;
-                background-position: center;
-              "
-            >
-          </div>
-            <div class="blog-content">
-              <button
-                type="button"
-                class="view-here-btn text-lefttext-black"
-              >
-                <h5>
-                  Completed Interviews
-                  <i
-                    class="fa fa-arrow-right"
-                    style="
-                      font-size: 18px;
-                      padding-top: 8px;
-                      padding-right: 7px;
-                    "
-                  ></i>
-                </h5>
-              </button>
-            </div>
-          </div>
-        </a>
-
-        <div style="width: 100%; text-align: center; padding-top: 10px">
-          <a class="animated-arrow" href="https://www.accolite.com/insights">
-            <span class="the-arrow -left">
-              <span class="shaft"></span>
-            </span>
-          </a>
-        </div>
-
-      </div>
+        <!-- <a routerLink="/dashboard/completed-interviews">
+          <mat-grid-tile
+            data-aos="fade-center"
+            data-aos-delay="100"
+            colspan="3"
+            rowspan="2"
+          >
+            <button class="big-tile">
+              Completed Interviews <mat-icon class="tile-icon">done_outline</mat-icon>
+            </button>
+          </mat-grid-tile>
+        </a> -->
+      </mat-grid-list>
     </div>
   </div>
-</div> -->
+</div>
 
 
-<div class="container text-center text-black">
+<!-- <div class="container text-center text-black">
   <mat-drawer-container class="example-container">
     <mat-drawer mode="side" opened>
 
@@ -179,14 +99,6 @@
             </button>
 
             <button type="button" class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx-auto d-inline-block">
-              <img width="auto" height="70px" src="../../../assets/images/logData.png">
-              <h6 class="mt-4 font-weight-normal">
-                Completed Interviews
-              </h6>
-              <i class="fa fa-arrow-right" style="font-size: 18px; padding-top:8px; padding-right: 7px"></i>
-            </button>
-
-            <button type="button" class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx-auto d-inline-block">
               <img width="auto" height="70px" src="../../../assets/images/createInterview.png">
               <h6 class="mt-4 font-weight-normal">
                 Create Interviews
@@ -198,10 +110,4 @@
         </div>
     </mat-drawer-content>
   </mat-drawer-container>
-</div>
-
-<br> <br>
-
-<div class="card">
-  <interview-overview></interview-overview>
-</div>
+</div> -->

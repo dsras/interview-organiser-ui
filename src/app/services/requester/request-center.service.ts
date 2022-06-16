@@ -11,6 +11,15 @@ import { Observable } from 'rxjs';
 export class RequestCenterService {
   constructor(private requester: Requester, private pipe: DatePipe) {}
 
+  getUserRoles(username: string):Observable<string[]> {
+    const url =
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.ROLES_GET.replace('username', username);
+
+    return this.requester.getRequest<string[]>(url);
+  
+  }
+
   getUser(username: string): void {
     console.log('Calling');
     const url =

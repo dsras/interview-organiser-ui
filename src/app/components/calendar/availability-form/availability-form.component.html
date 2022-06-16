@@ -1,4 +1,4 @@
-<button
+<!-- <button
 type="button"
 class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx-auto d-inline-block"
     (click)="openDialog(form)">
@@ -7,13 +7,13 @@ class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx
     Add Availability
   </h4>
   <i class="fa fa-arrow-right" style="font-size: 18px; padding-top:8px; padding-right: 7px"></i>
-</button>
+</button> -->
 
-<!-- <div class="row justify-content-center">
+<div class="row justify-content-center">
   <button
     type="button"
     class="view-here-btn text-center"
-    (click)="openDialog(form)"
+    (click)="openDialog(dialog)"
   >
     Add Availability
     <i
@@ -21,51 +21,60 @@ class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx
       style="font-size: 18px; padding-top: 8px; padding-right: 7px"
     ></i>
   </button>
-</div> -->
+</div>
 
-<ng-template #form>
-  <form
-    [formGroup]="createAvailabilityForm"
-    (ngSubmit)="onSubmit(createAvailabilityForm)"
-    class="md-form"
-    style="color: black"
-  >
-    <div class="container text-center text-black">
-      <div
-        class="modal-header">
-        <div class="container-fluid py-2 intro-section-color">
-          <h3 class="text-black font-weight-bold text-center">
-            Add Availability
-          </h3>
-        </div>
-      </div>
-      <div class="row text-center">
-        <div class="col-md-6">
-          <label for="startTime">Start Time</label>
-          <timepicker
-            id="startTime"
-            type="time"
-            formControlName="startTime"
-          ></timepicker>
-        </div>
-        <div class="col-md-6">
-          <label for="endTime">End Time</label>
-          <timepicker
-            id="endTime"
-            type="time"
-            formControlName="endTime"
-          ></timepicker>
-        </div>
-      </div>
+<ng-template #dialog>
+  <div class="container-fluid py-2 intro-section-color">
+      <h4 class="text-black font-weight-bold text-center">Add Availability</h4>
+    </div>
 
-      <br />
+  <mat-dialog-content>
+    <h2 class="text-center">Range or selection?</h2>
 
-      <div class="container-fluid">
+    <div class="text-center">
+    <mat-slide-toggle
+      [(ngModel)]="isChecked"
+      [ngModelOptions]="{ standalone: true }"
+    >
+      <p *ngIf="isChecked">Range</p>
+      <p *ngIf="!isChecked">Individual</p>
+    </mat-slide-toggle>
+    </div>
+
+    <form
+      [formGroup]="dateRangeForm"
+      class="md-form"
+      style="color: black"
+      *ngIf="isChecked"
+    >
+      <div class="container text-center text-black pt-4 mt-4">
+        <div class="row text-center">
+          <div class="col-md-6">
+            <label for="startTime">Start Time</label>
+            <timepicker
+              id="startTime1"
+              type="time"
+              formControlName="startTime"
+            ></timepicker>
+          </div>
+          <div class="col-md-6">
+            <label for="endTime">End Time</label>
+            <timepicker
+              id="endTime1"
+              type="time"
+              formControlName="endTime"
+            ></timepicker>
+          </div>
+        </div>
+
+        <br />
+
         <mat-form-field appearance="outline" color="accent">
           <mat-label>Enter a date range</mat-label>
           <mat-date-range-input
-            [formGroup]="createAvailabilityForm"
+            [formGroup]="dateRangeForm"
             [rangePicker]="picker"
+            [dateFilter]="weekendFilter"
             disabled="true"
           >
             <input
@@ -91,24 +100,108 @@ class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx
         </mat-form-field>
       </div>
       <br />
-    </div>
-    <div class="modal-footer">
-      <div class="col-12 col-md-12 mx-auto services">
-        <div class="row justify-content-center">
-          <button
-            type="submit"
-            class="view-here-btn text-center d-inline-block"
-            [disabled]="!createAvailabilityForm.valid"
-            (click)="closeDialog()"
-          >
-          Submit
-          <i
+    </form>
+
+    <form
+      [formGroup]="multiDayForm"
+      class="md-form"
+      style="color: black"
+      *ngIf="!isChecked"
+    >
+      <div class="container text-center text-black pt-4 mt-4">
+        <div class="row text-center">
+          <div class="col-md-6">
+            <label for="startTime">Start Time</label>
+            <timepicker
+              id="startTime"
+              type="time"
+              formControlName="startTime"
+            ></timepicker>
+          </div>
+          <div class="col-md-6">
+            <label for="endTime">End Time</label>
+            <timepicker
+              id="endTime"
+              type="time"
+              formControlName="endTime"
+            ></timepicker>
+          </div>
+        </div>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Select Occurences</mat-label>
+          <mat-hint>Number</mat-hint>
+          <input
+            type="number"
+            matInput
+            name="weeks"
+            placeholder="Weeks"
+            formControlName="weeks"
+          />
+        </mat-form-field>
+
+        <div class="text-center">
+        <button mat-raised-button (click)="addRecurringDay()">Add a day</button>
+        </div>
+
+        <ng-container formArrayName="days">
+          <div *ngFor="let _ of days.controls; let i = index">
+            <ng-container [formGroupName]="i">
+              <mat-form-field appearance="outline">
+                <mat-label>Select Weekday</mat-label>
+                <label for="Weekday">dd/mm/yyyy</label>
+                <input
+                  type="date"
+                  id="Weekday"
+                  matInput
+                  [matDatepicker]="datepicker"
+                  formControlName="weekday"
+                />
+                <mat-hint>Weekday</mat-hint>
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="datepicker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #datepicker> </mat-datepicker>
+              </mat-form-field>
+            </ng-container>
+          </div>
+        </ng-container>
+      </div>
+      <br />
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <div class="col-12 col-md-12 mx-auto services">
+      <div class="row justify-content-center">
+        <button
+          *ngIf="isChecked"
+          type="submit"
+          class="view-here-btn text-center d-inline-block"
+          [disabled]="!dateRangeForm.valid"
+          (click)="[closeDialog(), onSubmit(dateRangeForm)]"
+        >
+        Submit
+        <i
             class="fa fa-arrow-right"
             style="font-size: 18px; padding-top: 8px; padding-right: 7px"
           ></i>
-          </button>
-        </div>
+        </button>
+        <button
+          *ngIf="!isChecked"
+          type="submit"
+          class="view-here-btn text-center d-inline-block"
+          [disabled]="!multiDayForm.valid"
+          (click)="[closeDialog(), onSubmit(multiDayForm)]"
+        >
+        Submit
+        <i
+            class="fa fa-arrow-right"
+            style="font-size: 18px; padding-top: 8px; padding-right: 7px"
+          ></i>
+        </button>
       </div>
     </div>
-  </form>
+  </mat-dialog-actions>
 </ng-template>

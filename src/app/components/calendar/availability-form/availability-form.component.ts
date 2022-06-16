@@ -1,5 +1,5 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, OnInit, TemplateRef } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 
@@ -15,24 +15,49 @@ export class AvailabilityFormComponent implements OnInit {
   /**
    * Blank form to be populated by the user
    */
-  createAvailabilityForm: FormGroup = this.fb.group({
+   @Input() callbackFunction!: (args: any) => void;
+
+  dateRangeForm: FormGroup = this.fb.group({
     startTime: ['', Validators.required],
     endTime: ['', Validators.required],
     firstDate: ['', Validators.required],
     lastDate: ['', Validators.required],
   });
+
+  multiDayForm: FormGroup = this.fb.group({
+    startTime: ['', Validators.required],
+    endTime: ['', Validators.required],
+    days: this.fb.array([
+      this.fb.group({ weekday: ['', Validators.required] }),
+    ]),
+    weeks: ['1', [Validators.required, Validators.min(1)]],
+  });
+
+  formSelector: FormGroup = this.fb.group({ range: [true] });
+
+  isChecked: boolean = false;
+
+  weekendFilter(d: Date | null): boolean {
+    const day = (d || new Date()).getDay();
+    // Prevent Saturday and Sunday from being selected.
+    return day !== 0 && day !== 6;
+  }
+
   /** @ignore */
   constructor(
     private fb: FormBuilder,
     private _dialog: MatDialogService,
     private aRequester: AvailabilityRequesterService
   ) {}
+
   /** @ignore */
   ngOnInit(): void {}
+
   /** @ignore */
   openDialog(template: TemplateRef<any>): void {
-    this._dialog.openDialog(template);
+    this._dialog.openDialogTall(template);
   }
+
   /** @ignore */
   closeDialog(): void {
     this._dialog.closeDialog();
@@ -44,7 +69,38 @@ export class AvailabilityFormComponent implements OnInit {
    * @param {FormGroup} form completed FormGroup to be submitted
    */
   onSubmit(form: FormGroup): void {
-    this.aRequester.addAvailabilityForm(form.value);
+    if (this.isChecked) {
+      this.aRequester.addAvailabilityRange(form.value);
+      form.reset();
+    } else {
+      console.log(form.value);
+      this.aRequester.addAvailabilityArray(form.value);
+      form.reset();
+    }
+  }
+
+  get days() {
+    return this.multiDayForm.controls['days'] as FormArray;
+  }
+
+  addRecurringDay() {
+    const dayForm = this.fb.group({
+      weekday: ['', Validators.required],
+    });
+
+    this.days.push(dayForm);
+  }
+
+  deleteRecurringDay(lessonIndex: number) {
+    this.days.removeAt(lessonIndex);
+  }
+
+  dummySubmit(form: FormGroup): void {
+    console.log(form.value);
     form.reset();
+  }
+
+  test() {
+    console.log(this.isChecked);
   }
 }

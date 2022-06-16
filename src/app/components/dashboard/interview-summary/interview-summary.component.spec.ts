@@ -6,7 +6,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { ModalControllerService } from 'src/app/services/modal-controller.service';
 
 import { InterviewSummaryComponent } from './interview-summary.component';
 
