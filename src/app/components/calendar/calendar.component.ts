@@ -78,7 +78,7 @@ export class CalendarComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = this.userService.getUsername();
     //this.userRoles = this.userService.getUserRoleNames();
-    this.requester.getUserRoles(this.currentUser).subscribe((returnData) => {
+    this.requester.getUserRoles(this.currentUser).subscribe(returnData => {
       returnData.forEach((element) => {
         this.userRoles.push(element);
       });
@@ -173,12 +173,14 @@ export class CalendarComponent implements OnInit {
   }
 
   initRecruiter(): void {
-    this.aRequester.getRecruiterAvailability().subscribe((ret) => {
-      ret.forEach((ele) => {
-        this.events.push(this.aRequester.parseAvailabilityRecruiter(ele));
-        this.availability.push(this.aRequester.parseAvailabilityRecruiter(ele));
-      });
-      this.fastRefresh();
+    this.aRequester.getRecruiterAvailability()
+      .subscribe((ret) => {
+        console.table(ret);
+        ret.forEach((ele) => {
+          this.events.push(this.aRequester.parseAvailabilityRecruiter(ele));
+          this.availability.push(this.aRequester.parseAvailabilityRecruiter(ele));
+        });
+        this.fastRefresh();
     });
     this.iRequester
       .getInterviewsPerMonthByInterviewer(
@@ -187,9 +189,10 @@ export class CalendarComponent implements OnInit {
         this.dateString.dateToStringDate(this.endDate)
       )
       .subscribe((ret) => {
+        console.table(ret);
         ret.forEach((ele) => {
-          this.events.push(this.iRequester.parseInterviewUser(ele));
-          this.interviews.push(this.iRequester.parseInterviewUser(ele));
+          this.events.push(this.iRequester.parseInterviewRecruiter(ele));
+          this.interviews.push(this.iRequester.parseInterviewRecruiter(ele));
         });
         this.fastRefresh();
       });
@@ -258,5 +261,7 @@ export class CalendarComponent implements OnInit {
     this.setDates();
     this.populateCalendar();
     this.activeDayIsOpen = false;
+  }
+  test(){
   }
 }

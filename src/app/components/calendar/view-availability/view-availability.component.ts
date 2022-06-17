@@ -24,6 +24,7 @@ import {
 } from 'src/app/shared/models/table-data';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 
 /**
  * Component that displays when a day is clicked on the calendar.
@@ -116,11 +117,7 @@ export class ViewAvailabilityComponent implements OnInit {
       ? this.displayedColumnsRec
       : this.displayedColumnsUser;
 
-    // this.getAvailability();
-    if (this.userRoles.includes('RECRUITER')) {
-      this.recAuth = true;
-      console.log('rec true');
-    }
+      console.log('is recruiter: ' + (this.isRecruiter?'true':'false'));
   }
 
   ngAfterViewInit() {
@@ -137,11 +134,20 @@ export class ViewAvailabilityComponent implements OnInit {
   // }
 
   /** @ignore */
-  constructor(private ar: AvailabilityRequesterService) {}
+  constructor(
+    private ar: AvailabilityRequesterService,
+    private ir: InterviewRequesterService
+    ) {}
 
   onDelete(id: string | number | any) {
     console.log(id);
     this.ar.deleteAvailability(id).subscribe(() => {
+      this.callbackEmitter.emit();
+    });
+  }
+  onIDelete(id: string | number | any) {
+    console.log(id);
+    this.ir.deleteInterviewRecompAvails(id).subscribe(() => {
       this.callbackEmitter.emit();
     });
   }

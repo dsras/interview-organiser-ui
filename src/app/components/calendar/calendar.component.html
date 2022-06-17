@@ -11,6 +11,7 @@
   <h2 class="text-black font-weight-bold text-center">Calendar</h2>
   <div class="col-1 mt-3 mx-auto orange-border"></div>
 </div>
+
 <br />
 <div>
   <div class="row calendar-controls" style="width: 100%">
@@ -108,7 +109,7 @@
     [interviews]="dayInterviews"
     [userRoles]="userRoles"
     (callbackEmitter)="callbackFunction()"
-
+    [isRecruiter]="isRecruiter"
   ></view-availability>
   <!-- [callbackFunction]="populateCalendar" -->
 </ng-template>

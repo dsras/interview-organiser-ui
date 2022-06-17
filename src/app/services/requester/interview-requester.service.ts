@@ -15,6 +15,7 @@ import { DateToStringService } from '../date-to-string.service';
 import { Observable } from 'rxjs';
 import { GetUserDataService } from '../get-user-data.service';
 import { CreateInterviewFormValue } from 'src/app/shared/models/forms';
+import { identifierModuleUrl } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +26,16 @@ export class InterviewRequesterService {
     private dateFormatter: DateToStringService,
     private userService: GetUserDataService
   ) {}
+
+  deleteInterviewRecompAvails(id: string){
+ 
+    let url =
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.INTER_DELETE
+
+    return this.requester.postRequestNoType<string>(url, id);
+    
+  }
 
   getInterviewsPerMonthByInterviewer(
     isRec: boolean,
