@@ -24,103 +24,78 @@
     ></availability-form>
     <skills-form></skills-form>
   </div>
+</div>
   <!-- </div> -->
-</div>
 
-<div class="container-fluid py-5 intro-section-color">
-  <h2 class="text-black font-weight-bold text-center">Calendar</h2>
-  <div class="col-1 mt-3 mx-auto orange-border"></div>
-</div>
-<br />
-<div>
-  <div class="row calendar-controls" style="width: 100%;">
-    <div class="col-sm" style="text-align: start;">
-      <div class="btn-group pl-3">
-        <button
-          class="btn btn-warning padded-btn"
-          mwlCalendarPreviousView
-          [view]="view"
-          [(viewDate)]="viewDate"
-          (viewDateChange)="closeOpenMonthViewDay()"
-        >
-          <span>Previous</span>
-        </button>
-        <button
-          class="btn btn-outline-warning padded-btn"
-          mwlCalendarToday
-          [(viewDate)]="viewDate"
-        >
-          <span class="text-black">Today</span>
-        </button>
-        <button
-          class="btn btn-warning padded-btn"
-          mwlCalendarNextView
-          [view]="view"
-          [(viewDate)]="viewDate"
-          (viewDateChange)="closeOpenMonthViewDay()"
-        >
-          <span>Next</span>
-        </button>
-      </div>
-    </div>
-    <div class="col-sm">
-      <h3 class="text-black font-weight-bold text-center">
-        {{ viewDate | calendarDate: view + "ViewTitle":"en" }}
-      </h3>
-    </div>
-    <div class="col-sm" style="text-align: end">
-      <div class="btn-group">
-        <button
-          class="btn btn-warning padded-btn"
-          (click)="setView(CalendarView.Month)"
-          [class.active]="view === CalendarView.Month"
-        >
-          <span class="text-center">Month</span>
-        </button>
-        <button
-          class="btn btn-outline-warning padded-btn"
-          (click)="setView(CalendarView.Week)"
-          [class.active]="view === CalendarView.Week"
-        >
-          <span class="text-black text-center">Week</span>
-        </button>
-        <button
-          class="btn btn-warning padded-btn"
-          (click)="setView(CalendarView.Day)"
-          [class.active]="view === CalendarView.Day"
-        >
-          <span>Day</span>
-        </button>
-      </div>
-    </div>
+  <div class="container-fluid py-5 intro-section-color">
+    <h1 class="text-black font-weight-bold text-center">
+      Calendar
+    </h1>
+    <div class="col-1 mt-3 mx-auto orange-border"></div>
   </div>
   <br />
-  <div [ngSwitch]="view">
-    <mwl-calendar-month-view
-      *ngSwitchCase="CalendarView.Month"
-      [viewDate]="viewDate"
-      [events]="events"
-      [refresh]="refresh"
-      [activeDayIsOpen]="activeDayIsOpen"
-      (dayClicked)="dayClicked($event.day)"
-    >
-    </mwl-calendar-month-view>
-    <mwl-calendar-week-view
-      *ngSwitchCase="CalendarView.Week"
-      [viewDate]="viewDate"
-      [events]="events"
-      [refresh]="refresh"
-    >
-    </mwl-calendar-week-view>
-    <mwl-calendar-day-view
-      *ngSwitchCase="CalendarView.Day"
-      [viewDate]="viewDate"
-      [events]="events"
-      [refresh]="refresh"
-    >
-    </mwl-calendar-day-view>
+  <div>
+    <div class="row" style="width:100%">
+      <div class=" col-sm">
+        <div class="btn-group pl-3 col-8">
+          <div class="btn btn-warning" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+            (viewDateChange)="closeOpenMonthViewDay()">
+            <h5 class="text-center">Previous</h5>
+          </div>
+          <div class="btn btn-outline-warning" mwlCalendarToday [(viewDate)]="viewDate">
+            <h5 class="text-black text-center">Today</h5>
+          </div>
+          <div class="btn btn-warning" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+            (viewDateChange)="closeOpenMonthViewDay()">
+            <h5 class="text-center">Next</h5>
+          </div>
+        </div>
+      </div>
+      <div class=" text-center col-sm">
+        <h2 class="text-black font-weight-bold text-center pl-4">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h2>
+      </div>
+      <div class=" col-sm" style="position:relative; text-align: end;">
+        <div class="btn-group col-8">
+          <div class="btn btn-warning" (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month">
+            <h5 class="text-center">Month</h5>
+          </div>
+          <div class="btn btn-outline-warning" (click)="setView(CalendarView.Week)"
+            [class.active]="view === CalendarView.Week">
+            <h5 class="text-black text-center">Week</h5>
+          </div>
+          <div class="btn btn-warning" (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">
+            <h5 class="text-center">Day</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div [ngSwitch]="view">
+      <mwl-calendar-month-view
+        *ngSwitchCase="CalendarView.Month"
+        [viewDate]="viewDate"
+        [events]="events"
+        [refresh]="refresh"
+        [activeDayIsOpen]="activeDayIsOpen"
+        (dayClicked)="dayClicked($event.day)"
+      >
+      </mwl-calendar-month-view>
+      <mwl-calendar-week-view
+        *ngSwitchCase="CalendarView.Week"
+        [viewDate]="viewDate"
+        [events]="events"
+        [refresh]="refresh"
+      >
+      </mwl-calendar-week-view>
+      <mwl-calendar-day-view
+        *ngSwitchCase="CalendarView.Day"
+        [viewDate]="viewDate"
+        [events]="events"
+        [refresh]="refresh"
+      >
+      </mwl-calendar-day-view>
+    </div>
   </div>
-</div>
 
 <!-- Everything you see below is just for the demo, you don't need to include it in your app -->
 
