@@ -49,9 +49,9 @@ const RequesterServiceStub = {
 const interRet: InterviewReturn = {
   interviewId: 0,
   interviewers: ["", ""],
-  date: "1995-05-10",
-  startTime: "10:00",
-  endTime: "11:00",
+  date: "2022-06-01T00:00:00.000Z",
+  startTime: "2022-06-01T09:00:00.000Z",
+  endTime: "2022-06-01T13:00:00.000Z",
   additionalInfo: "additional",
   status: "completed",
   outcome: "hired"

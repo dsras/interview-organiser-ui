@@ -150,12 +150,15 @@ describe('AvailabilityRequesterService', () => {
     expect(service).toBeTruthy();
   });
   it('date should be formatted to YYYY-MM-DD', () => {
-    let tempDate = new Date('2022-06-01T09:00:00.000Z');
+    let tempDate = new Date('2022-06-01T09:00:00.000');
     expect(service.dateToStringDate(tempDate) === "2022-06-01").toBeTruthy();
   });
   it('time should be formatted to HH:MM', () => {
-    let tempDate = new Date('2022-06-01T09:00:00.000Z');
-    expect(service.dateToStringTime(tempDate) === "09:00").toBeTruthy();
+    let tempDate = new Date('2022-06-01T09:00:00.000');
+    let timeString = service.dateToStringTime(tempDate);
+    console.log("the time");
+    console.log(timeString);
+    expect(timeString === "09:00").toBeTruthy();
   });
 
   it('parseAvailabilityEvent gets called', () => {
@@ -168,11 +171,11 @@ describe('AvailabilityRequesterService', () => {
   it('addAvailability calls requester methods', () => {
     let form: AvailabilityArrayFormValue = {
       startTime:  "2022-06-01T09:00:00.000Z",
-      endTime:  "2022-06-01T13:00:00.000Z",
+      endTime:  "2022-06-07T13:00:00.000Z",
       weeks: 1,
       days:[
-        {weekday: 'Monday'},
-        {weekday: 'Tuesday'},
+        {weekday: '2022-06-01T09:00:00.000Z'},
+        {weekday: '2022-06-05T09:00:00.000Z'},
       ]
     }
     spy = spyOn(rService, 'postRequest').and.callThrough();
