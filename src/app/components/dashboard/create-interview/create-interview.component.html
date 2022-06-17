@@ -105,11 +105,11 @@
               class="view-here-btn text-center d-inline-block"
               [disabled]="!findInterviewsForm.valid"
             >
-            Create Interview
-            <i
-            class="fa fa-arrow-right"
-            style="font-size: 18px; padding-top: 8px; padding-right: 7px"
-          ></i>
+              Find Interview
+              <i
+                class="fa fa-arrow-right"
+                style="font-size: 18px; padding-top: 8px; padding-right: 7px"
+              ></i>
             </button>
           </div>
         </div>
@@ -169,7 +169,7 @@
             ></timepicker>
           </mat-expansion-panel>
           <br />
-          <mat-form-field appearance="outline" style="width: 100%;">
+          <mat-form-field appearance="outline" style="width: 100%">
             <mat-label>Additional Information</mat-label>
             <textarea
               matInput
@@ -191,7 +191,11 @@
               (click)="switchView('')"
               class="view-here-btn text-lefttext-black text-center mx-auto"
             >
-              <h6 class="text-center">Reset Criteria</h6>
+              <i
+                class="fa fa-arrow-left"
+                style="font-size: 18px; padding-top: 8px; padding-right: 7px"
+              ></i>
+              Reset Criteria
             </button>
             <button
               type="submit"
@@ -199,7 +203,11 @@
               (click)="closeModal()"
               class="view-here-btn text-lefttext-black text-center mx-auto"
             >
-              <h6 class="text-center">Create Interview</h6>
+              Create Interview
+              <i
+                class="fa fa-check"
+                style="font-size: 18px; padding-top: 8px; padding-right: 7px"
+              ></i>
             </button>
           </div>
         </div>
