@@ -71,16 +71,13 @@ export class AvailabilityFormComponent implements OnInit {
   onSubmit(form: FormGroup): void {
     if (this.isChecked) {
       this.aRequester.addAvailabilityRange(form.value).subscribe(()=>{
-        this.callbackEmitter.emit();
         form.reset();
-
+        this.callbackEmitter.emit();
       });
     } else {
-      console.log(form.value);
       this.aRequester.addAvailabilityArray(form.value).subscribe(()=>{
-        this.callbackEmitter.emit();
         form.reset();
-
+        this.callbackEmitter.emit();
       });
     }
   }

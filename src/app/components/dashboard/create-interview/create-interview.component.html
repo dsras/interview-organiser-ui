@@ -11,10 +11,10 @@
       style="color: black"
     >
       <div class="text-center text-black">
-        <div style="width: 100%; color: black; background-color: orange">
+        <div style="width: 100%">
           <div class="container-fluid py-2 intro-section-color">
             <h4 class="text-black font-weight-bold text-center">
-              Find Interview
+              Create Interview
             </h4>
           </div>
         </div>
@@ -22,12 +22,12 @@
           <div class="col-md-6">
             <label for="startTime">Start Time</label>
             <timepicker
-              id="startTime"
+              id="startTime1"
               type="time"
               formControlName="startTime"
             ></timepicker>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-4">
             <label for="endTime">End Time</label>
             <timepicker
               id="endTime"
@@ -99,13 +99,17 @@
 
       <div class="modal-footer">
         <div class="col-12 col-md-12 mx-auto services">
-          <div class="row text-center">
+          <div class="row justify-content-center">
             <button
               type="submit"
-              class="view-here-btn text-lefttext-black mx-auto d-inline-block"
+              class="view-here-btn text-center d-inline-block"
               [disabled]="!findInterviewsForm.valid"
             >
-              <h6 class="text-center">Find Interview</h6>
+            Create Interview
+            <i
+            class="fa fa-arrow-right"
+            style="font-size: 18px; padding-top: 8px; padding-right: 7px"
+          ></i>
             </button>
           </div>
         </div>
@@ -165,7 +169,7 @@
             ></timepicker>
           </mat-expansion-panel>
           <br />
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="outline" style="width: 100%;">
             <mat-label>Additional Information</mat-label>
             <textarea
               matInput

@@ -1,15 +1,29 @@
-import { trigger, state, style, transition, animate } from '@angular/animations';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { CalendarEvent } from 'angular-calendar';
-import { StringToDatetimePipe } from 'src/app/pipes/string-to-datetime.pipe';
-import { DateToStringService } from 'src/app/services/date-to-string.service';
+import {
+  trigger,
+  state,
+  style,
+  transition,
+  animate,
+} from '@angular/animations';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild,
+} from '@angular/core';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 import {
   CalendarEventAvailability,
   CalendarEventInterview,
 } from 'src/app/shared/models/calendar-event-detail';
-import { AvailabilityTableData, InterviewTableData, InterviewTableDisplayData } from 'src/app/shared/models/table-data';
-import { MatDialogService } from 'src/app/services/mat-dialog.service';
+import {
+  AvailabilityTableData,
+  InterviewTableDisplayData,
+} from 'src/app/shared/models/table-data';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 /**
  * Component that displays when a day is clicked on the calendar.
@@ -31,36 +45,44 @@ import { MatDialogService } from 'src/app/services/mat-dialog.service';
     ]),
   ],
 })
-export class ViewAvailabilityComponent implements OnInit{
+export class ViewAvailabilityComponent implements OnInit {
   /** Availabilty list for the day */
   @Input() availability: Array<CalendarEventAvailability> = [];
   /** Interview list for the day */
   @Input() interviews: Array<CalendarEventInterview> = [];
+
   @Input() userRoles: Array<string> = [];
   @Output() callbackEmitter: EventEmitter<any> = new EventEmitter();
-  @Input() isRecruiter:boolean=false;
-  recAuth: boolean = false;  
-  tableData: AvailabilityTableData = new AvailabilityTableData(this.availability);
-  iTableData: InterviewTableDisplayData = new InterviewTableDisplayData(this.interviews);
+
+  @Input() isRecruiter: boolean = false;
+
+  @ViewChild('aPaginator') aPaginator!: MatPaginator;
+  @ViewChild('iPaginator') iPaginator!: MatPaginator;
+
+  recAuth: boolean = false;
+
+
+  aTable!: MatTableDataSource<CalendarEventAvailability>;
+  iTable!: MatTableDataSource<CalendarEventInterview>;
 
 
   displayedColumnsUser: Array<string> = [
     'AvailabilityId',
     'date',
     'time',
-    'delete'
+    'delete',
     // 'outcome',
     // 'status',
-  ]; 
-  
+  ];
+
   displayedColumnsRec: Array<string> = [
     'AvailabilityId',
     'date',
     'time',
-    'name'
+    'name',
     // 'outcome',
     // 'status',
-  ]; 
+  ];
   iDisplayedColumnsUser: Array<string> = [
     'InterviewId',
     'date',
@@ -73,12 +95,12 @@ export class ViewAvailabilityComponent implements OnInit{
     'date',
     'time',
     'name',
-    'delete'
+    'delete',
     // 'outcome',
     // 'status',
   ];
-  iDisplayedColumns: Array<string>=[];
-  displayedColumns: Array<string>=[];
+  iDisplayedColumns: Array<string> = [];
+  displayedColumns: Array<string> = [];
   expandedAvailability!: CalendarEventAvailability | null;
   expandedInterview!: CalendarEventAvailability | null;
   /** @ignore test method to be removed when completed */
@@ -86,34 +108,41 @@ export class ViewAvailabilityComponent implements OnInit{
     console.log(text);
   }
 
-  ngOnInit(){
-    this.iDisplayedColumns = this.isRecruiter?this.iDisplayedColumnsRec:this.iDisplayedColumnsUser;
-    this.displayedColumns = this.isRecruiter?this.displayedColumnsRec:this.displayedColumnsUser;
+  ngOnInit() {
+    this.iDisplayedColumns = this.isRecruiter
+      ? this.iDisplayedColumnsRec
+      : this.iDisplayedColumnsUser;
+    this.displayedColumns = this.isRecruiter
+      ? this.displayedColumnsRec
+      : this.displayedColumnsUser;
 
-    this.getAvailability();
+    // this.getAvailability();
     if (this.userRoles.includes('RECRUITER')) {
       this.recAuth = true;
       console.log('rec true');
-    }  
-  
-  }
-  /** Request table data from the database */
-  getAvailability(): void {
-    this.tableData.setData(this.availability);
-    this.iTableData.setData(this.interviews);
+    }
   }
 
+  ngAfterViewInit() {
+    this.aTable = new MatTableDataSource(this.availability)
+    this.aTable.paginator = this.aPaginator
+    this.iTable = new MatTableDataSource(this.interviews)
+    this.iTable.paginator = this.iPaginator
+  }
+
+  /** Request table data from the database */
+  // getAvailability(): void {
+  //   this.aTableData.setData(this.availability);
+  //   this.iTableData.setData(this.interviews);
+  // }
+
   /** @ignore */
-  constructor(
-    private ar: AvailabilityRequesterService, 
-    private dt: DateToStringService,
-    private _dialog: MatDialogService,
-    ) {}
-  onDelete(id: string | number | any){
+  constructor(private ar: AvailabilityRequesterService) {}
+
+  onDelete(id: string | number | any) {
     console.log(id);
-    this.ar.deleteAvailability(id).subscribe(()=>{
+    this.ar.deleteAvailability(id).subscribe(() => {
       this.callbackEmitter.emit();
     });
   }
-
 }
