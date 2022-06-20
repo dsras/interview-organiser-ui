@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { SocialAuthService } from 'angularx-social-login';
 import { APPCONSTANTS } from 'src/app/shared/constants/app.constant';
-import { SSOUser } from 'src/app/shared/models/user-model';
+import { ISSOUser } from 'src/app/shared/models/user-model';
 
 @Component({
   selector: 'toolbar',
@@ -13,7 +13,7 @@ export class ToolbarComponent implements OnInit {
 
   /** Login type */
   loginType: string = '';
-  user: SSOUser | null = null;
+  user: ISSOUser | null = null;
   loggedIn: boolean = false;
 
   /** @ignore */

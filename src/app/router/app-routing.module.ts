@@ -5,9 +5,9 @@ import { AllInterviewsComponent } from '../components/dashboard/all-interviews/a
 import { CompletedInterviewsComponent } from '../components/dashboard/completed-interviews/completed-interviews.component';
 import { DashboardComponent } from '../components/dashboard/dashboard.component';
 import { LoginComponent } from '../components/login/login.component';
+import { HomeComponent } from '../components/navigation/home/home.component';
 import { LoginGuard } from './guards/login.guard';
 import { RecruiterGuard } from './guards/recruiter.guard';
-
 
 const routes: Routes = [
   {
@@ -16,15 +16,21 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
+    path: 'home',
+    component: HomeComponent,
+    pathMatch: 'full',
+  },
+  {
     path: 'dashboard/all-interviews',
     component: AllInterviewsComponent,
     pathMatch: 'full',
-    canActivate: [LoginGuard, RecruiterGuard]
-  },  {
+    canActivate: [LoginGuard, RecruiterGuard],
+  },
+  {
     path: 'dashboard/completed-interviews',
     component: CompletedInterviewsComponent,
     pathMatch: 'full',
-    canActivate: [LoginGuard, RecruiterGuard]
+    canActivate: [LoginGuard, RecruiterGuard],
   },
   {
     path: 'dashboard',
@@ -41,13 +47,13 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: '/calendar',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: '**',
     redirectTo: '/calendar',
-    pathMatch: 'full'
-  }
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({

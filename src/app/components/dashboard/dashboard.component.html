@@ -1,113 +1,30 @@
 <div class="container-fluid section first-section-color">
-  <h2 class="text-black font-weight-bold text-center">
-    Recruiter Dashboard
-    <br />
-  </h2>
-
-  <div class="col-3 mt-3 mx-auto orange-border"></div>
-
-  <br />
-
   <div class="container text-center text-black">
-    <div class="col-12 col-md-12 mx-auto mt-3">
-      <mat-grid-list cols="4" rowHeight="100px">
-        <mat-grid-tile colspan="1" rowspan="6">
-          <div class="tile">
-            <interview-overview></interview-overview>
-          </div>
+    <mat-grid-list cols="4" rowHeight="100px">
+      <mat-grid-tile colspan="1" rowspan="2">
+        <mat-card class="tile">
+          <create-interview></create-interview>
+        </mat-card>
+      </mat-grid-tile>
+
+      <a routerLink="/dashboard/all-interviews">
+        <mat-grid-tile colspan="1" rowspan="2">
+          <button class="big-tile text-center">
+            <span class="big-btn">
+              Interviews
+              <mat-icon class="tile-icon" style="position: sticky"
+                >list</mat-icon
+              ></span
+            >
+          </button>
         </mat-grid-tile>
+      </a>
 
-        <mat-grid-tile colspan="3" rowspan="2">
-          <mat-card class="tile">
-            <create-interview></create-interview>
-          </mat-card>
-        </mat-grid-tile>
-
-        <a routerLink="/dashboard/all-interviews">
-          <mat-grid-tile colspan="3" rowspan="2">
-            <button class="big-tile text-center">
-              <span class="big-btn">
-                Interviews
-                <mat-icon class="tile-icon" style="position: sticky"
-                  >list</mat-icon
-                ></span
-              >
-            </button>
-          </mat-grid-tile>
-        </a>
-
-        <!-- <a routerLink="/dashboard/completed-interviews">
-          <mat-grid-tile
-            data-aos="fade-center"
-            data-aos-delay="100"
-            colspan="3"
-            rowspan="2"
-          >
-            <button class="big-tile">
-              Completed Interviews <mat-icon class="tile-icon">done_outline</mat-icon>
-            </button>
-          </mat-grid-tile>
-        </a> -->
-      </mat-grid-list>
-    </div>
+      <mat-grid-tile colspan="1" rowspan="6">
+        <div class="tile">
+          <interview-overview></interview-overview>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
   </div>
 </div>
-
-
-<!-- <div class="container text-center text-black">
-  <mat-drawer-container class="example-container">
-    <mat-drawer mode="side" opened>
-
-      <div class="dropdown">
-        <button class="dropbtn">
-          Dropdown
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
-          </svg>
-        </button>
-        <div class="dropdown-content">
-          <a href="#">Link 1</a>
-          <a href="#">Link 2</a>
-          <a href="#">Link 3</a>
-        </div>
-      </div>
-
-    </mat-drawer>
-    <mat-drawer-content>
-
-        <div class="col-12 col-md-12 mx-auto services">
-          <div class="row text-center">
-
-            <button
-            type="button"
-            class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx-auto d-inline-block"
-            routerLink="calendar"
-            routerLinkActive="active">
-              <img width="auto" height="70px" src="../../../assets/images/calendar.png">
-              <h6 class="mt-4 font-weight-normal">
-                Calendar
-              </h6>
-              <i class="fa fa-arrow-right" style="font-size: 18px; padding-top:8px; padding-right: 7px"></i>
-            </button>
-
-            <button type="button" class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx-auto d-inline-block">
-              <img width="auto" height="70px" src="../../../assets/images/getData.png">
-              <h6 class="mt-4 font-weight-normal">
-                All Interviews
-              </h6>
-              <i class="fa fa-arrow-right" style="font-size: 18px; padding-top:8px; padding-right: 7px"></i>
-            </button>
-
-            <button type="button" class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx-auto d-inline-block">
-              <img width="auto" height="70px" src="../../../assets/images/createInterview.png">
-              <h6 class="mt-4 font-weight-normal">
-                Create Interviews
-              </h6>
-              <i class="fa fa-arrow-right" style="font-size: 18px; padding-top:8px; padding-right: 7px"></i>
-            </button>
-
-          </div>
-        </div>
-    </mat-drawer-content>
-  </mat-drawer-container>
-</div> -->
