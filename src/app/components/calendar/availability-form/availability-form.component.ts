@@ -1,5 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  TemplateRef,
+} from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { CalendarUpdaterService } from 'src/app/services/calendar-updater.service';
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 
@@ -15,7 +23,10 @@ export class AvailabilityFormComponent implements OnInit {
   /**
    * Blank form to be populated by the user
    */
-   @Output() callbackEmitter: EventEmitter<any> = new EventEmitter();
+  @Output() callbackEmitter: EventEmitter<any> = new EventEmitter();
+
+  message: string = '';
+  subscription!: Subscription;
 
   dateRangeForm: FormGroup = this.fb.group({
     startTime: ['', Validators.required],
@@ -47,11 +58,16 @@ export class AvailabilityFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private _dialog: MatDialogService,
-    private aRequester: AvailabilityRequesterService
+    private aRequester: AvailabilityRequesterService,
+    private updater: CalendarUpdaterService
   ) {}
 
   /** @ignore */
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.subscription = this.updater.currentUpdateMessage.subscribe(
+      (message) => (this.message = message)
+    );
+  }
 
   /** @ignore */
   openDialog(template: TemplateRef<any>): void {
@@ -63,6 +79,10 @@ export class AvailabilityFormComponent implements OnInit {
     this._dialog.closeDialog();
   }
 
+  updateCalendar() {
+    this.updater.update(new Date().toString());
+  }
+
   /**
    * Accepts a completed form populated by user to be sent to database
    *
@@ -70,14 +90,14 @@ export class AvailabilityFormComponent implements OnInit {
    */
   onSubmit(form: FormGroup): void {
     if (this.isChecked) {
-      this.aRequester.addAvailabilityRange(form.value).subscribe(()=>{
+      this.aRequester.addAvailabilityRange(form.value).subscribe(() => {
         form.reset();
-        this.callbackEmitter.emit();
+        this.updateCalendar();
       });
     } else {
-      this.aRequester.addAvailabilityArray(form.value).subscribe(()=>{
+      this.aRequester.addAvailabilityArray(form.value).subscribe(() => {
         form.reset();
-        this.callbackEmitter.emit();
+        this.updateCalendar();
       });
     }
   }
