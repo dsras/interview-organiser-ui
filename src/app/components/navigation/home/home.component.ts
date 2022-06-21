@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit {
   user: ISSOUser | null = null;
   userRoles: string[] = [];
   loggedIn: boolean = false;
+  url: string = ''
 
   /** @ignore */
   constructor(
@@ -29,6 +30,8 @@ export class HomeComponent implements OnInit {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.setRoute(event);
+        console.log(event);
+        console.log(this.userRoles);
       }
     });
   }
@@ -45,7 +48,10 @@ export class HomeComponent implements OnInit {
   }
 
   private setRoute(currentRoute: NavigationEnd): void {
-    if (currentRoute.url !== '/login' && !this.loggedIn) {
+    this.url = currentRoute.urlAfterRedirects
+    if (this.loggedIn && this.user && this.userRoles.length > 0) {
+      return;
+    } else if (currentRoute.url !== '/login') {
       this.loggedIn = true;
       const user = localStorage.getItem('ssoUser');
       const roles = this.userDataService.getUserRoleNames();

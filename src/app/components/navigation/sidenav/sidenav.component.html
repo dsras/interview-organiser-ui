@@ -1,4 +1,4 @@
-<interview-overview></interview-overview>
+<interview-overview *ngIf="isRecruiter"></interview-overview>
 <!-- <a routerLink="/dashboard/all-interviews">
   <button class="big-tile text-center">
     <span class="big-btn">
@@ -7,11 +7,22 @@
     >
   </button>
 </a> -->
-<a routerLink="dashboard/all-interviews">
-  <button mat-stroked-button style="width: 100%;" >
-    <span class="big-btn">
-      Interviews
-      <mat-icon class="tile-icon" style="position: sticky">list</mat-icon></span
-    >
-  </button>
+
+<a
+  *ngIf="isRecruiter"
+  routerLink="all-interviews"
+  mat-stroked-button
+  style="width: 100%"
+>
+  <span class="big-btn">
+    Interviews
+    <mat-icon class="tile-icon" style="position: sticky">list</mat-icon></span
+  >
 </a>
+
+<create-interview *ngIf="isRecruiter"></create-interview>
+
+<availability-form *ngIf="isUser"></availability-form>
+
+<skills-form *ngIf="isUser"></skills-form>
+

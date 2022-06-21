@@ -40,6 +40,6 @@ import { DateToTimePipe } from 'src/app/pipes/DateToTimePipe';
       useFactory: adapterFactory,
     }),
   ],
-  exports: [CalendarComponent],
+  exports: [CalendarComponent, AvailabilityFormComponent, SkillsFormComponent],
 })
 export class MyCalendarModule {}

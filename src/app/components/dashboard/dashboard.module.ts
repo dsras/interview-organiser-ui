@@ -20,6 +20,6 @@ import { InterviewOverviewComponent } from './interview-overview/interview-overv
     InterviewOverviewComponent,
   ],
   imports: [CommonModule, SharedModule, ReactiveFormsModule, AppRoutingModule],
-  exports: [DashboardComponent, InterviewOverviewComponent],
+  exports: [DashboardComponent, InterviewOverviewComponent, CreateInterviewComponent],
 })
 export class DashboardModule {}

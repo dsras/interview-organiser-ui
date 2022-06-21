@@ -15,7 +15,7 @@ export const legacyRoutes: Routes = [
       pathMatch: 'full',
     },
     {
-      path: 'dashboard/all-interviews',
+      path: 'all-interviews',
       component: AllInterviewsComponent,
       pathMatch: 'full',
       canActivate: [LoginGuard, RecruiterGuard],

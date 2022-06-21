@@ -75,7 +75,7 @@
 </mat-toolbar>
 <mat-sidenav-container>
   <mat-sidenav #sidenav mode="side">
-    <sidenav></sidenav>
+    <sidenav [userRoles]="userRoles"></sidenav>
   </mat-sidenav>
   <mat-sidenav-content>
     <router-outlet></router-outlet>
