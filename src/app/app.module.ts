@@ -28,6 +28,7 @@ import { MyCalendarModule } from './components/calendar/calendar.module';
 import { DashboardModule } from './components/dashboard/dashboard.module';
 import { AppRoutingModule } from './router/app-routing.module';
 import { NavigationModule } from './components/navigation/navigation.module';
+import { SharedModule } from './shared/shared.module';
 
 // [application Services]
 import { AppInterceptor } from './components/interceptor/app.interceptor';
@@ -45,6 +46,7 @@ const CLIENT_ID = prodEnv
     DashboardModule,
     NavigationModule,
     AppRoutingModule,
+    SharedModule,
     HttpClientModule,
     ReactiveFormsModule,
     AgGridModule.withComponents([]),

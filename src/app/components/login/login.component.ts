@@ -77,15 +77,13 @@ export class LoginComponent implements OnInit {
     this._login.login(user).subscribe((response: any) => {
       if (response && response.token) {
         localStorage.setItem('apiKey', response.token);
-        this._rs.getUserData(this._user.getUsername()).subscribe((returnData: any) => {
-          user = returnData;
-          localStorage.setItem('userData', JSON.stringify(user));
-          if (this._user.getUserRoleNames().includes('RECRUITER')){
-            this._router.navigate(['/dashboard'])
-          } else {
+        this._rs
+          .getUserData(this._user.getUsername())
+          .subscribe((returnData: any) => {
+            user = returnData;
+            localStorage.setItem('userData', JSON.stringify(user));
             this._router.navigate(['/calendar']);
-          }
-        });
+          });
       }
     });
   }

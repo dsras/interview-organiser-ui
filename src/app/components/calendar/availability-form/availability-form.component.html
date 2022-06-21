@@ -39,9 +39,9 @@ class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx
       <p *ngIf="!isChecked">Individual</p>
     </mat-slide-toggle> -->
 
-  <mat-tab-group mat-stretch-tabs>
+  <mat-tab-group mat-stretch-tabs color="primary" backgroundColor="accent">
     <mat-tab label="Range">
-      <form [formGroup]="dateRangeForm" class="md-form" style="color: black">
+      <form [formGroup]="dateRangeForm" class="md-form" style="color: black; border: 2px;">
         <div class="container text-center text-black pt-4 mt-4">
           <div class="row text-center">
             <div class="col-md-6">
@@ -64,7 +64,7 @@ class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx
 
           <br />
 
-          <mat-form-field appearance="outline" color="accent">
+          <mat-form-field appearance="outline" color="accent" backgroundColor="primary">
             <mat-label>Enter a date range</mat-label>
             <mat-date-range-input
               [formGroup]="dateRangeForm"

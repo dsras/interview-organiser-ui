@@ -1,17 +1,83 @@
-<!-- <mat-grid-list cols="8" rowHeight="100px">
-  <mat-grid-tile colspan="6" rowspan="8">
-    <calendar></calendar>
-  </mat-grid-tile>
-  <mat-grid-tile colspan="2" rowspan="8">
-    <dashboard></dashboard>
-  </mat-grid-tile>
-</mat-grid-list> -->
+<mat-toolbar style="width: 100%">
+  <!-- <span class="hide-gt-lg" [hidden]="!loggedIn">
+    <button mat-button [matMenuTriggerFor]="menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>Item 1</button>
+      <button mat-menu-item>Item 2</button>
+    </mat-menu>
+  </span> -->
+  <button *ngIf="loggedIn" mat-icon-button color="primary" backgroundColor="accent" (click)="sidenav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
 
+  <span>
+    <a
+      class="nav-link"
+      routerLink="home"
+      id="industriesDropdown"
+      role="button"
+      aria-haspopup="true"
+      aria-expanded="false"
+    >
+      <img
+        src="https://www.accolite.com/assets/jpg/homebannerimages/accolite-logo.svg"
+        class="navbar-image"
+        alt="Accolite Digital Logo"
+      /> </a
+  ></span>
+  <span class="spacer"></span>
+  <!-- <span>
+    <a
+      class="nav-link"
+      routerLink="dashboard"
+      routerLinkActive="active"
+      role="button"
+      aria-haspopup="true"
+      aria-expanded="false"
+      [hidden]="!loggedIn"
+      >Dashboard</a
+    >
+  </span>
+  <span class="spacer"></span>
+
+  <span>
+    <a
+      class="nav-link"
+      routerLink="calendar"
+      routerLinkActive="active"
+      id="industriesDropdown"
+      role="button"
+      aria-haspopup="true"
+      aria-expanded="false"
+      [hidden]="!loggedIn"
+      >Calendar</a
+    >
+  </span>
+  <span class="spacer"></span> -->
+
+  <button
+    mat-button
+    class="icon"
+    aria-label="Example icon-button with share icon"
+    [hidden]="!loggedIn"
+    (click)="logout()"
+  >
+    Logout
+    <img
+      [src]="user.photoUrl"
+      class="rounded-circle"
+      style="height: 30px; width: 30px"
+      *ngIf="loggedIn && user"
+    />
+  </button>
+</mat-toolbar>
 <mat-sidenav-container>
-  <mat-sidenav mode="side" opened>
+  <mat-sidenav #sidenav mode="side">
     <sidenav></sidenav>
   </mat-sidenav>
   <mat-sidenav-content>
-    <calendar></calendar>
+    <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
