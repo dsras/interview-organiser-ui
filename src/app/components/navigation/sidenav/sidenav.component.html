@@ -8,12 +8,7 @@
   </button>
 </a> -->
 
-<a
-  *ngIf="isRecruiter"
-  routerLink="all-interviews"
-  mat-stroked-button
-  style="width: 100%"
->
+<a *ngIf="isRecruiter" routerLink="all-interviews" mat-stroked-button>
   <span class="big-btn">
     Interviews
     <mat-icon class="tile-icon" style="position: sticky">list</mat-icon></span
@@ -25,4 +20,3 @@
 <availability-form *ngIf="isUser"></availability-form>
 
 <skills-form *ngIf="isUser"></skills-form>
-

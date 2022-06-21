@@ -5,7 +5,7 @@ import { LoginGuard } from './guards/login.guard';
 import { RecruiterGuard } from './guards/recruiter.guard';
 import { ROUTES } from './app.routes';
 
-const routes: Routes = legacyRoutes;
+const routes: Routes = ROUTES;
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

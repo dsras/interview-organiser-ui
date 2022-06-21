@@ -4,7 +4,6 @@ import { AllInterviewsComponent } from "../components/dashboard/all-interviews/a
 import { CompletedInterviewsComponent } from "../components/dashboard/completed-interviews/completed-interviews.component";
 import { DashboardComponent } from "../components/dashboard/dashboard.component";
 import { LoginComponent } from "../components/login/login.component";
-import { HomeComponent } from "../components/navigation/home/home.component";
 import { LoginGuard } from "./guards/login.guard";
 import { RecruiterGuard } from "./guards/recruiter.guard";
 
@@ -15,7 +14,7 @@ export const legacyRoutes: Routes = [
       pathMatch: 'full',
     },
     {
-      path: 'all-interviews',
+      path: 'dashboard/all-interviews',
       component: AllInterviewsComponent,
       pathMatch: 'full',
       canActivate: [LoginGuard, RecruiterGuard],

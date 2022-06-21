@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
+import { CalendarComponent } from '../components/calendar/calendar.component';
 import { AllInterviewsComponent } from '../components/dashboard/all-interviews/all-interviews.component';
 import { LoginComponent } from '../components/login/login.component';
-import { HomeComponent } from '../components/navigation/home/home.component';
 import { LoginGuard } from './guards/login.guard';
 import { RecruiterGuard } from './guards/recruiter.guard';
 
@@ -12,10 +12,10 @@ export const ROUTES: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'home',
+    path: 'calendar',
     canActivate: [LoginGuard],
     pathMatch: 'full',
-    component: HomeComponent,
+    component: CalendarComponent,
   },
   {
     path: 'all-interviews',
@@ -24,12 +24,12 @@ export const ROUTES: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'calendar',
     pathMatch: 'full'
   },
   {
     path: '**',
-    redirectTo: 'home',
+    redirectTo: 'calendar',
     pathMatch: 'full',
   },
 ];
