@@ -60,7 +60,7 @@ export class InterviewStatusComponent implements OnInit {
 
   /** @ignore */
   openModal(template: TemplateRef<any>): void {
-    this._dialog.openDialogLarge(template);
+    this._dialog.openStatusForm(template);
   }
 
   /** @ignore */
@@ -71,8 +71,8 @@ export class InterviewStatusComponent implements OnInit {
   /**
    * Function to be called on click of the submit button
    */
-  onSubmit(f: FormGroup): void {
-    const str: string = f.value.status;
+  onSubmit(form: FormGroup): void {
+    const str: string = form.value.status;
     let id: number = -1;
 
     if (this.slot?.id) {
@@ -80,9 +80,9 @@ export class InterviewStatusComponent implements OnInit {
     }
     // TODO streamline this?
     const isStatus: boolean = Object.values(this.statusOptions).includes(
-      f.value.status
+      form.value.status
     );
     this.iRequester.updateInterviewStatus(id, str, isStatus);
-    f.reset();
+    form.reset();
   }
 }

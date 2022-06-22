@@ -233,7 +233,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
         this.dayInterviews.push(element);
       }
     }
-    this._dialog.openDialogLarge(this.dayContent);
+    this._dialog.openDayTable(this.dayContent);
   }
   /** @ignore */
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {

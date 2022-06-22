@@ -38,7 +38,7 @@
         </div>
         <br />
         <div class="container-fluid">
-          <h2>Date(s) required</h2>
+          <h5>Date(s) required</h5>
           <mat-form-field appearance="outline" color="accent">
             <mat-label>Enter a date range</mat-label>
             <mat-date-range-input
@@ -69,7 +69,7 @@
           </mat-form-field>
         </div>
         <div formArrayName="skills">
-          <h2>Skill required</h2>
+          <h5>Skill required</h5>
           <mat-form-field appearance="outline">
             <mat-label>Skill</mat-label>
             <mat-select formControlName="skillName" name="skillName">
@@ -97,21 +97,19 @@
         <br />
       </div>
 
-      <div class="modal-footer">
-        <div class="col-12 col-md-12 mx-auto services">
-          <div class="row justify-content-center">
-            <button
-              type="submit"
-              class="view-here-btn text-center d-inline-block"
-              [disabled]="!findInterviewsForm.valid"
-            >
-              Find Interview
-              <i
-                class="fa fa-arrow-right"
-                style="font-size: 18px; padding-top: 8px; padding-right: 7px"
-              ></i>
-            </button>
-          </div>
+      <div class="col-12 col-md-12 mx-auto services">
+        <div class="row justify-content-center">
+          <button
+            type="submit"
+            class="view-here-btn text-center d-inline-block"
+            [disabled]="!findInterviewsForm.valid"
+          >
+            Find Interview
+            <i
+              class="fa fa-arrow-right"
+              style="font-size: 18px; padding-top: 8px; padding-right: 7px"
+            ></i>
+          </button>
         </div>
       </div>
     </form>
@@ -123,15 +121,13 @@
       class="md-form"
       style="color: black"
     >
-      <div class="modal-header modal-org">
         <h3>
           <strong>Create Interview</strong>
         </h3>
-      </div>
       <div>
         <div class="container-padded">
           <h2>Select an interview slot</h2>
-          <mat-form-field appearance="outline" class="full-width">
+          <mat-form-field appearance="outline" style="width: 100%">
             <mat-label>Slot</mat-label>
             <mat-select
               formControlName="interviewSelected"
@@ -142,7 +138,7 @@
                 [value]="interview"
               >
                 On {{ interview.date }} between {{ interview.startTime }} ->
-                {{ interview.endTime }}, this is with:
+                {{ interview.endTime }}, Interview Panel:
                 {{ interview.interviewer }}.
               </mat-option>
             </mat-select>
@@ -166,6 +162,7 @@
               id="startTime"
               type="time"
               formControlName="startTime"
+              style="text-align: center"
             ></timepicker>
           </mat-expansion-panel>
           <br />
@@ -183,33 +180,31 @@
           </mat-form-field>
         </div>
       </div>
-      <div class="modal-footer">
-        <div class="col-12 col-md-12 mx-auto services">
-          <div class="row text-center">
-            <button
-              type="button"
-              (click)="switchView('')"
-              class="view-here-btn text-lefttext-black text-center mx-auto"
-            >
-              <i
-                class="fa fa-arrow-left"
-                style="font-size: 18px; padding-top: 8px; padding-right: 7px"
-              ></i>
-              Reset Criteria
-            </button>
-            <button
-              type="submit"
-              [disabled]="!createInterviewForm.valid"
-              (click)="closeModal()"
-              class="view-here-btn text-lefttext-black text-center mx-auto"
-            >
-              Create Interview
-              <i
-                class="fa fa-check"
-                style="font-size: 18px; padding-top: 8px; padding-right: 7px"
-              ></i>
-            </button>
-          </div>
+      <div class="col-12 col-md-12 mx-auto services">
+        <div class="row text-center">
+          <button
+            type="button"
+            (click)="switchView('')"
+            class="view-here-btn text-lefttext-black text-center mx-auto"
+          >
+            <i
+              class="fa fa-arrow-left"
+              style="font-size: 18px; padding-top: 8px; padding-right: 7px"
+            ></i>
+            Reset Criteria
+          </button>
+          <button
+            type="submit"
+            [disabled]="!createInterviewForm.valid"
+            (click)="closeModal()"
+            class="view-here-btn text-lefttext-black text-center mx-auto"
+          >
+            Create Interview
+            <i
+              class="fa fa-check"
+              style="font-size: 18px; padding-top: 8px; padding-right: 7px"
+            ></i>
+          </button>
         </div>
       </div>
     </form>

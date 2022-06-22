@@ -65,7 +65,7 @@ export class CreateInterviewComponent implements OnInit {
 
   /** @ignore */
   openModal(template: TemplateRef<any>): void {
-    this._dialog.openDialogTall(template);
+    this._dialog.openFindInterview(template);
   }
 
   /** @ignore */
