@@ -6,6 +6,7 @@ import {
   TemplateRef,
 } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Subscription } from 'rxjs';
 import { CalendarUpdaterService } from 'src/app/services/calendar-updater.service';
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
@@ -71,7 +72,31 @@ export class AvailabilityFormComponent implements OnInit {
 
   /** @ignore */
   openDialog(template: TemplateRef<any>): void {
-    this._dialog.openDialogTall(template);
+    this._dialog.openAvailabilityForm(template);
+    this._dialog.dialogRef?.afterClosed().subscribe(() => {
+      this.multiDayForm.reset();
+      this.multiDayForm.setControl(
+        'days',
+        this.fb.array([this.fb.group({ weekday: ['', Validators.required] })])
+      );
+      this.dateRangeForm.reset();
+    });
+  }
+
+  rangeDialog(): void {
+    this._dialog.rangeResize();
+  }
+
+  tabChange($event: MatTabChangeEvent): void {
+    const index = $event.index;
+    switch (index) {
+      case 0:
+        this._dialog.selectResize();
+        break;
+      case 1:
+        this._dialog.rangeResize();
+        break;
+    }
   }
 
   /** @ignore */
@@ -125,5 +150,9 @@ export class AvailabilityFormComponent implements OnInit {
 
   test() {
     console.log(this.isChecked);
+  }
+
+  log(text: string) {
+    console.log(text);
   }
 }
