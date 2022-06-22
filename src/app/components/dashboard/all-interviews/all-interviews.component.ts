@@ -46,10 +46,7 @@ export class AllInterviewsComponent implements OnInit {
     // 'status',
   ];
   /** @ignore */
-  constructor(
-    private _dialog: MatDialogService,
-    private iRequester: InterviewRequesterService
-  ) {}
+  constructor(private iRequester: InterviewRequesterService) {}
 
   /** Populate interviews on init */
   ngOnInit(): void {
@@ -69,15 +66,6 @@ export class AllInterviewsComponent implements OnInit {
     console.log(JSON.stringify(obj));
   }
 
-  /** @ignore */
-  openModal(template: TemplateRef<any>): void {
-    this._dialog.openDialog(template);
-  }
-
-  /** @ignore */
-  closeModal(): void {
-    this._dialog.closeDialog();
-  }
   /** @ignore test method to be removed when completed */
   message(text: string): void {
     console.log(text);

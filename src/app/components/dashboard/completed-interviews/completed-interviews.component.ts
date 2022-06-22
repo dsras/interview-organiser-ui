@@ -45,7 +45,6 @@ export class CompletedInterviewsComponent implements OnInit {
   ];
   /** @ignore */
   constructor(
-    private _dialog: MatDialogService,
     private iRequester: InterviewRequesterService
   ) {}
 
@@ -75,15 +74,6 @@ export class CompletedInterviewsComponent implements OnInit {
     console.log(JSON.stringify(obj));
   }
 
-  /** @ignore */
-  openModal(template: TemplateRef<any>): void {
-    this._dialog.openDialog(template);
-  }
-
-  /** @ignore */
-  closeModal(): void {
-    this._dialog.closeDialog();
-  }
   /** @ignore test method to be removed when completed */
   message(text: string): void {
     console.log(text);

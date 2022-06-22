@@ -46,7 +46,7 @@ export class SkillsFormComponent implements OnInit {
   // ? should this be private ?
   /** {@link MatDialogService} */
   openDialog(template: TemplateRef<any>): void {
-    this._dialog.openDialogSmall(template);
+    this._dialog.openSkillform(template);
   }
 
   // ? Should this be private ?
