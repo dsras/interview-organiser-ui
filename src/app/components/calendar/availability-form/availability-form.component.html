@@ -1,14 +1,3 @@
-<!-- <button
-type="button"
-class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx-auto d-inline-block"
-    (click)="openDialog(form)">
-  <img width="auto" height="70px" src="../../../assets/images/createInterview.png">
-  <h4 class="mt-4 font-weight-normal">
-    Add Availability
-  </h4>
-  <i class="fa fa-arrow-right" style="font-size: 18px; padding-top:8px; padding-right: 7px"></i>
-</button> -->
-
 <div class="row justify-content-center">
   <button
     type="button"
@@ -95,13 +84,12 @@ class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx
         <div style="text-align: center">
           <button
             type="submit"
-            class="view-here-btn text-lefttext-black text-center mx-auto d-inline-block"
+            class="view-here-btn text-center d-inline-block"
             [disabled]="!multiDayForm.valid"
-            (click)="[closeDialog(), onSubmit(multiDayForm)]"
+            (click)="onSubmit(multiDayForm)"
           >
-            <h6 class="mt-4 font-weight-normal" style="font-size: 100%">
-              Submit<mat-icon>save</mat-icon>
-            </h6>
+            Submit
+            <mat-icon>save</mat-icon>
           </button>
         </div>
       </form>
@@ -173,13 +161,12 @@ class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx
         <div class="text-center">
           <button
             type="submit"
-            class="view-here-btn text-lefttext-black text-center mx-auto d-inline-block"
+            class="view-here-btn text-center d-inline-block"
             [disabled]="!dateRangeForm.valid"
-            (click)="[closeDialog(), onSubmit(dateRangeForm)]"
+            (click)="onSubmit(dateRangeForm)"
           >
-            <h6 class="mt-4 font-weight-normal" style="font-size: 100%">
-              Submit<mat-icon>save</mat-icon>
-            </h6>
+            Submit
+            <mat-icon>save</mat-icon>
           </button>
         </div>
       </form>
