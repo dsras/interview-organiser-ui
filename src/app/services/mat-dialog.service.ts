@@ -19,17 +19,24 @@ export class MatDialogService {
 
   openAvailabilityForm(template: TemplateRef<any>): void {
     this.openDialog(template, availabilitySelectForm);
+    this.selectResize(1)
   }
 
   rangeResize(): void {
     this.resize(availabilityRangeForm);
   }
 
-  selectResize(days?: number): void {
-    let config = availabilitySelectForm;
+  selectResize(days: number): void {
+    let config = new MatDialogConfig();
+    config.height = availabilitySelectForm.height;
+    config.width = availabilitySelectForm.width;
     if (days) {
       switch (days) {
-        case 0 | 1:
+        case 0:
+          this.resize(config);
+          break;
+        case 1:
+          config.height = '71%'
           this.resize(config);
           break;
         case 2:
@@ -38,6 +45,7 @@ export class MatDialogService {
           break;
         case 3:
           config.height = '93%';
+          this.resize(config);
           break;
         default:
           config.height = '100%';
@@ -86,7 +94,7 @@ export class MatDialogService {
 }
 
 const availabilitySelectForm: MatDialogConfig = {
-  height: '71%',
+  height: '60%',
   width: '30%',
   position: { top: 'top' },
 };

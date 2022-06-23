@@ -8,7 +8,13 @@
       <button mat-menu-item>Item 2</button>
     </mat-menu>
   </span> -->
-  <button *ngIf="loggedIn" mat-icon-button color="primary" backgroundColor="accent" (click)="sidenav.toggle()">
+  <button
+    *ngIf="loggedIn"
+    mat-icon-button
+    color="primary"
+    backgroundColor="accent"
+    (click)="sidenav.toggle()"
+  >
     <mat-icon>menu</mat-icon>
   </button>
 
@@ -64,13 +70,14 @@
     [hidden]="!loggedIn"
     (click)="logout()"
   >
-    Logout
-    <img
+    <!-- <img
       [src]="user.photoUrl"
       class="rounded-circle"
       style="height: 30px; width: 30px"
       *ngIf="loggedIn && user"
-    />
+    /> -->
+    Logout
+    <mat-icon>logout</mat-icon>
   </button>
 </mat-toolbar>
 <mat-sidenav-container>

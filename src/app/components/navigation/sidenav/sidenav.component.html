@@ -1,22 +1,24 @@
-<interview-overview *ngIf="isRecruiter"></interview-overview>
-<!-- <a routerLink="/dashboard/all-interviews">
-  <button class="big-tile text-center">
-    <span class="big-btn">
-      Interviews
-      <mat-icon class="tile-icon" style="position: sticky">list</mat-icon></span
-    >
-  </button>
-</a> -->
+<mat-card class="side-card">
+  <div class="text-center side-padded">
+    <availability-form *ngIf="isUser"></availability-form>
+  </div>
 
-<a *ngIf="isRecruiter" routerLink="all-interviews" mat-stroked-button>
-  <span class="big-btn">
-    Interviews
-    <mat-icon class="tile-icon" style="position: sticky">list</mat-icon></span
-  >
-</a>
+  <div class="text-center side-padded">
+    <skills-form *ngIf="isUser"></skills-form>
+  </div>
 
-<create-interview *ngIf="isRecruiter"></create-interview>
+  <div class="text-center side-padded">
+    <create-interview *ngIf="isRecruiter"></create-interview>
+  </div>
 
-<availability-form *ngIf="isUser"></availability-form>
+  <div class="text-center side-padded">
+    <a *ngIf="isRecruiter" routerLink="all-interviews">
+      <button mat-raised-button class="main-button">
+        Interviews
+        <mat-icon class="tile-icon" style="position: sticky">list</mat-icon>
+      </button>
+    </a>
+  </div>
 
-<skills-form *ngIf="isUser"></skills-form>
+  <interview-overview *ngIf="isRecruiter"></interview-overview>
+</mat-card>

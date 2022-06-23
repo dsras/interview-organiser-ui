@@ -1,9 +1,9 @@
-<button class="big-tile" (click)="openModal(form)">
-  Create Interview <mat-icon>add_circle</mat-icon>
+<button mat-raised-button class="main-button" (click)="openModal(form)">
+  Create Interview <mat-icon>add</mat-icon>
 </button>
 
 <ng-template #form>
-  <div id="find" style="display: block">
+  <div id="find" *ngIf="!viewCreate">
     <form
       [formGroup]="findInterviewsForm"
       (ngSubmit)="findInterview(findInterviewsForm)"
@@ -100,35 +100,35 @@
       <div class="col-12 col-md-12 mx-auto services">
         <div class="row justify-content-center">
           <button
+            mat-raised-button
             type="submit"
-            class="view-here-btn text-center d-inline-block"
+            class="main-button"
             [disabled]="!findInterviewsForm.valid"
           >
             Find Interview
-            <i
-              class="fa fa-arrow-right"
-              style="font-size: 18px; padding-top: 8px; padding-right: 7px"
-            ></i>
+            <mat-icon *ngIf="!findInterviewsForm.valid"
+              >hourglass_empty</mat-icon
+            >
+            <mat-icon *ngIf="findInterviewsForm.valid">search</mat-icon>
           </button>
         </div>
       </div>
     </form>
   </div>
-  <div id="confirm" style="display: none">
+  <div id="confirm" *ngIf="viewCreate">
     <form
       [formGroup]="createInterviewForm"
       (ngSubmit)="submitInterview(createInterviewForm)"
       class="md-form"
       style="color: black"
     >
-        <h3>
-          <strong>Create Interview</strong>
-        </h3>
-      <div>
+      <h3 mat-dialog-title>
+        <strong>Create Interview</strong>
+      </h3>
+      <mat-dialog-content>
         <div class="container-padded">
-          <h2>Select an interview slot</h2>
           <mat-form-field appearance="outline" style="width: 100%">
-            <mat-label>Slot</mat-label>
+            <mat-label>Select an interview slot</mat-label>
             <mat-select
               formControlName="interviewSelected"
               name="interviewSelected"
@@ -179,34 +179,31 @@
             </mat-error>
           </mat-form-field>
         </div>
-      </div>
-      <div class="col-12 col-md-12 mx-auto services">
-        <div class="row text-center">
-          <button
-            type="button"
-            (click)="switchView('')"
-            class="view-here-btn text-lefttext-black text-center mx-auto"
+      </mat-dialog-content>
+      <mat-dialog-actions align="end">
+        <button
+          mat-raised-button
+          class="main-button"
+          type="button"
+          (click)="switchView()"
+        >
+          <mat-icon>undo</mat-icon>
+          Reset Criteria
+        </button>
+        <button
+          mat-raised-button
+          type="submit"
+          [disabled]="!createInterviewForm.valid"
+          (click)="closeModal()"
+          class="view-here-btn text-center d-inline-block"
+        >
+          Create Interview
+          <mat-icon *ngIf="!createInterviewForm.valid"
+            >hourglass_empty</mat-icon
           >
-            <i
-              class="fa fa-arrow-left"
-              style="font-size: 18px; padding-top: 8px; padding-right: 7px"
-            ></i>
-            Reset Criteria
-          </button>
-          <button
-            type="submit"
-            [disabled]="!createInterviewForm.valid"
-            (click)="closeModal()"
-            class="view-here-btn text-lefttext-black text-center mx-auto"
-          >
-            Create Interview
-            <i
-              class="fa fa-check"
-              style="font-size: 18px; padding-top: 8px; padding-right: 7px"
-            ></i>
-          </button>
-        </div>
-      </div>
+          <mat-icon *ngIf="createInterviewForm.valid">add_task</mat-icon>
+        </button>
+      </mat-dialog-actions>
     </form>
   </div>
 </ng-template>

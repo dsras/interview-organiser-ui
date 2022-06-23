@@ -10,11 +10,16 @@
   background-color: #ff9800;
 }
 
-button:disabled,
-button[disabled]{
-  border: 1px solid #999999;
-  background-color: #cccccc;
-  color: #666666;
+.button-container {
+  float: left;
+  width: 50%;
+}
+
+/* Clear floats after the columns */
+.button-container:after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
 .padded {

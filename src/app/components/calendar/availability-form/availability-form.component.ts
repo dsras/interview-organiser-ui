@@ -93,7 +93,7 @@ export class AvailabilityFormComponent implements OnInit {
     this.tab = $event.index;
     switch (this.tab) {
       case 0:
-        this._dialog.selectResize();
+        this._dialog.selectResize(this.days.length);
         break;
       case 1:
         this._dialog.rangeResize();
