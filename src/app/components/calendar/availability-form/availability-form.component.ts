@@ -1,14 +1,7 @@
-import {
-  Component,
-  EventEmitter,
-  OnInit,
-  Output,
-  TemplateRef,
-} from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { MatTabChangeEvent } from '@angular/material/tabs';
-import { Subscription } from 'rxjs';
 import { CalendarUpdaterService } from 'src/app/services/calendar-updater.service';
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
@@ -22,16 +15,12 @@ import { AvailabilityRequesterService } from 'src/app/services/requester/availab
   styleUrls: ['./availability-form.component.scss'],
 })
 export class AvailabilityFormComponent implements OnInit {
+  submitted: boolean = false;
+  currentTab: number = 0;
+
   /**
    * Blank form to be populated by the user
    */
-  @Output() callbackEmitter: EventEmitter<any> = new EventEmitter();
-
-  message: string = '';
-  subscription!: Subscription;
-  submitted: boolean = false;
-  tab: number = 0
-
   dateRangeForm: FormGroup = this.fb.group({
     startTime: ['', Validators.required],
     endTime: ['', Validators.required],
@@ -39,6 +28,9 @@ export class AvailabilityFormComponent implements OnInit {
     lastDate: ['', Validators.required],
   });
 
+  /**
+   * Blank form to be populated by the user
+   */
   multiDayForm: FormGroup = this.fb.group({
     startTime: ['', Validators.required],
     endTime: ['', Validators.required],
@@ -66,44 +58,28 @@ export class AvailabilityFormComponent implements OnInit {
   ) {}
 
   /** @ignore */
-  ngOnInit(): void {
-    this.subscription = this.updater.currentUpdateMessage.subscribe(
-      (message) => (this.message = message)
-    );
-  }
+  ngOnInit(): void {}
 
   /** @ignore */
   openDialog(template: TemplateRef<HTMLElement>): void {
-    this._dialog.openAvailabilityForm(template);
+    this._dialog.openDialog(template);
     this._dialog.dialogRef?.afterClosed().subscribe(() => {
       this.multiDayForm.reset();
       this.resetDays();
       this.dateRangeForm.reset();
       if (this.submitted) {
-        this.updateCalendar()
+        this.updater.updateCalendar();
       }
     });
   }
 
   rangeDialog(): void {
-    this._dialog.rangeResize();
+    this._dialog.resize();
   }
 
-  tabChange($event: MatTabChangeEvent): void {
-    this.tab = $event.index;
-    switch (this.tab) {
-      case 0:
-        this._dialog.selectResize(this.days.length);
-        break;
-      case 1:
-        this._dialog.rangeResize();
-        this.resetDays();
-        break;
-    }
-  }
-
-  updateCalendar() {
-    this.updater.update(new Date().toString());
+  tabChange(event: MatTabChangeEvent): void {
+    this.currentTab = event.index;
+    this._dialog.resize();
   }
 
   /**
@@ -112,18 +88,20 @@ export class AvailabilityFormComponent implements OnInit {
    * @param {FormGroup} form completed FormGroup to be submitted
    */
   onSubmit(form: FormGroup): void {
-    console.log(form.value)
-    console.log(`Tab: ${this.tab}`)
-    if (this.tab === 0) {
-      this.aRequester.addAvailabilityArray(form.value).subscribe(() => {
-        console.log(form.value)
-        this.submitted = true;
-      });
-    } else {
-      this.aRequester.addAvailabilityRange(form.value).subscribe((data) => {
-        console.log(data)
-        this.submitted = true;
-      });
+    switch (this.currentTab) {
+      case 0: {
+        this.aRequester.addAvailabilityArray(form.value).subscribe(() => {
+          this.submitted = true;
+        });
+        break;
+      }
+      case 1: {
+        this.aRequester.addAvailabilityRange(form.value).subscribe((data) => {
+          console.log(data);
+          this.submitted = true;
+        });
+        break;
+      }
     }
     this._dialog.closeDialog();
   }
@@ -138,7 +116,7 @@ export class AvailabilityFormComponent implements OnInit {
         weekday: ['', Validators.required],
       });
       this.days.push(dayForm);
-      this._dialog.selectResize(this.days.length);
+      this._dialog.resize();
     } else {
       const config: MatSnackBarConfig = {
         duration: 1000,
@@ -150,11 +128,11 @@ export class AvailabilityFormComponent implements OnInit {
 
   deleteRecurringDay(lessonIndex: number) {
     this.days.removeAt(lessonIndex);
-    this._dialog.selectResize(this.days.length);
+    this._dialog.resize();
   }
 
+  //* For Testing only //
   dummySubmit(form: FormGroup): void {
-    console.log(form.value);
     form.reset();
   }
 

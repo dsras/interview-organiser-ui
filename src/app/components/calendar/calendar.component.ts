@@ -43,7 +43,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
   currentUser: string = '';
   userRoles: Array<string> = [];
 
-  subscription!: Subscription;
+  updateSubscription!: Subscription;
 
   /* 
   TODO implement this later to view/edit individual events on the calendar
@@ -92,15 +92,15 @@ export class CalendarComponent implements OnInit, OnDestroy {
     //setup dates
     this.setDates();
 
-    this.subscription = this.updater.currentUpdateMessage.subscribe(() =>
-      this.callbackFunction()
-    );
+    this.updateSubscription = this.updater
+      .getEmitter()
+      .subscribe(() => this.callbackFunction());
 
     console.log('populate time');
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.updateSubscription.unsubscribe();
   }
 
   /** @ignore private? */
@@ -200,6 +200,10 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   initAdmin(): void {}
 
+  tabChange(): void {
+    this._dialog.resize();
+  }
+
   // ! Calendar core functionality contained here, shouldn't need to touch it!
   // TODO openDayModal() may need corrected down the line.
   /** @ignore */
@@ -233,7 +237,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
         this.dayInterviews.push(element);
       }
     }
-    this._dialog.openDayTable(this.dayContent);
+    this._dialog.openDialog(this.dayContent);
   }
   /** @ignore */
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {

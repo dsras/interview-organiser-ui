@@ -9,6 +9,7 @@ import {
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
+import { CalendarUpdaterService } from 'src/app/services/calendar-updater.service';
 
 /** Component for finding savailability for interview and creating them */
 @Component({
@@ -57,7 +58,8 @@ export class CreateInterviewComponent implements OnInit {
     private _dialog: MatDialogService,
     private rs: RequestCenterService,
     private aRequester: AvailabilityRequesterService,
-    private iRequester: InterviewRequesterService
+    private iRequester: InterviewRequesterService,
+    private updater: CalendarUpdaterService
   ) {}
 
   /** @ignore */
@@ -67,7 +69,7 @@ export class CreateInterviewComponent implements OnInit {
 
   /** @ignore */
   openModal(template: TemplateRef<any>): void {
-    this._dialog.openFindInterview(template);
+    this._dialog.openDialog(template);
   }
 
   /** @ignore */
@@ -104,8 +106,6 @@ export class CreateInterviewComponent implements OnInit {
     //   idArr,
     //   this.availableInterviews
     // );
-    console.log(form.value);
-    console.log(idArr);
     this.aRequester.getSlots(form.value, idArr).subscribe((returnData) => {
       console.table(returnData);
       const newStartDate: Date = new Date(form.value.firstDate);
@@ -156,10 +156,11 @@ export class CreateInterviewComponent implements OnInit {
     this.iRequester.addInterviewForm(form.value);
     console.table(form.value);
     form.reset();
+    this.updater.updateCalendar();
   }
 
   /** Switches which form is being viewed */
   switchView(): void {
-    this.viewCreate = !this.viewCreate
+    this.viewCreate = !this.viewCreate;
   }
 }

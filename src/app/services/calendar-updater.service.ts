@@ -1,17 +1,19 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable, EventEmitter } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CalendarUpdaterService {
+  private updateEvent: EventEmitter<any> = new EventEmitter();
 
-  private updateMessage = new BehaviorSubject('');
-  currentUpdateMessage = this.updateMessage.asObservable();
-  
-  constructor() { }
+  constructor() {}
 
-  update(message: string) {
-    this.updateMessage.next(message)
-    }
+  getEmitter(): EventEmitter<any> {
+    return this.updateEvent;
+  }
+
+  updateCalendar(): void {
+    this.updateEvent.emit();
+  }
 }

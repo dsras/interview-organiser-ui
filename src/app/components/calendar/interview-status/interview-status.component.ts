@@ -8,6 +8,7 @@ import {
 } from 'src/app/shared/constants/interview-options.constant';
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
 import { GetUserDataService } from 'src/app/services/get-user-data.service';
+import { CalendarUpdaterService } from 'src/app/services/calendar-updater.service';
 
 /**
  * Component to view and modify interview status
@@ -50,7 +51,8 @@ export class InterviewStatusComponent implements OnInit {
     private _dialog: MatDialogService,
     private fb: FormBuilder,
     private iRequester: InterviewRequesterService,
-    private userService: GetUserDataService
+    private userService: GetUserDataService,
+    private updater: CalendarUpdaterService
   ) {}
 
   /** @ignore */
@@ -60,7 +62,7 @@ export class InterviewStatusComponent implements OnInit {
 
   /** @ignore */
   openModal(template: TemplateRef<any>): void {
-    this._dialog.openStatusForm(template);
+    this._dialog.openDialog(template);
   }
 
   /** @ignore */
@@ -84,5 +86,6 @@ export class InterviewStatusComponent implements OnInit {
     );
     this.iRequester.updateInterviewStatus(id, str, isStatus);
     form.reset();
+    this.updater.updateCalendar();
   }
 }

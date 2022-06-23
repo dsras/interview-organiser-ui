@@ -6,7 +6,6 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { MatDialogService } from 'src/app/services/mat-dialog.service';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { InterviewTableData } from 'src/app/shared/models/table-data';
 import { InterviewReturn } from 'src/app/shared/models/types';

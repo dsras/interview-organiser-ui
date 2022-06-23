@@ -6,7 +6,7 @@
 </h2>
 
 <div mat-dialog-content>
-  <mat-tab-group mat-stretch-tabs>
+  <mat-tab-group mat-stretch-tabs (selectedTabChange)="tabChange()">
     <mat-tab *ngIf="availability.length > 0" label="Availability">
       <table
         style="width: 100%"

@@ -35,7 +35,6 @@ export class SkillsFormComponent implements OnInit {
     private rs: RequestCenterService,
     private _dialog: MatDialogService,
     private userService: GetUserDataService
-
   ) {}
 
   /** @ignore */
@@ -46,7 +45,7 @@ export class SkillsFormComponent implements OnInit {
   // ? should this be private ?
   /** {@link MatDialogService} */
   openDialog(template: TemplateRef<any>): void {
-    this._dialog.openSkillform(template);
+    this._dialog.openDialog(template);
   }
 
   // ? Should this be private ?
