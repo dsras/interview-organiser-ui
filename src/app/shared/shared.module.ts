@@ -25,6 +25,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatTabsModule } from '@angular/material/tabs';
 import { DateToTimePipe } from '../pipes/DateToTimePipe';
 import { NgxMultipleDatesModule } from 'ngx-multiple-dates';
+import { MatTreeModule } from '@angular/material/tree';
+
 
 @NgModule({
   imports: [
@@ -51,6 +53,7 @@ import { NgxMultipleDatesModule } from 'ngx-multiple-dates';
     MatChipsModule,
     NgxMultipleDatesModule,
     MatTabsModule,
+    MatTreeModule,
   ],
   exports: [
     TimepickerModule,
@@ -76,6 +79,7 @@ import { NgxMultipleDatesModule } from 'ngx-multiple-dates';
     MatChipsModule,
     NgxMultipleDatesModule,
     MatTabsModule,
+    MatTreeModule,
   ],
   declarations: [StringToDatetimePipe],
   providers: [

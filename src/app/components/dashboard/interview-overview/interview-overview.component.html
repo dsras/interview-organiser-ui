@@ -7,12 +7,40 @@
       This is a summary of all interviews
     </mat-panel-description>
   </mat-expansion-panel-header>
+
   <mat-list role="list">
     <mat-list-item role="listitem">
       Total Interviews: {{ interviews.length }}
     </mat-list-item>
     <mat-list-item role="listitem" *ngFor="let filteredList of allFilteredArrays | keyvalue">
-      {{ filteredList.key }}: {{ filteredList.value.length }}
+      <div *ngIf="filteredList.key == 'Awaiting Completion'">
+        <span class="dotAmber" or ></span>
+        {{ filteredList.key }} : {{ filteredList.value.length }}
+      </div>
+      <div *ngIf="filteredList.key == 'Candidate No Show'">
+        <span class="dotGrey"></span>
+        {{ filteredList.key }} : {{ filteredList.value.length }}
+      </div>
+      <div *ngIf="filteredList.key == 'Completed'">
+        <span class="dotGreen"></span>
+        {{ filteredList.key }} : {{ filteredList.value.length }}
+      </div>
+      <div *ngIf="filteredList.key == 'Did Not Progress'">
+        <span class="dotRed"></span>
+        {{ filteredList.key }} : {{ filteredList.value.length }}
+      </div>
+      <div *ngIf="filteredList.key == 'Panel No Show'">
+        <span class="dotGrey"></span>
+        {{ filteredList.key }} : {{ filteredList.value.length }}
+      </div>
+      <div *ngIf="filteredList.key == 'Pending'">
+        <span class="dotAmber"></span>
+        {{ filteredList.key }} : {{ filteredList.value.length }}
+      </div>
+      <div *ngIf="filteredList.key == 'Progressed'">
+        <span class="dotGreen"></span>
+        {{ filteredList.key }} : {{ filteredList.value.length }}
+      </div>
     </mat-list-item>
   </mat-list>
 </mat-expansion-panel>
