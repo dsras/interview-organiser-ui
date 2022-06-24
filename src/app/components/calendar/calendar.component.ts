@@ -201,7 +201,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
   initAdmin(): void {}
 
   tabChange(): void {
-    this._dialog.resize();
+    this._dialog.resizeDay();
   }
 
   // ! Calendar core functionality contained here, shouldn't need to touch it!
@@ -237,7 +237,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
         this.dayInterviews.push(element);
       }
     }
-    this._dialog.openDialog(this.dayContent);
+    this._dialog.openDay(this.dayContent);
   }
   /** @ignore */
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {

@@ -9,6 +9,7 @@ import {
 })
 export class MatDialogService {
   dialogRef?: MatDialogRef<TemplateRef<any>>;
+  private CALENDARDAYWIDTH = '60%'
 
   constructor(private dailogService: MatDialog) {}
 
@@ -24,4 +25,15 @@ export class MatDialogService {
   resize(): void {
     this.dialogRef?.updateSize();
   }
+
+  openDay(template: TemplateRef<any>):void {
+    this.dialogRef = this.dailogService.open(template)
+    this.resize()
+    this.dialogRef.updateSize(this.CALENDARDAYWIDTH)
+  }
+  resizeDay(): void {
+    this.resize()
+    this.dialogRef?.updateSize(this.CALENDARDAYWIDTH)
+  }
+
 }
