@@ -29,45 +29,67 @@
                 formControlName="startTime"
               ></timepicker>
             </div>
-            <br />
+            <div class="col-md-6">
+              <label for="endTime">End Time</label>
+              <timepicker
+                id="endTime"
+                type="time"
+                formControlName="endTime"
+              ></timepicker>
+            </div>
+          </div>
 
-            <ng-container formArrayName="days">
-              <div *ngFor="let _ of days.controls; let i = index">
-                <ng-container [formGroupName]="i">
-                  <mat-form-field appearance="outline">
-                    <mat-label>Select Weekday</mat-label>
-                    <input
-                      matInput
-                      [matDatepicker]="datepicker"
-                      formControlName="weekday"
-                    />
-                    <mat-hint>Weekday</mat-hint>
-                    <mat-datepicker-toggle
-                      matSuffix
-                      [for]="datepicker"
-                    ></mat-datepicker-toggle>
-                    <mat-datepicker #datepicker> </mat-datepicker>
-                  </mat-form-field>
-                  <button mat-icon-button (click)="deleteRecurringDay(i)">
-                    <mat-icon>delete</mat-icon>
-                  </button>
-                </ng-container>
-              </div>
-            </ng-container>
-          </div>
-          <br />
-          <div style="text-align: center">
-            <button
-              mat-raised-button
-              type="submit"
-              class="main-button"
-              [disabled]="!multiDayForm.valid"
-              (click)="onSubmit(multiDayForm)"
-            >
-              Submit
-              <mat-icon>add</mat-icon>
-            </button>
-          </div>
+          <mat-form-field appearance="outline">
+            <mat-label>Select Occurences</mat-label>
+            <mat-hint>Number</mat-hint>
+            <input
+              type="number"
+              matInput
+              name="weeks"
+              placeholder="Weeks"
+              formControlName="weeks"
+            />
+          </mat-form-field>
+          <button mat-raised-button (click)="addRecurringDay()">
+            Add a day
+          </button>
+
+          <ng-container formArrayName="days">
+            <div *ngFor="let _ of days.controls; let i = index">
+              <ng-container [formGroupName]="i">
+                <mat-form-field appearance="outline">
+                  <mat-label>Select Weekday</mat-label>
+                  <input
+                    matInput
+                    [matDatepicker]="datepicker"
+                    formControlName="weekday"
+                  />
+                  <mat-hint>Weekday</mat-hint>
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="datepicker"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker #datepicker> </mat-datepicker>
+                </mat-form-field>
+                <button mat-icon-button (click)="deleteRecurringDay(i)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </ng-container>
+            </div>
+          </ng-container>
+        </div>
+        <br />
+        <div style="text-align: center">
+          <button
+            mat-raised-button
+            type="submit"
+            class="main-button"
+            [disabled]="!multiDayForm.valid"
+            (click)="onSubmit(multiDayForm)"
+          >
+            Submit
+            <mat-icon>add</mat-icon>
+          </button>
         </div>
       </form>
     </mat-tab>
