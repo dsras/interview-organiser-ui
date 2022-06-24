@@ -1,58 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CalendarComponent } from '../components/calendar/calendar.component';
-import { AllInterviewsComponent } from '../components/dashboard/all-interviews/all-interviews.component';
-import { CompletedInterviewsComponent } from '../components/dashboard/completed-interviews/completed-interviews.component';
-import { DashboardComponent } from '../components/dashboard/dashboard.component';
-import { LoginComponent } from '../components/login/login.component';
+import { legacyRoutes } from './legacy.routes';
 import { LoginGuard } from './guards/login.guard';
 import { RecruiterGuard } from './guards/recruiter.guard';
+import { ROUTES } from './app.routes';
 
-
-const routes: Routes = [
-  {
-    path: 'login',
-    component: LoginComponent,
-    pathMatch: 'full',
-  },
-  {
-    path: 'dashboard/all-interviews',
-    component: AllInterviewsComponent,
-    pathMatch: 'full',
-    canActivate: [LoginGuard, RecruiterGuard]
-  },  {
-    path: 'dashboard/completed-interviews',
-    component: CompletedInterviewsComponent,
-    pathMatch: 'full',
-    canActivate: [LoginGuard, RecruiterGuard]
-  },
-  {
-    path: 'dashboard',
-    component: DashboardComponent,
-    pathMatch: 'full',
-    canActivate: [LoginGuard, RecruiterGuard],
-  },
-  {
-    path: 'calendar',
-    component: CalendarComponent,
-    pathMatch: 'full',
-    canActivate: [LoginGuard],
-  },
-  {
-    path: '',
-    redirectTo: '/calendar',
-    pathMatch: 'full'
-  },
-  {
-    path: '**',
-    redirectTo: '/calendar',
-    pathMatch: 'full'
-  }
-];
+const routes: Routes = ROUTES;
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  providers: [LoginGuard],
+  providers: [LoginGuard, RecruiterGuard],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

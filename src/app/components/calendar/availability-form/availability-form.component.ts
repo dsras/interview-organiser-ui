@@ -1,5 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { MatTabChangeEvent } from '@angular/material/tabs';
+import { CalendarUpdaterService } from 'src/app/services/calendar-updater.service';
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 
@@ -12,11 +15,12 @@ import { AvailabilityRequesterService } from 'src/app/services/requester/availab
   styleUrls: ['./availability-form.component.scss'],
 })
 export class AvailabilityFormComponent implements OnInit {
+  submitted: boolean = false;
+  currentTab: number = 0;
+
   /**
    * Blank form to be populated by the user
    */
-   @Output() callbackEmitter: EventEmitter<any> = new EventEmitter();
-
   dateRangeForm: FormGroup = this.fb.group({
     startTime: ['', Validators.required],
     endTime: ['', Validators.required],
@@ -24,6 +28,9 @@ export class AvailabilityFormComponent implements OnInit {
     lastDate: ['', Validators.required],
   });
 
+  /**
+   * Blank form to be populated by the user
+   */
   multiDayForm: FormGroup = this.fb.group({
     startTime: ['', Validators.required],
     endTime: ['', Validators.required],
@@ -35,8 +42,6 @@ export class AvailabilityFormComponent implements OnInit {
 
   formSelector: FormGroup = this.fb.group({ range: [true] });
 
-  isChecked: boolean = false;
-
   weekendFilter(d: Date | null): boolean {
     const day = (d || new Date()).getDay();
     // Prevent Saturday and Sunday from being selected.
@@ -47,20 +52,34 @@ export class AvailabilityFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private _dialog: MatDialogService,
-    private aRequester: AvailabilityRequesterService
+    private aRequester: AvailabilityRequesterService,
+    private updater: CalendarUpdaterService,
+    private _snackbar: MatSnackBar
   ) {}
 
   /** @ignore */
   ngOnInit(): void {}
 
   /** @ignore */
-  openDialog(template: TemplateRef<any>): void {
-    this._dialog.openDialogTall(template);
+  openDialog(template: TemplateRef<HTMLElement>): void {
+    this._dialog.openDialog(template);
+    this._dialog.dialogRef?.afterClosed().subscribe(() => {
+      this.multiDayForm.reset();
+      this.resetDays();
+      this.dateRangeForm.reset();
+      if (this.submitted) {
+        this.updater.updateCalendar();
+      }
+    });
   }
 
-  /** @ignore */
-  closeDialog(): void {
-    this._dialog.closeDialog();
+  rangeDialog(): void {
+    this._dialog.resize();
+  }
+
+  tabChange(event: MatTabChangeEvent): void {
+    this.currentTab = event.index;
+    this._dialog.resize();
   }
 
   /**
@@ -69,17 +88,22 @@ export class AvailabilityFormComponent implements OnInit {
    * @param {FormGroup} form completed FormGroup to be submitted
    */
   onSubmit(form: FormGroup): void {
-    if (this.isChecked) {
-      this.aRequester.addAvailabilityRange(form.value).subscribe(()=>{
-        form.reset();
-        this.callbackEmitter.emit();
-      });
-    } else {
-      this.aRequester.addAvailabilityArray(form.value).subscribe(()=>{
-        form.reset();
-        this.callbackEmitter.emit();
-      });
+    switch (this.currentTab) {
+      case 0: {
+        this.aRequester.addAvailabilityArray(form.value).subscribe(() => {
+          this.submitted = true;
+        });
+        break;
+      }
+      case 1: {
+        this.aRequester.addAvailabilityRange(form.value).subscribe((data) => {
+          console.log(data);
+          this.submitted = true;
+        });
+        break;
+      }
     }
+    this._dialog.closeDialog();
   }
 
   get days() {
@@ -87,23 +111,35 @@ export class AvailabilityFormComponent implements OnInit {
   }
 
   addRecurringDay() {
-    const dayForm = this.fb.group({
-      weekday: ['', Validators.required],
-    });
-
-    this.days.push(dayForm);
+    if (this.days.length < 5) {
+      const dayForm = this.fb.group({
+        weekday: ['', Validators.required],
+      });
+      this.days.push(dayForm);
+      this._dialog.resize();
+    } else {
+      const config: MatSnackBarConfig = {
+        duration: 1000,
+        verticalPosition: 'top',
+      };
+      this._snackbar.open('5 days is the limit', undefined, config);
+    }
   }
 
   deleteRecurringDay(lessonIndex: number) {
     this.days.removeAt(lessonIndex);
+    this._dialog.resize();
   }
 
+  //* For Testing only //
   dummySubmit(form: FormGroup): void {
-    console.log(form.value);
     form.reset();
   }
 
-  test() {
-    console.log(this.isChecked);
+  private resetDays(): void {
+    this.multiDayForm.setControl(
+      'days',
+      this.fb.array([this.fb.group({ weekday: ['', Validators.required] })])
+    );
   }
 }

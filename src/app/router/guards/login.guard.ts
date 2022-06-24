@@ -28,7 +28,7 @@ export class LoginGuard implements CanActivate {
       localStorage.getItem('userData') === ''
     ) {
       this.requester.getUserData(this.userService.getUsername()).subscribe((returnData: any) => {
-        console.log("USer data return");
+        console.log("User data return");
         console.log(returnData);
         localStorage.setItem('userData', returnData);
       });

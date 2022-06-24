@@ -1,39 +1,39 @@
 import { Injectable, TemplateRef } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+} from '@angular/material/dialog';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MatDialogService {
   dialogRef?: MatDialogRef<TemplateRef<any>>;
+  private CALENDARDAYWIDTH = '60%'
 
   constructor(private dailogService: MatDialog) {}
 
   openDialog(template: TemplateRef<any>): void {
-    this.dialogRef = this.dailogService.open(template, mediumDialog);
-  }
-
-  openDialogTall(template: TemplateRef<any>): void {
-    this.dialogRef = this.dailogService.open(template, tallDialog);
-  }
-
-  openDialogLarge(template: TemplateRef<any>): void {
-    this.dialogRef = this.dailogService.open(template, largeDialog);
-  }
-
-  openDialogSmall(template: TemplateRef<any>): void {
-    this.dialogRef = this.dailogService.open(template, smallDialog);
+    this.dialogRef = this.dailogService.open(template);
+    this.resize();
   }
 
   closeDialog(): void {
     this.dialogRef?.close();
   }
+
+  resize(): void {
+    this.dialogRef?.updateSize();
+  }
+
+  openDay(template: TemplateRef<any>):void {
+    this.dialogRef = this.dailogService.open(template)
+    this.resize()
+    this.dialogRef.updateSize(this.CALENDARDAYWIDTH)
+  }
+  resizeDay(): void {
+    this.resize()
+    this.dialogRef?.updateSize(this.CALENDARDAYWIDTH)
+  }
+
 }
-interface DialogConfig {
-  height: string;
-  width: string;
-}
-const smallDialog: DialogConfig = { height: '60%%', width: '40%' };
-const mediumDialog: DialogConfig = { height: '75%', width: '40%' };
-const tallDialog: DialogConfig = { height: '90%', width: '60%' };
-const largeDialog: DialogConfig = { height: '80%', width: '80%' };

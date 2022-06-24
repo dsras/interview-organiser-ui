@@ -1,21 +1,22 @@
-<div class="container-fluid section first-section-color">
+<!-- <div class="container-fluid section first-section-color">
   <div class="row">
     <availability-form
     (callbackEmitter)="callbackFunction()"
     ></availability-form>
     <skills-form></skills-form>
   </div>
-</div>
+</div> -->
 
-<div class="container-fluid py-5 intro-section-color">
+<!-- <div class="container-fluid py-5 intro-section-color">
   <h2 class="text-black font-weight-bold text-center">Calendar</h2>
   <div class="col-1 mt-3 mx-auto orange-border"></div>
-</div>
+</div> -->
 <br />
-<div>
+<mat-card>
+  <div>
   <div class="row calendar-controls" style="width: 100%">
     <div class="col-sm" style="text-align: start">
-      <div class="btn-group pl-3">
+      <div class="btn-group">
         <button
           class="btn btn-warning padded-btn"
           mwlCalendarPreviousView
@@ -101,14 +102,14 @@
     </mwl-calendar-day-view>
   </div>
 </div>
+</mat-card>
 
 <ng-template #dayContent>
   <view-availability
     [availability]="dayAvailability"
     [interviews]="dayInterviews"
     [userRoles]="userRoles"
-    (callbackEmitter)="callbackFunction()"
-
+    (tabChangeEvent)="tabChange()"
   ></view-availability>
   <!-- [callbackFunction]="populateCalendar" -->
 </ng-template>

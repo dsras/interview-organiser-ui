@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AppRoles, UserData } from '../shared/models/types';
+import { ISSOUser } from '../shared/models/user-model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,12 +24,15 @@ export class GetUserDataService {
     userRoles.forEach((role) => {
       roles.push(role.name);
     });
-    console.log(roles);
     return roles;
   }
   
   getUserData(): UserData {
     return JSON.parse('' + localStorage.getItem('userData'));
+  }
+
+  getSSOUser(): ISSOUser {
+    return JSON.parse(''+ localStorage.getItem('ssoUser'))
   }
   
 }

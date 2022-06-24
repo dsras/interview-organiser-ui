@@ -6,7 +6,6 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { MatDialogService } from 'src/app/services/mat-dialog.service';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { InterviewTableData } from 'src/app/shared/models/table-data';
 import { InterviewReturn } from 'src/app/shared/models/types';
@@ -46,10 +45,7 @@ export class AllInterviewsComponent implements OnInit {
     // 'status',
   ];
   /** @ignore */
-  constructor(
-    private _dialog: MatDialogService,
-    private iRequester: InterviewRequesterService
-  ) {}
+  constructor(private iRequester: InterviewRequesterService) {}
 
   /** Populate interviews on init */
   ngOnInit(): void {
@@ -69,15 +65,6 @@ export class AllInterviewsComponent implements OnInit {
     console.log(JSON.stringify(obj));
   }
 
-  /** @ignore */
-  openModal(template: TemplateRef<any>): void {
-    this._dialog.openDialog(template);
-  }
-
-  /** @ignore */
-  closeModal(): void {
-    this._dialog.closeDialog();
-  }
   /** @ignore test method to be removed when completed */
   message(text: string): void {
     console.log(text);

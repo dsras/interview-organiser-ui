@@ -1,8 +1,8 @@
 .bg-grey {
-  background-color: #D8D8D8;
+  background-color: #d8d8d8;
 }
 .bg-grey {
-  background-color: #D8D8D8;
+  background-color: #d8d8d8;
 }
 
 .modal-org {
@@ -10,11 +10,16 @@
   background-color: #ff9800;
 }
 
-button:disabled,
-button[disabled]{
-  border: 1px solid #999999;
-  background-color: #cccccc;
-  color: #666666;
+.button-container {
+  float: left;
+  width: 50%;
+}
+
+/* Clear floats after the columns */
+.button-container:after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
 .padded {
@@ -39,8 +44,8 @@ button[disabled]{
 }
 
 .container-fluid {
-	background-size: cover;
-	background-position: center;
+  background-size: cover;
+  background-position: center;
 }
 
 #startTime {
@@ -58,6 +63,13 @@ button[disabled]{
 }
 
 #endTime {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+}
+
+#endTime1 {
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -103,7 +115,6 @@ button[disabled]{
 
 ::ng-deep.bs-datepicker-theming {
   background-color: #ff9800;
-
 }
 
 #startTime {
@@ -122,13 +133,13 @@ button[disabled]{
 
 .card {
   /* Add shadows to create the "card" effect */
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
 }
 
 /* On mouse-over, add a deeper shadow */
 .card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
 /* Add some padding inside the card container */
@@ -140,3 +151,9 @@ button[disabled]{
   width: 90%;
 }
 
+#startTime1 {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+}

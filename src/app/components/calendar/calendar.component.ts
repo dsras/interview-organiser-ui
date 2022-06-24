@@ -4,9 +4,10 @@ import {
   ChangeDetectionStrategy,
   ViewChild,
   TemplateRef,
+  OnDestroy,
 } from '@angular/core';
 import { isSameDay, isSameMonth } from 'date-fns';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { CalendarEvent, CalendarView } from 'angular-calendar';
 import {
   CalendarEventAvailability,
@@ -18,6 +19,7 @@ import { MatDialogService } from 'src/app/services/mat-dialog.service';
 import { DateToStringService } from '../../services/date-to-string.service';
 import { GetUserDataService } from '../../services/get-user-data.service';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
+import { CalendarUpdaterService } from 'src/app/services/calendar-updater.service';
 
 /**
  * The main component of the calendar, an implementation of angular-calendar
@@ -31,7 +33,7 @@ import { RequestCenterService } from 'src/app/services/requester/request-center.
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnInit, OnDestroy {
   /**
    * Passes information to {@link ViewAvailabilityComponent}
    * when the day is clicked on the calendar
@@ -40,6 +42,8 @@ export class CalendarComponent implements OnInit {
 
   currentUser: string = '';
   userRoles: Array<string> = [];
+
+  updateSubscription!: Subscription;
 
   /* 
   TODO implement this later to view/edit individual events on the calendar
@@ -69,7 +73,8 @@ export class CalendarComponent implements OnInit {
     private iRequester: InterviewRequesterService,
     private aRequester: AvailabilityRequesterService,
     private dateString: DateToStringService,
-    private userService: GetUserDataService
+    private userService: GetUserDataService,
+    private updater: CalendarUpdaterService
   ) {
     this.populateCalendar = this.populateCalendar.bind(this);
   }
@@ -87,7 +92,15 @@ export class CalendarComponent implements OnInit {
     //setup dates
     this.setDates();
 
+    this.updateSubscription = this.updater
+      .getEmitter()
+      .subscribe(() => this.callbackFunction());
+
     console.log('populate time');
+  }
+
+  ngOnDestroy() {
+    this.updateSubscription.unsubscribe();
   }
 
   /** @ignore private? */
@@ -101,15 +114,6 @@ export class CalendarComponent implements OnInit {
     this.events = [];
     this.availability = [];
     this.interviews = [];
-  }
-
-  //* in test
-  /** @ignore needed for implementation? */
-  async delayedRefresh(): Promise<void> {
-    console.log('sleep called');
-    await this.sleep(3000)
-      .then(() => this.refresh.next())
-      .catch();
   }
 
   fastRefresh(): void {
@@ -139,7 +143,6 @@ export class CalendarComponent implements OnInit {
     if (this.userRoles.includes('ADMIN')) {
       this.initAdmin();
     }
-    //this.delayedRefresh();
   }
 
   initUser(): void {
@@ -197,6 +200,10 @@ export class CalendarComponent implements OnInit {
 
   initAdmin(): void {}
 
+  tabChange(): void {
+    this._dialog.resizeDay();
+  }
+
   // ! Calendar core functionality contained here, shouldn't need to touch it!
   // TODO openDayModal() may need corrected down the line.
   /** @ignore */
@@ -230,7 +237,7 @@ export class CalendarComponent implements OnInit {
         this.dayInterviews.push(element);
       }
     }
-    this._dialog.openDialogLarge(this.dayContent);
+    this._dialog.openDay(this.dayContent);
   }
   /** @ignore */
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {

@@ -18,12 +18,9 @@ import {
   CalendarEventAvailability,
   CalendarEventInterview,
 } from 'src/app/shared/models/calendar-event-detail';
-import {
-  AvailabilityTableData,
-  InterviewTableDisplayData,
-} from 'src/app/shared/models/table-data';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { CalendarUpdaterService } from 'src/app/services/calendar-updater.service';
 
 /**
  * Component that displays when a day is clicked on the calendar.
@@ -52,7 +49,7 @@ export class ViewAvailabilityComponent implements OnInit {
   @Input() interviews: Array<CalendarEventInterview> = [];
 
   @Input() userRoles: Array<string> = [];
-  @Output() callbackEmitter: EventEmitter<any> = new EventEmitter();
+  @Output() tabChangeEvent: EventEmitter<any> = new EventEmitter();
 
   @Input() isRecruiter: boolean = false;
 
@@ -61,10 +58,8 @@ export class ViewAvailabilityComponent implements OnInit {
 
   recAuth: boolean = false;
 
-
   aTable!: MatTableDataSource<CalendarEventAvailability>;
   iTable!: MatTableDataSource<CalendarEventInterview>;
-
 
   displayedColumnsUser: Array<string> = [
     'AvailabilityId',
@@ -116,7 +111,6 @@ export class ViewAvailabilityComponent implements OnInit {
       ? this.displayedColumnsRec
       : this.displayedColumnsUser;
 
-    // this.getAvailability();
     if (this.userRoles.includes('RECRUITER')) {
       this.recAuth = true;
       console.log('rec true');
@@ -124,25 +118,26 @@ export class ViewAvailabilityComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.aTable = new MatTableDataSource(this.availability)
-    this.aTable.paginator = this.aPaginator
-    this.iTable = new MatTableDataSource(this.interviews)
-    this.iTable.paginator = this.iPaginator
+    this.aTable = new MatTableDataSource(this.availability);
+    this.aTable.paginator = this.aPaginator;
+    this.iTable = new MatTableDataSource(this.interviews);
+    this.iTable.paginator = this.iPaginator;
   }
 
-  /** Request table data from the database */
-  // getAvailability(): void {
-  //   this.aTableData.setData(this.availability);
-  //   this.iTableData.setData(this.interviews);
-  // }
-
   /** @ignore */
-  constructor(private ar: AvailabilityRequesterService) {}
+  constructor(
+    private aRequester: AvailabilityRequesterService,
+    private updater: CalendarUpdaterService
+  ) {}
 
   onDelete(id: string | number | any) {
     console.log(id);
-    this.ar.deleteAvailability(id).subscribe(() => {
-      this.callbackEmitter.emit();
+    this.aRequester.deleteAvailability(id).subscribe(() => {
+      this.updater.updateCalendar();
     });
+  }
+
+  tabChange(): void {
+    this.tabChangeEvent.emit();
   }
 }

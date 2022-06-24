@@ -156,6 +156,7 @@ body {
   color: black;
   transition: all 0.5s ease;
   background: white;
+  margin: 0;
 }
 
 a {
@@ -393,6 +394,47 @@ h4 small {
 .big-tile:hover {
   color: #ff8500;
   background-color: #bbbbbb;
+	transform:scale(1.01);
+}
+
+mat-icon {
+  vertical-align: middle;
+}
+
+button:disabled,
+button[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
+
+.main-button {
+  margin-top: 20px;
+  border-radius: 50px;
+  width: 200px !important;
+  background-color: white;
+  border: 1px solid #ff8500;
+  color: #292929;
+  padding: 4px 20px;
+  line-height: 30px;
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.side-padded {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.side-card {
+  padding: 1%;
+  height: 100%;
+  width: 100%;
+}
+
+.main-button:hover {
+  color: orange;
+  background-color: #eeeeee;
 	transform:scale(1.01);
 }
 

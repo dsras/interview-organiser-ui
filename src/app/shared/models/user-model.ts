@@ -30,7 +30,7 @@ export class LoginUser implements IUser {
   }
 }
 
-export interface SSOUser {
+export interface ISSOUser {
   authToken: string;
   email: string;
   firstName: string;
@@ -40,4 +40,22 @@ export interface SSOUser {
   name: string;
   photoUrl: string;
   provider: string;
+}
+
+export interface IUserData {
+account: string
+businessTitle: string
+businessUnit: string
+dateOfJoining: string
+designation: string
+email: string
+id: number
+location: string
+mobile: string
+name: string
+password: string
+priorExperience: string
+roles: Array<any>
+username: string
+
 }

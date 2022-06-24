@@ -8,6 +8,7 @@ import {
 } from 'src/app/shared/constants/interview-options.constant';
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
 import { GetUserDataService } from 'src/app/services/get-user-data.service';
+import { CalendarUpdaterService } from 'src/app/services/calendar-updater.service';
 
 /**
  * Component to view and modify interview status
@@ -50,7 +51,8 @@ export class InterviewStatusComponent implements OnInit {
     private _dialog: MatDialogService,
     private fb: FormBuilder,
     private iRequester: InterviewRequesterService,
-    private userService: GetUserDataService
+    private userService: GetUserDataService,
+    private updater: CalendarUpdaterService
   ) {}
 
   /** @ignore */
@@ -60,7 +62,7 @@ export class InterviewStatusComponent implements OnInit {
 
   /** @ignore */
   openModal(template: TemplateRef<any>): void {
-    this._dialog.openDialogLarge(template);
+    this._dialog.openDialog(template);
   }
 
   /** @ignore */
@@ -71,8 +73,8 @@ export class InterviewStatusComponent implements OnInit {
   /**
    * Function to be called on click of the submit button
    */
-  onSubmit(f: FormGroup): void {
-    const str: string = f.value.status;
+  onSubmit(form: FormGroup): void {
+    const str: string = form.value.status;
     let id: number = -1;
 
     if (this.slot?.id) {
@@ -80,9 +82,10 @@ export class InterviewStatusComponent implements OnInit {
     }
     // TODO streamline this?
     const isStatus: boolean = Object.values(this.statusOptions).includes(
-      f.value.status
+      form.value.status
     );
     this.iRequester.updateInterviewStatus(id, str, isStatus);
-    f.reset();
+    form.reset();
+    this.updater.updateCalendar();
   }
 }

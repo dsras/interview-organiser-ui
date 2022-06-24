@@ -1,5 +1,5 @@
-<mat-toolbar>
-  <span class="hide-gt-lg" [hidden]="!loggedIn">
+<mat-toolbar style="width: 100%">
+  <!-- <span class="hide-gt-lg" [hidden]="!loggedIn">
     <button mat-button [matMenuTriggerFor]="menu">
       <mat-icon>menu</mat-icon>
     </button>
@@ -7,7 +7,16 @@
       <button mat-menu-item>Item 1</button>
       <button mat-menu-item>Item 2</button>
     </mat-menu>
-  </span>
+  </span> -->
+  <button
+    *ngIf="loggedIn"
+    mat-icon-button
+    color="primary"
+    backgroundColor="accent"
+    (click)="sidenav.toggle()"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
 
   <span>
     <a
@@ -25,7 +34,7 @@
       /> </a
   ></span>
   <span class="spacer"></span>
-  <span>
+  <!-- <span>
     <a
       class="nav-link"
       routerLink="dashboard"
@@ -52,7 +61,7 @@
       >Calendar</a
     >
   </span>
-  <span class="spacer"></span>
+  <span class="spacer"></span> -->
 
   <button
     mat-button
@@ -61,12 +70,21 @@
     [hidden]="!loggedIn"
     (click)="logout()"
   >
-    Logout
-    <img
+    <!-- <img
       [src]="user.photoUrl"
       class="rounded-circle"
       style="height: 30px; width: 30px"
       *ngIf="loggedIn && user"
-    />
+    /> -->
+    Logout
+    <mat-icon>logout</mat-icon>
   </button>
 </mat-toolbar>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="side">
+    <sidenav [userRoles]="userRoles"></sidenav>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,27 +1,15 @@
-<!-- <button
-type="button"
-class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx-auto d-inline-block"
-    (click)="openDialog(form)">
-  <img width="auto" height="70px" src="../../../assets/images/createInterview.png">
-  <h4 class="mt-4 font-weight-normal">
-    Add Skill
-  </h4>
-  <i class="fa fa-arrow-right" style="font-size: 18px; padding-top:8px; padding-right: 7px"></i>
-</button> -->
-
 <div class="row justify-content-center">
   <button
+    mat-raised-button
     type="button"
-    class="view-here-btn text-center"
+    class="main-button"
     (click)="openDialog(form)"
   >
     Add Skill
-    <i
-      class="fa fa-arrow-right"
-      style="font-size: 18px; padding-top: 8px; padding-right: 7px"
-    ></i>
+    <mat-icon>add</mat-icon>
   </button>
 </div>
+
 
 <ng-template #form>
   <form
@@ -31,10 +19,8 @@ class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx
     style="color: black"
   >
     <div class="container text-center text-black">
-      <div class="modal-header">
-        <div class="container-fluid py-2 intro-section-color">
-          <h3 class="text-black font-weight-bold text-center">Add Skill</h3>
-        </div>
+      <div class="container-fluid py-2 intro-section-color">
+        <h3 class="text-black font-weight-bold text-center">Add Skill</h3>
       </div>
     </div>
     <div class="row text-center">
@@ -69,23 +55,19 @@ class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx
       </div>
     </div>
     <br />
-    <div class="modal-footer">
-      <div class="col-12 col-md-12 mx-auto services">
-        <div class="row justify-content-center">
-          <button
-            class="view-here-btn text-center d-inline-block"
-            type="submit"
-            id="submit"
-            [disabled]="!addSkillsForm.valid"
-            (click)="closeDialog()"
-          >
-            Submit
-            <i
-            class="fa fa-arrow-right"
-            style="font-size: 18px; padding-top: 8px; padding-right: 7px"
-          ></i>
-          </button>
-        </div>
+    <div class="col-12 col-md-12 mx-auto services">
+      <div class="row justify-content-center">
+        <button
+          mat-raised-button
+          class="main-button"
+          type="submit"
+          id="submit"
+          [disabled]="!addSkillsForm.valid"
+          (click)="closeDialog()"
+        >
+          Submit
+          <mat-icon>done</mat-icon>
+        </button>
       </div>
     </div>
   </form>

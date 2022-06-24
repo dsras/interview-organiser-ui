@@ -1,16 +1,12 @@
-<a><i class="fa fa-close" data-dismiss="modal" #closeBtn></i></a>
-
-<div mat-dialog-title>
-  <h2 *ngIf="availability.length > 0">
-    {{ availability[0].start | date }}
-  </h2>
-  <h2 *ngIf="availability.length === 0">
-    {{ interviews[0].start | date }}
-  </h2>
-</div>
+<h2 mat-dialog-title *ngIf="availability.length > 0">
+  {{ availability[0].start | date }}
+</h2>
+<h2 mat-dialog-title *ngIf="availability.length === 0">
+  {{ interviews[0].start | date }}
+</h2>
 
 <div mat-dialog-content>
-  <mat-tab-group mat-stretch-tabs>
+  <mat-tab-group mat-stretch-tabs (selectedTabChange)="tabChange()">
     <mat-tab *ngIf="availability.length > 0" label="Availability">
       <table
         style="width: 100%"
@@ -47,7 +43,8 @@
           <td mat-cell *matCellDef="let availability">
             <div>
               <button
-                class="btn btn-warning"
+                mat-raised-button
+                class="main-button"
                 (click)="onDelete(availability.id)"
               >
                 Delete
@@ -129,7 +126,11 @@
           <th mat-header-cell *matHeaderCellDef>Delete</th>
           <td mat-cell *matCellDef="let interview">
             <div>
-              <button class="btn btn-warning" (click)="onDelete(interview.id)">
+              <button
+                mat-raised-button
+                class="main-button"
+                (click)="onDelete(interview.id)"
+              >
                 Delete
               </button>
             </div>

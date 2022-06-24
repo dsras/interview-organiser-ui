@@ -1,23 +1,35 @@
 <form [formGroup]="statusForm">
   <div class="container">
     <div class="row">
-      <div class="col-xs-4"*ngIf="this.userRoles.includes('RECRUITER')">
-        <select id="status" type="text" formControlName="status" >
+      <div class="col-xs-4" *ngIf="this.userRoles.includes('RECRUITER')">
+        <select id="status" type="text" formControlName="status">
           <option value="" disabled selected hidden>Status</option>
           <option *ngFor="let state of recruiterOptions" [ngValue]="state">
             {{ state }}
           </option>
         </select>
-        <button class="btn btn-warning" (click)="onSubmit(statusForm)">Submit</button>
+        <button
+          mat-raised-button
+          class="main-button"
+          (click)="onSubmit(statusForm)"
+        >
+          Submit
+        </button>
       </div>
-      <div class="col-xs-4"*ngIf="!this.userRoles.includes('RECRUITER')">
-        <select id="status" type="text" formControlName="status" >
+      <div class="col-xs-4" *ngIf="!this.userRoles.includes('RECRUITER')">
+        <select id="status" type="text" formControlName="status">
           <option value="" disabled selected hidden>Status</option>
           <option *ngFor="let state of interviewerOptions" [ngValue]="state">
             {{ state }}
           </option>
         </select>
-        <button class="btn btn-warning" (click)="onSubmit(statusForm)">Submit</button>
+        <button
+          mat-raised-button
+          class="main-button"
+          (click)="onSubmit(statusForm)"
+        >
+          Submit
+        </button>
       </div>
     </div>
   </div>

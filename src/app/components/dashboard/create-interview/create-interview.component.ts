@@ -9,6 +9,7 @@ import {
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
+import { CalendarUpdaterService } from 'src/app/services/calendar-updater.service';
 
 /** Component for finding savailability for interview and creating them */
 @Component({
@@ -25,7 +26,9 @@ export class CreateInterviewComponent implements OnInit {
     skillLevels: new Set<string>(),
   };
 
-  panelOpenState = false;
+  viewCreate: boolean = false;
+
+  panelOpenState: boolean = false;
 
   /** Array of availability as strings to be used in form selection */
   availableInterviews: Array<AvailabilityForInterviews> = [];
@@ -55,7 +58,8 @@ export class CreateInterviewComponent implements OnInit {
     private _dialog: MatDialogService,
     private rs: RequestCenterService,
     private aRequester: AvailabilityRequesterService,
-    private iRequester: InterviewRequesterService
+    private iRequester: InterviewRequesterService,
+    private updater: CalendarUpdaterService
   ) {}
 
   /** @ignore */
@@ -65,7 +69,7 @@ export class CreateInterviewComponent implements OnInit {
 
   /** @ignore */
   openModal(template: TemplateRef<any>): void {
-    this._dialog.openDialogTall(template);
+    this._dialog.openDialog(template);
   }
 
   /** @ignore */
@@ -102,8 +106,6 @@ export class CreateInterviewComponent implements OnInit {
     //   idArr,
     //   this.availableInterviews
     // );
-    console.log(form.value);
-    console.log(idArr);
     this.aRequester.getSlots(form.value, idArr).subscribe((returnData) => {
       console.table(returnData);
       const newStartDate: Date = new Date(form.value.firstDate);
@@ -142,7 +144,7 @@ export class CreateInterviewComponent implements OnInit {
         this.availableInterviews.push(element);
       });
     });
-    this.switchView('');
+    this.switchView();
   }
 
   /**
@@ -154,30 +156,11 @@ export class CreateInterviewComponent implements OnInit {
     this.iRequester.addInterviewForm(form.value);
     console.table(form.value);
     form.reset();
+    this.updater.updateCalendar();
   }
 
   /** Switches which form is being viewed */
-  switchView(disp: string): void {
-    const find: HTMLElement = document.getElementById('find')!;
-    const confirm: HTMLElement = document.getElementById('confirm')!;
-    if (!disp || disp == '') {
-      try {
-        disp = find.style.display;
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    switch (disp) {
-      case 'none':
-        find.style.display = 'block';
-        confirm.style.display = 'none';
-        break;
-      case 'block':
-        find.style.display = 'none';
-        confirm.style.display = 'block';
-        break;
-      default:
-        break;
-    }
+  switchView(): void {
+    this.viewCreate = !this.viewCreate;
   }
 }

@@ -1,49 +1,85 @@
-<!-- <button
-type="button"
-class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx-auto d-inline-block"
-    (click)="openDialog(form)">
-  <img width="auto" height="70px" src="../../../assets/images/createInterview.png">
-  <h4 class="mt-4 font-weight-normal">
-    Add Availability
-  </h4>
-  <i class="fa fa-arrow-right" style="font-size: 18px; padding-top:8px; padding-right: 7px"></i>
-</button> -->
-
 <div class="row justify-content-center">
   <button
+    mat-raised-button
     type="button"
-    class="view-here-btn text-center"
+    class="main-button"
     (click)="openDialog(dialog)"
   >
     Add Availability
-    <i
-      class="fa fa-arrow-right"
-      style="font-size: 18px; padding-top: 8px; padding-right: 7px"
-    ></i>
+    <mat-icon>add</mat-icon>
   </button>
 </div>
 
 <ng-template #dialog>
-  <!-- <div mat-dialog-title>
-    <h4 class="text-black font-weight-bold text-center">Add Availability</h4>
-  </div> -->
-
-  <!-- <h2>Range or selection?</h2>
-
-    <div class="text-center">
-    <mat-slide-toggle
-      [(ngModel)]="isChecked"
-      [ngModelOptions]="{ standalone: true }"
-    >
-      <p *ngIf="isChecked">Range</p>
-      <p *ngIf="!isChecked">Individual</p>
-    </mat-slide-toggle> -->
-
-  <mat-tab-group mat-stretch-tabs>
-    <mat-tab label="Range">
-      <form [formGroup]="dateRangeForm" class="md-form" style="color: black">
+  <mat-tab-group
+    mat-stretch-tabs
+    color="primary"
+    backgroundColor="accent"
+    (selectedTabChange)="tabChange($event)"
+  >
+    <mat-tab label="Selection">
+      <form [formGroup]="multiDayForm" class="md-form" style="color: black">
         <div class="container text-center text-black pt-4 mt-4">
-          <div class="row text-center">
+          <div class="row">
+            <div class="col-md-6">
+              <label for="startTime">Start Time</label>
+              <timepicker
+                id="startTime"
+                type="time"
+                formControlName="startTime"
+              ></timepicker>
+            </div>
+            <br />
+
+            <ng-container formArrayName="days">
+              <div *ngFor="let _ of days.controls; let i = index">
+                <ng-container [formGroupName]="i">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Select Weekday</mat-label>
+                    <input
+                      matInput
+                      [matDatepicker]="datepicker"
+                      formControlName="weekday"
+                    />
+                    <mat-hint>Weekday</mat-hint>
+                    <mat-datepicker-toggle
+                      matSuffix
+                      [for]="datepicker"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #datepicker> </mat-datepicker>
+                  </mat-form-field>
+                  <button mat-icon-button (click)="deleteRecurringDay(i)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </ng-container>
+              </div>
+            </ng-container>
+          </div>
+          <br />
+          <div style="text-align: center">
+            <button
+              mat-raised-button
+              type="submit"
+              class="main-button"
+              [disabled]="!multiDayForm.valid"
+              (click)="onSubmit(multiDayForm)"
+            >
+              Submit
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+        </div>
+      </form>
+    </mat-tab>
+
+    <mat-tab label="Range">
+      <form
+        [formGroup]="dateRangeForm"
+        class="md-form"
+        style="color: black; border: 2px"
+      >
+        <div class="container text-center text-black pt-4 mt-4">
+          <div class="row">
             <div class="col-md-6">
               <label for="startTime">Start Time</label>
               <timepicker
@@ -64,7 +100,11 @@ class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx
 
           <br />
 
-          <mat-form-field appearance="outline" color="accent">
+          <mat-form-field
+            appearance="outline"
+            color="accent"
+            backgroundColor="primary"
+          >
             <mat-label>Enter a date range</mat-label>
             <mat-date-range-input
               [formGroup]="dateRangeForm"
@@ -97,88 +137,14 @@ class="view-here-btn text-lefttext-black col-lg-2 col-md-4 col-6 mb-5 mb-lg-0 mx
         <br />
         <div class="text-center">
           <button
+            mat-raised-button
             type="submit"
-            class="view-here-btn text-lefttext-black text-center mx-auto d-inline-block"
+            class="main-button"
             [disabled]="!dateRangeForm.valid"
-            (click)="[closeDialog(), onSubmit(dateRangeForm)]"
+            (click)="onSubmit(dateRangeForm)"
           >
-            <h6 class="mt-4 font-weight-normal" style="font-size: 100%">
-              Submit<mat-icon>save</mat-icon>
-            </h6>
-          </button>
-        </div>
-      </form>
-    </mat-tab>
-
-    <mat-tab label="Selection">
-      <form [formGroup]="multiDayForm" class="md-form" style="color: black">
-        <div class="container text-center text-black pt-4 mt-4">
-          <div class="row text-center">
-            <div class="col-md-6">
-              <label for="startTime">Start Time</label>
-              <timepicker
-                id="startTime"
-                type="time"
-                formControlName="startTime"
-              ></timepicker>
-            </div>
-            <div class="col-md-6">
-              <label for="endTime">End Time</label>
-              <timepicker
-                id="endTime"
-                type="time"
-                formControlName="endTime"
-              ></timepicker>
-            </div>
-          </div>
-
-          <mat-form-field appearance="outline">
-            <mat-label>Select Occurences</mat-label>
-            <mat-hint>Number</mat-hint>
-            <input
-              type="number"
-              matInput
-              name="weeks"
-              placeholder="Weeks"
-              formControlName="weeks"
-            />
-          </mat-form-field>
-          <button mat-raised-button (click)="addRecurringDay()">
-            Add a day
-          </button>
-
-          <ng-container formArrayName="days">
-            <div *ngFor="let _ of days.controls; let i = index">
-              <ng-container [formGroupName]="i">
-                <mat-form-field appearance="outline">
-                  <mat-label>Select Weekday</mat-label>
-                  <input
-                    matInput
-                    [matDatepicker]="datepicker"
-                    formControlName="weekday"
-                  />
-                  <mat-hint>Weekday</mat-hint>
-                  <mat-datepicker-toggle
-                    matSuffix
-                    [for]="datepicker"
-                  ></mat-datepicker-toggle>
-                  <mat-datepicker #datepicker> </mat-datepicker>
-                </mat-form-field>
-              </ng-container>
-            </div>
-          </ng-container>
-        </div>
-        <br />
-        <div style="text-align: center">
-          <button
-            type="submit"
-            class="view-here-btn text-lefttext-black text-center mx-auto d-inline-block"
-            [disabled]="!multiDayForm.valid"
-            (click)="[closeDialog(), onSubmit(multiDayForm)]"
-          >
-            <h6 class="mt-4 font-weight-normal" style="font-size: 100%">
-              Submit<mat-icon>save</mat-icon>
-            </h6>
+            Submit
+            <mat-icon>add</mat-icon>
           </button>
         </div>
       </form>
