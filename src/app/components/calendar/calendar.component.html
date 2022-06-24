@@ -14,94 +14,94 @@
 <br />
 <mat-card>
   <div>
-  <div class="row calendar-controls" style="width: 100%">
-    <div class="col-sm" style="text-align: start">
-      <div class="btn-group">
-        <button
-          class="btn btn-warning padded-btn"
-          mwlCalendarPreviousView
-          [view]="view"
-          [(viewDate)]="viewDate"
-          (viewDateChange)="closeOpenMonthViewDay()"
-        >
-          <span>Previous</span>
-        </button>
-        <button
-          class="btn btn-outline-warning padded-btn"
-          mwlCalendarToday
-          [(viewDate)]="viewDate"
-        >
-          <span class="text-black">Today</span>
-        </button>
-        <button
-          class="btn btn-warning padded-btn"
-          mwlCalendarNextView
-          [view]="view"
-          [(viewDate)]="viewDate"
-          (viewDateChange)="closeOpenMonthViewDay()"
-        >
-          <span>Next</span>
-        </button>
+    <div class="row calendar-controls" style="width: 100%">
+      <div class="col-sm" style="text-align: start">
+        <div class="btn-group">
+          <button
+            class="btn btn-warning padded-btn"
+            mwlCalendarPreviousView
+            [view]="view"
+            [(viewDate)]="viewDate"
+            (viewDateChange)="closeOpenMonthViewDay()"
+          >
+            <span>Previous</span>
+          </button>
+          <button
+            class="btn btn-outline-warning padded-btn"
+            mwlCalendarToday
+            [(viewDate)]="viewDate"
+          >
+            <span class="text-black">Today</span>
+          </button>
+          <button
+            class="btn btn-warning padded-btn"
+            mwlCalendarNextView
+            [view]="view"
+            [(viewDate)]="viewDate"
+            (viewDateChange)="closeOpenMonthViewDay()"
+          >
+            <span>Next</span>
+          </button>
+        </div>
+      </div>
+      <div class="col-sm">
+        <h3 class="text-black font-weight-bold text-center">
+          {{ viewDate | calendarDate: view + "ViewTitle":"en" }}
+        </h3>
+      </div>
+      <div class="col-sm" style="text-align: end">
+        <div class="btn-group">
+          <button
+            class="btn btn-warning padded-btn"
+            (click)="setView(CalendarView.Month)"
+            [class.active]="view === CalendarView.Month"
+          >
+            <span class="text-center">Month</span>
+          </button>
+          <button
+            class="btn btn-outline-warning padded-btn"
+            (click)="setView(CalendarView.Week)"
+            [class.active]="view === CalendarView.Week"
+          >
+            <span class="text-black text-center">Week</span>
+          </button>
+          <button
+            class="btn btn-warning padded-btn"
+            (click)="setView(CalendarView.Day)"
+            [class.active]="view === CalendarView.Day"
+          >
+            <span>Day</span>
+          </button>
+        </div>
       </div>
     </div>
-    <div class="col-sm">
-      <h3 class="text-black font-weight-bold text-center">
-        {{ viewDate | calendarDate: view + "ViewTitle":"en" }}
-      </h3>
-    </div>
-    <div class="col-sm" style="text-align: end">
-      <div class="btn-group">
-        <button
-          class="btn btn-warning padded-btn"
-          (click)="setView(CalendarView.Month)"
-          [class.active]="view === CalendarView.Month"
-        >
-          <span class="text-center">Month</span>
-        </button>
-        <button
-          class="btn btn-outline-warning padded-btn"
-          (click)="setView(CalendarView.Week)"
-          [class.active]="view === CalendarView.Week"
-        >
-          <span class="text-black text-center">Week</span>
-        </button>
-        <button
-          class="btn btn-warning padded-btn"
-          (click)="setView(CalendarView.Day)"
-          [class.active]="view === CalendarView.Day"
-        >
-          <span>Day</span>
-        </button>
-      </div>
+    <br />
+    <div [ngSwitch]="view">
+      <mwl-calendar-month-view
+        *ngSwitchCase="CalendarView.Month"
+        [viewDate]="viewDate"
+        [events]="events"
+        [refresh]="refresh"
+        [activeDayIsOpen]="activeDayIsOpen"
+        (dayClicked)="dayClicked($event.day)"
+      >
+      </mwl-calendar-month-view>
+      <mwl-calendar-week-view
+        *ngSwitchCase="CalendarView.Week"
+        [viewDate]="viewDate"
+        [events]="events"
+        [refresh]="refresh"
+      >
+      </mwl-calendar-week-view>
+      <mwl-calendar-day-view
+        *ngSwitchCase="CalendarView.Day"
+        [viewDate]="viewDate"
+        [events]="events"
+        [refresh]="refresh"
+      >
+      </mwl-calendar-day-view>
     </div>
   </div>
-  <br />
-  <div [ngSwitch]="view">
-    <mwl-calendar-month-view
-      *ngSwitchCase="CalendarView.Month"
-      [viewDate]="viewDate"
-      [events]="events"
-      [refresh]="refresh"
-      [activeDayIsOpen]="activeDayIsOpen"
-      (dayClicked)="dayClicked($event.day)"
-    >
-    </mwl-calendar-month-view>
-    <mwl-calendar-week-view
-      *ngSwitchCase="CalendarView.Week"
-      [viewDate]="viewDate"
-      [events]="events"
-      [refresh]="refresh"
-    >
-    </mwl-calendar-week-view>
-    <mwl-calendar-day-view
-      *ngSwitchCase="CalendarView.Day"
-      [viewDate]="viewDate"
-      [events]="events"
-      [refresh]="refresh"
-    >
-    </mwl-calendar-day-view>
-  </div>
-</div>
 </mat-card>
 
 <ng-template #dayContent>
@@ -110,6 +110,7 @@
     [interviews]="dayInterviews"
     [userRoles]="userRoles"
     (tabChangeEvent)="tabChange()"
+    [isRecruiter]="isRecruiter"
   ></view-availability>
   <!-- [callbackFunction]="populateCalendar" -->
 </ng-template>

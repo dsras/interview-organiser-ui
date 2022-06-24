@@ -26,6 +26,7 @@ class API_CONSTANTS {
   APPLICANT_ALL: string = 'applicants/findAll';
 
   INTER: string = 'interviews';
+  INTER_DELETE: string = 'interviews/delete';
   INTER_INTER_RANGE: string = 'interviews/range/username';
   INTER_COMP: string = 'interviews/username/completed';
   INTER_CONF: string = 'interviews/username/status/confirmed'

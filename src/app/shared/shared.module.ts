@@ -24,10 +24,10 @@ import { FormsModule } from '@angular/forms';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { DateToTimePipe } from '../pipes/DateToTimePipe';
 import { NgxMultipleDatesModule } from 'ngx-multiple-dates';
 import { MatTreeModule } from '@angular/material/tree';
-
 
 @NgModule({
   imports: [
@@ -55,6 +55,7 @@ import { MatTreeModule } from '@angular/material/tree';
     NgxMultipleDatesModule,
     MatTabsModule,
     MatSnackBarModule,
+    MatBottomSheetModule,
   ],
   exports: [
     TimepickerModule,
@@ -82,6 +83,7 @@ import { MatTreeModule } from '@angular/material/tree';
     MatTabsModule,
     MatSnackBarModule,
     MatTreeModule,
+    MatBottomSheetModule,
   ],
   declarations: [StringToDatetimePipe],
   providers: [

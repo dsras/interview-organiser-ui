@@ -15,6 +15,7 @@ import { DateToStringService } from '../date-to-string.service';
 import { Observable } from 'rxjs';
 import { GetUserDataService } from '../get-user-data.service';
 import { CreateInterviewFormValue } from 'src/app/shared/models/forms';
+import { identifierModuleUrl } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +26,14 @@ export class InterviewRequesterService {
     private dateFormatter: DateToStringService,
     private userService: GetUserDataService
   ) {}
+
+  deleteInterviewRecompAvails(id: string) {
+    let url =
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.INTER_DELETE;
+
+    return this.requester.postRequestNoType<string>(url, id);
+  }
 
   getInterviewsPerMonthByInterviewer(
     isRec: boolean,
@@ -206,7 +215,7 @@ export class InterviewRequesterService {
     if (form.startTime != '') {
       //set end time to be an hour after start time
       let myTime = new Date(form.startTime);
-      
+
       startTimeString = this.dateFormatter.dateToStringTime(myTime);
       console.log('Start time good: ' + startTimeString);
 
@@ -285,7 +294,7 @@ export class InterviewRequesterService {
       APPCONSTANTS.APICONSTANTS.INTER +
       '/organiser/' +
       this.userService.getUsername();
-      
+
     return this.requester.getRequest<Array<InterviewReturn>>(url);
   }
 

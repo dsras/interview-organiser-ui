@@ -21,6 +21,7 @@ import {
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { CalendarUpdaterService } from 'src/app/services/calendar-updater.service';
+import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 
 /**
  * Component that displays when a day is clicked on the calendar.
@@ -127,7 +128,8 @@ export class ViewAvailabilityComponent implements OnInit {
   /** @ignore */
   constructor(
     private aRequester: AvailabilityRequesterService,
-    private updater: CalendarUpdaterService
+    private updater: CalendarUpdaterService,
+    private iRequester: InterviewRequesterService
   ) {}
 
   onDelete(id: string | number | any) {
@@ -139,5 +141,12 @@ export class ViewAvailabilityComponent implements OnInit {
 
   tabChange(): void {
     this.tabChangeEvent.emit();
+  }
+
+  onIDelete(id: string | number | any) {
+    console.log(id);
+    this.iRequester.deleteInterviewRecompAvails(id).subscribe(() => {
+      this.updater.updateCalendar();
+    });
   }
 }
