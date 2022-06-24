@@ -4,6 +4,25 @@
     (callbackEmitter)="callbackFunction()"
     ></availability-form>
     <skills-form></skills-form>
+
+  </div>
+</div> -->
+
+<div class="container-fluid section first-section-color" >
+  <div class="d-flex justify-content-center">
+    <div class="row" style="width: 50%">
+      <mat-grid-list cols="2" rowHeight="5:1">
+        <mat-grid-tile  >
+          <availability-form
+          (callbackEmitter)="callbackFunction()"
+          ></availability-form>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <skills-form>
+          </skills-form>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
   </div>
 </div> -->
 
@@ -43,34 +62,21 @@
         </button>
       </div>
     </div>
-    <div class="col-sm">
-      <h3 class="text-black font-weight-bold text-center">
-        {{ viewDate | calendarDate: view + "ViewTitle":"en" }}
-      </h3>
+    <div class=" text-center col-sm">
+      <h2 class="text-black font-weight-bold text-center pl-4">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h2>
     </div>
-    <div class="col-sm" style="text-align: end">
-      <div class="btn-group">
-        <button
-          class="btn btn-warning padded-btn"
-          (click)="setView(CalendarView.Month)"
-          [class.active]="view === CalendarView.Month"
-        >
-          <span class="text-center">Month</span>
-        </button>
-        <button
-          class="btn btn-outline-warning padded-btn"
-          (click)="setView(CalendarView.Week)"
-          [class.active]="view === CalendarView.Week"
-        >
-          <span class="text-black text-center">Week</span>
-        </button>
-        <button
-          class="btn btn-warning padded-btn"
-          (click)="setView(CalendarView.Day)"
-          [class.active]="view === CalendarView.Day"
-        >
-          <span>Day</span>
-        </button>
+    <div class=" col-sm" style="position:relative; text-align: end;">
+      <div class="btn-group col-8">
+        <div class="btn btn-warning" (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month">
+          <h5 class="text-center">Month</h5>
+        </div>
+        <div class="btn btn-outline-warning" (click)="setView(CalendarView.Week)"
+          [class.active]="view === CalendarView.Week">
+          <h5 class="text-black text-center">Week</h5>
+        </div>
+        <div class="btn btn-warning" (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">
+          <h5 class="text-center">Day</h5>
+        </div>
       </div>
     </div>
   </div>

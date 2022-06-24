@@ -2,6 +2,20 @@
   Create Interview <mat-icon>add</mat-icon>
 </button>
 
+<!-- <div class="row justify-content-center">
+  <button
+    type="button"
+    class="view-here-btn text-center"
+    (click)="openModal(form)"
+  >
+    Create Interview
+    <i
+      class="fa fa-arrow-right"
+      style="font-size: 18px; padding-top: 8px; padding-right: 7px"
+    ></i>
+  </button>
+</div> -->
+
 <ng-template #form>
   <div id="find" *ngIf="!viewCreate">
     <form
@@ -10,27 +24,25 @@
       class="md-form"
       style="color: black"
     >
+
       <div class="text-center text-black">
-        <div style="width: 100%">
-          <div class="container-fluid py-2 intro-section-color">
-            <h4 class="text-black font-weight-bold text-center">
-              Create Interview
-            </h4>
-          </div>
+        <div class="container-fluid py-2 intro-section-color">
+          <h4 class="text-black font-weight-bold text-center">
+            Create Interview
+          </h4>
         </div>
-        <div class="row text-center">
-          <div class="col-md-6">
+        <div class="container text-center text-black pt-4 mt-4">
+          <div class="row text-center">
             <label for="startTime">Start Time</label>
             <timepicker
               id="startTime1"
               type="time"
               formControlName="startTime"
             ></timepicker>
-          </div>
-          <div class="col-md-4">
+            <br>
             <label for="endTime">End Time</label>
             <timepicker
-              id="endTime"
+              id="endTime1"
               type="time"
               formControlName="endTime"
             ></timepicker>
@@ -76,23 +88,65 @@
               <mat-option
                 *ngFor="let skillName of skillOptions.skillNames"
                 [value]="skillName"
+          <br />
+          <div class="container-fluid">
+            <h2>Date(s) required</h2>
+            <mat-form-field appearance="outline" color="accent">
+              <mat-label>Enter a date range</mat-label>
+              <mat-date-range-input
+                [formGroup]="findInterviewsForm"
+                [rangePicker]="picker"
+                disabled="true"
               >
-                {{ skillName }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+                <input
+                  matStartDate
+                  formControlName="firstDate"
+                  placeholder="Start date"
+                />
+                <input
+                  matEndDate
+                  formControlName="lastDate"
+                  placeholder="End date"
+                />
+              </mat-date-range-input>
+              <mat-hint>MM/DD/YYYY - MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-date-range-picker
+                #picker
+                disabled="false"
+              ></mat-date-range-picker>
+            </mat-form-field>
+          </div>
+          <div formArrayName="skills">
+            <h2>Skill required</h2>
+            <mat-form-field appearance="outline">
+              <mat-label>Skill</mat-label>
+              <mat-select formControlName="skillName" name="skillName">
+                <mat-option
+                  *ngFor="let skillName of skillOptions.skillNames"
+                  [value]="skillName"
+                >
+                  {{ skillName }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Level</mat-label>
-            <mat-select formControlName="skillLevel" name="skillLevel">
-              <mat-option
-                *ngFor="let skillLevel of skillOptions.skillLevels"
-                [value]="skillLevel"
-              >
-                {{ skillLevel }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Level</mat-label>
+              <mat-select formControlName="skillLevel" name="skillLevel">
+                <mat-option
+                  *ngFor="let skillLevel of skillOptions.skillLevels"
+                  [value]="skillLevel"
+                >
+                  {{ skillLevel }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <br />
         </div>
         <br />
       </div>
@@ -108,6 +162,12 @@
             Find Interview
             <mat-icon *ngIf="!findInterviewsForm.valid"
               >hourglass_empty</mat-icon
+        <div class="col-12 col-md-12 mx-auto services">
+          <div class="row justify-content-center">
+            <button
+              type="submit"
+              class="view-here-btn text-center d-inline-block"
+              [disabled]="!findInterviewsForm.valid"
             >
             <mat-icon *ngIf="findInterviewsForm.valid">search</mat-icon>
           </button>
@@ -126,6 +186,12 @@
         <strong>Create Interview</strong>
       </h3>
       <mat-dialog-content>
+    <div class="container-fluid py-2 intro-section-color">
+      <h4 class="text-black font-weight-bold text-center">
+        Create Interview
+      </h4>
+    </div>
+      <div>
         <div class="container-padded">
           <mat-form-field appearance="outline" style="width: 100%">
             <mat-label>Select an interview slot</mat-label>
@@ -165,6 +231,13 @@
                 formControlName="startTime"
               ></timepicker>
             </div>
+            <label for="startTime">Start Time</label>
+            <timepicker
+              id="startTime1"
+              type="time"
+              formControlName="startTime"
+            ></timepicker>
+          </div>
           </mat-expansion-panel>
           <br />
           <mat-form-field appearance="outline" style="width: 100%">
