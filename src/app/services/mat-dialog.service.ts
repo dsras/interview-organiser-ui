@@ -1,20 +1,21 @@
 import { Injectable, TemplateRef } from '@angular/core';
-import {
-  MatDialog,
-  MatDialogRef,
-} from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MatDialogService {
+
   dialogRef?: MatDialogRef<TemplateRef<any>>;
-  private CALENDARDAYWIDTH = '60%'
+  
+  private CALENDARDAYWIDTH = '60%';
 
   constructor(private dailogService: MatDialog) {}
 
   openDialog(template: TemplateRef<any>): void {
-    this.dialogRef = this.dailogService.open(template);
+    this.dialogRef = this.dailogService.open(template, {
+      maxHeight: '100vh',
+    });
     this.resize();
   }
 
@@ -26,14 +27,13 @@ export class MatDialogService {
     this.dialogRef?.updateSize();
   }
 
-  openDay(template: TemplateRef<any>):void {
-    this.dialogRef = this.dailogService.open(template)
-    this.resize()
-    this.dialogRef.updateSize(this.CALENDARDAYWIDTH)
+  openDay(template: TemplateRef<any>): void {
+    this.dialogRef = this.dailogService.open(template);
+    this.resize();
+    this.dialogRef.updateSize(this.CALENDARDAYWIDTH);
   }
   resizeDay(): void {
-    this.resize()
-    this.dialogRef?.updateSize(this.CALENDARDAYWIDTH)
+    this.resize();
+    this.dialogRef?.updateSize(this.CALENDARDAYWIDTH);
   }
-
 }
