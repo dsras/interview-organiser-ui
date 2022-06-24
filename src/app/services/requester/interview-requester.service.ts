@@ -298,26 +298,13 @@ export class InterviewRequesterService {
     return this.requester.getRequest<Array<InterviewReturn>>(url);
   }
 
-  getUserInterviews(
-    events: Array<CalendarEvent>,
-    interviews: Array<CalendarEventInterview>
-  ): void {
+  getUserInterviews(): Observable<InterviewReturn[]> {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.INTER +
       '/' +
       this.userService.getUsername();
-    let out;
-    this.requester
-      .getRequest<InterviewReturn>(url)
-      .subscribe((returnData: unknown) => {
-        out = <Array<InterviewReturn>>(<unknown>returnData);
-        out.forEach((element) => {
-          const interview = this.parseInterviewUser(element);
-          events.push(interview);
-          interviews.push(interview);
-        });
-      });
+    return this.requester.getRequest<InterviewReturn[]>(url);
   }
 
   getRecruiterInterviews(

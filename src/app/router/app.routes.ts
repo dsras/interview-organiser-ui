@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { CalendarComponent } from '../components/calendar/calendar.component';
+import { MyInterviewsComponent } from '../components/calendar/my-interviews/my-interviews.component';
 import { AllInterviewsComponent } from '../components/dashboard/all-interviews/all-interviews.component';
 import { LoginComponent } from '../components/login/login.component';
 import { LoginGuard } from './guards/login.guard';
@@ -21,6 +22,11 @@ export const ROUTES: Routes = [
     path: 'all-interviews',
     component: AllInterviewsComponent,
     canActivate: [LoginGuard, RecruiterGuard],
+  },
+  {
+    path: 'my-interviews',
+    component: MyInterviewsComponent,
+    pathMatch: 'full'
   },
   {
     path: '',
