@@ -13,18 +13,18 @@
 </div> -->
 <br />
 <div class="text-center side-padded">
-  <a *ngIf="!isRecruiter" routerLink="my-interviews">
+  <!-- <a *ngIf="!isRecruiter" routerLink="my-interviews">
     <button mat-raised-button class="main-button">
       Interviews
       <mat-icon class="tile-icon" style="position: sticky">list</mat-icon>
     </button>
-  </a>
+  </a> -->
 </div>
 <mat-card>
   <div>
   <div class="row" style="width:100%">
     <div class=" col-sm">
-      <div class="btn-group pl-3 col-8">
+      <div class="btn-group pl-3 col-8" style="height: 60%; width: 50%;">
         <div class="btn btn-warning" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
           (viewDateChange)="closeOpenMonthViewDay()">
           <h5 class="text-center">Previous</h5>
@@ -42,7 +42,7 @@
       <h2 class="text-black font-weight-bold text-center pl-4">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h2>
     </div>
     <div class=" col-sm" style="position:relative; text-align: end;">
-      <div class="btn-group col-8">
+      <div class="btn-group col-8" style="height: 60%; width: 50%;">
         <div class="btn btn-warning" (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month">
           <h5 class="text-center">Month</h5>
         </div>
