@@ -33,7 +33,6 @@
         alt="Accolite Digital Logo"
       /> </a
   ></span>
-  <span class="spacer"></span>
   <!-- <span>
     <a
       class="nav-link"
@@ -60,11 +59,38 @@
       [hidden]="!loggedIn"
       >Calendar</a
     >
-  </span>
-  <span class="spacer"></span> -->
-  <skills-form></skills-form>
+  </span> -->
+  <span class="spacer"></span>
+
+  <div [hidden]="!loggedIn" class="row">
+    <div [hidden]="!isRec"  class="col-5">
+      <create-interview></create-interview>
+    </div>
+    <div [hidden]="!isUser"  class="col-5">
+      <skills-form></skills-form>
+    </div>
+    <div [hidden]="!isUser" class="col-7">
+      <availability-form></availability-form>
+    </div>
+  </div>
 
   <button
+  mat-button
+  class="icon"
+  aria-label="Example icon-button with share icon"
+  [hidden]="!loggedIn"
+  (click)="logout()"
+>
+  <!-- <img
+    [src]="user.photoUrl"
+    class="rounded-circle"
+    style="height: 30px; width: 30px"
+    *ngIf="loggedIn && user"
+  /> -->
+  Logout
+  <mat-icon>logout</mat-icon>
+</button>
+  <!-- <button
     mat-button
     class="icon"
     aria-label="Example icon-button with share icon"
@@ -72,8 +98,8 @@
   >
     Create Interview
     <mat-icon>edit calendar</mat-icon>
-  </button>
-
+  </button> -->
+<!-- 
   <button
     mat-button
     class="icon"
@@ -82,25 +108,11 @@
   >
     Interviews
     <mat-icon>list</mat-icon>
-  </button>
+  </button> -->
 
-  <button
-    mat-button
-    class="icon"
-    aria-label="Example icon-button with share icon"
-    [hidden]="!loggedIn"
-    (click)="logout()"
-  >
-    <!-- <img
-      [src]="user.photoUrl"
-      class="rounded-circle"
-      style="height: 30px; width: 30px"
-      *ngIf="loggedIn && user"
-    /> -->
-    Logout
-    <mat-icon>logout</mat-icon>
-  </button>
+
 </mat-toolbar>
+
 <mat-sidenav-container>
   <mat-sidenav #sidenav mode="side">
     <sidenav [userRoles]="userRoles"></sidenav>

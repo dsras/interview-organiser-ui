@@ -2,6 +2,7 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { SocialAuthService } from 'angularx-social-login';
 import { GetUserDataService } from 'src/app/services/get-user-data.service';
+import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 import { APPCONSTANTS } from 'src/app/shared/constants/app.constant';
 import { ISSOUser } from 'src/app/shared/models/user-model';
 
@@ -16,13 +17,16 @@ export class HomeComponent implements OnInit {
   user: ISSOUser | null = null;
   userRoles: string[] = [];
   loggedIn: boolean = false;
-  url: string = ''
-
+  url: string = '';
+  currentUser = '';
+  isRec = false;
+  isUser= false;
   /** @ignore */
   constructor(
     private router: Router,
     private socialAuthService: SocialAuthService,
-    private userDataService: GetUserDataService
+    private userDataService: GetUserDataService,
+    private requester: RequestCenterService
   ) {}
 
   /** @ignore */
@@ -57,9 +61,20 @@ export class HomeComponent implements OnInit {
       const roles = this.userDataService.getUserRoleNames();
       if (user && roles !== []) {
         this.user = JSON.parse(user);
-        this.userRoles = roles;
-        console.log(this.user);
-        console.table(this.userRoles);
+        this.currentUser = this.userDataService.getUsername();
+
+        this.requester.getUserRoles(this.currentUser).subscribe(rolesReturn =>{
+          this.userRoles = rolesReturn;
+          if(this.userRoles.includes("RECRUITER")){
+            this.isRec = true;
+          }
+          if(this.userRoles.includes('USER')){
+            this.isUser = true;
+          }
+          console.log(this.currentUser);
+          console.log(this.userRoles);
+        });
+        
       }
     } else {
       this.loggedIn = false;

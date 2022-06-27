@@ -177,7 +177,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   initRecruiter(): void {
     this.aRequester.getRecruiterAvailability().subscribe((ret) => {
-      console.table(ret);
+      //console.table(ret);
       ret.forEach((ele) => {
         this.events.push(this.aRequester.parseAvailabilityRecruiter(ele));
         this.availability.push(this.aRequester.parseAvailabilityRecruiter(ele));
@@ -191,7 +191,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
         this.dateString.dateToStringDate(this.endDate)
       )
       .subscribe((ret) => {
-        console.table(ret);
+        //console.table(ret);
         ret.forEach((ele) => {
           this.events.push(this.iRequester.parseInterviewRecruiter(ele));
           this.interviews.push(this.iRequester.parseInterviewRecruiter(ele));
