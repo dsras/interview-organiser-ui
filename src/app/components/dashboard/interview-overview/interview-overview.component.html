@@ -6,9 +6,6 @@
   </mat-expansion-panel-header>
 
   <mat-list role="list">
-    <mat-list-item role="listitem">
-      Total Interviews: {{ interviews.length }}
-    </mat-list-item>
     <mat-list-item role="listitem" *ngFor="let filteredList of allFilteredArrays | keyvalue">
       <div *ngIf="filteredList.key == 'Awaiting Completion'">
         <span class="dotAmber" or ></span>
