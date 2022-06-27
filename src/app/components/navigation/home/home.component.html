@@ -62,6 +62,27 @@
     >
   </span>
   <span class="spacer"></span> -->
+  <skills-form></skills-form>
+
+  <button
+    mat-button
+    class="icon"
+    aria-label="Example icon-button with share icon"
+    [hidden]="!loggedIn"
+  >
+    Create Interview
+    <mat-icon>edit calendar</mat-icon>
+  </button>
+
+  <button
+    mat-button
+    class="icon"
+    aria-label="Example icon-button with share icon"
+    [hidden]="!loggedIn"
+  >
+    Interviews
+    <mat-icon>list</mat-icon>
+  </button>
 
   <button
     mat-button
