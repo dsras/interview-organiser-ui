@@ -35,6 +35,8 @@ export class InterviewOverviewComponent implements OnInit {
       this.interviews = interviews;
       this.filterStatus();
       this.filterOutcome();
+      console.log(this.allFilteredArrays);
+      console.log(this.allFilteredArrays.get('Pending')?.length);
     });
   }
 

@@ -29,3 +29,14 @@
   border-radius: 50%;
   display: inline-block;
 }
+
+.overviewContainer {
+  width: 200px;
+}
+
+.entryContainer {
+  margin-left: 0;
+  margin-right: auto;
+  display: table-row;
+  font-size: 120%;
+}
