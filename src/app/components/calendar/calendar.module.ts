@@ -24,11 +24,10 @@ import { MyInterviewsComponent } from './my-interviews/my-interviews.component';
     ViewAvailabilityComponent,
     InterviewStatusComponent,
     CalendarHeaderComponent,
-    DateToTimePipe,
-    MyInterviewsComponent
+    MyInterviewsComponent,
+    
   ],
   providers: [
-    DateToTimePipe,
   ],
   imports: [
     SharedModule,

@@ -13,7 +13,7 @@ export const interviewOutcomeOptions: Array<string> = [
 ];
 
 export enum statusOptions {
-  completed = 'Completed',
+  completed = 'Complete',
   candidateNoShow = 'Candidate No Show' ,
   panelNoShow = 'Panel No Show',
   pending = 'Pending',

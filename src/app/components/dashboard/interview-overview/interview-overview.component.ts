@@ -7,6 +7,12 @@ import {
 } from 'src/app/shared/constants/interview-options.constant';
 import { InterviewReturn } from 'src/app/shared/models/types';
 import { from } from 'rxjs';
+import { GetUserDataService } from 'src/app/services/get-user-data.service';
+import { RequestCenterService } from 'src/app/services/requester/request-center.service';
+import { CalendarEvent } from 'angular-calendar';
+import { CalendarEventInterview } from 'src/app/shared/models/calendar-event-detail';
+import { DateToStringService } from 'src/app/services/date-to-string.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'interview-overview',
@@ -23,21 +29,78 @@ export class InterviewOverviewComponent implements OnInit {
   progressed: InterviewReturn[] = [];
   awaitingCompletion: InterviewReturn[] = [];
   interviews: InterviewReturn[] = [];
-
+  interviewEvents: CalendarEventInterview[] = [];
   allFilteredArrays: Map<string, InterviewReturn[]> = new Map();
 
-  constructor(private iRequester: InterviewRequesterService) {}
+  currentUser = '';
+  userRoles: string[] = [];
+  isRecruiter = false;
+  isUser = false;
+
+  startDate = new Date();
+  endDate = new Date();
+
+  displayedColumns: string[] = [
+    'ID',
+    'Date',
+    'Time'
+  ]
+  aTable!: MatTableDataSource<CalendarEventInterview>;
+
+  constructor(
+    private iRequester: InterviewRequesterService,
+    private userService: GetUserDataService,
+    private requester: RequestCenterService,
+    private dateString: DateToStringService,
+    ) {}
 
 
-
+  setDates() {
+    this.startDate.setMonth(new Date().getMonth());
+    this.startDate.setDate(1);
+    this.endDate.setMonth(new Date().getMonth() + 1);
+    this.endDate.setDate(1);
+    this.startDate.setHours(0, 0, 0, 0);
+    this.endDate.setHours(0, 0, 0, 0);
+  }
   ngOnInit(): void {
-    this.iRequester.getAllInterviews().subscribe((interviews) => {
-      this.interviews = interviews;
-      this.filterStatus();
-      this.filterOutcome();
-      console.log(this.allFilteredArrays);
-      console.log(this.allFilteredArrays.get('Pending')?.length);
-    });
+    console.log('interview overview init');
+    this.currentUser = this.userService.getUsername();
+    this.requester.getUserRoles(this.currentUser).subscribe((returnData) => {
+      returnData.forEach((element) => {
+        this.userRoles.push(element);
+      });
+      this.setDates();
+      if (this.userRoles.includes('RECRUITER')) {
+        console.log('rec true')
+        this.isRecruiter = true;
+        this.iRequester.getAllInterviews().subscribe((interviews) => {
+          this.interviews = interviews;
+          this.filterStatus();
+          this.filterOutcome();
+        });
+      }
+      else{
+        console.log('user true');
+
+        this.isUser = true;
+        this.iRequester
+        .getInterviewsPerMonthByInterviewer(
+          false,
+          this.dateString.dateToStringDate(this.startDate),
+          this.dateString.dateToStringDate(this.endDate)
+        )
+        .subscribe((ret) => {
+          ret.forEach((ele) => {
+            this.interviewEvents.push(this.iRequester.parseInterviewUser(ele));
+          });
+          this.aTable = new MatTableDataSource(this.interviewEvents);
+          console.log(this.interviewEvents);
+        });
+      }
+    })
+    
+   
   }
 
 
