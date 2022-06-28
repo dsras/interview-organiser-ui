@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
+import { CalendarColors } from 'src/app/shared/constants/colours.constant';
 import {
   outcomeOptions,
   statusOptions,
 } from 'src/app/shared/constants/interview-options.constant';
 import { InterviewReturn } from 'src/app/shared/models/types';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'interview-overview',
@@ -26,6 +28,8 @@ export class InterviewOverviewComponent implements OnInit {
 
   constructor(private iRequester: InterviewRequesterService) {}
 
+
+
   ngOnInit(): void {
     this.iRequester.getAllInterviews().subscribe((interviews) => {
       this.interviews = interviews;
@@ -34,7 +38,9 @@ export class InterviewOverviewComponent implements OnInit {
     });
   }
 
+
   private filterStatus(): void {
+
     this.interviews.forEach((interview) => {
       switch (interview.status) {
         case statusOptions.candidateNoShow:

@@ -5,7 +5,7 @@
   <mat-list role="list">
     <mat-list-item role="listitem" *ngFor="let filteredList of allFilteredArrays | keyvalue">
       <div *ngIf="filteredList.key == 'Completed'">
-        <span class="dotGreen"></span>
+        <span  class="dotGreen"></span>
         {{ filteredList.key }} : {{ filteredList.value.length }}
       </div>
       <div *ngIf="filteredList.key == 'Progressed'">
@@ -13,7 +13,7 @@
         {{ filteredList.key }} : {{ filteredList.value.length }}
       </div>
       <div *ngIf="filteredList.key == 'Awaiting Completion'">
-        <span class="dotAmber" or ></span>
+        <span name="DotYellow" class="dotAmber" or ></span>
         {{ filteredList.key }} : {{ filteredList.value.length }}
       </div>
       <div *ngIf="filteredList.key == 'Pending'">
@@ -22,16 +22,16 @@
       </div>
       
       <div *ngIf="filteredList.key == 'Did Not Progress'">
-        <span class="dotRed"></span>
+        <span name="DotRed" class="dotRed"></span>
         {{ filteredList.key }} : {{ filteredList.value.length }}
       </div>
       <div *ngIf="filteredList.key == 'Candidate No Show'">
-        <span class="dotGrey"></span>
+        <span name="DotGrey" class="dotGrey"></span>
         {{ filteredList.key }} : {{ filteredList.value.length }}
       </div>
 
       <div *ngIf="filteredList.key == 'Panel No Show'">
-        <span class="dotGrey"></span>
+        <span name="DotGrey" class="dotGrey"></span>
         {{ filteredList.key }} : {{ filteredList.value.length }}
       </div>
 

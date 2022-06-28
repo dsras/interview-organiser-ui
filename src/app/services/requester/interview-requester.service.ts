@@ -10,7 +10,7 @@ import { APPCONSTANTS } from '../../shared/constants/app.constant';
 import { CalendarEvent } from 'angular-calendar';
 import { CalendarEventInterview } from 'src/app/shared/models/calendar-event-detail';
 import { InterviewMetaData } from 'src/app/shared/models/event-meta-data';
-import { CalendarColors } from 'src/app/shared/constants/colours.constant';
+import { CalendarColors, ColorSelector } from 'src/app/shared/constants/colours.constant';
 import { DateToStringService } from '../date-to-string.service';
 import { Observable } from 'rxjs';
 import { GetUserDataService } from '../get-user-data.service';
@@ -346,12 +346,14 @@ export class InterviewRequesterService {
       additional: element.additionalInfo,
     });
 
+    var myColour = element.outcome=='Awaiting Completion'? ColorSelector.colorForInput(<string>element.status):ColorSelector.colorForInput(<string> element.outcome);
+    console.log(myColour);
     const newInterview: CalendarEventInterview = {
       id: int_id,
       start: start,
       end: end,
       title: 'interview',
-      color: CalendarColors.get('yellow'),
+      color: myColour,
       meta: newInterviewData,
     };
     return newInterview;
@@ -373,13 +375,16 @@ export class InterviewRequesterService {
       status: element.status,
       additional: element.additionalInfo,
     });
+    var myColour = element.outcome=='Awaiting Completion'? ColorSelector.colorForInput(<string>element.status):ColorSelector.colorForInput(<string> element.outcome);
+    console.log(element.status);
+    console.log(myColour);
 
     const newInterview: CalendarEventInterview = {
       id: int_id,
       start: start,
       end: end,
       title: 'interview',
-      color: CalendarColors.get('red'),
+      color: myColour,
       meta: newInterviewData,
     };
     return newInterview;
