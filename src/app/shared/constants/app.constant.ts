@@ -10,6 +10,7 @@ class API_CONSTANTS {
   USER_FIND: string = 'users/findUser';
 
   AVAIL: string = 'availability';
+  AVAIL_REC: string = 'availability/recruiter';
   AVAIL_REC_RANGE: string = 'availabilityRange/';
   AVAIL_DEL: string = 'availability/delete';
   AVAIL_RANGE: string = 'availability/username/range';

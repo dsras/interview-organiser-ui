@@ -34,8 +34,8 @@ export class HomeComponent implements OnInit {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.setRoute(event);
-        console.log(event);
-        console.log(this.userRoles);
+        //console.log(event);
+        //console.log(this.userRoles);
       }
     });
   }
@@ -71,8 +71,8 @@ export class HomeComponent implements OnInit {
           if(this.userRoles.includes('USER')){
             this.isUser = true;
           }
-          console.log(this.currentUser);
-          console.log(this.userRoles);
+          //console.log(this.currentUser);
+          //console.log(this.userRoles);
         });
         
       }

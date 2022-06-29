@@ -13,7 +13,7 @@ export class SidenavComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     this.isUser = this.userRoles.includes('USER');
     this.isRecruiter = this.userRoles.includes('RECRUITER');
-    console.log(changes)
+    //console.log(changes)
   }
 
   constructor() {}

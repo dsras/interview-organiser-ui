@@ -96,7 +96,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
       .getEmitter()
       .subscribe(() => this.callbackFunction());
 
-    console.log('populate time');
   }
 
   ngOnDestroy() {
@@ -176,8 +175,10 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
 
   initRecruiter(): void {
-    this.aRequester.getRecruiterAvailability().subscribe((ret) => {
-      //console.table(ret);
+    this.aRequester.getRecruiterAvailability(
+      this.dateString.dateToStringDate(this.startDate),
+      this.dateString.dateToStringDate(this.endDate)
+    ).subscribe((ret) => {
       ret.forEach((ele) => {
         this.events.push(this.aRequester.parseAvailabilityRecruiter(ele));
         this.availability.push(this.aRequester.parseAvailabilityRecruiter(ele));
@@ -191,7 +192,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
         this.dateString.dateToStringDate(this.endDate)
       )
       .subscribe((ret) => {
-        //console.table(ret);
         ret.forEach((ele) => {
           this.events.push(this.iRequester.parseInterviewRecruiter(ele));
           this.interviews.push(this.iRequester.parseInterviewRecruiter(ele));
@@ -249,15 +249,14 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
   /** @ignore */
   setView(view: CalendarView): void {
-    console.log('set view?');
     this.view = view;
   }
 
   setDates() {
     this.startDate.setMonth(this.viewDate.getMonth());
     this.startDate.setDate(1);
-    this.startDate.setDate(1);
-    this.endDate.setMonth(this.viewDate.getMonth() + 1);
+    this.endDate.setMonth(this.viewDate.getMonth()+1);
+    this.endDate.setDate(0);
     this.startDate.setHours(0, 0, 0, 0);
     this.endDate.setHours(0, 0, 0, 0);
   }

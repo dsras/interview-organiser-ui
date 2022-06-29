@@ -217,7 +217,7 @@ export class InterviewRequesterService {
       let myTime = new Date(form.startTime);
 
       startTimeString = this.dateFormatter.dateToStringTime(myTime);
-      console.log('Start time good: ' + startTimeString);
+      //console.log('Start time good: ' + startTimeString);
 
       endTimeString = this.stringTimeAdd(startTimeString, 1);
     } else {
@@ -226,7 +226,7 @@ export class InterviewRequesterService {
       myTime.setHours(parseInt(times1[0]), parseInt(times1[1]));
 
       startTimeString = this.dateFormatter.dateToStringTime(myTime);
-      console.log('Start time bad: ' + startTimeString);
+      //console.log('Start time bad: ' + startTimeString);
 
       endTimeString = this.stringTimeAdd(startTimeString, 1);
     }
@@ -345,7 +345,7 @@ export class InterviewRequesterService {
     });
 
     var myColour = element.outcome=='Awaiting Completion'? ColorSelector.colorForInput(<string>element.status):ColorSelector.colorForInput(<string> element.outcome);
-    console.log(myColour);
+    //console.log(myColour);
     const newInterview: CalendarEventInterview = {
       id: int_id,
       start: start,
@@ -374,8 +374,8 @@ export class InterviewRequesterService {
       additional: element.additionalInfo,
     });
     var myColour = element.outcome=='Awaiting Completion'? ColorSelector.colorForInput(<string>element.status):ColorSelector.colorForInput(<string> element.outcome);
-    console.log(element.status);
-    console.log(myColour);
+    //console.log(element.status);
+    //console.log(myColour);
 
     const newInterview: CalendarEventInterview = {
       id: int_id,

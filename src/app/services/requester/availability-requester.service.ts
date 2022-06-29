@@ -132,11 +132,15 @@ export class AvailabilityRequesterService {
     });
   }
 
-  getRecruiterAvailability(): Observable<Array<Availability>> {
+  getRecruiterAvailability(
+    start: string,
+    end: string
+  ): Observable<Array<Availability>> {
     const url =
-      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL;
+      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_REC;
+      let myRange = new dateRange(start, end);
 
-    return this.requester.getRequest<Availability[]>(url);
+    return this.requester.postRequestNoType<Availability[]>(url, myRange);
   }
 
   /**
