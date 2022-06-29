@@ -11,15 +11,15 @@
   <h2 class="text-black font-weight-bold text-center">Calendar</h2>
   <div class="col-1 mt-3 mx-auto orange-border"></div>
 </div> -->
-<br />
-<div class="text-center side-padded">
-  <!-- <a *ngIf="!isRecruiter" routerLink="my-interviews">
+<!--<br />
+ <div class="text-center side-padded">
+  <a *ngIf="!isRecruiter" routerLink="my-interviews">
     <button mat-raised-button class="main-button">
       Interviews
       <mat-icon class="tile-icon" style="position: sticky">list</mat-icon>
     </button>
-  </a> -->
-</div>
+  </a>
+</div> -->
 <mat-card>
   <div>
   <div class="row" style="width:100%">
@@ -38,7 +38,7 @@
         </div>
       </div>
     </div>
-    <div class=" text-center col-sm">
+    <div class=" text-center col-sm" style="margin-right: 1%;">
       <h2 class="text-black font-weight-bold text-center pl-4">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h2>
     </div>
     <div class=" col-sm" style="position:relative; text-align: end;">

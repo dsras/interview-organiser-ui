@@ -62,15 +62,16 @@
   </span> -->
   <span class="spacer"></span>
 
-  <div [hidden]="!loggedIn" class="row">
-    <div [hidden]="!isRec"  class="col-5">
-      <create-interview></create-interview>
-    </div>
+  <div [hidden]="!loggedIn" class="row" style="width: 25%;">
+
     <div [hidden]="!isUser"  class="col-5">
       <skills-form></skills-form>
     </div>
-    <div [hidden]="!isUser" class="col-7">
+    <div [hidden]="!isUser" class="col-6">
       <availability-form></availability-form>
+    </div>
+    <div [hidden]="!isRec"  class="col-5" style="margin-left: 50%;">
+      <create-interview></create-interview>
     </div>
   </div>
 
