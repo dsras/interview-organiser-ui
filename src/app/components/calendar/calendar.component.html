@@ -27,14 +27,14 @@
       <div class="btn-group pl-3 col-8" style="height: 60%; width: 50%;">
         <div class="btn btn-warning" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
           (viewDateChange)="closeOpenMonthViewDay()">
-          <h5 class="text-center">Previous</h5>
+          <h5 class="text-center" style="font-size: 100%;">Previous</h5>
         </div>
         <div class="btn btn-outline-warning" mwlCalendarToday [(viewDate)]="viewDate">
-          <h5 class="text-black text-center">Today</h5>
+          <h5 class="text-black text-center"  style="font-size: 100%;">Today</h5>
         </div>
         <div class="btn btn-warning" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
           (viewDateChange)="closeOpenMonthViewDay()">
-          <h5 class="text-center">Next</h5>
+          <h5 class="text-center" style="font-size: 100%;">Next</h5>
         </div>
       </div>
     </div>
@@ -44,14 +44,14 @@
     <div class=" col-sm" style="position:relative; text-align: end;">
       <div class="btn-group col-8" style="height: 60%; width: 50%;">
         <div class="btn btn-warning" (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month">
-          <h5 class="text-center">Month</h5>
+          <h5 class="text-center" style="font-size: 100%;">Month</h5>
         </div>
         <div class="btn btn-outline-warning" (click)="setView(CalendarView.Week)"
           [class.active]="view === CalendarView.Week">
-          <h5 class="text-black text-center">Week</h5>
+          <h5 class="text-black text-center" style="font-size: 100%;">Week</h5>
         </div>
         <div class="btn btn-warning" (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">
-          <h5 class="text-center">Day</h5>
+          <h5 class="text-center" style="font-size: 100%;">Day</h5>
         </div>
       </div>
     </div>
