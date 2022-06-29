@@ -208,7 +208,7 @@ export class InterviewRequesterService {
     return this.dateFormatter.dateToStringDate(date);
   }
 
-  addInterviewForm(form: CreateInterviewFormValue) {
+  addInterviewForm(form: CreateInterviewFormValue) : Observable<Interview> {
     let startTimeString: string;
     let endTimeString: string;
 
@@ -231,7 +231,7 @@ export class InterviewRequesterService {
       endTimeString = this.stringTimeAdd(startTimeString, 1);
     }
 
-    this.createInterview(
+    return this.createInterview(
       this.userService.getUsername(),
       [form.interviewSelected.interviewerId],
       form.interviewSelected.date,
@@ -241,14 +241,14 @@ export class InterviewRequesterService {
     );
   }
 
-  createInterview(
+  createInterview (
     userName: string,
     interviewerID: number[],
     interviewDate: string,
     timeStart: string,
     timeEnd: string,
     additionalInfo: string
-  ) {
+  ):Observable<Interview> {
     const url: string =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.INTER +
@@ -265,9 +265,7 @@ export class InterviewRequesterService {
       'Pending'
     );
 
-    this.requester
-      .postRequest<Interview>(url, newInterview)
-      .subscribe((returnData: any) => {});
+    return this.requester.postRequest<Interview>(url, newInterview);
   }
 
   updateInterviewStatus(id: number, status: string, isStatus: boolean) {

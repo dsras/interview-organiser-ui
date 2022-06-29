@@ -92,6 +92,7 @@ export class AvailabilityFormComponent implements OnInit {
       case 0: {
         this.aRequester.addAvailabilityArray(form.value).subscribe(() => {
           this.submitted = true;
+          this.updater.updateCalendar();
         });
         break;
       }
@@ -99,6 +100,7 @@ export class AvailabilityFormComponent implements OnInit {
         this.aRequester.addAvailabilityRange(form.value).subscribe((data) => {
           console.log(data);
           this.submitted = true;
+          this.updater.updateCalendar();
         });
         break;
       }
