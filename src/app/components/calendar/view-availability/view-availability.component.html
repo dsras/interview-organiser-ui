@@ -16,35 +16,35 @@
         multiTemplateDataRows
       >
         <ng-container matColumnDef="AvailabilityId">
-          <th mat-header-cell *matHeaderCellDef>ID No.</th>
-          <td mat-cell *matCellDef="let availability">{{ availability.id }}</td>
+          <th mat-header-cell class="cellHeadStyle" *matHeaderCellDef>ID No.</th>
+          <td mat-cell  class="cellStyle"  *matCellDef="let availability">{{ availability.id }}</td>
         </ng-container>
         <ng-container matColumnDef="date">
-          <th mat-header-cell *matHeaderCellDef>Date</th>
-          <td mat-cell *matCellDef="let availability">
+          <th mat-header-cell class="cellHeadStyle" *matHeaderCellDef>Date</th>
+          <td mat-cell  class="cellStyle"  *matCellDef="let availability">
             {{ availability.start | date }}
           </td>
         </ng-container>
         <ng-container matColumnDef="time">
-          <th mat-header-cell *matHeaderCellDef>Time</th>
-          <td mat-cell *matCellDef="let availability">
+          <th mat-header-cell class="cellHeadStyle" *matHeaderCellDef>Time</th>
+          <td mat-cell  class="cellStyle"  *matCellDef="let availability">
             {{ availability.start | DateToTimePipe }} -
             {{ availability.end | DateToTimePipe }}
           </td>
         </ng-container>
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>Name</th>
-          <td mat-cell *matCellDef="let availability">
+          <th mat-header-cell class="cellHeadStyle" *matHeaderCellDef>Name</th>
+          <td mat-cell class="cellStyle" *matCellDef="let availability">
             {{ availability.interviewer }}
           </td>
         </ng-container>
         <ng-container matColumnDef="delete">
-          <th mat-header-cell *matHeaderCellDef>Delete</th>
-          <td mat-cell *matCellDef="let availability">
+          <th mat-header-cell class="cellHeadStyle" *matHeaderCellDef>Delete</th>
+          <td mat-cell  class="cellStyle"  *matCellDef="let availability">
             <div>
               <button
                 mat-raised-button
-                class="main-button"
+                class="btn btn-primary"
                 (click)="onDelete(availability.id)"
               >
                 Delete
@@ -99,36 +99,36 @@
         [dataSource]="iTable"
         multiTemplateDataRows
       >
-        <ng-container matColumnDef="InterviewId">
-          <th mat-header-cell *matHeaderCellDef>ID No.</th>
-          <td mat-cell *matCellDef="let interview">{{ interview.id }}</td>
+        <ng-container matColumnDef="InterviewId" >
+          <th mat-header-cell class="cellHeadStyle" *matHeaderCellDef >ID No.</th>
+          <td mat-cell  class="cellStyle"  *matCellDef="let interview">{{ interview.id }}</td>
         </ng-container>
         <ng-container matColumnDef="date">
-          <th mat-header-cell *matHeaderCellDef>Date</th>
-          <td mat-cell *matCellDef="let interview">
+          <th mat-header-cell class="cellHeadStyle" *matHeaderCellDef>Date</th>
+          <td mat-cell  class="cellStyle"  *matCellDef="let interview">
             {{ interview.start | date }}
           </td>
         </ng-container>
         <ng-container matColumnDef="time">
-          <th mat-header-cell *matHeaderCellDef>Time</th>
-          <td mat-cell *matCellDef="let interview">
+          <th mat-header-cell class="cellHeadStyle"  *matHeaderCellDef>Time</th>
+          <td mat-cell  class="cellStyle"   *matCellDef="let interview">
             {{ interview.start | DateToTimePipe }} -
             {{ interview.end | DateToTimePipe }}
           </td>
         </ng-container>
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>Name</th>
-          <td mat-cell *matCellDef="let interview">
+          <th mat-header-cell class="cellHeadStyle" *matHeaderCellDef>Name</th>
+          <td mat-cell  class="cellStyle"  *matCellDef="let interview">
             {{ interview.meta.interviewPanel }}
           </td>
         </ng-container>
         <ng-container matColumnDef="delete">
-          <th mat-header-cell *matHeaderCellDef>Delete</th>
-          <td mat-cell *matCellDef="let interview">
+          <th mat-header-cell class="cellHeadStyle" *matHeaderCellDef>Delete</th>
+          <td mat-cell  class="cellStyle"  *matCellDef="let interview">
             <div>
               <button
                 mat-raised-button
-                class="main-button"
+                class="btn btn-warning"
                 (click)="onIDelete(interview.id)"
               > Delete</button>
             </div>
