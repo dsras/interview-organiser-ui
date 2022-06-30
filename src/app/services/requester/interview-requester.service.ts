@@ -262,7 +262,7 @@ export class InterviewRequesterService {
       timeEnd,
       additionalInfo,
       'Pending',
-      'Pending'
+      'Awaiting Completion'
     );
 
     return this.requester.postRequest<Interview>(url, newInterview);
