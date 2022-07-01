@@ -1,13 +1,4 @@
 <mat-toolbar style="width: 100%">
-  <!-- <span class="hide-gt-lg" [hidden]="!loggedIn">
-    <button mat-button [matMenuTriggerFor]="menu">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item>Item 1</button>
-      <button mat-menu-item>Item 2</button>
-    </mat-menu>
-  </span> -->
   <button
     *ngIf="loggedIn"
     mat-icon-button
@@ -33,37 +24,9 @@
         alt="Accolite Digital Logo"
       /> </a
   ></span>
-  <!-- <span>
-    <a
-      class="nav-link"
-      routerLink="dashboard"
-      routerLinkActive="active"
-      role="button"
-      aria-haspopup="true"
-      aria-expanded="false"
-      [hidden]="!loggedIn"
-      >Dashboard</a
-    >
-  </span>
-  <span class="spacer"></span>
-
-  <span>
-    <a
-      class="nav-link"
-      routerLink="calendar"
-      routerLinkActive="active"
-      id="industriesDropdown"
-      role="button"
-      aria-haspopup="true"
-      aria-expanded="false"
-      [hidden]="!loggedIn"
-      >Calendar</a
-    >
-  </span> -->
   <span class="spacer"></span>
 
   <div [hidden]="!loggedIn" class="row" style="width: 25%;">
-
     <div [hidden]="!isUser"  class="col-5">
       <skills-form></skills-form>
     </div>
@@ -81,37 +44,10 @@
   aria-label="Example icon-button with share icon"
   [hidden]="!loggedIn"
   (click)="logout()"
->
-  <!-- <img
-    [src]="user.photoUrl"
-    class="rounded-circle"
-    style="height: 30px; width: 30px"
-    *ngIf="loggedIn && user"
-  /> -->
-  Logout
-  <mat-icon>logout</mat-icon>
-</button>
-  <!-- <button
-    mat-button
-    class="icon"
-    aria-label="Example icon-button with share icon"
-    [hidden]="!loggedIn"
   >
-    Create Interview
-    <mat-icon>edit calendar</mat-icon>
-  </button> -->
-<!-- 
-  <button
-    mat-button
-    class="icon"
-    aria-label="Example icon-button with share icon"
-    [hidden]="!loggedIn"
-  >
-    Interviews
-    <mat-icon>list</mat-icon>
-  </button> -->
-
-
+    Logout
+    <mat-icon>logout</mat-icon>
+  </button>
 </mat-toolbar>
 
 <mat-sidenav-container>

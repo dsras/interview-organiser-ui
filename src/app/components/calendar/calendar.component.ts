@@ -20,6 +20,8 @@ import { DateToStringService } from '../../services/date-to-string.service';
 import { GetUserDataService } from '../../services/get-user-data.service';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 import { CalendarUpdaterService } from 'src/app/services/calendar-updater.service';
+import { FocusDayService } from 'src/app/services/focus-day.service';
+import { OverviewUpdaterService } from 'src/app/services/overview-updater.service';
 
 /**
  * The main component of the calendar, an implementation of angular-calendar
@@ -74,7 +76,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
     private aRequester: AvailabilityRequesterService,
     private dateString: DateToStringService,
     private userService: GetUserDataService,
-    private updater: CalendarUpdaterService
+    private updater: CalendarUpdaterService,
+    private oUpdater: OverviewUpdaterService
   ) {
     this.populateCalendar = this.populateCalendar.bind(this);
   }
@@ -250,6 +253,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
   /** @ignore */
   setView(view: CalendarView): void {
     this.view = view;
+
   }
 
   setDates() {
@@ -263,6 +267,10 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   /** @ignore */
   closeOpenMonthViewDay(): void {
+    console.log("focus day");
+    console.log(this.viewDate);
+    FocusDayService.changeDate(this.viewDate);
+    this.oUpdater.updateOverview();
     this.setDates();
     this.populateCalendar();
     this.activeDayIsOpen = false;
