@@ -267,8 +267,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   /** @ignore */
   closeOpenMonthViewDay(): void {
-    console.log("focus day");
-    console.log(this.viewDate);
     FocusDayService.changeDate(this.viewDate);
     this.oUpdater.updateOverview();
     this.setDates();
