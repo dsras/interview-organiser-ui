@@ -192,7 +192,7 @@ export class AvailabilityRequesterService {
   getSlots(form: FindSlotFormValue, skills: number[]): Observable<any> {
     const url: string =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
-      APPCONSTANTS.APICONSTANTS.INTER_INTER;
+      APPCONSTANTS.APICONSTANTS.INTER_INTER_ACC;
 
     const newRange: InterviewRange = new InterviewRange(
       this.dateToStringDate(new Date(form.firstDate)),
