@@ -20,7 +20,8 @@ export class HomeComponent implements OnInit {
   url: string = '';
   currentUser = '';
   isRec = false;
-  isUser= false;
+  isUser = false;
+
   /** @ignore */
   constructor(
     private router: Router,
@@ -34,8 +35,6 @@ export class HomeComponent implements OnInit {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.setRoute(event);
-        //console.log(event);
-        //console.log(this.userRoles);
       }
     });
   }
@@ -45,36 +44,48 @@ export class HomeComponent implements OnInit {
     if (this.loginType === APPCONSTANTS.LOGIN_CONSTANTS.LOGIN_TYPE_SSO) {
       this.socialAuthService.signOut();
     }
-    localStorage.clear();
-    this.user = null;
-    this.userRoles = [];
+    this.clearData();
     this.router.navigate(['login']);
   }
 
+  private clearData(): void {
+    this.isRec = false;
+    this.isUser = false;
+    localStorage.clear();
+    this.user = null;
+    this.userRoles = [];
+    this.loginType = '';
+    this.loggedIn = false;
+    this.currentUser = '';
+  }
+
+  private setRoles(returnedRoles: string[]): void {
+    this.userRoles = returnedRoles;
+    if (this.userRoles.includes('RECRUITER')) {
+      this.isRec = true;
+    }
+    if (this.userRoles.includes('USER')) {
+      this.isUser = true;
+    }
+  }
+
   private setRoute(currentRoute: NavigationEnd): void {
-    this.url = currentRoute.urlAfterRedirects
+    this.url = currentRoute.urlAfterRedirects;
     if (this.loggedIn && this.user && this.userRoles.length > 0) {
       return;
-    } else if (currentRoute.url !== '/login') {
+    } else 
+    if (currentRoute.url !== '/login') {
       this.loggedIn = true;
       const user = localStorage.getItem('ssoUser');
       const roles = this.userDataService.getUserRoleNames();
       if (user && roles !== []) {
         this.user = JSON.parse(user);
         this.currentUser = this.userDataService.getUsername();
-
-        this.requester.getUserRoles(this.currentUser).subscribe(rolesReturn =>{
-          this.userRoles = rolesReturn;
-          if(this.userRoles.includes("RECRUITER")){
-            this.isRec = true;
-          }
-          if(this.userRoles.includes('USER')){
-            this.isUser = true;
-          }
-          //console.log(this.currentUser);
-          //console.log(this.userRoles);
-        });
-        
+        this.requester
+          .getUserRoles(this.currentUser)
+          .subscribe((returnedRoles) => {
+            this.setRoles(returnedRoles);
+          });
       }
     } else {
       this.loggedIn = false;

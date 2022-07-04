@@ -15,7 +15,6 @@ import { AvailabilityRequesterService } from 'src/app/services/requester/availab
   styleUrls: ['./availability-form.component.scss'],
 })
 export class AvailabilityFormComponent implements OnInit {
-  submitted: boolean = false;
   currentTab: number = 0;
 
   /**
@@ -67,9 +66,6 @@ export class AvailabilityFormComponent implements OnInit {
       this.multiDayForm.reset();
       this.resetDays();
       this.dateRangeForm.reset();
-      if (this.submitted) {
-        this.updater.updateCalendar();
-      }
     });
   }
 
@@ -91,7 +87,6 @@ export class AvailabilityFormComponent implements OnInit {
     switch (this.currentTab) {
       case 0: {
         this.aRequester.addAvailabilityArray(form.value).subscribe(() => {
-          this.submitted = true;
           this.updater.updateCalendar();
         });
         break;
@@ -99,7 +94,6 @@ export class AvailabilityFormComponent implements OnInit {
       case 1: {
         this.aRequester.addAvailabilityRange(form.value).subscribe((data) => {
           console.log(data);
-          this.submitted = true;
           this.updater.updateCalendar();
         });
         break;
