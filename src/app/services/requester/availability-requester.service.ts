@@ -237,9 +237,10 @@ export class AvailabilityRequesterService {
     let outputArray: string[] = [];
     days.forEach((day) => {
       const outputDate = new Date(day.weekday);
-      for (let i = 0; i < weeks; i++) {
-        outputArray.push(this.dateToStringDate(outputDate));
+      outputArray.push(this.dateToStringDate(outputDate));
+      for (let i = 1; i < weeks; i++) {
         outputDate.setDate(outputDate.getDate() + 7);
+        outputArray.push(this.dateToStringDate(outputDate));
       }
     });
     return outputArray;
