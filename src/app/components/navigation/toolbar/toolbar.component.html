@@ -63,10 +63,10 @@
   >
     Logout
     <img
-      [src]="user.photoUrl"
+      [src]="user?.photoUrl"
       class="rounded-circle"
       style="height: 30px; width: 30px"
-      *ngIf="loggedIn && user"
+      *ngIf="loggedIn "
     />
   </button>
 </mat-toolbar>

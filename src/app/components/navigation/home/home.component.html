@@ -26,24 +26,25 @@
   ></span>
   <span class="spacer"></span>
 
-  <div [hidden]="!loggedIn" class="row" style="width: 25%;">
-    <div [hidden]="!isUser"  class="col-5">
-      <skills-form></skills-form>
-    </div>
-    <div [hidden]="!isUser" class="col-6">
-      <availability-form></availability-form>
-    </div>
-    <div [hidden]="!isRec"  class="col-5" style="margin-left: 50%;">
-      <create-interview></create-interview>
-    </div>
+  <div *ngIf="loggedIn && isUser">
+    <skills-form></skills-form>
   </div>
+  <span class="spacer"></span>
+  <div *ngIf="loggedIn && isUser">
+    <availability-form></availability-form>
+  </div>
+  <span class="spacer"></span>
+  <div *ngIf="loggedIn && isRec">
+    <create-interview></create-interview>
+  </div>
+  <span class="spacer"></span>
 
   <button
-  mat-button
-  class="icon"
-  aria-label="Example icon-button with share icon"
-  [hidden]="!loggedIn"
-  (click)="logout()"
+    mat-button
+    class="icon"
+    aria-label="Example icon-button with share icon"
+    [hidden]="!loggedIn"
+    (click)="logout()"
   >
     Logout
     <mat-icon>logout</mat-icon>
