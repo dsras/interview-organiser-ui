@@ -102,6 +102,8 @@ export class AvailabilityRequesterService {
       this.generateDateArray(form.days, form.weeks)
     );
 
+    console.table(newAvail)
+
     return this.requester.postRequest<AvailabilityArray>(url, newAvail);
   }
 
@@ -234,10 +236,9 @@ export class AvailabilityRequesterService {
   generateDateArray(days: Array<Weekday>, weeks: number): string[] {
     let outputArray: string[] = [];
     days.forEach((day) => {
-      let outputDate = new Date(day.weekday);
-      const date = outputDate.getDate();
+      const outputDate = new Date(day.weekday);
       for (let i = 0; i < weeks; i++) {
-        outputDate.setDate(7 * i + date);
+        outputDate.setDate(outputDate.getDate() + 7);
         outputArray.push(this.dateToStringDate(outputDate));
       }
     });
