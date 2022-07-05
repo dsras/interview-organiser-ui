@@ -29,3 +29,30 @@
   border-radius: 50%;
   display: inline-block;
 }
+
+.overviewContainer {
+  width: 200px;
+}
+
+.entryContainer {
+  margin-left: 0;
+  margin-right: auto;
+  display: table-row;
+  font-size: 120%;
+}
+
+table {
+  width: 100%;
+}
+
+.interviewOverviewUser {
+  width: 270px;
+}
+
+.mat-cell {
+  text-align: center;
+  border-right: 1px solid rgba(175, 175, 175, 0.5);
+}
+.mat-header-cell {
+  text-align: center;
+}

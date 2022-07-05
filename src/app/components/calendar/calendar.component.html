@@ -1,77 +1,36 @@
-<!-- <div class="container-fluid section first-section-color">
-  <div class="row">
-    <availability-form
-    (callbackEmitter)="callbackFunction()"
-    ></availability-form>
-    <skills-form></skills-form>
-  </div>
-</div> -->
-
-<!-- <div class="container-fluid py-5 intro-section-color">
-  <h2 class="text-black font-weight-bold text-center">Calendar</h2>
-  <div class="col-1 mt-3 mx-auto orange-border"></div>
-</div> -->
-<br />
 <mat-card>
   <div>
-    <div class="row calendar-controls" style="width: 100%">
-      <div class="col-sm" style="text-align: start">
-        <div class="btn-group">
-          <button
-            class="btn btn-warning padded-btn"
-            mwlCalendarPreviousView
-            [view]="view"
-            [(viewDate)]="viewDate"
-            (viewDateChange)="closeOpenMonthViewDay()"
-          >
-            <span>Previous</span>
-          </button>
-          <button
-            class="btn btn-outline-warning padded-btn"
-            mwlCalendarToday
-            [(viewDate)]="viewDate"
-          >
-            <span class="text-black">Today</span>
-          </button>
-          <button
-            class="btn btn-warning padded-btn"
-            mwlCalendarNextView
-            [view]="view"
-            [(viewDate)]="viewDate"
-            (viewDateChange)="closeOpenMonthViewDay()"
-          >
-            <span>Next</span>
-          </button>
+  <div class="row" style="width:100%">
+    <div class=" col-sm">
+      <div class="btn-group pl-3 col-8" style="height: 60%; width: 50%;">
+        <div class="btn btn-warning" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+          (viewDateChange)="closeOpenMonthViewDay()">
+          <h5 class="text-center" style="font-size: 100%;">Previous</h5>
+        </div>
+        <div class="btn btn-outline-warning" mwlCalendarToday [(viewDate)]="viewDate"
+          (viewDateChange)="closeOpenMonthViewDay()">
+          <h5 class="text-black text-center"  style="font-size: 100%;">Today</h5>
+        </div>
+        <div class="btn btn-warning" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+          (viewDateChange)="closeOpenMonthViewDay()">
+          <h5 class="text-center" style="font-size: 100%;">Next</h5>
         </div>
       </div>
-      <div class="col-sm">
-        <h3 class="text-black font-weight-bold text-center">
-          {{ viewDate | calendarDate: view + "ViewTitle":"en" }}
-        </h3>
-      </div>
-      <div class="col-sm" style="text-align: end">
-        <div class="btn-group">
-          <button
-            class="btn btn-warning padded-btn"
-            (click)="setView(CalendarView.Month)"
-            [class.active]="view === CalendarView.Month"
-          >
-            <span class="text-center">Month</span>
-          </button>
-          <button
-            class="btn btn-outline-warning padded-btn"
-            (click)="setView(CalendarView.Week)"
-            [class.active]="view === CalendarView.Week"
-          >
-            <span class="text-black text-center">Week</span>
-          </button>
-          <button
-            class="btn btn-warning padded-btn"
-            (click)="setView(CalendarView.Day)"
-            [class.active]="view === CalendarView.Day"
-          >
-            <span>Day</span>
-          </button>
+    </div>
+    <div class=" text-center col-sm" style="margin-right: 1%;">
+      <h2 class="text-black font-weight-bold text-center pl-4">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h2>
+    </div>
+    <div class=" col-sm" style="position:relative; text-align: end;">
+      <div class="btn-group col-8" style="height: 60%; width: 50%;">
+        <div class="btn btn-warning" (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month">
+          <h5 class="text-center" style="font-size: 100%;">Month</h5>
+        </div>
+        <div class="btn btn-outline-warning" (click)="setView(CalendarView.Week)"
+          [class.active]="view === CalendarView.Week">
+          <h5 class="text-black text-center" style="font-size: 100%;">Week</h5>
+        </div>
+        <div class="btn btn-warning" (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">
+          <h5 class="text-center" style="font-size: 100%;">Day</h5>
         </div>
       </div>
     </div>
@@ -102,6 +61,10 @@
       </mwl-calendar-day-view>
     </div>
   </div>
+
+  <br />
+  
+</div>
 </mat-card>
 
 <ng-template #dayContent>
@@ -112,5 +75,4 @@
     (tabChangeEvent)="tabChange()"
     [isRecruiter]="isRecruiter"
   ></view-availability>
-  <!-- [callbackFunction]="populateCalendar" -->
 </ng-template>

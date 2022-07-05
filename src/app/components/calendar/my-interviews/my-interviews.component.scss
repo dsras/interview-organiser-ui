@@ -1,0 +1,68 @@
+.interview-table {
+  padding: 5%;
+  width: 100%;
+}
+
+.mat-column-interview_id {
+  width: 32px;
+  border-right: 1px solid currentColor;
+  padding-right: 24px;
+  text-align: center;
+}
+
+.mat-column-interviewers {
+  padding-left: 16px;
+  font-size: 20px;
+}
+
+.mat-column-date {
+  padding-left: 16px;
+  font-size: 16px;
+  font-style: italic;
+}
+
+.mat-column-start_time {
+  padding-left: 16px;
+  font-size: 16px;
+  font-style: italic;
+}
+
+.mat-column-status {
+  width: 32px;
+  text-align: center;
+  font-weight: bold;
+}
+
+table {
+  width: 100%;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: lightblue;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.interview-expanded {
+  overflow: hidden;
+  display: flex;
+}
+
+.interview-detail {
+  padding: 16px;
+  font-weight: lighter;
+}
+
+
+
+

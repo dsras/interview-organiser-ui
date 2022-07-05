@@ -10,6 +10,7 @@ class API_CONSTANTS {
   USER_FIND: string = 'users/findUser';
 
   AVAIL: string = 'availability';
+  AVAIL_REC: string = 'availability/recruiter';
   AVAIL_REC_RANGE: string = 'availabilityRange/';
   AVAIL_DEL: string = 'availability/delete';
   AVAIL_RANGE: string = 'availability/username/range';
@@ -36,6 +37,7 @@ class API_CONSTANTS {
   INTER_NOPROG: string = 'interviews/username/status/not-progressed'
   INTER_HIRE: string = 'interviews/username/status/hired'
   INTER_INTER: string = 'interviews/interviewers'
+  INTER_INTER_ACC: string = 'interviews/interviewersAccurate'
 
   INTER_ADD: string = 'interviews/new';
   INTER_BY_INT: string = 'interviews/findByInterviewer';

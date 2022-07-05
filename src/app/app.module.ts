@@ -35,6 +35,7 @@ import { AppInterceptor } from './components/interceptor/app.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { APPCONSTANTS, prodEnv } from './shared/constants/app.constant';
 import { Requester } from './services/requester/requester.service';
+import { DateToTimePipe } from './pipes/DateToTimePipe';
 
 const CLIENT_ID = prodEnv
   ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD

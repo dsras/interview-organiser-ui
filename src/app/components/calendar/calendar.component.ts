@@ -20,6 +20,8 @@ import { DateToStringService } from '../../services/date-to-string.service';
 import { GetUserDataService } from '../../services/get-user-data.service';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 import { CalendarUpdaterService } from 'src/app/services/calendar-updater.service';
+import { FocusDayService } from 'src/app/services/focus-day.service';
+import { OverviewUpdaterService } from 'src/app/services/overview-updater.service';
 
 /**
  * The main component of the calendar, an implementation of angular-calendar
@@ -74,7 +76,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
     private aRequester: AvailabilityRequesterService,
     private dateString: DateToStringService,
     private userService: GetUserDataService,
-    private updater: CalendarUpdaterService
+    private updater: CalendarUpdaterService,
+    private oUpdater: OverviewUpdaterService
   ) {
     this.populateCalendar = this.populateCalendar.bind(this);
   }
@@ -96,7 +99,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
       .getEmitter()
       .subscribe(() => this.callbackFunction());
 
-    console.log('populate time');
   }
 
   ngOnDestroy() {
@@ -176,8 +178,10 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
 
   initRecruiter(): void {
-    this.aRequester.getRecruiterAvailability().subscribe((ret) => {
-      console.table(ret);
+    this.aRequester.getRecruiterAvailability(
+      this.dateString.dateToStringDate(this.startDate),
+      this.dateString.dateToStringDate(this.endDate)
+    ).subscribe((ret) => {
       ret.forEach((ele) => {
         this.events.push(this.aRequester.parseAvailabilityRecruiter(ele));
         this.availability.push(this.aRequester.parseAvailabilityRecruiter(ele));
@@ -191,7 +195,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
         this.dateString.dateToStringDate(this.endDate)
       )
       .subscribe((ret) => {
-        console.table(ret);
         ret.forEach((ele) => {
           this.events.push(this.iRequester.parseInterviewRecruiter(ele));
           this.interviews.push(this.iRequester.parseInterviewRecruiter(ele));
@@ -249,21 +252,23 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
   /** @ignore */
   setView(view: CalendarView): void {
-    console.log('set view?');
     this.view = view;
+
   }
 
   setDates() {
     this.startDate.setMonth(this.viewDate.getMonth());
     this.startDate.setDate(1);
-    this.startDate.setDate(1);
-    this.endDate.setMonth(this.viewDate.getMonth() + 1);
+    this.endDate.setMonth(this.viewDate.getMonth()+1);
+    this.endDate.setDate(0);
     this.startDate.setHours(0, 0, 0, 0);
     this.endDate.setHours(0, 0, 0, 0);
   }
 
   /** @ignore */
   closeOpenMonthViewDay(): void {
+    FocusDayService.changeDate(this.viewDate);
+    this.oUpdater.updateOverview();
     this.setDates();
     this.populateCalendar();
     this.activeDayIsOpen = false;

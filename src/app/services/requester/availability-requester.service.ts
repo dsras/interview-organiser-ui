@@ -40,9 +40,7 @@ export class AvailabilityRequesterService {
   deleteAvailability(id: string | number | any): Observable<availIdOnly> {
     const url: string =
       APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_DEL;
-    return this.requester
-      .postRequest<availIdOnly>(url, id)
-      
+    return this.requester.postRequest<availIdOnly>(url, id);
   }
 
   getMyAvailabilityInRange(
@@ -67,7 +65,9 @@ export class AvailabilityRequesterService {
    *
    * @param {AvailabilityRangeFormValue} form availability form submitted
    */
-  addAvailabilityRange(form: AvailabilityRangeFormValue): Observable<AvailabilityRange> {
+  addAvailabilityRange(
+    form: AvailabilityRangeFormValue
+  ): Observable<AvailabilityRange> {
     const newAvail: AvailabilityRange = new AvailabilityRange(
       this.dateToStringDate(new Date(form.firstDate)),
       this.dateToStringDate(new Date(form.lastDate)),
@@ -82,12 +82,12 @@ export class AvailabilityRequesterService {
 
     let out: AvailabilityRange;
 
-    return this.requester
-      .postRequest<AvailabilityRange>(url, newAvail)
-      
+    return this.requester.postRequest<AvailabilityRange>(url, newAvail);
   }
 
-  addAvailabilityArray(form: AvailabilityArrayFormValue): Observable<AvailabilityArray> {
+  addAvailabilityArray(
+    form: AvailabilityArrayFormValue
+  ): Observable<AvailabilityArray> {
     const url: string =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.AVAIL_REC_RANGE +
@@ -101,6 +101,8 @@ export class AvailabilityRequesterService {
       this.dateFormatter.dateToStringTime(endTime),
       this.generateDateArray(form.days, form.weeks)
     );
+
+    console.table(newAvail);
 
     return this.requester.postRequest<AvailabilityArray>(url, newAvail);
   }
@@ -132,11 +134,15 @@ export class AvailabilityRequesterService {
     });
   }
 
-  getRecruiterAvailability(): Observable<Array<Availability>> {
+  getRecruiterAvailability(
+    start: string,
+    end: string
+  ): Observable<Array<Availability>> {
     const url =
-      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL;
+      APPCONSTANTS.APICONSTANTS.BASE_URL + APPCONSTANTS.APICONSTANTS.AVAIL_REC;
+    let myRange = new dateRange(start, end);
 
-    return this.requester.getRequest<Availability[]>(url);
+    return this.requester.postRequestNoType<Availability[]>(url, myRange);
   }
 
   /**
@@ -188,7 +194,7 @@ export class AvailabilityRequesterService {
   getSlots(form: FindSlotFormValue, skills: number[]): Observable<any> {
     const url: string =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
-      APPCONSTANTS.APICONSTANTS.INTER_INTER;
+      APPCONSTANTS.APICONSTANTS.INTER_INTER_ACC;
 
     const newRange: InterviewRange = new InterviewRange(
       this.dateToStringDate(new Date(form.firstDate)),
@@ -230,10 +236,10 @@ export class AvailabilityRequesterService {
   generateDateArray(days: Array<Weekday>, weeks: number): string[] {
     let outputArray: string[] = [];
     days.forEach((day) => {
-      let outputDate = new Date(day.weekday);
-      const date = outputDate.getDate();
-      for (let i = 0; i < weeks; i++) {
-        outputDate.setDate(7 * i + date);
+      const outputDate = new Date(day.weekday);
+      outputArray.push(this.dateToStringDate(outputDate));
+      for (let i = 1; i < weeks; i++) {
+        outputDate.setDate(outputDate.getDate() + 7);
         outputArray.push(this.dateToStringDate(outputDate));
       }
     });
@@ -264,7 +270,7 @@ export class AvailabilityRequesterService {
       title: 'availability',
       color: CalendarColors.get('blue'),
       meta: data,
-      interviewer: availability.interviewer
+      interviewer: availability.interviewer,
     };
     return newAvailability;
   }

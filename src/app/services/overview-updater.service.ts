@@ -1,9 +1,10 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
+
 })
-export class CalendarUpdaterService {
+export class OverviewUpdaterService {
   private updateEvent: EventEmitter<any> = new EventEmitter();
 
   constructor() {}
@@ -11,8 +12,7 @@ export class CalendarUpdaterService {
   getEmitter(): EventEmitter<any> {
     return this.updateEvent;
   }
-
-  updateCalendar(): void {
+  updateOverview(): void{
     this.updateEvent.emit();
   }
 }

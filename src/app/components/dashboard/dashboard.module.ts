@@ -9,6 +9,9 @@ import { AppRoutingModule } from 'src/app/router/app-routing.module';
 import { InterviewSummaryComponent } from './interview-summary/interview-summary.component';
 import { CompletedInterviewsComponent } from './completed-interviews/completed-interviews.component';
 import { InterviewOverviewComponent } from './interview-overview/interview-overview.component';
+import { DateToTimePipe } from 'src/app/pipes/DateToTimePipe';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,14 @@ import { InterviewOverviewComponent } from './interview-overview/interview-overv
     CompletedInterviewsComponent,
     InterviewOverviewComponent,
   ],
-  imports: [CommonModule, SharedModule, ReactiveFormsModule, AppRoutingModule],
+  providers: [
+  ],
+  imports: [
+    CommonModule, 
+    SharedModule, 
+    ReactiveFormsModule, 
+    AppRoutingModule
+  ],
   exports: [DashboardComponent, InterviewOverviewComponent, CreateInterviewComponent],
 })
 export class DashboardModule {}

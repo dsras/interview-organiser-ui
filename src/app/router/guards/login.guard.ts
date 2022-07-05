@@ -16,25 +16,24 @@ export class LoginGuard implements CanActivate {
   ) {}
 
   canActivate(): boolean {
+    let allowed = false
     if (
       null === localStorage.getItem('ssoUser') ||
       localStorage.getItem('ssoUser') === ''
     ) {
       localStorage.clear()
       this.router.navigate(['login']);
-      return false;
     } else if (
       null === localStorage.getItem('userData') ||
       localStorage.getItem('userData') === ''
     ) {
       this.requester.getUserData(this.userService.getUsername()).subscribe((returnData: any) => {
-        console.log("User data return");
-        console.log(returnData);
         localStorage.setItem('userData', returnData);
+        allowed = true
       });
-      return true;
     } else {
-      return true;
+      allowed = true;
     }
+    return allowed
   }
 }

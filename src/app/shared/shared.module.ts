@@ -56,6 +56,7 @@ import { MatTreeModule } from '@angular/material/tree';
     MatTabsModule,
     MatSnackBarModule,
     MatBottomSheetModule,
+
   ],
   exports: [
     TimepickerModule,
@@ -84,8 +85,12 @@ import { MatTreeModule } from '@angular/material/tree';
     MatSnackBarModule,
     MatTreeModule,
     MatBottomSheetModule,
+    DateToTimePipe
   ],
-  declarations: [StringToDatetimePipe],
+  declarations: [
+    StringToDatetimePipe,
+    DateToTimePipe
+  ],
   providers: [
     { provide: TimepickerConfig, useFactory: getTimepickerConfig },
     DateToTimePipe,

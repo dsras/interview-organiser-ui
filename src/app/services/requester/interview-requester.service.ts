@@ -10,7 +10,7 @@ import { APPCONSTANTS } from '../../shared/constants/app.constant';
 import { CalendarEvent } from 'angular-calendar';
 import { CalendarEventInterview } from 'src/app/shared/models/calendar-event-detail';
 import { InterviewMetaData } from 'src/app/shared/models/event-meta-data';
-import { CalendarColors } from 'src/app/shared/constants/colours.constant';
+import { CalendarColors, ColorSelector } from 'src/app/shared/constants/colours.constant';
 import { DateToStringService } from '../date-to-string.service';
 import { Observable } from 'rxjs';
 import { GetUserDataService } from '../get-user-data.service';
@@ -208,7 +208,7 @@ export class InterviewRequesterService {
     return this.dateFormatter.dateToStringDate(date);
   }
 
-  addInterviewForm(form: CreateInterviewFormValue) {
+  addInterviewForm(form: CreateInterviewFormValue) : Observable<Interview> {
     let startTimeString: string;
     let endTimeString: string;
 
@@ -217,7 +217,7 @@ export class InterviewRequesterService {
       let myTime = new Date(form.startTime);
 
       startTimeString = this.dateFormatter.dateToStringTime(myTime);
-      console.log('Start time good: ' + startTimeString);
+      //console.log('Start time good: ' + startTimeString);
 
       endTimeString = this.stringTimeAdd(startTimeString, 1);
     } else {
@@ -226,12 +226,12 @@ export class InterviewRequesterService {
       myTime.setHours(parseInt(times1[0]), parseInt(times1[1]));
 
       startTimeString = this.dateFormatter.dateToStringTime(myTime);
-      console.log('Start time bad: ' + startTimeString);
+      //console.log('Start time bad: ' + startTimeString);
 
       endTimeString = this.stringTimeAdd(startTimeString, 1);
     }
 
-    this.createInterview(
+    return this.createInterview(
       this.userService.getUsername(),
       [form.interviewSelected.interviewerId],
       form.interviewSelected.date,
@@ -241,14 +241,14 @@ export class InterviewRequesterService {
     );
   }
 
-  createInterview(
+  createInterview (
     userName: string,
     interviewerID: number[],
     interviewDate: string,
     timeStart: string,
     timeEnd: string,
     additionalInfo: string
-  ) {
+  ):Observable<Interview> {
     const url: string =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.INTER +
@@ -262,12 +262,10 @@ export class InterviewRequesterService {
       timeEnd,
       additionalInfo,
       'Pending',
-      'Pending'
+      'Awaiting Completion'
     );
 
-    this.requester
-      .postRequest<Interview>(url, newInterview)
-      .subscribe((returnData: any) => {});
+    return this.requester.postRequest<Interview>(url, newInterview);
   }
 
   updateInterviewStatus(id: number, status: string, isStatus: boolean) {
@@ -298,26 +296,13 @@ export class InterviewRequesterService {
     return this.requester.getRequest<Array<InterviewReturn>>(url);
   }
 
-  getUserInterviews(
-    events: Array<CalendarEvent>,
-    interviews: Array<CalendarEventInterview>
-  ): void {
+  getUserInterviews(): Observable<InterviewReturn[]> {
     const url =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.INTER +
       '/' +
       this.userService.getUsername();
-    let out;
-    this.requester
-      .getRequest<InterviewReturn>(url)
-      .subscribe((returnData: unknown) => {
-        out = <Array<InterviewReturn>>(<unknown>returnData);
-        out.forEach((element) => {
-          const interview = this.parseInterviewUser(element);
-          events.push(interview);
-          interviews.push(interview);
-        });
-      });
+    return this.requester.getRequest<InterviewReturn[]>(url);
   }
 
   getRecruiterInterviews(
@@ -359,12 +344,14 @@ export class InterviewRequesterService {
       additional: element.additionalInfo,
     });
 
+    var myColour = element.outcome=='Awaiting Completion'? ColorSelector.colorForInput(<string>element.status):ColorSelector.colorForInput(<string> element.outcome);
+    //console.log(myColour);
     const newInterview: CalendarEventInterview = {
       id: int_id,
       start: start,
       end: end,
       title: 'interview',
-      color: CalendarColors.get('yellow'),
+      color: myColour,
       meta: newInterviewData,
     };
     return newInterview;
@@ -386,13 +373,16 @@ export class InterviewRequesterService {
       status: element.status,
       additional: element.additionalInfo,
     });
+    var myColour = element.outcome=='Awaiting Completion'? ColorSelector.colorForInput(<string>element.status):ColorSelector.colorForInput(<string> element.outcome);
+    //console.log(element.status);
+    //console.log(myColour);
 
     const newInterview: CalendarEventInterview = {
       id: int_id,
       start: start,
       end: end,
       title: 'interview',
-      color: CalendarColors.get('red'),
+      color: myColour,
       meta: newInterviewData,
     };
     return newInterview;

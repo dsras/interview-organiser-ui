@@ -153,10 +153,12 @@ export class CreateInterviewComponent implements OnInit {
    * @param form completed form of interview attributes
    */
   submitInterview(form: FormGroup): void {
-    this.iRequester.addInterviewForm(form.value);
-    console.table(form.value);
-    form.reset();
-    this.updater.updateCalendar();
+    this.iRequester.addInterviewForm(form.value).subscribe(()=>{
+      console.table(form.value);
+      form.reset();
+      this.updater.updateCalendar();
+    });
+
   }
 
   /** Switches which form is being viewed */

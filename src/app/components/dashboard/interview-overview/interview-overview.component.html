@@ -1,43 +1,70 @@
-<mat-expansion-panel>
-  <mat-expansion-panel-header>
-    <mat-panel-title>
-      <h4 class="text-center">Total Interviews: {{ interviews.length }}</h4>
-    </mat-panel-title>
-  </mat-expansion-panel-header>
 
-  <mat-list role="list">
-    <mat-list-item role="listitem">
-      Total Interviews: {{ interviews.length }}
-    </mat-list-item>
-    <mat-list-item role="listitem" *ngFor="let filteredList of allFilteredArrays | keyvalue">
-      <div *ngIf="filteredList.key == 'Awaiting Completion'">
-        <span class="dotAmber" or ></span>
-        {{ filteredList.key }} : {{ filteredList.value.length }}
-      </div>
-      <div *ngIf="filteredList.key == 'Candidate No Show'">
-        <span class="dotGrey"></span>
-        {{ filteredList.key }} : {{ filteredList.value.length }}
-      </div>
-      <div *ngIf="filteredList.key == 'Completed'">
-        <span class="dotGreen"></span>
-        {{ filteredList.key }} : {{ filteredList.value.length }}
-      </div>
-      <div *ngIf="filteredList.key == 'Did Not Progress'">
-        <span class="dotRed"></span>
-        {{ filteredList.key }} : {{ filteredList.value.length }}
-      </div>
-      <div *ngIf="filteredList.key == 'Panel No Show'">
-        <span class="dotGrey"></span>
-        {{ filteredList.key }} : {{ filteredList.value.length }}
-      </div>
-      <div *ngIf="filteredList.key == 'Pending'">
-        <span class="dotAmber"></span>
-        {{ filteredList.key }} : {{ filteredList.value.length }}
-      </div>
-      <div *ngIf="filteredList.key == 'Progressed'">
-        <span class="dotGreen"></span>
-        {{ filteredList.key }} : {{ filteredList.value.length }}
-      </div>
-    </mat-list-item>
-  </mat-list>
-</mat-expansion-panel>
+<div id="interviewOverviewRec" *ngIf="isRecruiter">
+  <h4 class="text-center">Total Interviews: {{ interviews.length }}</h4>
+  <div class="overviewContainer">
+    <mat-grid-list cols="1" rowHeight="40px" width="50px">
+      <mat-grid-tile style="margin-left: 0;">
+        <div class="entryContainer">
+          <span  class="dotGreen"></span>
+            {{'Completed : ' +allFilteredArrays.get('Completed')?.length}}
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <div class="entryContainer">
+          <span  class="dotGreen"></span>
+          {{'Progressed : ' +allFilteredArrays.get('Progressed')?.length}}
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <div class="entryContainer">
+          <span  class="dotAmber"></span>
+          {{'Awaiting Completion : ' +allFilteredArrays.get('Awaiting Completion')?.length}}
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <div class="entryContainer">
+          <span  class="dotAmber"></span>
+          {{'Pending : ' +allFilteredArrays.get('Pending')?.length}}
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <div class="entryContainer">
+          <span  class="dotRed"></span>
+          {{'Did Not Progress : ' +allFilteredArrays.get('Did Not Progress')?.length}}
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <div class="entryContainer">
+          <span  class="dotGrey"></span>
+          {{'Candidate No Show : ' +allFilteredArrays.get('Candidate No Show')?.length}}
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <div class="entryContainer">
+          <span  class="dotGrey"></span>
+          {{'Panel No Show : ' +allFilteredArrays.get('Panel No Show')?.length}}
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</div>
+<div class="interviewOverviewUser" *ngIf="isUser">
+  <h4 class="text-center">My Interviews: {{ interviewEvents.length }}</h4>
+  <table mat-table [dataSource]="aTable" >
+    <ng-container matColumnDef="ID">
+      <th mat-header-cell *matHeaderCellDef> ID. </th>
+      <td mat-cell style="border-left: 1px solid rgba(175, 175, 175, 0.5); text-align: left;" *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+    <ng-container matColumnDef="Date">
+      <th mat-header-cell *matHeaderCellDef> Date. </th>
+      <td mat-cell *matCellDef="let element"> {{element.start | date}} </td>
+    </ng-container>
+    <ng-container matColumnDef="Time">
+      <th mat-header-cell *matHeaderCellDef> Time. </th>
+      <td mat-cell *matCellDef="let element"> {{element.start | DateToTimePipe }} - {{element.end | DateToTimePipe}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

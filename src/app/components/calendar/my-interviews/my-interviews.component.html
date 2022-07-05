@@ -1,0 +1,87 @@
+<div class="container-fluid section first-section-color">
+  <h2 class="text-black font-weight-bold text-center">
+    My Interviews
+    <br />
+  </h2>
+
+  <div class="col-1 mt-3 mx-auto orange-border"></div>
+</div>
+
+<br />
+<div class="container-fluid section" style="width: 100%;">
+  <table
+    mat-table
+    class="interview-table mat-elevation-z8"
+    [dataSource]="tableData"
+    multiTemplateDataRows
+  >
+    <ng-container matColumnDef="interviewId">
+      <th mat-header-cell *matHeaderCellDef>ID No.</th>
+      <td mat-cell *matCellDef="let interview">{{ interview.interviewId }}</td>
+    </ng-container>
+    <ng-container matColumnDef="interviewers">
+      <th mat-header-cell *matHeaderCellDef>Interview panel</th>
+      <td mat-cell *matCellDef="let interview">
+        {{ interview.interviewers.replaceAll(",", " & ") }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef>Date</th>
+      <td mat-cell *matCellDef="let interview">{{ interview.date | date }}</td>
+    </ng-container>
+    <ng-container matColumnDef="time">
+      <th mat-header-cell *matHeaderCellDef>Time</th>
+      <td mat-cell *matCellDef="let interview">
+        {{ interview.startTime | stringToDatetime | date: "HH:mm" }} -
+        {{ interview.endTime | stringToDatetime | date: "HH:mm" }}
+      </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="expandedDetail">
+      <td
+        mat-cell
+        *matCellDef="let interview"
+        [attr.colspan]="displayedColumns.length"
+      >
+        <div
+          class="interview-expanded"
+          [@detailExpand]="
+            interview == expandedInterview ? 'expanded' : 'collapsed'
+          "
+        >
+          <div class="container row">
+            <div class="col-3 interview-detail">
+              Status: {{ interview.status || "Pending" }}
+            </div>
+            <div class="col-3 interview-detail">
+              Outcome: {{ interview.outcome || "Pending" }}
+            </div>
+            <div class="col-5 interview-detail">
+              Additional Information: {{ interview.additionalInfo || "None" }}
+            </div>
+            <div class="col-1">
+
+            </div>
+          </div>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let interview; columns: displayedColumns"
+      class="example-element-row"
+      [class.example-expanded-row]="expandedInterview === interview"
+      (click)="
+        expandedInterview = expandedInterview === interview ? null : interview
+      "
+    ></tr>
+    <tr
+      mat-row
+      *matRowDef="let interview; columns: ['expandedDetail']"
+      class="example-detail-row"
+    ></tr>
+  </table>
+</div>

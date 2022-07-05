@@ -99,12 +99,15 @@ export class ViewAvailabilityComponent implements OnInit {
   displayedColumns: Array<string> = [];
   expandedAvailability!: CalendarEventAvailability | null;
   expandedInterview!: CalendarEventAvailability | null;
+
+  deleteCount = 0;
   /** @ignore test method to be removed when completed */
   message(text: string): void {
     console.log(text);
   }
 
   ngOnInit() {
+    this.deleteCount = 0;
     this.iDisplayedColumns = this.isRecruiter
       ? this.iDisplayedColumnsRec
       : this.iDisplayedColumnsUser;
@@ -136,6 +139,7 @@ export class ViewAvailabilityComponent implements OnInit {
     console.log(id);
     this.aRequester.deleteAvailability(id).subscribe(() => {
       this.updater.updateCalendar();
+      this.deleteCount++;
     });
   }
 
