@@ -82,6 +82,9 @@ export class LoginComponent implements OnInit {
           .subscribe((returnData: any) => {
             user = returnData;
             localStorage.setItem('userData', JSON.stringify(user));
+            this._rs.getUserRoles(user.username).subscribe((roles) => {
+              this._login.updateView(roles);
+            });
             this._router.navigate(['/calendar']);
           });
       }

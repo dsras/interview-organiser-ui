@@ -1,70 +1,112 @@
 <mat-card>
   <div>
-  <div class="row" style="width:100%">
-    <div class=" col-sm">
-      <div class="btn-group pl-3 col-8" style="height: 60%; width: 50%;">
-        <div class="btn btn-warning" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
-          (viewDateChange)="closeOpenMonthViewDay()">
-          <h5 class="text-center" style="font-size: 100%;">Previous</h5>
-        </div>
-        <div class="btn btn-outline-warning" mwlCalendarToday [(viewDate)]="viewDate"
-          (viewDateChange)="closeOpenMonthViewDay()">
-          <h5 class="text-black text-center"  style="font-size: 100%;">Today</h5>
-        </div>
-        <div class="btn btn-warning" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
-          (viewDateChange)="closeOpenMonthViewDay()">
-          <h5 class="text-center" style="font-size: 100%;">Next</h5>
+    <div class="row" style="width: 100%">
+      <div class="col-sm">
+        <div class="btn-group pl-3 col-8" style="height: 60%; width: 50%">
+          <div
+            class="btn btn-warning"
+            mwlCalendarPreviousView
+            [view]="view"
+            [(viewDate)]="viewDate"
+            (viewDateChange)="closeOpenMonthViewDay()"
+          >
+            <h5 class="text-center" style="font-size: 100%">Previous</h5>
+          </div>
+          <div
+            class="btn btn-outline-warning"
+            mwlCalendarToday
+            [(viewDate)]="viewDate"
+            (viewDateChange)="closeOpenMonthViewDay()"
+          >
+            <h5 class="text-black text-center" style="font-size: 100%">
+              Today
+            </h5>
+          </div>
+          <div
+            class="btn btn-warning"
+            mwlCalendarNextView
+            [view]="view"
+            [(viewDate)]="viewDate"
+            (viewDateChange)="closeOpenMonthViewDay()"
+          >
+            <h5 class="text-center" style="font-size: 100%">Next</h5>
+          </div>
         </div>
       </div>
-    </div>
-    <div class=" text-center col-sm" style="margin-right: 1%;">
-      <h2 class="text-black font-weight-bold text-center pl-4">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h2>
-    </div>
-    <div class=" col-sm" style="position:relative; text-align: end;">
-      <div class="btn-group col-8" style="height: 60%; width: 50%;">
-        <div class="btn btn-warning" (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month">
-          <h5 class="text-center" style="font-size: 100%;">Month</h5>
-        </div>
-        <div class="btn btn-outline-warning" (click)="setView(CalendarView.Week)"
-          [class.active]="view === CalendarView.Week">
-          <h5 class="text-black text-center" style="font-size: 100%;">Week</h5>
-        </div>
-        <div class="btn btn-warning" (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">
-          <h5 class="text-center" style="font-size: 100%;">Day</h5>
+      <div class="text-center col-sm" style="margin-right: 1%">
+        <h2 class="text-black font-weight-bold text-center pl-4">
+          {{ viewDate | calendarDate: view + "ViewTitle":"en" }}
+        </h2>
+      </div>
+      <div class="col-sm" style="position: relative; text-align: end">
+        <div class="btn-group col-8" style="height: 60%; width: 50%">
+          <div
+            class="btn btn-warning"
+            (click)="setView(CalendarView.Month)"
+            [class.active]="view === CalendarView.Month"
+          >
+            <h5 class="text-center" style="font-size: 100%">Month</h5>
+          </div>
+          <div
+            class="btn btn-outline-warning"
+            (click)="setView(CalendarView.Week)"
+            [class.active]="view === CalendarView.Week"
+          >
+            <h5 class="text-black text-center" style="font-size: 100%">Week</h5>
+          </div>
+          <div
+            class="btn btn-warning"
+            (click)="setView(CalendarView.Day)"
+            [class.active]="view === CalendarView.Day"
+          >
+            <h5 class="text-center" style="font-size: 100%">Day</h5>
+          </div>
         </div>
       </div>
-    </div>
-    <br />
-    <div [ngSwitch]="view">
-      <mwl-calendar-month-view
-        *ngSwitchCase="CalendarView.Month"
-        [viewDate]="viewDate"
-        [events]="events"
-        [refresh]="refresh"
-        [activeDayIsOpen]="activeDayIsOpen"
-        (dayClicked)="dayClicked($event.day)"
-      >
-      </mwl-calendar-month-view>
-      <mwl-calendar-week-view
-        *ngSwitchCase="CalendarView.Week"
-        [viewDate]="viewDate"
-        [events]="events"
-        [refresh]="refresh"
-      >
-      </mwl-calendar-week-view>
-      <mwl-calendar-day-view
-        *ngSwitchCase="CalendarView.Day"
-        [viewDate]="viewDate"
-        [events]="events"
-        [refresh]="refresh"
-      >
-      </mwl-calendar-day-view>
+      <br />
+        <div [ngSwitch]="view">
+          <mwl-calendar-month-view
+            *ngSwitchCase="CalendarView.Month"
+            [viewDate]="viewDate"
+            [events]="events"
+            [refresh]="refresh"
+            [activeDayIsOpen]="activeDayIsOpen"
+            (dayClicked)="dayClicked($event.day)"
+          >
+            <!-- [cellTemplate]="customCellTemplate"
+    (beforeViewRender)="beforeMonthViewRender($event)" -->
+          </mwl-calendar-month-view>
+          <mwl-calendar-week-view
+            *ngSwitchCase="CalendarView.Week"
+            [viewDate]="viewDate"
+            [events]="events"
+            [refresh]="refresh"
+          >
+          </mwl-calendar-week-view>
+          <mwl-calendar-day-view
+            *ngSwitchCase="CalendarView.Day"
+            [viewDate]="viewDate"
+            [events]="events"
+            [refresh]="refresh"
+          >
+          </mwl-calendar-day-view>
+        </div>
+      <div *ngIf="currentRole == 'RECRUITER'">
+        <mwl-calendar-month-view
+          [viewDate]="viewDate"
+          [events]="events"
+          [refresh]="refresh"
+          [activeDayIsOpen]="activeDayIsOpen"
+          (dayClicked)="dayClicked($event.day)"
+          [cellTemplate]="customCellTemplate"
+          (beforeViewRender)="beforeMonthViewRender($event)"
+        >
+        </mwl-calendar-month-view>
+      </div>
+
+      <br />
     </div>
   </div>
-
-  <br />
-  
-</div>
 </mat-card>
 
 <ng-template #dayContent>
@@ -75,4 +117,23 @@
     (tabChangeEvent)="tabChange()"
     [isRecruiter]="isRecruiter"
   ></view-availability>
+</ng-template>
+
+<ng-template #customCellTemplate let-day="day" let-locale="locale">
+  <div class="cal-cell-top">
+    <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{
+      day.badgeTotal
+    }}</span>
+    <span class="cal-day-number">{{
+      day.date | calendarDate: "monthViewDayNumber":locale
+    }}</span>
+  </div>
+  <div class="cell-totals">
+    <span
+      *ngFor="let group of day.eventGroups"
+      class="badge badge-{{ group[0] }}"
+    >
+      {{ group[1].length }}
+    </span>
+  </div>
 </ng-template>

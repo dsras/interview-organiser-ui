@@ -3,6 +3,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { SocialAuthService } from 'angularx-social-login';
 import { GetUserDataService } from 'src/app/services/get-user-data.service';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
+import { RoleViewService } from 'src/app/services/role-view.service';
 import { APPCONSTANTS } from 'src/app/shared/constants/app.constant';
 import { ISSOUser } from 'src/app/shared/models/user-model';
 
@@ -27,7 +28,8 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private socialAuthService: SocialAuthService,
     private userDataService: GetUserDataService,
-    private requester: RequestCenterService
+    private requester: RequestCenterService,
+    private roleView: RoleViewService,
   ) {}
 
   /** @ignore */
@@ -46,6 +48,14 @@ export class HomeComponent implements OnInit {
     }
     this.clearData();
     this.router.navigate(['login']);
+  }
+
+  viewRecruiter(): void {
+    this.roleView.changeView('RECRUITER')
+  }
+
+  viewUser(): void {
+    this.roleView.changeView('USER')
   }
 
   private clearData(): void {
