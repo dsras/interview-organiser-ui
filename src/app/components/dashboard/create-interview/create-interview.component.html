@@ -134,7 +134,8 @@
               name="interviewSelected"
             >
               <mat-option
-                *ngFor="let interview of availableInterviews"
+                id="slotSelected"
+                *ngFor="let interview of availableInterviews;"
                 [value]="interview"
               >
                 On {{ interview.date }} between {{ interview.startTime }} ->

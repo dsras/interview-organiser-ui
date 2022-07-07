@@ -37,7 +37,7 @@ export class CreateInterviewComponent implements OnInit {
   createInterviewForm: FormGroup = this.fb.group({
     interviewSelected: ['', Validators.required],
     additionalInformation: ['', Validators.maxLength(255)],
-    startTime: [''],
+    startTime: ['',],
   });
 
   /** Search for availability for selected criteria form  */
@@ -70,6 +70,11 @@ export class CreateInterviewComponent implements OnInit {
   /** @ignore */
   openModal(template: TemplateRef<any>): void {
     this._dialog.openDialog(template);
+    this._dialog.dialogRef?.afterClosed().subscribe(() => {
+      this.findInterviewsForm.reset();
+      this.createInterviewForm.reset();
+      this.viewCreate = false;
+    });
   }
 
   /** @ignore */
@@ -83,8 +88,9 @@ export class CreateInterviewComponent implements OnInit {
    *
    * @param form completed search criteria form
    */
+  // todo form value passed to function with typing
   findInterview(form: FormGroup): void {
-    let idArr: Array<number> = [];
+    const idArray: Array<number> = [];
 
     let skillReq = {
       skillName: form.value.skills.skillName,
@@ -96,17 +102,12 @@ export class CreateInterviewComponent implements OnInit {
         skillStore.skillName === skillReq.skillName &&
         skillStore.skillLevel === skillReq.skillLevel
       ) {
-        idArr.push(skillStore.id);
+        idArray.push(skillStore.id);
       }
     });
     this.availableInterviews = [];
 
-    // this.aRequester.getInterviewSlots(
-    //   form.value,
-    //   idArr,
-    //   this.availableInterviews
-    // );
-    this.aRequester.getSlots(form.value, idArr).subscribe((returnData) => {
+    this.aRequester.getSlots(form.value, idArray).subscribe((returnData) => {
       console.table(returnData);
       const newStartDate: Date = new Date(form.value.firstDate);
       const newStartTime: Date = new Date(form.value.startTime);
@@ -128,18 +129,15 @@ export class CreateInterviewComponent implements OnInit {
           Number.parseInt(element.endTime.split(':')[1])
         );
 
-        let startInput: string = '';
-        let endInput: string = '';
-        if (refStart.getTime() > newStartTime.getTime()) {
-          startInput = this.aRequester.dateToStringTime(refStart);
-        } else {
-          startInput = this.aRequester.dateToStringTime(newStartTime);
-        }
-        if (refEnd.getTime() < newEndTime.getTime()) {
-          endInput = this.aRequester.dateToStringTime(refEnd);
-        } else {
-          endInput = this.aRequester.dateToStringTime(newEndTime);
-        }
+        let startInput: string =
+          refStart.getTime() > newStartTime.getTime()
+            ? this.aRequester.dateToStringTime(refStart)
+            : this.aRequester.dateToStringTime(newStartTime);
+
+        let endInput: string =
+          refEnd.getTime() < newEndTime.getTime()
+            ? this.aRequester.dateToStringTime(refEnd)
+            : this.aRequester.dateToStringTime(newEndTime);
 
         this.availableInterviews.push(element);
       });
@@ -152,13 +150,12 @@ export class CreateInterviewComponent implements OnInit {
    *
    * @param form completed form of interview attributes
    */
+  // todo form value passed to function with typing
   submitInterview(form: FormGroup): void {
-    this.iRequester.addInterviewForm(form.value).subscribe(()=>{
-      console.table(form.value);
+    this.iRequester.addInterviewForm(form.value).subscribe(() => {
       form.reset();
       this.updater.updateCalendar();
     });
-
   }
 
   /** Switches which form is being viewed */

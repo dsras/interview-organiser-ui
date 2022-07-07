@@ -63,6 +63,9 @@ export class InterviewStatusComponent implements OnInit {
   /** @ignore */
   openModal(template: TemplateRef<any>): void {
     this._dialog.openDialog(template);
+    this._dialog.dialogRef?.afterClosed().subscribe(() => {
+      this.statusForm.reset();
+    });
   }
 
   /** @ignore */
@@ -74,18 +77,14 @@ export class InterviewStatusComponent implements OnInit {
    * Function to be called on click of the submit button
    */
   onSubmit(form: FormGroup): void {
-    const str: string = form.value.status;
-    let id: number = -1;
+    const status: string = form.value.status;
+    const id: number = this.slot?.id ? Number(this.slot.id) : -1;
 
-    if (this.slot?.id) {
-      id = Number(this.slot.id);
-    }
     // TODO streamline this?
     const isStatus: boolean = Object.values(this.statusOptions).includes(
       form.value.status
     );
-    this.iRequester.updateInterviewStatus(id, str, isStatus);
-    form.reset();
+    this.iRequester.updateInterviewStatus(id, status, isStatus);
     this.updater.updateCalendar();
   }
 }

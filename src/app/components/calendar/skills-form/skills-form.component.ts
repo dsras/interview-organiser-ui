@@ -46,6 +46,9 @@ export class SkillsFormComponent implements OnInit {
   /** {@link MatDialogService} */
   openDialog(template: TemplateRef<any>): void {
     this._dialog.openDialog(template);
+    this._dialog.dialogRef?.afterClosed().subscribe(() => {
+      this.addSkillsForm.reset();
+    });
   }
 
   // ? Should this be private ?
@@ -76,6 +79,5 @@ export class SkillsFormComponent implements OnInit {
       }
     });
     this.rs.addSkills(id, this.userService.getUsername());
-    form.reset();
   }
 }

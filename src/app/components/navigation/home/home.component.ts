@@ -73,8 +73,7 @@ export class HomeComponent implements OnInit {
     this.url = currentRoute.urlAfterRedirects;
     if (this.loggedIn && this.user && this.userRoles.length > 0) {
       return;
-    } else 
-    if (currentRoute.url !== '/login') {
+    } else if (currentRoute.url !== '/login') {
       this.loggedIn = true;
       const user = localStorage.getItem('ssoUser');
       const roles = this.userDataService.getUserRoleNames();

@@ -108,12 +108,14 @@ export class AvailabilityFormComponent implements OnInit {
 
   addRecurringDay() {
     if (this.days.length < 5) {
+      // Add an additional day to the form array
       const dayForm = this.fb.group({
         weekday: ['', Validators.required],
       });
       this.days.push(dayForm);
       this._dialog.resize();
     } else {
+      // Display snackbar popup to indicate limit reached
       const config: MatSnackBarConfig = {
         duration: 1000,
         verticalPosition: 'top',

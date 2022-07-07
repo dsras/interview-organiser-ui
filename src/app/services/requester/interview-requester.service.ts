@@ -10,7 +10,10 @@ import { APPCONSTANTS } from '../../shared/constants/app.constant';
 import { CalendarEvent } from 'angular-calendar';
 import { CalendarEventInterview } from 'src/app/shared/models/calendar-event-detail';
 import { InterviewMetaData } from 'src/app/shared/models/event-meta-data';
-import { CalendarColors, ColorSelector } from 'src/app/shared/constants/colours.constant';
+import {
+  CalendarColors,
+  ColorSelector,
+} from 'src/app/shared/constants/colours.constant';
 import { DateToStringService } from '../date-to-string.service';
 import { Observable } from 'rxjs';
 import { GetUserDataService } from '../get-user-data.service';
@@ -208,7 +211,7 @@ export class InterviewRequesterService {
     return this.dateFormatter.dateToStringDate(date);
   }
 
-  addInterviewForm(form: CreateInterviewFormValue) : Observable<Interview> {
+  addInterviewForm(form: CreateInterviewFormValue): Observable<Interview> {
     let startTimeString: string;
     let endTimeString: string;
 
@@ -241,14 +244,14 @@ export class InterviewRequesterService {
     );
   }
 
-  createInterview (
+  createInterview(
     userName: string,
     interviewerID: number[],
     interviewDate: string,
     timeStart: string,
     timeEnd: string,
     additionalInfo: string
-  ):Observable<Interview> {
+  ): Observable<Interview> {
     const url: string =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
       APPCONSTANTS.APICONSTANTS.INTER +
@@ -269,16 +272,11 @@ export class InterviewRequesterService {
   }
 
   updateInterviewStatus(id: number, status: string, isStatus: boolean) {
-    let url: string = '';
-    if (isStatus) {
-      url =
-        APPCONSTANTS.APICONSTANTS.BASE_URL +
-        APPCONSTANTS.APICONSTANTS.STATUS_UPDATE;
-    } else {
-      url =
-        APPCONSTANTS.APICONSTANTS.BASE_URL +
+    const url: string = isStatus
+      ? APPCONSTANTS.APICONSTANTS.BASE_URL +
+        APPCONSTANTS.APICONSTANTS.STATUS_UPDATE
+      : APPCONSTANTS.APICONSTANTS.BASE_URL +
         APPCONSTANTS.APICONSTANTS.OUTCOME_UPDATE;
-    }
 
     let newStatus = new StatusUpdate(id, status);
     this.requester
@@ -344,7 +342,10 @@ export class InterviewRequesterService {
       additional: element.additionalInfo,
     });
 
-    var myColour = element.outcome=='Awaiting Completion'? ColorSelector.colorForInput(<string>element.status):ColorSelector.colorForInput(<string> element.outcome);
+    const myColour =
+      element.outcome == 'Awaiting Completion'
+        ? ColorSelector.colorForInput(<string>element.status)
+        : ColorSelector.colorForInput(<string>element.outcome);
     //console.log(myColour);
     const newInterview: CalendarEventInterview = {
       id: int_id,
@@ -373,7 +374,10 @@ export class InterviewRequesterService {
       status: element.status,
       additional: element.additionalInfo,
     });
-    var myColour = element.outcome=='Awaiting Completion'? ColorSelector.colorForInput(<string>element.status):ColorSelector.colorForInput(<string> element.outcome);
+    const myColour =
+      element.outcome == 'Awaiting Completion'
+        ? ColorSelector.colorForInput(<string>element.status)
+        : ColorSelector.colorForInput(<string>element.outcome);
     //console.log(element.status);
     //console.log(myColour);
 
