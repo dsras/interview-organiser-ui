@@ -8,7 +8,11 @@ import {
 } from '@angular/core';
 import { isSameDay, isSameMonth } from 'date-fns';
 import { Subject, Subscription } from 'rxjs';
-import { CalendarEvent, CalendarView } from 'angular-calendar';
+import {
+  CalendarEvent,
+  CalendarMonthViewDay,
+  CalendarView,
+} from 'angular-calendar';
 import {
   CalendarEventAvailability,
   CalendarEventInterview,
@@ -22,6 +26,8 @@ import { RequestCenterService } from 'src/app/services/requester/request-center.
 import { CalendarUpdaterService } from 'src/app/services/calendar-updater.service';
 import { FocusDayService } from 'src/app/services/focus-day.service';
 import { OverviewUpdaterService } from 'src/app/services/overview-updater.service';
+import { RoleViewService } from 'src/app/services/role-view.service';
+
 
 /**
  * The main component of the calendar, an implementation of angular-calendar
@@ -61,12 +67,17 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   /** This is where the local calendar events are stored */
   events: Array<CalendarEvent> = [];
+  /** Holds the group events for recruiter view */
+  groupedEvents: CalendarEvent[] = [];
   /** Array of all availability. */
   availability: Array<CalendarEventAvailability> = [];
   /** Array of all interviews. */
   interviews: Array<CalendarEventInterview> = [];
   startDate = new Date();
   endDate = new Date();
+
+  $currentRole: Subscription = new Subscription();
+  currentRole: string = '';
 
   /** @ignore */
   constructor(
@@ -77,7 +88,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
     private dateString: DateToStringService,
     private userService: GetUserDataService,
     private updater: CalendarUpdaterService,
-    private oUpdater: OverviewUpdaterService
+    private oUpdater: OverviewUpdaterService,
+    private roleView: RoleViewService
   ) {
     this.populateCalendar = this.populateCalendar.bind(this);
   }
@@ -85,20 +97,23 @@ export class CalendarComponent implements OnInit, OnDestroy {
   /** @ignore */
   ngOnInit(): void {
     this.currentUser = this.userService.getUsername();
-    //this.userRoles = this.userService.getUserRoleNames();
-    this.requester.getUserRoles(this.currentUser).subscribe((returnData) => {
-      returnData.forEach((element) => {
-        this.userRoles.push(element);
-      });
+    this.$currentRole = this.roleView.getCurrentView().subscribe((view) => {
+      console.log(`role change: ${view}`)
+      this.currentRole = view;
       this.populateCalendar();
     });
+    // this.requester.getUserRoles(this.currentUser).subscribe((userRoles) => {
+    //   userRoles.forEach((role) => {
+    //     this.userRoles.push(role);
+    //   });
+    //   this.populateCalendar();
+    // });
     //setup dates
     this.setDates();
 
     this.updateSubscription = this.updater
       .getEmitter()
-      .subscribe(() => this.callbackFunction());
-
+      .subscribe(() => this.update());
   }
 
   ngOnDestroy() {
@@ -116,13 +131,14 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this.events = [];
     this.availability = [];
     this.interviews = [];
+    this.groupedEvents = [];
   }
 
   fastRefresh(): void {
     this.refresh.next();
   }
 
-  callbackFunction(): void {
+  update(): void {
     this.populateCalendar();
   }
   //* in test
@@ -131,63 +147,76 @@ export class CalendarComponent implements OnInit, OnDestroy {
   populateCalendar(): void {
     this.resetEvents();
 
-    // TODO make switch cases
-    if (this.userRoles.includes('RECRUITER')) {
-      this.isRecruiter = true;
-      this.initRecruiter();
-    }
-    if (
-      this.userRoles.includes('USER') &&
-      !this.userRoles.includes('RECRUITER')
-    ) {
-      this.initUser();
-    }
-    if (this.userRoles.includes('ADMIN')) {
-      this.initAdmin();
+    switch (this.currentRole) {
+      case 'RECRUITER':
+        this.initRecruiter();
+        break;
+      case 'USER':
+        this.initUser();
+        break;
+      case 'ADMIN':
+        this.initAdmin();
+        break;
+      default:
+        break;
     }
   }
 
   initUser(): void {
+    // Request availability
     this.aRequester
       .getMyAvailabilityInRange(
         this.userService.getUsername(),
         this.dateString.dateToStringDate(this.startDate),
         this.dateString.dateToStringDate(this.endDate)
       )
-      .subscribe((ret) => {
-        ret.forEach((ele) => {
-          this.events.push(this.aRequester.parseAvailabilityUser(ele));
-          this.availability.push(this.aRequester.parseAvailabilityUser(ele));
+      .subscribe((availabilityArray) => {
+        availabilityArray.forEach((slot) => {
+          this.events.push(this.aRequester.parseAvailabilityUser(slot));
+          this.availability.push(this.aRequester.parseAvailabilityUser(slot));
         });
         this.fastRefresh();
       });
 
+    // Request interviews
     this.iRequester
       .getInterviewsPerMonthByInterviewer(
         false,
         this.dateString.dateToStringDate(this.startDate),
         this.dateString.dateToStringDate(this.endDate)
       )
-      .subscribe((ret) => {
-        ret.forEach((ele) => {
-          this.events.push(this.iRequester.parseInterviewUser(ele));
-          this.interviews.push(this.iRequester.parseInterviewUser(ele));
+      .subscribe((interviewArray) => {
+        interviewArray.forEach((interview) => {
+          this.events.push(this.iRequester.parseInterviewUser(interview));
+          this.interviews.push(this.iRequester.parseInterviewUser(interview));
         });
         this.fastRefresh();
       });
   }
 
   initRecruiter(): void {
-    this.aRequester.getRecruiterAvailability(
-      this.dateString.dateToStringDate(this.startDate),
-      this.dateString.dateToStringDate(this.endDate)
-    ).subscribe((ret) => {
-      ret.forEach((ele) => {
-        this.events.push(this.aRequester.parseAvailabilityRecruiter(ele));
-        this.availability.push(this.aRequester.parseAvailabilityRecruiter(ele));
+    // Request availability
+    const eventGroups = new Set();
+    this.aRequester
+      .getRecruiterAvailability(
+        this.dateString.dateToStringDate(this.startDate),
+        this.dateString.dateToStringDate(this.endDate)
+      )
+      .subscribe((availabilityArray) => {
+        availabilityArray.forEach((slot) => {
+          this.events.push(this.aRequester.parseAvailabilityRecruiter(slot));
+          this.availability.push(
+            this.aRequester.parseAvailabilityRecruiter(slot)
+          );
+        });
+        this.events.forEach((event) => {
+          if (eventGroups.has(event)) {
+            return;
+          }
+        });
+        this.fastRefresh();
       });
-      this.fastRefresh();
-    });
+    // Request interviews
     this.iRequester
       .getInterviewsPerMonthByInterviewer(
         false,
@@ -209,6 +238,28 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this._dialog.resizeDay();
   }
 
+  beforeMonthViewRender({
+    body,
+  }: {
+    body: CalendarMonthViewDay[];
+  }): void {
+  //   // month view has a different UX from the week and day view so we only really need to group by the type
+    // body.forEach((cell) => {
+  //     const groups: {
+  //       eventGroups: string[];
+  //       map: Map<string, Array<CalendarEvent>>;
+  //     } = { eventGroups: [], map: new Map() };
+  //     cell.events.forEach((event) => {
+  //       if (groups.map.has(event.meta.type)) {
+  //         groups.map.get(event.meta.type)?.push(event);
+  //       } else {
+  //         groups.map.set(event.meta.type, [event]);
+  //       }
+  //     });
+  //     cell['eventGroups'] = Object.entries(groups);
+  //   });
+  }
+
   // ! Calendar core functionality contained here, shouldn't need to touch it!
   // TODO openDayModal() may need corrected down the line.
   /** @ignore */
@@ -227,7 +278,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
   /** @ignore */
   activeDayIsOpen: boolean = false;
   /** @ignore */
-  openDayModal(dateSelected: Date /*useDate: boolean*/) {
+  openDayModal(dateSelected: Date) {
     this.dayAvailability = [];
     this.dayInterviews = [];
 
@@ -253,13 +304,12 @@ export class CalendarComponent implements OnInit, OnDestroy {
   /** @ignore */
   setView(view: CalendarView): void {
     this.view = view;
-
   }
 
   setDates() {
     this.startDate.setMonth(this.viewDate.getMonth());
     this.startDate.setDate(1);
-    this.endDate.setMonth(this.viewDate.getMonth()+1);
+    this.endDate.setMonth(this.viewDate.getMonth() + 1);
     this.endDate.setDate(0);
     this.startDate.setHours(0, 0, 0, 0);
     this.endDate.setHours(0, 0, 0, 0);
@@ -274,4 +324,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this.activeDayIsOpen = false;
   }
   test() {}
+}
+
+interface EventGroupMeta {
+  type: string;
 }
