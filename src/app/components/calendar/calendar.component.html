@@ -64,42 +64,43 @@
         </div>
       </div>
       <br />
-        <div [ngSwitch]="view">
-          <mwl-calendar-month-view
-            *ngSwitchCase="CalendarView.Month"
-            [viewDate]="viewDate"
-            [events]="events"
-            [refresh]="refresh"
-            [activeDayIsOpen]="activeDayIsOpen"
-            (dayClicked)="dayClicked($event.day)"
-          >
-            <!-- [cellTemplate]="customCellTemplate"
-    (beforeViewRender)="beforeMonthViewRender($event)" -->
-          </mwl-calendar-month-view>
-          <mwl-calendar-week-view
-            *ngSwitchCase="CalendarView.Week"
-            [viewDate]="viewDate"
-            [events]="events"
-            [refresh]="refresh"
-          >
-          </mwl-calendar-week-view>
-          <mwl-calendar-day-view
-            *ngSwitchCase="CalendarView.Day"
-            [viewDate]="viewDate"
-            [events]="events"
-            [refresh]="refresh"
-          >
-          </mwl-calendar-day-view>
-        </div>
-      <div *ngIf="currentRole == 'RECRUITER'">
+      <div [ngSwitch]="view">
         <mwl-calendar-month-view
+          *ngSwitchCase="CalendarView.Month"
           [viewDate]="viewDate"
           [events]="events"
           [refresh]="refresh"
           [activeDayIsOpen]="activeDayIsOpen"
           (dayClicked)="dayClicked($event.day)"
-          [cellTemplate]="customCellTemplate"
+        >
+          <!-- [cellTemplate]="customCellTemplate"
+    (beforeViewRender)="beforeMonthViewRender($event)" -->
+        </mwl-calendar-month-view>
+        <mwl-calendar-week-view
+          *ngSwitchCase="CalendarView.Week"
+          [viewDate]="viewDate"
+          [events]="events"
+          [refresh]="refresh"
+        >
+        </mwl-calendar-week-view>
+        <mwl-calendar-day-view
+          *ngSwitchCase="CalendarView.Day"
+          [viewDate]="viewDate"
+          [events]="events"
+          [refresh]="refresh"
+        >
+        </mwl-calendar-day-view>
+      </div>
+      <div *ngIf="currentRole == 'RECRUITER'">
+        <mwl-calendar-month-view
+          [viewDate]="viewDate"
+          [events]="events"
+          [cellTemplate]="groupedDays"
+          (dayClicked)="dayClicked($event.day)"
           (beforeViewRender)="beforeMonthViewRender($event)"
+          [activeDayIsOpen]="false"
+          [refresh]="refresh"
+
         >
         </mwl-calendar-month-view>
       </div>
@@ -119,11 +120,11 @@
   ></view-availability>
 </ng-template>
 
-<ng-template #customCellTemplate let-day="day" let-locale="locale">
+<ng-template #groupedDays let-day="day" let-locale="locale">
   <div class="cal-cell-top">
-    <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{
-      day.badgeTotal
-    }}</span>
+    <span class="cal-day-badge" *ngIf="day.badgeTotal > 0"
+      >{{ day.badgeTotal }} {{ day.eventGroups }}
+    </span>
     <span class="cal-day-number">{{
       day.date | calendarDate: "monthViewDayNumber":locale
     }}</span>

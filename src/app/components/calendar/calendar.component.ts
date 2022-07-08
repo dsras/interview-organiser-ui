@@ -16,6 +16,7 @@ import {
 import {
   CalendarEventAvailability,
   CalendarEventInterview,
+  DayCellRecruiter,
 } from 'src/app/shared/models/calendar-event-detail';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
@@ -27,7 +28,6 @@ import { CalendarUpdaterService } from 'src/app/services/calendar-updater.servic
 import { FocusDayService } from 'src/app/services/focus-day.service';
 import { OverviewUpdaterService } from 'src/app/services/overview-updater.service';
 import { RoleViewService } from 'src/app/services/role-view.service';
-
 
 /**
  * The main component of the calendar, an implementation of angular-calendar
@@ -69,6 +69,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
   events: Array<CalendarEvent> = [];
   /** Holds the group events for recruiter view */
   groupedEvents: CalendarEvent[] = [];
+
+  groupedCells: DayCellRecruiter[] = [];
   /** Array of all availability. */
   availability: Array<CalendarEventAvailability> = [];
   /** Array of all interviews. */
@@ -98,7 +100,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.currentUser = this.userService.getUsername();
     this.$currentRole = this.roleView.getCurrentView().subscribe((view) => {
-      console.log(`role change: ${view}`)
+      console.log(`role change: ${view}`);
       this.currentRole = view;
       this.populateCalendar();
     });
@@ -209,11 +211,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
             this.aRequester.parseAvailabilityRecruiter(slot)
           );
         });
-        this.events.forEach((event) => {
-          if (eventGroups.has(event)) {
-            return;
-          }
-        });
         this.fastRefresh();
       });
     // Request interviews
@@ -223,10 +220,12 @@ export class CalendarComponent implements OnInit, OnDestroy {
         this.dateString.dateToStringDate(this.startDate),
         this.dateString.dateToStringDate(this.endDate)
       )
-      .subscribe((ret) => {
-        ret.forEach((ele) => {
-          this.events.push(this.iRequester.parseInterviewRecruiter(ele));
-          this.interviews.push(this.iRequester.parseInterviewRecruiter(ele));
+      .subscribe((interviewArray) => {
+        interviewArray.forEach((interview) => {
+          this.events.push(this.iRequester.parseInterviewRecruiter(interview));
+          this.interviews.push(
+            this.iRequester.parseInterviewRecruiter(interview)
+          );
         });
         this.fastRefresh();
       });
@@ -238,26 +237,31 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this._dialog.resizeDay();
   }
 
-  beforeMonthViewRender({
-    body,
-  }: {
-    body: CalendarMonthViewDay[];
-  }): void {
-  //   // month view has a different UX from the week and day view so we only really need to group by the type
-    // body.forEach((cell) => {
-  //     const groups: {
-  //       eventGroups: string[];
-  //       map: Map<string, Array<CalendarEvent>>;
-  //     } = { eventGroups: [], map: new Map() };
-  //     cell.events.forEach((event) => {
-  //       if (groups.map.has(event.meta.type)) {
-  //         groups.map.get(event.meta.type)?.push(event);
-  //       } else {
-  //         groups.map.set(event.meta.type, [event]);
-  //       }
-  //     });
-  //     cell['eventGroups'] = Object.entries(groups);
-  //   });
+  beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
+    const outBody: DayCellRecruiter[] = [];
+    console.log(body);
+    body.forEach((cell) => {
+      const groupCell = new DayCellRecruiter(cell);
+      const groups: Map<string, Array<CalendarEvent>> = new Map<
+        string,
+        Array<CalendarEvent>
+      >();
+      groupCell.events.forEach((event) => {
+        if (groups.has(event.meta.type)) {
+          console.log('has');
+          console.log(event.meta.type);
+          groups.get(event.meta.type)?.push(event);
+        } else {
+          console.log('set');
+          console.log(event.meta.type);
+          groups.set(event.meta.type, [event]);
+        }
+      });
+      groupCell.eventGroups = Array.from(groups.keys());
+      this.groupedCells.push(groupCell);
+      outBody.push(groupCell);
+    });
+    body = outBody;
   }
 
   // ! Calendar core functionality contained here, shouldn't need to touch it!
@@ -323,7 +327,9 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this.populateCalendar();
     this.activeDayIsOpen = false;
   }
-  test() {}
+  test(input: any) {
+    console.log(input);
+  }
 }
 
 interface EventGroupMeta {

@@ -1,7 +1,7 @@
 import { DataSource } from '@angular/cdk/collections';
 import { Observable, ReplaySubject } from 'rxjs';
 import { CalendarEventAvailability, CalendarEventInterview } from './calendar-event-detail';
-import { Availability, AvailabilityReturn, InterviewReturn, SkillReturn } from './types';
+import { InterviewReturn, SkillReturn } from './types';
 
 export class AvailabilityTableData extends DataSource<CalendarEventAvailability> {
   private _dataStream = new ReplaySubject<CalendarEventAvailability[]>();

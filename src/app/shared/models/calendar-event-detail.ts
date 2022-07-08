@@ -1,4 +1,4 @@
-import { CalendarEvent } from 'angular-calendar';
+import { CalendarEvent, CalendarMonthViewDay } from 'angular-calendar';
 import { EventColor, EventAction } from 'calendar-utils';
 import { AvailabilityMetaData, InterviewMetaData } from './event-meta-data';
 
@@ -62,7 +62,7 @@ export class CalendarEventAvailability implements CalendarEvent {
   start: Date;
   end?: Date | undefined;
   title: string;
-  interviewer?:string;
+  interviewer?: string;
   color?: EventColor | undefined;
   actions?: EventAction[] | undefined;
   allDay?: boolean | undefined;
@@ -83,7 +83,7 @@ export class CalendarEventAvailability implements CalendarEvent {
    * @param event the CalendarEvent to base the detailed event on
    * @param meta the metadata object containing additional typed attributes
    */
-  constructor(event: CalendarEvent, meta?: AvailabilityMetaData) {
+  constructor(event: CalendarEvent, meta: AvailabilityMetaData) {
     this.id = event.id;
     this.start = event.start;
     this.end = event.end;
@@ -95,5 +95,37 @@ export class CalendarEventAvailability implements CalendarEvent {
     this.resizable = event.resizable;
     this.draggable = event.draggable;
     this.meta = meta;
+  }
+}
+
+export class DayCellRecruiter implements CalendarMonthViewDay {
+  inMonth: boolean;
+  events: CalendarEvent<any>[];
+  backgroundColor?: string | undefined;
+  badgeTotal: number;
+  meta?: any;
+  date: Date;
+  day: number;
+  isPast: boolean;
+  isToday: boolean;
+  isFuture: boolean;
+  isWeekend: boolean;
+  cssClass?: string | undefined;
+  eventGroups: string[];
+
+  constructor(viewDay: CalendarMonthViewDay, eventGroups?: string[]) {
+    this.inMonth = viewDay.inMonth;
+    this.events = viewDay.events;
+    this.backgroundColor = viewDay.backgroundColor;
+    this.badgeTotal = viewDay.badgeTotal;
+    this.meta = viewDay.meta;
+    this.date = viewDay.date;
+    this.day = viewDay.day;
+    this.isPast = viewDay.isPast;
+    this.isToday = viewDay.isToday;
+    this.isFuture = viewDay.isFuture;
+    this.isWeekend = viewDay.isWeekend;
+    this.cssClass = viewDay.cssClass;
+    this.eventGroups = eventGroups ? eventGroups : [];
   }
 }

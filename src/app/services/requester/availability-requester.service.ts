@@ -261,7 +261,7 @@ export class AvailabilityRequesterService {
 
     start.setHours(parseInt(times1[0]), parseInt(times1[1]));
     end.setHours(parseInt(times2[0]), parseInt(times2[1]));
-    const data = new AvailabilityMetaData();
+    
 
     const newAvailability: CalendarEventAvailability = {
       id: availability.availabilityId,
@@ -269,7 +269,7 @@ export class AvailabilityRequesterService {
       end: end,
       title: 'availability',
       color: CalendarColors.get('blue'),
-      meta: data,
+      meta: new AvailabilityMetaData(),
       interviewer: availability.interviewer,
     };
     return newAvailability;
@@ -286,8 +286,6 @@ export class AvailabilityRequesterService {
     start.setHours(parseInt(times1[0]), parseInt(times1[1]));
     end.setHours(parseInt(times2[0]), parseInt(times2[1]));
 
-    const data = new AvailabilityMetaData();
-
     const newAvailability: CalendarEventAvailability = {
       id: availability.availabilityId,
       start: start,
@@ -295,7 +293,7 @@ export class AvailabilityRequesterService {
       title: 'availability',
       color: CalendarColors.get('purple'),
       interviewer: availability.interviewer,
-      meta: data,
+      meta: {type: 'availability'},
     };
     return newAvailability;
   }
