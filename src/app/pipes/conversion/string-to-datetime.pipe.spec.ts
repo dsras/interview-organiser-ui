@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { SocialAuthService, GoogleLoginProvider, SocialAuthServiceConfig } from 'angularx-social-login';
-import { RequestCenterService } from '../services/requester/request-center.service';
+import { RequestCenterService } from '../../services/requester/request-center.service';
 import { StringToDatetimePipe } from './string-to-datetime.pipe';
 
 describe('StringToDatetimePipe', () => {

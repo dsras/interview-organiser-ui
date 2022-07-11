@@ -111,9 +111,9 @@ export class DayCellRecruiter implements CalendarMonthViewDay {
   isFuture: boolean;
   isWeekend: boolean;
   cssClass?: string | undefined;
-  eventGroups: string[];
+  eventGroups: Map<string, number>
 
-  constructor(viewDay: CalendarMonthViewDay, eventGroups?: string[]) {
+  constructor(viewDay: CalendarMonthViewDay, eventGroups?: Map<string, number>) {
     this.inMonth = viewDay.inMonth;
     this.events = viewDay.events;
     this.backgroundColor = viewDay.backgroundColor;
@@ -126,6 +126,6 @@ export class DayCellRecruiter implements CalendarMonthViewDay {
     this.isFuture = viewDay.isFuture;
     this.isWeekend = viewDay.isWeekend;
     this.cssClass = viewDay.cssClass;
-    this.eventGroups = eventGroups ? eventGroups : [];
+    this.eventGroups = eventGroups ? eventGroups : new Map();
   }
 }

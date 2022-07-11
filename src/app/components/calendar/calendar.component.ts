@@ -23,7 +23,6 @@ import { AvailabilityRequesterService } from 'src/app/services/requester/availab
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
 import { DateToStringService } from '../../services/date-to-string.service';
 import { GetUserDataService } from '../../services/get-user-data.service';
-import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 import { CalendarUpdaterService } from 'src/app/services/calendar-updater.service';
 import { FocusDayService } from 'src/app/services/focus-day.service';
 import { OverviewUpdaterService } from 'src/app/services/overview-updater.service';
@@ -84,7 +83,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
   /** @ignore */
   constructor(
     private _dialog: MatDialogService,
-    private requester: RequestCenterService,
     private iRequester: InterviewRequesterService,
     private aRequester: AvailabilityRequesterService,
     private dateString: DateToStringService,
@@ -104,15 +102,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
       this.currentRole = view;
       this.populateCalendar();
     });
-    // this.requester.getUserRoles(this.currentUser).subscribe((userRoles) => {
-    //   userRoles.forEach((role) => {
-    //     this.userRoles.push(role);
-    //   });
-    //   this.populateCalendar();
-    // });
-    //setup dates
     this.setDates();
-
     this.updateSubscription = this.updater
       .getEmitter()
       .subscribe(() => this.update());
@@ -238,30 +228,27 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
 
   beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
-    const outBody: DayCellRecruiter[] = [];
-    console.log(body);
-    body.forEach((cell) => {
-      const groupCell = new DayCellRecruiter(cell);
-      const groups: Map<string, Array<CalendarEvent>> = new Map<
-        string,
-        Array<CalendarEvent>
-      >();
-      groupCell.events.forEach((event) => {
-        if (groups.has(event.meta.type)) {
-          console.log('has');
-          console.log(event.meta.type);
-          groups.get(event.meta.type)?.push(event);
+    // create a new array of custom class for grouping
+    const output: DayCellRecruiter[] = [];
+    //fill array with each days events
+    body.forEach((viewDay) => {
+      const customDay = new DayCellRecruiter(viewDay);
+      viewDay.events.forEach((event) => {
+        const type: string = event.meta.type ? event.meta.type : '';
+        const value = customDay.eventGroups.get(type)
+          ? customDay.eventGroups.get(type)
+          : 0;
+
+        if (!customDay.eventGroups.has(type)) {
+          customDay.eventGroups.set(type, 1);
         } else {
-          console.log('set');
-          console.log(event.meta.type);
-          groups.set(event.meta.type, [event]);
+          customDay.eventGroups.set(type, 1 + Number(value));
         }
       });
-      groupCell.eventGroups = Array.from(groups.keys());
-      this.groupedCells.push(groupCell);
-      outBody.push(groupCell);
+      output.push(customDay);
     });
-    body = outBody;
+    console.log(output);
+    this.groupedCells = output;
   }
 
   // ! Calendar core functionality contained here, shouldn't need to touch it!
@@ -330,8 +317,4 @@ export class CalendarComponent implements OnInit, OnDestroy {
   test(input: any) {
     console.log(input);
   }
-}
-
-interface EventGroupMeta {
-  type: string;
 }

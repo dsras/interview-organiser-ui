@@ -13,8 +13,8 @@ import { InterviewStatusComponent } from './interview-status/interview-status.co
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
 import { CalendarHeaderComponent } from './calendar-header/calendar-header.component';
-import { DateToTimePipe } from 'src/app/pipes/DateToTimePipe';
 import { MyInterviewsComponent } from './my-interviews/my-interviews.component';
+import { PipeModule } from 'src/app/pipes/pipe.module';
 
 @NgModule({
   declarations: [
@@ -25,13 +25,12 @@ import { MyInterviewsComponent } from './my-interviews/my-interviews.component';
     InterviewStatusComponent,
     CalendarHeaderComponent,
     MyInterviewsComponent,
-    
   ],
-  providers: [
-  ],
+  providers: [],
   imports: [
     SharedModule,
     CommonModule,
+    PipeModule,
     ReactiveFormsModule,
     TimepickerModule,
     BsDatepickerModule,
@@ -41,6 +40,11 @@ import { MyInterviewsComponent } from './my-interviews/my-interviews.component';
       useFactory: adapterFactory,
     }),
   ],
-  exports: [CalendarComponent, AvailabilityFormComponent, SkillsFormComponent, MyInterviewsComponent],
+  exports: [
+    CalendarComponent,
+    AvailabilityFormComponent,
+    SkillsFormComponent,
+    MyInterviewsComponent,
+  ],
 })
 export class MyCalendarModule {}

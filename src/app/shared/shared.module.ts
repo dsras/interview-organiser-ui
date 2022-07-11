@@ -9,7 +9,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
-import { StringToDatetimePipe } from '../pipes/string-to-datetime.pipe';
+import { StringToDatetimePipe } from '../pipes/conversion/string-to-datetime.pipe';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -25,9 +25,9 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
-import { DateToTimePipe } from '../pipes/DateToTimePipe';
 import { NgxMultipleDatesModule } from 'ngx-multiple-dates';
 import { MatTreeModule } from '@angular/material/tree';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @NgModule({
   imports: [
@@ -56,7 +56,7 @@ import { MatTreeModule } from '@angular/material/tree';
     MatTabsModule,
     MatSnackBarModule,
     MatBottomSheetModule,
-
+    MatBadgeModule,
   ],
   exports: [
     TimepickerModule,
@@ -67,7 +67,6 @@ import { MatTreeModule } from '@angular/material/tree';
     MatInputModule,
     MatPaginatorModule,
     MatDialogModule,
-    StringToDatetimePipe,
     MatIconModule,
     MatButtonModule,
     MatSidenavModule,
@@ -85,15 +84,9 @@ import { MatTreeModule } from '@angular/material/tree';
     MatSnackBarModule,
     MatTreeModule,
     MatBottomSheetModule,
-    DateToTimePipe
+    MatBadgeModule,
   ],
-  declarations: [
-    StringToDatetimePipe,
-    DateToTimePipe
-  ],
-  providers: [
-    { provide: TimepickerConfig, useFactory: getTimepickerConfig },
-    DateToTimePipe,
-  ],
+
+  providers: [{ provide: TimepickerConfig, useFactory: getTimepickerConfig }],
 })
 export class SharedModule {}

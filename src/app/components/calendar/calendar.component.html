@@ -100,7 +100,6 @@
           (beforeViewRender)="beforeMonthViewRender($event)"
           [activeDayIsOpen]="false"
           [refresh]="refresh"
-
         >
         </mwl-calendar-month-view>
       </div>
@@ -121,20 +120,36 @@
 </ng-template>
 
 <ng-template #groupedDays let-day="day" let-locale="locale">
-  <div class="cal-cell-top">
+  <div class="cal-cell-top" (mouseover)="test(day)">
     <span class="cal-day-badge" *ngIf="day.badgeTotal > 0"
-      >{{ day.badgeTotal }} {{ day.eventGroups }}
+      >{{ day.badgeTotal }}
     </span>
     <span class="cal-day-number">{{
       day.date | calendarDate: "monthViewDayNumber":locale
     }}</span>
   </div>
   <div class="cell-totals">
-    <span
-      *ngFor="let group of day.eventGroups"
-      class="badge badge-{{ group[0] }}"
-    >
-      {{ group[1].length }}
+    <span *ngFor="let cell of groupedCells | cellDayFilter: day">
+      <div
+        *ngFor="let group of cell.eventGroups | mapValues; let i = index"
+        [matBadge]="group"
+        matBadgeSize="medium"
+      >{{ cell.eventGroups }}
+      </div>
+      <!-- <p>
+        <span matBadge="1" matBadgeSize="large">Text with large badge</span>
+    </p> -->
     </span>
   </div>
+
+  <!-- <div class="cell-totals">
+    <span *ngFor="let day of groupedCells">
+      <span
+        *ngFor="let group of day.eventGroups"
+        class="badge badge-{{ group[0] }}"
+      >
+        {{ group[1] }}
+      </span>
+    </span>
+  </div> -->
 </ng-template>

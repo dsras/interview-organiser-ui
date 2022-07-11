@@ -28,8 +28,8 @@
         <ng-container matColumnDef="time">
           <th mat-header-cell class="cellHeadStyle" *matHeaderCellDef>Time</th>
           <td mat-cell  class="cellStyle"  *matCellDef="let availability">
-            {{ availability.start | DateToTimePipe }} -
-            {{ availability.end | DateToTimePipe }}
+            {{ availability.start | dateToTime}} -
+            {{ availability.end | dateToTime }}
           </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -112,8 +112,8 @@
         <ng-container matColumnDef="time">
           <th mat-header-cell class="cellHeadStyle"  *matHeaderCellDef>Time</th>
           <td mat-cell  class="cellStyle"   *matCellDef="let interview">
-            {{ interview.start | DateToTimePipe }} -
-            {{ interview.end | DateToTimePipe }}
+            {{ interview.start | dateToTime }} -
+            {{ interview.end | dateToTime }}
           </td>
         </ng-container>
         <ng-container matColumnDef="name">

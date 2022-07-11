@@ -29,25 +29,26 @@ import { DashboardModule } from './components/dashboard/dashboard.module';
 import { AppRoutingModule } from './router/app-routing.module';
 import { NavigationModule } from './components/navigation/navigation.module';
 import { SharedModule } from './shared/shared.module';
+import { PipeModule } from './pipes/pipe.module';
 
 // [application Services]
 import { AppInterceptor } from './components/interceptor/app.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { APPCONSTANTS, prodEnv } from './shared/constants/app.constant';
 import { Requester } from './services/requester/requester.service';
-import { DateToTimePipe } from './pipes/DateToTimePipe';
 
 const CLIENT_ID = prodEnv
   ? APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_PROD
   : APPCONSTANTS.SSO_CONSTANTS.CLIENT_ID_DEV;
 @NgModule({
-  declarations: [AppComponent, LoginComponent,],
+  declarations: [AppComponent, LoginComponent],
   imports: [
     BrowserModule,
     DashboardModule,
     NavigationModule,
     AppRoutingModule,
     SharedModule,
+    PipeModule,
     HttpClientModule,
     ReactiveFormsModule,
     AgGridModule.withComponents([]),

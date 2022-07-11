@@ -139,13 +139,7 @@ describe('AvailabilityRequesterService', () => {
     service.getSlots(new FakeSlotForm, [1]);
     expect(spy).toHaveBeenCalled();
   });
-  it('getUserAvailability should call service method', () => {
-    spy = spyOn(rService, 'getRequest').and.callThrough();
-    let myEvents: CalendarEvent[]=[];
-    let myInts: CalendarEventInterview[]=[];
-    service.getUserAvailability(myEvents,myInts);
-    expect(spy).toHaveBeenCalled();
-  });
+
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
