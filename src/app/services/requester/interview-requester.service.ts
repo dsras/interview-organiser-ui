@@ -233,14 +233,15 @@ export class InterviewRequesterService {
 
       endTimeString = this.stringTimeAdd(startTimeString, 1);
     }
-
     return this.createInterview(
       this.userService.getUsername(),
       [form.interviewSelected.interviewerId],
       form.interviewSelected.date,
       startTimeString,
       endTimeString,
-      form.additionalInformation
+      form.additionalInformation,
+      form.stageForInterview
+      
     );
   }
 
@@ -250,7 +251,8 @@ export class InterviewRequesterService {
     interviewDate: string,
     timeStart: string,
     timeEnd: string,
-    additionalInfo: string
+    additionalInfo: string,
+    stageForInterview: string
   ): Observable<Interview> {
     const url: string =
       APPCONSTANTS.APICONSTANTS.BASE_URL +
@@ -264,7 +266,7 @@ export class InterviewRequesterService {
       timeStart,
       timeEnd,
       additionalInfo,
-      'Stage1',
+      stageForInterview,
       'Awaiting Completion'
     );
 

@@ -39,14 +39,6 @@
   </div>
   <span class="spacer"></span>
 
-  <div *ngIf="loggedIn && isRec">
-    <button mat-button (click)="viewRecruiter()">Recruiter</button>
-  </div>
-  <span class="spacer"></span>
-
-  <div *ngIf="loggedIn && isUser">
-    <button mat-button (click)="viewUser()">User</button>
-  </div>
   <button
     mat-button
     class="icon"
@@ -59,11 +51,11 @@
   </button>
 </mat-toolbar>
 
-<mat-sidenav-container>
+<mat-sidenav-container >
   <mat-sidenav #sidenav mode="side">
-    <sidenav [userRoles]="userRoles"></sidenav>
+    <sidenav [userRoles]="userRoles" ></sidenav>
   </mat-sidenav>
-  <mat-sidenav-content>
+  <mat-sidenav-content >
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

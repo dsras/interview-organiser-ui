@@ -143,6 +143,10 @@ export class ViewAvailabilityComponent implements OnInit {
     });
   }
 
+  updateInterviews(){
+
+  }
+
   tabChange(): void {
     this.tabChangeEvent.emit();
   }

@@ -38,7 +38,8 @@ export class CreateInterviewComponent implements OnInit {
   createInterviewForm: FormGroup = this.fb.group({
     interviewSelected: ['', Validators.required],
     additionalInformation: ['', Validators.maxLength(255)],
-    startTime: ['',],
+    stageForInterview: ['',],
+    startTime: ['',]
   });
 
   /** Search for availability for selected criteria form  */
@@ -56,6 +57,11 @@ export class CreateInterviewComponent implements OnInit {
   selectedInterview:InterviewReturn = new InterviewReturn(0,[''],'','','','','','',''); 
   startTimeSelected: Date = new Date();
   endTimeSelected: Date = new Date();
+  
+  stages: Set<string> = new Set<string>(['None', 'Stage1', 'Stage2', 'Stage3']); 
+  selectedStage: string = 'None';
+
+
   /** @ignore */
   constructor(
     private fb: FormBuilder,
@@ -174,6 +180,7 @@ export class CreateInterviewComponent implements OnInit {
    */
   // todo form value passed to function with typing
   submitInterview(form: FormGroup): void {
+    console.log(form.value);
     this.iRequester.addInterviewForm(form.value).subscribe(() => {
       form.reset();
       this.updater.updateCalendar();

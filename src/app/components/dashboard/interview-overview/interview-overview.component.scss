@@ -54,7 +54,10 @@
 }
 
 .overviewContainer {
-  width: 200px;
+  width: 100%;
+}
+.interviewOverviewUser {
+  width: 100%;
 }
 
 .entryContainer {
@@ -68,9 +71,6 @@ table {
   width: 100%;
 }
 
-.interviewOverviewUser {
-  width: 270px;
-}
 
 .mat-cell {
   text-align: center;

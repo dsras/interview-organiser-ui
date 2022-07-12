@@ -171,6 +171,19 @@
               ></timepicker>
             </div>
           </mat-expansion-panel>
+          <div>
+            <mat-form-field appearance="fill">
+              <mat-label>Stage</mat-label>
+              <mat-select 
+                formControlName="stageForInterview"
+                name="stageForInterview"
+              >
+                <mat-option *ngFor="let stage of stages" [value]="stage">
+                  {{stage}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
           <br />
           <mat-form-field appearance="outline" style="width: 100%">
             <mat-label>Additional Information</mat-label>

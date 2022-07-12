@@ -1,17 +1,28 @@
 <mat-card>
   <div>
-    <div name="stageFilter">
-      <h4>Filter by Stage</h4>
-      <mat-form-field appearance="fill">
-        <mat-label>Stage</mat-label>
-        <mat-select [(ngModel)]="selectedStage" (ngModelChange)='changeStageFilter()'>
-          <mat-option *ngFor="let stage of stages" [value]="stage">
-            {{stage}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+    <div id="ActionsBar" class="row">
+      <div name="stageFilter" class="col-md-2">
+        <h4>Filter by Stage</h4>
+        <mat-form-field appearance="fill">
+          <mat-label>Stage</mat-label>
+          <mat-select [(ngModel)]="selectedStage" (ngModelChange)='changeStageFilter()'>
+            <mat-option *ngFor="let stage of stages" [value]="stage">
+              {{stage}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div name="AvailFilter" class="col-md-4">
+        <h4>Show/Hide Availability</h4>
+        <input 
+          type="checkbox" 
+          [(ngModel)]="showAvail"
+          (ngModelChange)='changeAvailVis()'
+        />
+      </div>
     </div>
-  <br>
+    
+    <br>
     <div class="row" style="width: 100%">
       <div class="col-sm">
         <div class="btn-group pl-3 col-8" style="height: 60%; width: 50%">

@@ -11,6 +11,7 @@ export interface CreateInterviewFormValue {
   interviewSelected: AvailabilityForInterviews;
   additionalInformation: string;
   startTime: string;
+  stageForInterview: string;
 }
 
 export interface FindSlotFormValue {

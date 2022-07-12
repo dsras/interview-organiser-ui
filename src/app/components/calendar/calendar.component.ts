@@ -85,6 +85,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
   stages: Set<string> = new Set<string>(['None', 'Stage1', 'Stage2', 'Stage3']); 
   selectedStage: string = 'None';
 
+  showAvail = true;
+
   /** @ignore */
   constructor(
     private _dialog: MatDialogService,
@@ -103,18 +105,18 @@ export class CalendarComponent implements OnInit, OnDestroy {
   /** @ignore */
   ngOnInit(): void {
     this.currentUser = this.userService.getUsername();
-    this.$currentRole = this.roleView.getCurrentView().subscribe((view) => {
-      console.log(`role change: ${view}`);
-      this.isRecruiter = view =='RECRUITER'?true:false;
-      this.currentRole = view;
-      this.populateCalendar();
-    });
-    // this.requester.getUserRoles(this.currentUser).subscribe((userRoles) => {
-    //   userRoles.forEach((role) => {
-    //     this.userRoles.push(role);
-    //   });
+    // this.$currentRole = this.roleView.getCurrentView().subscribe((view) => {
+    //   console.log(`role change: ${view}`);
+    //   this.isRecruiter = view =='RECRUITER'?true:false;
+    //   this.currentRole = view;
     //   this.populateCalendar();
     // });
+    this.requester.getUserRoles(this.currentUser).subscribe((userRoles) => {
+      userRoles.forEach((role) => {
+        this.userRoles.push(role);
+      });
+      this.populateCalendar();
+    });
     //setup dates
     this.setDates();
 
@@ -154,37 +156,45 @@ export class CalendarComponent implements OnInit, OnDestroy {
   populateCalendar(): void {
     this.resetEvents();
 
-    switch (this.currentRole) {
-      case 'RECRUITER':
-        this.initRecruiter();
-        break;
-      case 'USER':
-        this.initUser();
-        break;
-      case 'ADMIN':
-        this.initAdmin();
-        break;
-      default:
-        break;
+    if (this.userRoles.includes('RECRUITER')) {
+      this.isRecruiter = true;
+      this.initRecruiter();
     }
+    if (
+      this.userRoles.includes('USER') &&
+      !this.userRoles.includes('RECRUITER')
+    ) {
+      this.initUser();
+    }
+    if (this.userRoles.includes('ADMIN')) {
+      this.initAdmin();
+    }
+  }
+
+  changeAvailVis(){
+    this.changeStageFilter();
   }
   changeStageFilter(){
     console.log("stage selection change");
     console.log(this.selectedStage);
     if(this.selectedStage=='None'){
       this.events = [];
-      this.availability.forEach(element => {
-        this.events.push(element);
-      });
+      if(this.showAvail){
+        this.availability.forEach(element => {
+          this.events.push(element);
+        });
+      }
       this.interviews.forEach(element => {
         this.events.push(element);
       });
     }
     else{
       this.events=[];
-      this.availability.forEach(element => {
-        this.events.push(element);
-      });
+      if(this.showAvail){
+        this.availability.forEach(element => {
+          this.events.push(element);
+        });
+      }
       this.interviews.forEach(element => {
         if(element.title =='interview'){
           if(element.meta.interviewStatus == this.selectedStage){
