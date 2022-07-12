@@ -122,6 +122,12 @@
             {{ interview.meta.interviewPanel }}
           </td>
         </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell class="cellHeadStyle" *matHeaderCellDef>status</th>
+          <td mat-cell  class="cellStyle"  *matCellDef="let interview">
+            {{ interview.meta.interviewStatus }}
+          </td>
+        </ng-container>
         <ng-container matColumnDef="delete">
           <th mat-header-cell class="cellHeadStyle" *matHeaderCellDef>Delete</th>
           <td mat-cell  class="cellStyle"  *matCellDef="let interview">

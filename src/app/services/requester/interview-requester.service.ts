@@ -264,7 +264,7 @@ export class InterviewRequesterService {
       timeStart,
       timeEnd,
       additionalInfo,
-      'Pending',
+      'Stage1',
       'Awaiting Completion'
     );
 

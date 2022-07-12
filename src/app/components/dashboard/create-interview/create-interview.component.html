@@ -132,6 +132,8 @@
             <mat-select
               formControlName="interviewSelected"
               name="interviewSelected"
+              [(ngModel)]="selectedInterview"
+              (ngModelChange)='changeInterviewSelected(selectedInterview)'
             >
               <mat-option
                 id="slotSelected"
@@ -161,6 +163,8 @@
             <div class="row text-center">
               <label for="startTime">Start Time</label>
               <timepicker
+                [min]="this.startTimeSelected"
+                [max]="this.endTimeSelected"
                 id="startTime1"
                 type="time"
                 formControlName="startTime"

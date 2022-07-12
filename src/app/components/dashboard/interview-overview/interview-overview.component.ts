@@ -5,7 +5,7 @@ import {
   statusOptions,
 } from 'src/app/shared/constants/interview-options.constant';
 import { InterviewReturn } from 'src/app/shared/models/types';
-import { Subscription } from 'rxjs';
+import { elementAt, Subscription } from 'rxjs';
 import { GetUserDataService } from 'src/app/services/get-user-data.service';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 import { CalendarEventInterview } from 'src/app/shared/models/calendar-event-detail';
@@ -24,6 +24,12 @@ export class InterviewOverviewComponent implements OnInit {
   panelNoShow: InterviewReturn[] = [];
   candidateNoShow: InterviewReturn[] = [];
   pending: InterviewReturn[] = [];
+
+  stage1Interviews: InterviewReturn[]=[];
+  stage2Interviews: InterviewReturn[]=[];
+  stage3Interviews: InterviewReturn[]=[];
+
+
   confirmed: InterviewReturn[] = [];
   didNotProgress: InterviewReturn[] = [];
   progressed: InterviewReturn[] = [];
@@ -43,7 +49,7 @@ export class InterviewOverviewComponent implements OnInit {
 
   updateSubscription!: Subscription;
 
-  displayedColumns: string[] = ['ID', 'Date', 'Time'];
+  displayedColumns: string[] = ['ID', 'Date', 'Time', 'Status'];
   aTable!: MatTableDataSource<CalendarEventInterview>;
 
   constructor(
@@ -110,13 +116,14 @@ export class InterviewOverviewComponent implements OnInit {
             this.interviewEvents.push(this.iRequester.parseInterviewUser(ele));
           });
           this.aTable = new MatTableDataSource(this.interviewEvents);
-          //console.log(this.interviewEvents);
+          console.log(this.interviewEvents);
         });
     }
   }
 
   private filterStatus(): void {
     this.interviews.forEach((interview) => {
+      console.log(interview);
       switch (interview.status) {
         case statusOptions.candidateNoShow:
           this.candidateNoShow.push(interview);
@@ -130,6 +137,16 @@ export class InterviewOverviewComponent implements OnInit {
         case statusOptions.pending:
           this.pending.push(interview);
           break;
+        case statusOptions.S1:
+          this.stage1Interviews.push(interview);
+          break;
+        case statusOptions.S2:
+          this.stage2Interviews.push(interview);
+          break;
+        case statusOptions.S3:
+          this.stage3Interviews.push(interview);
+          break;
+                    
         default:
           break;
       }
@@ -138,7 +155,10 @@ export class InterviewOverviewComponent implements OnInit {
       .set('Candidate No Show', this.candidateNoShow)
       .set('Completed', this.completed)
       .set('Panel No Show', this.panelNoShow)
-      .set('Pending', this.pending);
+      .set('Pending', this.pending)
+      .set(statusOptions.S1, this.stage1Interviews)
+      .set(statusOptions.S2, this.stage2Interviews)
+      .set(statusOptions.S3, this.stage3Interviews);
   }
 
   private filterOutcome(): void {
@@ -160,10 +180,10 @@ export class InterviewOverviewComponent implements OnInit {
           break;
       }
     });
-    this.allFilteredArrays
-      .set('Completed', this.completed)
-      .set('Did Not Progress', this.didNotProgress)
-      .set('Progressed', this.progressed)
-      .set('Awaiting Completion', this.awaitingCompletion);
+  this.allFilteredArrays
+    .set('Completed', this.completed)
+    .set('Did Not Progress', this.didNotProgress)
+    .set('Progressed', this.progressed)
+    .set('Awaiting Completion', this.awaitingCompletion);
   }
 }

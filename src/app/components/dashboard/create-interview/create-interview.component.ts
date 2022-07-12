@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 import {
   AvailabilityForInterviews,
+  InterviewReturn,
   SkillOptions,
   Skills,
 } from '../../../shared/models/types';
@@ -52,6 +53,9 @@ export class CreateInterviewComponent implements OnInit {
     }),
   });
 
+  selectedInterview:InterviewReturn = new InterviewReturn(0,[''],'','','','','','',''); 
+  startTimeSelected: Date = new Date();
+  endTimeSelected: Date = new Date();
   /** @ignore */
   constructor(
     private fb: FormBuilder,
@@ -80,6 +84,24 @@ export class CreateInterviewComponent implements OnInit {
   /** @ignore */
   closeModal(): void {
     this._dialog.closeDialog();
+  }
+
+  changeInterviewSelected(input:InterviewReturn){
+    console.log(input.startTime);
+    console.log(input.endTime);
+    console.log(input.date);
+    this.startTimeSelected = new Date(input.date);
+    this.endTimeSelected = new Date(input.date);
+    
+    let time1 = input.startTime.split(':');
+    let time2 = input.endTime.split(':');
+
+    this.startTimeSelected.setHours(Number.parseInt(time1[0]), Number.parseInt(time1[1]));
+    this.endTimeSelected.setHours(Number.parseInt(time2[0])-1, Number.parseInt(time2[1]));
+
+    console.log(this.startTimeSelected);
+    console.log(this.endTimeSelected);
+    
   }
 
   /**

@@ -67,6 +67,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   /** This is where the local calendar events are stored */
   events: Array<CalendarEvent> = [];
+  storedEvents: Array<CalendarEvent> = [];
   /** Holds the group events for recruiter view */
   groupedEvents: CalendarEvent[] = [];
 
@@ -80,6 +81,9 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   $currentRole: Subscription = new Subscription();
   currentRole: string = '';
+
+  stages: Set<string> = new Set<string>(['None', 'Stage1', 'Stage2', 'Stage3']); 
+  selectedStage: string = 'None';
 
   /** @ignore */
   constructor(
@@ -101,6 +105,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this.currentUser = this.userService.getUsername();
     this.$currentRole = this.roleView.getCurrentView().subscribe((view) => {
       console.log(`role change: ${view}`);
+      this.isRecruiter = view =='RECRUITER'?true:false;
       this.currentRole = view;
       this.populateCalendar();
     });
@@ -163,9 +168,37 @@ export class CalendarComponent implements OnInit, OnDestroy {
         break;
     }
   }
+  changeStageFilter(){
+    console.log("stage selection change");
+    console.log(this.selectedStage);
+    if(this.selectedStage=='None'){
+      this.events = [];
+      this.availability.forEach(element => {
+        this.events.push(element);
+      });
+      this.interviews.forEach(element => {
+        this.events.push(element);
+      });
+    }
+    else{
+      this.events=[];
+      this.availability.forEach(element => {
+        this.events.push(element);
+      });
+      this.interviews.forEach(element => {
+        if(element.title =='interview'){
+          if(element.meta.interviewStatus == this.selectedStage){
+            this.events.push(element);
+          }
+        }
+      });
+    }
+    this.fastRefresh();
+  }
 
   initUser(): void {
     // Request availability
+
     this.aRequester
       .getMyAvailabilityInRange(
         this.userService.getUsername(),
@@ -239,7 +272,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
     const outBody: DayCellRecruiter[] = [];
-    console.log(body);
     body.forEach((cell) => {
       const groupCell = new DayCellRecruiter(cell);
       const groups: Map<string, Array<CalendarEvent>> = new Map<
@@ -248,12 +280,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
       >();
       groupCell.events.forEach((event) => {
         if (groups.has(event.meta.type)) {
-          console.log('has');
-          console.log(event.meta.type);
           groups.get(event.meta.type)?.push(event);
         } else {
-          console.log('set');
-          console.log(event.meta.type);
           groups.set(event.meta.type, [event]);
         }
       });

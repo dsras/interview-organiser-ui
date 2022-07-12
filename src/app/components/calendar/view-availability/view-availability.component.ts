@@ -84,7 +84,7 @@ export class ViewAvailabilityComponent implements OnInit {
     'date',
     'time',
     // 'outcome',
-    // 'status',
+    'status',
   ];
   iDisplayedColumnsRec: Array<string> = [
     'InterviewId',
@@ -93,7 +93,7 @@ export class ViewAvailabilityComponent implements OnInit {
     'name',
     'delete',
     // 'outcome',
-    // 'status',
+    'status',
   ];
   iDisplayedColumns: Array<string> = [];
   displayedColumns: Array<string> = [];
