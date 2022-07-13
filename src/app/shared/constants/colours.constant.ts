@@ -1,3 +1,6 @@
+import { CalendarA11y } from "angular-calendar";
+import { calendar } from "ngx-bootstrap/chronos/moment/calendar";
+
 interface CalendarColour {
   primary: string;
   secondary: string;
@@ -18,33 +21,43 @@ export const CalendarColors = new Map<string, CalendarColour>([
   
 ]);
 
+
+
 export const ColorSelector = {
   CalendarColors,
-  colorForInput(input: string){
+  colorForInput(input: string): string{
     switch (input) {
       case 'Awaiting Completion':
-        return CalendarColors.get('yellow');
+        return 'yellow';
       case 'Candidate No Show':
-          return CalendarColors.get('grey');
+          return 'grey';
       case 'Complete':
-        return CalendarColors.get('green');
+        return 'green';
       case 'Did Not Progress':
-          return CalendarColors.get('red');
+          return 'red';
       case 'Panel No Show':
-        return CalendarColors.get('grey');
+        return 'grey';
       case 'Pending':
-          return CalendarColors.get('yellow');
+          return 'yellow';
       case 'Progressed':
-        return CalendarColors.get('green');
+        return 'green';
       case 'Stage1':
-        return CalendarColors.get('orange');
+        return 'orange';
       case 'Stage2':
-          return CalendarColors.get('yellow');
+          return 'yellow';
       case 'Stage3':
-        return CalendarColors.get('lime');
+        return 'lime';
       
       default:
-        return undefined;
+        return 'blue';
     }
+  },
+  getCalColour(input:string): CalendarColour{
+    for(let [key, value] of CalendarColors){
+      if(key==input){
+        return value;
+      }
+    };
+    return { primary: '#1e90ff', secondary: '#D1E8FF' };
   }
 }

@@ -12,9 +12,9 @@ export class CalendarEventInterview implements CalendarEvent {
   /** Maybe change this to only be of type number */
   id?: string | number | undefined;
   start: Date;
-  end?: Date | undefined;
+  end: Date ;
   title: string;
-  color?: EventColor | undefined;
+  color: EventColor ;
   actions?: EventAction[] | undefined;
   allDay?: boolean | undefined;
   cssClass?: string | undefined;
@@ -60,10 +60,10 @@ export class CalendarEventAvailability implements CalendarEvent {
   /** Maybe change this to only be of type number */
   id?: string | number | undefined;
   start: Date;
-  end?: Date | undefined;
+  end: Date ;
   title: string;
   interviewer?: string;
-  color?: EventColor | undefined;
+  color: EventColor ;
   actions?: EventAction[] | undefined;
   allDay?: boolean | undefined;
   cssClass?: string | undefined;
@@ -71,7 +71,7 @@ export class CalendarEventAvailability implements CalendarEvent {
     | { beforeStart?: boolean | undefined; afterEnd?: boolean | undefined }
     | undefined;
   draggable?: boolean | undefined;
-  meta?: AvailabilityMetaData;
+  meta: AvailabilityMetaData;
 
   /**
    * Currently the constructor for a CalendarEventAvailability object takes an existing Calendarevent

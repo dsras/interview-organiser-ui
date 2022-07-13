@@ -344,17 +344,15 @@ export class InterviewRequesterService {
       additional: element.additionalInfo,
     });
 
-    const myColour =
-      element.outcome == 'Awaiting Completion'
-        ? ColorSelector.colorForInput(<string>element.status)
-        : ColorSelector.colorForInput(<string>element.outcome);
+    var myCol = ColorSelector.getCalColour(ColorSelector.colorForInput(element.status));
+      
     //console.log(myColour);
     const newInterview: CalendarEventInterview = {
       id: int_id,
       start: start,
       end: end,
       title: 'interview',
-      color: myColour,
+      color: myCol,
       meta: newInterviewData,
     };
     return newInterview;
@@ -376,19 +374,15 @@ export class InterviewRequesterService {
       status: element.status,
       additional: element.additionalInfo,
     });
-    const myColour =
-      element.outcome == 'Awaiting Completion'
-        ? ColorSelector.colorForInput(<string>element.status)
-        : ColorSelector.colorForInput(<string>element.outcome);
-    //console.log(element.status);
-    //console.log(myColour);
+    var myCol = ColorSelector.getCalColour(ColorSelector.colorForInput(element.status));
+
 
     const newInterview: CalendarEventInterview = {
       id: int_id,
       start: start,
       end: end,
       title: 'interview',
-      color: myColour,
+      color: myCol,
       meta: newInterviewData,
     };
     return newInterview;

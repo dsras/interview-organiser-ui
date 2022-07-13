@@ -258,8 +258,8 @@ export class InterviewReturn implements Data {
   startTime: string;
   endTime: string;
   additionalInfo?: string;
-  status?: string;
-  outcome?: string;
+  status: string;
+  outcome: string;
   organiser?: string;
   constructor(
     interviewId: number,

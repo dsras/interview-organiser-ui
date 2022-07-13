@@ -6,7 +6,7 @@ import {
   TemplateRef,
   OnDestroy,
 } from '@angular/core';
-import { isSameDay, isSameMonth } from 'date-fns';
+import { isSameDay, isSameMinute, isSameMonth } from 'date-fns';
 import { Subject, Subscription } from 'rxjs';
 import {
   CalendarEvent,
@@ -28,6 +28,7 @@ import { CalendarUpdaterService } from 'src/app/services/calendar-updater.servic
 import { FocusDayService } from 'src/app/services/focus-day.service';
 import { OverviewUpdaterService } from 'src/app/services/overview-updater.service';
 import { RoleViewService } from 'src/app/services/role-view.service';
+import { AvailabilityMetaData, InterviewMetaData } from 'src/app/shared/models/event-meta-data';
 
 /**
  * The main component of the calendar, an implementation of angular-calendar
@@ -40,6 +41,7 @@ import { RoleViewService } from 'src/app/services/role-view.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
+
 })
 export class CalendarComponent implements OnInit, OnDestroy {
   /**
@@ -102,6 +104,9 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this.populateCalendar = this.populateCalendar.bind(this);
   }
 
+  
+  groupedSimilarEvents: CalendarEvent[] = [];
+
   /** @ignore */
   ngOnInit(): void {
     this.currentUser = this.userService.getUsername();
@@ -111,6 +116,10 @@ export class CalendarComponent implements OnInit, OnDestroy {
     //   this.currentRole = view;
     //   this.populateCalendar();
     // });
+
+
+
+
     this.requester.getUserRoles(this.currentUser).subscribe((userRoles) => {
       userRoles.forEach((role) => {
         this.userRoles.push(role);
@@ -280,26 +289,30 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this._dialog.resizeDay();
   }
 
-  beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
-    const outBody: DayCellRecruiter[] = [];
+  beforeMonthViewRender({
+    body,
+  }: {
+    body: CalendarMonthViewDay<EventGroupMeta>[];
+  }): void {
+    // month view has a different UX from the week and day view so we only really need to group by the type
     body.forEach((cell) => {
-      const groupCell = new DayCellRecruiter(cell);
-      const groups: Map<string, Array<CalendarEvent>> = new Map<
-        string,
-        Array<CalendarEvent>
-      >();
-      groupCell.events.forEach((event) => {
-        if (groups.has(event.meta.type)) {
-          groups.get(event.meta.type)?.push(event);
-        } else {
-          groups.set(event.meta.type, [event]);
+      const groups: any = {};
+      cell.events.forEach((event: CalendarEvent<AvailabilityMetaData>) => {
+        if(event.meta.type=='availability'){
+          groups[event.meta.type] = groups[event.meta.type] || [];
+          groups[event.meta.type].push(event);
         }
       });
-      groupCell.eventGroups = Array.from(groups.keys());
-      this.groupedCells.push(groupCell);
-      outBody.push(groupCell);
+      cell.events.forEach((event: CalendarEvent<InterviewMetaData>) => {
+        if(event.meta.type=='interview'){
+          console.log(event);
+          groups[event.meta.interviewStatus] = groups[event.meta.interviewStatus] || [];
+          groups[event.meta.interviewStatus].push(event);
+        }
+
+      });
+      cell['eventGroups'] = Object.entries(groups);
     });
-    body = outBody;
   }
 
   // ! Calendar core functionality contained here, shouldn't need to touch it!
@@ -341,6 +354,11 @@ export class CalendarComponent implements OnInit, OnDestroy {
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate) && events.length != 0) {
       this.openDayModal(date);
+      events.forEach(event =>{
+        if(isSameDay(event.start, date)){
+          console.log(event);
+        }
+      })
     }
   }
   /** @ignore */

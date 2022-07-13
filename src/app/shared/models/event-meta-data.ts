@@ -1,13 +1,13 @@
 export class InterviewMetaData {
   type: string;
   interviewPanel: Array<string>;
-  interviewStatus?: string;
+  interviewStatus: string;
   interviewOutcome?: string;
   additional?: string;
   // * Additional params here as needed
   constructor(metaData: {
     panel: Array<string>;
-    status?: string;
+    status: string;
     outcome?: string;
     additional?: string;
   }) {

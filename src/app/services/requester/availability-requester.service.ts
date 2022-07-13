@@ -11,7 +11,7 @@ import {
 } from '../../shared/models/types';
 import { APPCONSTANTS } from '../../shared/constants/app.constant';
 import { CalendarEvent } from 'angular-calendar';
-import { CalendarColors } from '../../shared/constants/colours.constant';
+import { CalendarColors, ColorSelector } from '../../shared/constants/colours.constant';
 import { CalendarEventAvailability } from 'src/app/shared/models/calendar-event-detail';
 import { AvailabilityMetaData } from 'src/app/shared/models/event-meta-data';
 import { DateToStringService } from '../date-to-string.service';
@@ -268,7 +268,7 @@ export class AvailabilityRequesterService {
       start: start,
       end: end,
       title: 'availability',
-      color: CalendarColors.get('blue'),
+      color: ColorSelector.getCalColour('blue'),
       meta: new AvailabilityMetaData(),
       interviewer: availability.interviewer,
     };
@@ -291,7 +291,7 @@ export class AvailabilityRequesterService {
       start: start,
       end: end,
       title: 'availability',
-      color: CalendarColors.get('purple'),
+      color: ColorSelector.getCalColour('purple'),
       interviewer: availability.interviewer,
       meta: {type: 'availability'},
     };

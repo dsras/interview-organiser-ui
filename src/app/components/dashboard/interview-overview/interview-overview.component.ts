@@ -123,7 +123,6 @@ export class InterviewOverviewComponent implements OnInit {
 
   private filterStatus(): void {
     this.interviews.forEach((interview) => {
-      console.log(interview);
       switch (interview.status) {
         case statusOptions.candidateNoShow:
           this.candidateNoShow.push(interview);
