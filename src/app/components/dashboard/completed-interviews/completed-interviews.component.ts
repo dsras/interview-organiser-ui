@@ -5,10 +5,14 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
-import { outcomeOptions, statusOptions } from 'src/app/shared/constants/interview-options.constant';
+import {
+  outcomeOptions,
+  statusOptions,
+} from 'src/app/shared/constants/interview-options.constant';
 import { InterviewTableData } from 'src/app/shared/models/table-data';
 import { InterviewReturn } from 'src/app/shared/models/types';
 
@@ -27,13 +31,13 @@ import { InterviewReturn } from 'src/app/shared/models/types';
     ]),
   ],
 })
-export class CompletedInterviewsComponent implements OnInit {
-
-
+export class CompletedInterviewsComponent implements OnInit, OnDestroy {
   /** Array to be populated with interviews */
   completedInterviews: Array<InterviewReturn> = [];
   /** Collection of data to be displayed in table */
-  tableData: InterviewTableData = new InterviewTableData(this.completedInterviews);
+  tableData: InterviewTableData = new InterviewTableData(
+    this.completedInterviews
+  );
   /** Selector for expanded view on table */
   expandedInterview!: InterviewReturn | null;
   /** The columns to be displayed in the table */
@@ -43,10 +47,10 @@ export class CompletedInterviewsComponent implements OnInit {
     'date',
     'time',
   ];
+  destroy$: Subject<boolean> = new Subject();
+
   /** @ignore */
-  constructor(
-    private iRequester: InterviewRequesterService
-  ) {}
+  constructor(private iRequester: InterviewRequesterService) {}
 
   /** Populate interviews on init */
   ngOnInit(): void {
@@ -54,19 +58,26 @@ export class CompletedInterviewsComponent implements OnInit {
     this.expandedInterview = null;
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.complete();
+  }
+
   /** Request table data from the database */
   getInterviews(): void {
     let filtered: InterviewReturn[] = [];
-    this.iRequester.getAllInterviews().subscribe((interviews) => {
-      console.table(interviews)
-      interviews.forEach((interview) => {
-        if (interview.outcome == outcomeOptions.completed) {
-          filtered.push(interview)
-        }
-      })
-      this.tableData.setData(filtered)
-    })
-    
+    this.iRequester
+      .getAllInterviews()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((interviews) => {
+        console.table(interviews);
+        interviews.forEach((interview) => {
+          if (interview.outcome == outcomeOptions.completed) {
+            filtered.push(interview);
+          }
+        });
+        this.tableData.setData(filtered);
+      });
   }
 
   /** @ignore test method that should be replaced when completed */

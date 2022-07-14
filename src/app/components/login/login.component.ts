@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   SocialAuthService,
@@ -14,6 +14,7 @@ import { LoggedInObject, LoginUser } from 'src/app/shared/models/user-model';
 // [APP_LEVEL Imports]
 import { DataSourceService } from '../../services/data-source.service';
 import { APPCONSTANTS } from '../../shared/constants/app.constant';
+import { Subject, takeUntil } from 'rxjs';
 
 /** Login component shown to all user not logged in */
 @Component({
@@ -22,11 +23,13 @@ import { APPCONSTANTS } from '../../shared/constants/app.constant';
   styleUrls: ['./login.component.scss'],
   providers: [SocialLoginModule, SocialAuthService],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   /** User */
   socialUser: SocialUser = <any>null;
   /** Tracks whether the user is logged in */
   isLoggedin: boolean = false;
+
+  destroy$: Subject<boolean> = new Subject();
 
   /** @ignore */
   constructor(
@@ -44,25 +47,32 @@ export class LoginComponent implements OnInit {
       APPCONSTANTS.DATA_SOURCE_CONSTANTS.ROUTE,
       'login'
     );
-    this._socialAuthService.authState.subscribe((user) => {
-      if (user === null) {
-        localStorage.removeItem('ssoUser');
-        return;
-      }
-      localStorage.setItem('ssoUser', JSON.stringify(user));
-      if (!localStorage.getItem('userType')) {
-        return;
-      }
-      this.socialUser = user;
-      this.isLoggedin = user != null;
-      if (user) {
-        const loggedInObj: LoggedInObject = {
-          username: user.email,
-          password: user.idToken,
-        };
-        this.validate('social', loggedInObj);
-      }
-    });
+    this._socialAuthService.authState
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((user) => {
+        if (user === null) {
+          localStorage.removeItem('ssoUser');
+          return;
+        }
+        localStorage.setItem('ssoUser', JSON.stringify(user));
+        if (!localStorage.getItem('userType')) {
+          return;
+        }
+        this.socialUser = user;
+        this.isLoggedin = user != null;
+        if (user) {
+          const loggedInObj: LoggedInObject = {
+            username: user.email,
+            password: user.idToken,
+          };
+          this.validate('social', loggedInObj);
+        }
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 
   /**
@@ -74,21 +84,28 @@ export class LoginComponent implements OnInit {
       user = loginObj;
     }
     this._dataSourceService.updateDataSource('loginType', loginType);
-    this._login.login(user).subscribe((response: any) => {
-      if (response && response.token) {
-        localStorage.setItem('apiKey', response.token);
-        this._rs
-          .getUserData(this._user.getUsername())
-          .subscribe((returnData: any) => {
-            user = returnData;
-            localStorage.setItem('userData', JSON.stringify(user));
-            this._rs.getUserRoles(user.username).subscribe((roles) => {
-              this._login.updateView(roles);
+    this._login
+      .login(user)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((response: any) => {
+        if (response && response.token) {
+          localStorage.setItem('apiKey', response.token);
+          this._rs
+            .getUserData(this._user.getUsername())
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((returnData: any) => {
+              user = returnData;
+              localStorage.setItem('userData', JSON.stringify(user));
+              this._rs
+                .getUserRoles(user.username)
+                .pipe(takeUntil(this.destroy$))
+                .subscribe((roles) => {
+                  this._login.updateView(roles);
+                });
+              this._router.navigate(['/calendar']);
             });
-            this._router.navigate(['/calendar']);
-          });
-      }
-    });
+        }
+      });
   }
 
   /** Launch Google SSO */

@@ -1,6 +1,7 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { SocialAuthService } from 'angularx-social-login';
+import { Subject, takeUntil } from 'rxjs';
 import { GetUserDataService } from 'src/app/services/get-user-data.service';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 import { RoleViewService } from 'src/app/services/role-view.service';
@@ -12,7 +13,7 @@ import { ISSOUser } from 'src/app/shared/models/user-model';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   /** Login type */
   loginType: string = '';
   user: ISSOUser | null = null;
@@ -23,22 +24,29 @@ export class HomeComponent implements OnInit {
   isRec = false;
   isUser = false;
 
+  destroy$: Subject<boolean> = new Subject();
+
   /** @ignore */
   constructor(
     private router: Router,
     private socialAuthService: SocialAuthService,
     private userDataService: GetUserDataService,
     private requester: RequestCenterService,
-    private roleView: RoleViewService,
+    private roleView: RoleViewService
   ) {}
 
   /** @ignore */
   ngOnInit(): void {
-    this.router.events.subscribe((event) => {
+    this.router.events.pipe(takeUntil(this.destroy$)).subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.setRoute(event);
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 
   /** Logs out the user */
@@ -51,11 +59,11 @@ export class HomeComponent implements OnInit {
   }
 
   viewRecruiter(): void {
-    this.roleView.changeView('RECRUITER')
+    this.roleView.changeView('RECRUITER');
   }
 
   viewUser(): void {
-    this.roleView.changeView('USER')
+    this.roleView.changeView('USER');
   }
 
   private clearData(): void {
@@ -92,6 +100,7 @@ export class HomeComponent implements OnInit {
         this.currentUser = this.userDataService.getUsername();
         this.requester
           .getUserRoles(this.currentUser)
+          .pipe(takeUntil(this.destroy$))
           .subscribe((returnedRoles) => {
             this.setRoles(returnedRoles);
           });

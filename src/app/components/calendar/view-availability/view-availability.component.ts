@@ -12,6 +12,8 @@ import {
   Output,
   EventEmitter,
   ViewChild,
+  OnDestroy,
+  AfterViewInit,
 } from '@angular/core';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 import {
@@ -22,6 +24,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { CalendarUpdaterService } from 'src/app/services/calendar-updater.service';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
+import { Subject, takeUntil } from 'rxjs';
 
 /**
  * Component that displays when a day is clicked on the calendar.
@@ -43,7 +46,9 @@ import { InterviewRequesterService } from 'src/app/services/requester/interview-
     ]),
   ],
 })
-export class ViewAvailabilityComponent implements OnInit {
+export class ViewAvailabilityComponent
+  implements OnInit, OnDestroy, AfterViewInit
+{
   /** Availabilty list for the day */
   @Input() availability: Array<CalendarEventAvailability> = [];
   /** Interview list for the day */
@@ -99,6 +104,7 @@ export class ViewAvailabilityComponent implements OnInit {
   displayedColumns: Array<string> = [];
   expandedAvailability!: CalendarEventAvailability | null;
   expandedInterview!: CalendarEventAvailability | null;
+  destroy$: Subject<boolean> = new Subject();
 
   deleteCount = 0;
   /** @ignore test method to be removed when completed */
@@ -121,6 +127,11 @@ export class ViewAvailabilityComponent implements OnInit {
     }
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.complete();
+  }
+
   ngAfterViewInit() {
     this.aTable = new MatTableDataSource(this.availability);
     this.aTable.paginator = this.aPaginator;
@@ -137,15 +148,16 @@ export class ViewAvailabilityComponent implements OnInit {
 
   onDelete(id: string | number | any) {
     console.log(id);
-    this.aRequester.deleteAvailability(id).subscribe(() => {
-      this.updater.updateCalendar();
-      this.deleteCount++;
-    });
+    this.aRequester
+      .deleteAvailability(id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.updater.updateCalendar();
+        this.deleteCount++;
+      });
   }
 
-  updateInterviews(){
-
-  }
+  updateInterviews() {}
 
   tabChange(): void {
     this.tabChangeEvent.emit();
@@ -153,8 +165,11 @@ export class ViewAvailabilityComponent implements OnInit {
 
   onIDelete(id: string | number | any) {
     console.log(id);
-    this.iRequester.deleteInterviewRecompAvails(id).subscribe(() => {
-      this.updater.updateCalendar();
-    });
+    this.iRequester
+      .deleteInterviewRecompAvails(id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.updater.updateCalendar();
+      });
   }
 }

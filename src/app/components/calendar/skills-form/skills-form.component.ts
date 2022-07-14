@@ -1,9 +1,10 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 import { SkillOptions, Skills } from 'src/app/shared/models/types';
 import { GetUserDataService } from 'src/app/services/get-user-data.service';
+import { Subject, takeUntil } from 'rxjs';
 
 /**
  * Component for submiting new skills to users skill set
@@ -13,7 +14,7 @@ import { GetUserDataService } from 'src/app/services/get-user-data.service';
   templateUrl: './skills-form.component.html',
   styleUrls: ['./skills-form.component.scss'],
 })
-export class SkillsFormComponent implements OnInit {
+export class SkillsFormComponent implements OnInit, OnDestroy {
   /** Empty array to be populated with skill id's and information */
   skillsAvailable: Array<Skills> = [];
 
@@ -29,6 +30,8 @@ export class SkillsFormComponent implements OnInit {
     level: ['', Validators.required],
   });
 
+  destroy$: Subject<boolean> = new Subject();
+
   /** @ignore */
   constructor(
     private fb: FormBuilder,
@@ -42,13 +45,21 @@ export class SkillsFormComponent implements OnInit {
     this.rs.getAllSkills(this.skillsAvailable, this.formOptions);
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.complete();
+  }
+
   // ? should this be private ?
   /** {@link MatDialogService} */
   openDialog(template: TemplateRef<any>): void {
     this._dialog.openDialog(template);
-    this._dialog.dialogRef?.afterClosed().subscribe(() => {
-      this.addSkillsForm.reset();
-    });
+    this._dialog.dialogRef
+      ?.afterClosed()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.addSkillsForm.reset();
+      });
   }
 
   // ? Should this be private ?

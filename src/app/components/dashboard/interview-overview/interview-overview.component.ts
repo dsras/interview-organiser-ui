@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import {
   outcomeOptions,
   statusOptions,
 } from 'src/app/shared/constants/interview-options.constant';
 import { InterviewReturn } from 'src/app/shared/models/types';
-import { elementAt, Subscription } from 'rxjs';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 import { GetUserDataService } from 'src/app/services/get-user-data.service';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 import { CalendarEventInterview } from 'src/app/shared/models/calendar-event-detail';
@@ -13,22 +13,21 @@ import { DateToStringService } from 'src/app/services/date-to-string.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { FocusDayService } from 'src/app/services/focus-day.service';
 import { OverviewUpdaterService } from 'src/app/services/overview-updater.service';
-import { DateToShortDate } from 'src/app/pipes/DateToShortDate';
+
 @Component({
   selector: 'interview-overview',
   templateUrl: './interview-overview.component.html',
   styleUrls: ['./interview-overview.component.scss'],
 })
-export class InterviewOverviewComponent implements OnInit {
+export class InterviewOverviewComponent implements OnInit, OnDestroy {
   completed: InterviewReturn[] = [];
   panelNoShow: InterviewReturn[] = [];
   candidateNoShow: InterviewReturn[] = [];
   pending: InterviewReturn[] = [];
 
-  stage1Interviews: InterviewReturn[]=[];
-  stage2Interviews: InterviewReturn[]=[];
-  stage3Interviews: InterviewReturn[]=[];
-
+  stage1Interviews: InterviewReturn[] = [];
+  stage2Interviews: InterviewReturn[] = [];
+  stage3Interviews: InterviewReturn[] = [];
 
   confirmed: InterviewReturn[] = [];
   didNotProgress: InterviewReturn[] = [];
@@ -48,6 +47,7 @@ export class InterviewOverviewComponent implements OnInit {
   endDate = new Date();
 
   updateSubscription!: Subscription;
+  destroy$: Subject<boolean> = new Subject();
 
   displayedColumns: string[] = ['ID', 'Date', 'Time', 'Status'];
   aTable!: MatTableDataSource<CalendarEventInterview>;
@@ -75,33 +75,41 @@ export class InterviewOverviewComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = this.userService.getUsername();
 
-    this.updateSubscription = this.updater
+    this.updater
       .getEmitter()
+      .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.callbackFunction());
 
-    this.requester.getUserRoles(this.currentUser).subscribe((returnData) => {
-      returnData.forEach((element) => {
-        this.userRoles.push(element);
+    this.requester
+      .getUserRoles(this.currentUser)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((returnData) => {
+        returnData.forEach((element) => {
+          this.userRoles.push(element);
+        });
+        this.getData();
       });
-      this.getData();
-    });
   }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.complete();
+  }
+
   callbackFunction(): void {
     this.getData();
   }
-  reset(){
+  reset() {
     this.interviews = [];
     this.interviewEvents = [];
-    this.stage1Interviews =[];
-    this.stage2Interviews =[];
-    this.stage3Interviews =[];
+    this.stage1Interviews = [];
+    this.stage2Interviews = [];
+    this.stage3Interviews = [];
 
-
-    this.confirmed  = [];
-    this.didNotProgress  = [];
-    this.progressed  = [];
-    this.awaitingCompletion  = [];
-
+    this.confirmed = [];
+    this.didNotProgress = [];
+    this.progressed = [];
+    this.awaitingCompletion = [];
   }
   getData() {
     this.reset();
@@ -109,11 +117,14 @@ export class InterviewOverviewComponent implements OnInit {
     this.setDates();
     if (this.userRoles.includes('RECRUITER')) {
       this.isRecruiter = true;
-      this.iRequester.getAllInterviews().subscribe((interviews) => {
-        this.interviews = interviews;
-        this.filterStatus();
-        this.filterOutcome();
-      });
+      this.iRequester
+        .getAllInterviews()
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((interviews) => {
+          this.interviews = interviews;
+          this.filterStatus();
+          this.filterOutcome();
+        });
     } else {
       this.isUser = true;
       console.log('dates for the interview list');
@@ -125,15 +136,18 @@ export class InterviewOverviewComponent implements OnInit {
           this.dateString.dateToStringDate(this.startDate),
           this.dateString.dateToStringDate(this.endDate)
         )
-        .subscribe((ret) => {
-          ret.forEach((ele) => {
-            this.interviewEvents.push(this.iRequester.parseInterviewUser(ele));
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((returnedInterviews) => {
+          returnedInterviews.forEach((interview) => {
+            this.interviewEvents.push(
+              this.iRequester.parseInterviewUser(interview)
+            );
           });
           this.aTable = new MatTableDataSource(this.interviewEvents);
           console.log(this.interviewEvents);
-          this.interviewEvents.sort(function(a,b){
-            return a.start > b.start ? 1 : -1;           
-          })
+          this.interviewEvents.sort(function (a, b) {
+            return a.start > b.start ? 1 : -1;
+          });
         });
     }
   }
@@ -162,7 +176,7 @@ export class InterviewOverviewComponent implements OnInit {
         case statusOptions.S3:
           this.stage3Interviews.push(interview);
           break;
-                    
+
         default:
           break;
       }
@@ -196,10 +210,10 @@ export class InterviewOverviewComponent implements OnInit {
           break;
       }
     });
-  this.allFilteredArrays
-    .set('Completed', this.completed)
-    .set('Did Not Progress', this.didNotProgress)
-    .set('Progressed', this.progressed)
-    .set('Awaiting Completion', this.awaitingCompletion);
+    this.allFilteredArrays
+      .set('Completed', this.completed)
+      .set('Did Not Progress', this.didNotProgress)
+      .set('Progressed', this.progressed)
+      .set('Awaiting Completion', this.awaitingCompletion);
   }
 }

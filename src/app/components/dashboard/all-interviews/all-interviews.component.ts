@@ -5,7 +5,8 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { InterviewTableData } from 'src/app/shared/models/table-data';
 import { InterviewReturn } from 'src/app/shared/models/types';
@@ -28,7 +29,7 @@ import { InterviewReturn } from 'src/app/shared/models/types';
     ]),
   ],
 })
-export class AllInterviewsComponent implements OnInit {
+export class AllInterviewsComponent implements OnInit, OnDestroy {
   /** Array to be populated with interviews */
   interviews: Array<InterviewReturn> = [];
   /** Collection of data to be displayed in table */
@@ -44,6 +45,8 @@ export class AllInterviewsComponent implements OnInit {
     // 'outcome',
     // 'status',
   ];
+  destroy$: Subject<boolean> = new Subject();
+
   /** @ignore */
   constructor(private iRequester: InterviewRequesterService) {}
 
@@ -53,11 +56,19 @@ export class AllInterviewsComponent implements OnInit {
     this.expandedInterview = null;
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.complete();
+  }
+
   /** Request table data from the database */
   getInterviews(): void {
-    this.iRequester.getAllInterviews().subscribe((interviews) => {
-      this.tableData.setData(interviews);
-    });
+    this.iRequester
+      .getAllInterviews()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((interviews) => {
+        this.tableData.setData(interviews);
+      });
   }
 
   /** @ignore test method that should be replaced when completed */

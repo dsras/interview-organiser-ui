@@ -1,4 +1,10 @@
-import { Component, Input, OnInit, TemplateRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  TemplateRef,
+} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { CalendarEventInterview } from 'src/app/shared/models/calendar-event-detail';
@@ -9,6 +15,7 @@ import {
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
 import { GetUserDataService } from 'src/app/services/get-user-data.service';
 import { CalendarUpdaterService } from 'src/app/services/calendar-updater.service';
+import { Subject, takeUntil } from 'rxjs';
 
 /**
  * Component to view and modify interview status
@@ -21,10 +28,11 @@ import { CalendarUpdaterService } from 'src/app/services/calendar-updater.servic
   templateUrl: './interview-status.component.html',
   styleUrls: ['./interview-status.component.scss'],
 })
-export class InterviewStatusComponent implements OnInit {
+export class InterviewStatusComponent implements OnInit, OnDestroy {
   /** The time slot being displayed */
   @Input() slot?: CalendarEventInterview;
   userRoles!: string[];
+  destroy$: Subject<boolean> = new Subject();
 
   /** Form for updating interview status */
   statusForm: FormGroup = this.fb.group({
@@ -60,12 +68,20 @@ export class InterviewStatusComponent implements OnInit {
     this.userRoles = this.userService.getUserRoleNames();
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.complete();
+  }
+
   /** @ignore */
   openModal(template: TemplateRef<any>): void {
     this._dialog.openDialog(template);
-    this._dialog.dialogRef?.afterClosed().subscribe(() => {
-      this.statusForm.reset();
-    });
+    this._dialog.dialogRef
+      ?.afterClosed()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.statusForm.reset();
+      });
   }
 
   /** @ignore */

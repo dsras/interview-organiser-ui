@@ -5,7 +5,8 @@ import {
   transition,
   animate,
 } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import { InterviewTableData } from 'src/app/shared/models/table-data';
 import { InterviewReturn } from 'src/app/shared/models/types';
@@ -25,7 +26,7 @@ import { InterviewReturn } from 'src/app/shared/models/types';
     ]),
   ],
 })
-export class MyInterviewsComponent implements OnInit {
+export class MyInterviewsComponent implements OnInit, OnDestroy {
   /** Array to be populated with interviews */
   interviews: Array<InterviewReturn> = [];
   /** Collection of data to be displayed in table */
@@ -42,6 +43,8 @@ export class MyInterviewsComponent implements OnInit {
     // 'status',
   ];
 
+  destroy$: Subject<boolean> = new Subject();
+
   constructor(private iRequester: InterviewRequesterService) {}
 
   /** Populate interviews on init */
@@ -50,11 +53,19 @@ export class MyInterviewsComponent implements OnInit {
     this.expandedInterview = null;
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.complete();
+  }
+
   /** Request table data from the database */
   getInterviews(): void {
-    this.iRequester.getUserInterviews().subscribe((interviews) => {
-      this.tableData.setData(interviews);
-      console.log(interviews);
-    });
+    this.iRequester
+      .getUserInterviews()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((interviews) => {
+        this.tableData.setData(interviews);
+        console.log(interviews);
+      });
   }
 }
