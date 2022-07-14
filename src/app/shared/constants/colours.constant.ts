@@ -1,6 +1,3 @@
-import { CalendarA11y } from "angular-calendar";
-import { calendar } from "ngx-bootstrap/chronos/moment/calendar";
-
 interface CalendarColour {
   primary: string;
   secondary: string;
@@ -14,7 +11,7 @@ export const CalendarColors = new Map<string, CalendarColour>([
   ['blue', { primary: '#1e90ff', secondary: '#D1E8FF' }],
   ['yellow', { primary: '#f7db05', secondary: '#FDF1BA' }],
   ['green', { primary: '#12872d', secondary: '#0ad138' }],
-  ['purple', { primary: '#A52AFF', secondary: '#D3B2EA' }],
+  ['purple', { primary: '#c584f5', secondary: '#D3B2EA' }],
   ['grey', {primary: '#9c9c9c', secondary: '#666666'}],
   ['orange', {primary: '#eb9502', secondary: '#cc9200'}],
   ['lime', {primary: '#b8e002', secondary: '#a8cc02'}],

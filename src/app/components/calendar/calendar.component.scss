@@ -66,10 +66,13 @@ pre {
 }
 .badge {
   margin-right: 5px;
+  border: #000000;
+  border-width: 0.2px;
+  border-style: solid;
 }
 .badge-availability {
   color: #212529;
-  background-color: #A52AFF;
+  background-color: #c584f5;
 }
 .badge-Stage1 {
   color: #212529;
