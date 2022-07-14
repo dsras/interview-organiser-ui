@@ -1,7 +1,8 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { Subject, takeUntil } from 'rxjs';
 import { CalendarUpdaterService } from 'src/app/services/calendar-updater.service';
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
@@ -14,8 +15,9 @@ import { AvailabilityRequesterService } from 'src/app/services/requester/availab
   templateUrl: './availability-form.component.html',
   styleUrls: ['./availability-form.component.scss'],
 })
-export class AvailabilityFormComponent implements OnInit {
+export class AvailabilityFormComponent implements OnInit, OnDestroy {
   currentTab: number = 0;
+  destroy$: Subject<boolean> = new Subject();
 
   /**
    * Blank form to be populated by the user
@@ -59,14 +61,22 @@ export class AvailabilityFormComponent implements OnInit {
   /** @ignore */
   ngOnInit(): void {}
 
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.complete();
+  }
+
   /** @ignore */
   openDialog(template: TemplateRef<HTMLElement>): void {
     this._dialog.openDialog(template);
-    this._dialog.dialogRef?.afterClosed().subscribe(() => {
-      this.multiDayForm.reset();
-      this.resetDays();
-      this.dateRangeForm.reset();
-    });
+    this._dialog.dialogRef
+      ?.afterClosed()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.multiDayForm.reset();
+        this.resetDays();
+        this.dateRangeForm.reset();
+      });
   }
 
   rangeDialog(): void {
@@ -86,16 +96,22 @@ export class AvailabilityFormComponent implements OnInit {
   onSubmit(form: FormGroup): void {
     switch (this.currentTab) {
       case 0: {
-        this.aRequester.addAvailabilityArray(form.value).subscribe(() => {
-          this.updater.updateCalendar();
-        });
+        this.aRequester
+          .addAvailabilityArray(form.value)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe(() => {
+            this.updater.updateCalendar();
+          });
         break;
       }
       case 1: {
-        this.aRequester.addAvailabilityRange(form.value).subscribe((data) => {
-          console.log(data);
-          this.updater.updateCalendar();
-        });
+        this.aRequester
+          .addAvailabilityRange(form.value)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe((data) => {
+            console.log(data);
+            this.updater.updateCalendar();
+          });
         break;
       }
     }

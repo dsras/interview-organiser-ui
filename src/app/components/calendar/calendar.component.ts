@@ -7,7 +7,7 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { isSameDay, isSameMinute, isSameMonth } from 'date-fns';
-import { Subject, Subscription } from 'rxjs';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 import {
   CalendarEvent,
   CalendarMonthViewDay,
@@ -28,7 +28,10 @@ import { CalendarUpdaterService } from 'src/app/services/calendar-updater.servic
 import { FocusDayService } from 'src/app/services/focus-day.service';
 import { OverviewUpdaterService } from 'src/app/services/overview-updater.service';
 import { RoleViewService } from 'src/app/services/role-view.service';
-import { AvailabilityMetaData, InterviewMetaData } from 'src/app/shared/models/event-meta-data';
+import {
+  AvailabilityMetaData,
+  InterviewMetaData,
+} from 'src/app/shared/models/event-meta-data';
 
 /**
  * The main component of the calendar, an implementation of angular-calendar
@@ -41,7 +44,6 @@ import { AvailabilityMetaData, InterviewMetaData } from 'src/app/shared/models/e
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
-
 })
 export class CalendarComponent implements OnInit, OnDestroy {
   /**
@@ -52,8 +54,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   currentUser: string = '';
   userRoles: Array<string> = [];
-
-  updateSubscription!: Subscription;
 
   /* 
   TODO implement this later to view/edit individual events on the calendar
@@ -84,10 +84,12 @@ export class CalendarComponent implements OnInit, OnDestroy {
   $currentRole: Subscription = new Subscription();
   currentRole: string = '';
 
-  stages: Set<string> = new Set<string>(['None', 'Stage1', 'Stage2', 'Stage3']); 
+  stages: Set<string> = new Set<string>(['None', 'Stage1', 'Stage2', 'Stage3']);
   selectedStage: string = 'None';
 
   showAvail = true;
+
+  destroy$: Subject<boolean> = new Subject<boolean>();
 
   /** @ignore */
   constructor(
@@ -104,7 +106,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this.populateCalendar = this.populateCalendar.bind(this);
   }
 
-  
   groupedSimilarEvents: CalendarEvent[] = [];
 
   /** @ignore */
@@ -117,25 +118,27 @@ export class CalendarComponent implements OnInit, OnDestroy {
     //   this.populateCalendar();
     // });
 
-
-
-
-    this.requester.getUserRoles(this.currentUser).subscribe((userRoles) => {
-      userRoles.forEach((role) => {
-        this.userRoles.push(role);
+    this.requester
+      .getUserRoles(this.currentUser)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((userRoles) => {
+        userRoles.forEach((role) => {
+          this.userRoles.push(role);
+        });
+        this.populateCalendar();
       });
-      this.populateCalendar();
-    });
     //setup dates
     this.setDates();
 
-    this.updateSubscription = this.updater
+    this.updater
       .getEmitter()
+      .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.update());
   }
 
   ngOnDestroy() {
-    this.updateSubscription.unsubscribe();
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 
   /** @ignore private? */
@@ -180,33 +183,32 @@ export class CalendarComponent implements OnInit, OnDestroy {
     }
   }
 
-  changeAvailVis(){
+  changeAvailVis() {
     this.changeStageFilter();
   }
-  changeStageFilter(){
-    console.log("stage selection change");
+  changeStageFilter() {
+    console.log('stage selection change');
     console.log(this.selectedStage);
-    if(this.selectedStage=='None'){
+    if (this.selectedStage == 'None') {
       this.events = [];
-      if(this.showAvail){
-        this.availability.forEach(element => {
+      if (this.showAvail) {
+        this.availability.forEach((element) => {
           this.events.push(element);
         });
       }
-      this.interviews.forEach(element => {
+      this.interviews.forEach((element) => {
         this.events.push(element);
       });
-    }
-    else{
-      this.events=[];
-      if(this.showAvail){
-        this.availability.forEach(element => {
+    } else {
+      this.events = [];
+      if (this.showAvail) {
+        this.availability.forEach((element) => {
           this.events.push(element);
         });
       }
-      this.interviews.forEach(element => {
-        if(element.title =='interview'){
-          if(element.meta.interviewStatus == this.selectedStage){
+      this.interviews.forEach((element) => {
+        if (element.title == 'interview') {
+          if (element.meta.interviewStatus == this.selectedStage) {
             this.events.push(element);
           }
         }
@@ -224,6 +226,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
         this.dateString.dateToStringDate(this.startDate),
         this.dateString.dateToStringDate(this.endDate)
       )
+      .pipe(takeUntil(this.destroy$))
       .subscribe((availabilityArray) => {
         availabilityArray.forEach((slot) => {
           this.events.push(this.aRequester.parseAvailabilityUser(slot));
@@ -239,6 +242,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
         this.dateString.dateToStringDate(this.startDate),
         this.dateString.dateToStringDate(this.endDate)
       )
+      .pipe(takeUntil(this.destroy$))
       .subscribe((interviewArray) => {
         interviewArray.forEach((interview) => {
           this.events.push(this.iRequester.parseInterviewUser(interview));
@@ -256,6 +260,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
         this.dateString.dateToStringDate(this.startDate),
         this.dateString.dateToStringDate(this.endDate)
       )
+      .pipe(takeUntil(this.destroy$))
       .subscribe((availabilityArray) => {
         availabilityArray.forEach((slot) => {
           this.events.push(this.aRequester.parseAvailabilityRecruiter(slot));
@@ -272,6 +277,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
         this.dateString.dateToStringDate(this.startDate),
         this.dateString.dateToStringDate(this.endDate)
       )
+      .pipe(takeUntil(this.destroy$))
       .subscribe((interviewArray) => {
         interviewArray.forEach((interview) => {
           this.events.push(this.iRequester.parseInterviewRecruiter(interview));
@@ -298,18 +304,18 @@ export class CalendarComponent implements OnInit, OnDestroy {
     body.forEach((cell) => {
       const groups: any = {};
       cell.events.forEach((event: CalendarEvent<AvailabilityMetaData>) => {
-        if(event.meta.type=='availability'){
+        if (event.meta.type == 'availability') {
           groups[event.meta.type] = groups[event.meta.type] || [];
           groups[event.meta.type].push(event);
         }
       });
       cell.events.forEach((event: CalendarEvent<InterviewMetaData>) => {
-        if(event.meta.type=='interview'){
+        if (event.meta.type == 'interview') {
           console.log(event);
-          groups[event.meta.interviewStatus] = groups[event.meta.interviewStatus] || [];
+          groups[event.meta.interviewStatus] =
+            groups[event.meta.interviewStatus] || [];
           groups[event.meta.interviewStatus].push(event);
         }
-
       });
       cell['eventGroups'] = Object.entries(groups);
     });
@@ -354,11 +360,11 @@ export class CalendarComponent implements OnInit, OnDestroy {
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate) && events.length != 0) {
       this.openDayModal(date);
-      events.forEach(event =>{
-        if(isSameDay(event.start, date)){
+      events.forEach((event) => {
+        if (isSameDay(event.start, date)) {
           console.log(event);
         }
-      })
+      });
     }
   }
   /** @ignore */
