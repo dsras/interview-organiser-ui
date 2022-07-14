@@ -7,7 +7,7 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { isSameDay, isSameMonth } from 'date-fns';
-import { Subject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subject, Subscription, takeUntil } from 'rxjs';
 import {
   CalendarEvent,
   CalendarMonthViewDay,
@@ -50,8 +50,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
   currentUser: string = '';
   userRoles: Array<string> = [];
 
-  updateSubscription!: Subscription;
-
   /* 
   TODO implement this later to view/edit individual events on the calendar
   TODO See handleEvent() below
@@ -77,8 +75,10 @@ export class CalendarComponent implements OnInit, OnDestroy {
   startDate = new Date();
   endDate = new Date();
 
-  $currentRole: Subscription = new Subscription();
+  currentRole$: Subscription = new Subscription();
   currentRole: string = '';
+
+  destroy$: Subject<boolean> = new Subject<boolean>();
 
   /** @ignore */
   constructor(
@@ -97,19 +97,24 @@ export class CalendarComponent implements OnInit, OnDestroy {
   /** @ignore */
   ngOnInit(): void {
     this.currentUser = this.userService.getUsername();
-    this.$currentRole = this.roleView.getCurrentView().subscribe((view) => {
-      console.log(`role change: ${view}`);
-      this.currentRole = view;
-      this.populateCalendar();
-    });
+    this.roleView
+      .getCurrentView()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((view) => {
+        console.log(`role change: ${view}`);
+        this.currentRole = view;
+        this.populateCalendar();
+      });
     this.setDates();
-    this.updateSubscription = this.updater
+    this.updater
       .getEmitter()
+      .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.update());
   }
 
   ngOnDestroy() {
-    this.updateSubscription.unsubscribe();
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 
   /** @ignore private? */
@@ -162,6 +167,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
         this.dateString.dateToStringDate(this.startDate),
         this.dateString.dateToStringDate(this.endDate)
       )
+      .pipe(takeUntil(this.destroy$))
       .subscribe((availabilityArray) => {
         availabilityArray.forEach((slot) => {
           this.events.push(this.aRequester.parseAvailabilityUser(slot));
@@ -177,6 +183,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
         this.dateString.dateToStringDate(this.startDate),
         this.dateString.dateToStringDate(this.endDate)
       )
+      .pipe(takeUntil(this.destroy$))
       .subscribe((interviewArray) => {
         interviewArray.forEach((interview) => {
           this.events.push(this.iRequester.parseInterviewUser(interview));
@@ -194,6 +201,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
         this.dateString.dateToStringDate(this.startDate),
         this.dateString.dateToStringDate(this.endDate)
       )
+      .pipe(takeUntil(this.destroy$))
       .subscribe((availabilityArray) => {
         availabilityArray.forEach((slot) => {
           this.events.push(this.aRequester.parseAvailabilityRecruiter(slot));
@@ -210,6 +218,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
         this.dateString.dateToStringDate(this.startDate),
         this.dateString.dateToStringDate(this.endDate)
       )
+      .pipe(takeUntil(this.destroy$))
       .subscribe((interviewArray) => {
         interviewArray.forEach((interview) => {
           this.events.push(this.iRequester.parseInterviewRecruiter(interview));

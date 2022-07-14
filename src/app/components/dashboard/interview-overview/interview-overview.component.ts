@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { InterviewRequesterService } from 'src/app/services/requester/interview-requester.service';
 import {
   outcomeOptions,
@@ -20,7 +20,7 @@ import { RolesService } from 'src/app/services/login/roles.service';
   templateUrl: './interview-overview.component.html',
   styleUrls: ['./interview-overview.component.scss'],
 })
-export class InterviewOverviewComponent implements OnInit {
+export class InterviewOverviewComponent implements OnInit, OnDestroy {
   completed: InterviewReturn[] = [];
   panelNoShow: InterviewReturn[] = [];
   candidateNoShow: InterviewReturn[] = [];
@@ -75,7 +75,7 @@ export class InterviewOverviewComponent implements OnInit {
       .getEmitter()
       .subscribe(() => this.callbackFunction());
 
-    this.userRoles$ = this._roles.getRoles();
+    this.userRoles$.next(this._roles.getRoles());
     this.userRoles$.subscribe((roles) => {
       this.userRoles = roles
     })
@@ -88,6 +88,11 @@ export class InterviewOverviewComponent implements OnInit {
     //   this.getData();
     // });
   }
+
+  ngOnDestroy(): void {
+    this.updateSubscription.unsubscribe()    
+  }
+
   callbackFunction(): void {
     this.getData();
   }

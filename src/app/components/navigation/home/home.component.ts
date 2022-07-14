@@ -7,17 +7,20 @@ import { RequestCenterService } from 'src/app/services/requester/request-center.
 import { RoleViewService } from 'src/app/services/role-view.service';
 import { APPCONSTANTS } from 'src/app/shared/constants/app.constant';
 import { ISSOUser } from 'src/app/shared/models/user-model';
+import { BehaviorSubject, Subject, Subscription, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   /** Login type */
   loginType: string = '';
   user: ISSOUser | null = null;
   userRoles: string[] = [];
+  userRoles$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
+  destroy$: Subject<boolean> = new Subject<boolean>();
   loggedIn: boolean = false;
   url: string = '';
   currentUser = '';
@@ -30,7 +33,6 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private socialAuthService: SocialAuthService,
     private userDataService: GetUserDataService,
-    private requester: RequestCenterService,
     private roleView: RoleViewService,
     private _roles: RolesService
   ) {}
@@ -42,9 +44,20 @@ export class HomeComponent implements OnInit {
         this.setRoute(event);
       }
     });
-    this.roleView.getCurrentView().subscribe((view) => {
-      this.currentView = view;
+    this.roleView
+      .getCurrentView()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((view) => {
+        this.currentView = view;
+      });
+    this.userRoles$.pipe(takeUntil(this.destroy$)).subscribe((roles) => {
+      this.userRoles = roles;
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 
   /** Logs out the user */
@@ -75,8 +88,8 @@ export class HomeComponent implements OnInit {
     this.currentUser = '';
   }
 
-  private setRoles(returnedRoles: BehaviourSubject<string[]>): void {
-    this.userRoles = returnedRoles;
+  private setRoles(returnedRoles: string[]): void {
+    this.userRoles$.next(returnedRoles);
     if (this.userRoles.includes('RECRUITER')) {
       this.isRec = true;
     }
@@ -102,7 +115,7 @@ export class HomeComponent implements OnInit {
         //   .subscribe((returnedRoles) => {
         //     this.setRoles(returnedRoles);
         //   });
-        this.setRoles(this._roles.getRoles())
+        this.setRoles(this._roles.getRoles());
       }
     } else {
       this.loggedIn = false;
