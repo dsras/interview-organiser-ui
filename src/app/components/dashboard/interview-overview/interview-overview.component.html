@@ -45,21 +45,21 @@
 <div class="interviewOverviewUser" *ngIf="isUser">
   <h4 class="text-center">My Interviews: {{ interviewEvents.length }}</h4>
   <table mat-table [dataSource]="aTable" >
-    <ng-container matColumnDef="ID">
+    <ng-container matColumnDef="ID" >
       <th mat-header-cell *matHeaderCellDef> ID. </th>
-      <td mat-cell style="border-left: 1px solid rgba(175, 175, 175, 0.5); text-align: left;" *matCellDef="let element"> {{element.id}} </td>
+      <td mat-cell style="border-left: 1px solid rgba(175, 175, 175, 0.5); padding-left: 0;" *matCellDef="let element"> {{element.id}} </td>
     </ng-container>
     <ng-container matColumnDef="Date">
-      <th mat-header-cell *matHeaderCellDef> Date. </th>
-      <td mat-cell *matCellDef="let element"> {{element.start | date}} </td>
+      <th mat-header-cell *matHeaderCellDef > Date. </th>
+      <td mat-cell *matCellDef="let element"> {{element.start | DateToShortDate}} </td>
     </ng-container>
-    <ng-container matColumnDef="Time">
+    <ng-container matColumnDef="Time" >
       <th mat-header-cell *matHeaderCellDef> Time. </th>
       <td mat-cell *matCellDef="let element"> {{element.start | DateToTimePipe }} - {{element.end | DateToTimePipe}} </td>
     </ng-container>
-    <ng-container matColumnDef="Status">
-      <th mat-header-cell *matHeaderCellDef> Stage. </th>
-      <td mat-cell *matCellDef="let element"> {{element.meta.interviewStatus }}</td>
+    <ng-container matColumnDef="Status" >
+      <th mat-header-cell *matHeaderCellDef > Stage. </th>
+      <td mat-cell *matCellDef="let element" style="padding-right: 0;"> {{element.meta.interviewStatus }}</td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

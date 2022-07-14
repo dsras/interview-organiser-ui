@@ -23,9 +23,8 @@
   <div>
     <div id="ActionsBar" class="row">
       <div name="stageFilter" class="col-md-2">
-        <h4>Filter by Stage</h4>
         <mat-form-field appearance="fill">
-          <mat-label>Stage</mat-label>
+          <mat-label>Stage Filter</mat-label>
           <mat-select [(ngModel)]="selectedStage" (ngModelChange)='changeStageFilter()'>
             <mat-option *ngFor="let stage of stages" [value]="stage">
               {{stage}}
@@ -33,13 +32,18 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div name="AvailFilter" class="col-md-4">
-        <h4>Show/Hide Availability</h4>
-        <input 
-          type="checkbox" 
-          [(ngModel)]="showAvail"
-          (ngModelChange)='changeAvailVis()'
-        />
+      <div name="AvailFilter" class="col-md-2" style="align-items: center;">
+        <button
+          mat-raised-button
+          type="button"
+          class="main-button"
+          (click)='changeAvailVis()'
+          style="align-self: center;"
+        >
+          Toggle Availability
+          <mat-icon *ngIf="showAvail">check_box</mat-icon>
+          <mat-icon *ngIf="!showAvail">check_box_outline_blank</mat-icon>
+        </button>
       </div>
     </div>
     

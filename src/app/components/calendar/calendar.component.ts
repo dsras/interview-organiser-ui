@@ -184,6 +184,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
 
   changeAvailVis() {
+    console.log(this.showAvail);
+    this.showAvail=!this.showAvail;
     this.changeStageFilter();
   }
   changeStageFilter() {

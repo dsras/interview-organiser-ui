@@ -13,7 +13,7 @@ import { DateToStringService } from 'src/app/services/date-to-string.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { FocusDayService } from 'src/app/services/focus-day.service';
 import { OverviewUpdaterService } from 'src/app/services/overview-updater.service';
-
+import { DateToShortDate } from 'src/app/pipes/DateToShortDate';
 @Component({
   selector: 'interview-overview',
   templateUrl: './interview-overview.component.html',
@@ -117,6 +117,9 @@ export class InterviewOverviewComponent implements OnInit {
           });
           this.aTable = new MatTableDataSource(this.interviewEvents);
           console.log(this.interviewEvents);
+          this.interviewEvents.sort(function(a,b){
+            return a.start > b.start ? 1 : -1;           
+          })
         });
     }
   }

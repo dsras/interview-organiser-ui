@@ -28,6 +28,7 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { DateToTimePipe } from '../pipes/DateToTimePipe';
 import { NgxMultipleDatesModule } from 'ngx-multiple-dates';
 import { MatTreeModule } from '@angular/material/tree';
+import { DateToShortDate } from '../pipes/DateToShortDate';
 
 @NgModule({
   imports: [
@@ -85,15 +86,20 @@ import { MatTreeModule } from '@angular/material/tree';
     MatSnackBarModule,
     MatTreeModule,
     MatBottomSheetModule,
-    DateToTimePipe
+    DateToTimePipe,
+    DateToShortDate
+
   ],
   declarations: [
     StringToDatetimePipe,
-    DateToTimePipe
+    DateToTimePipe,
+    DateToShortDate
+
   ],
   providers: [
     { provide: TimepickerConfig, useFactory: getTimepickerConfig },
     DateToTimePipe,
+    DateToShortDate
   ],
 })
 export class SharedModule {}
