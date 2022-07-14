@@ -11,6 +11,7 @@ import { InterviewRequesterService } from 'src/app/services/requester/interview-
 import { AvailabilityRequesterService } from 'src/app/services/requester/availability-requester.service';
 import { MatDialogService } from 'src/app/services/mat-dialog.service';
 import { CalendarUpdaterService } from 'src/app/services/calendar-updater.service';
+import { statusOptions } from 'src/app/shared/constants/interview-options.constant';
 
 /** Component for finding savailability for interview and creating them */
 @Component({
@@ -58,7 +59,7 @@ export class CreateInterviewComponent implements OnInit {
   startTimeSelected: Date = new Date();
   endTimeSelected: Date = new Date();
   
-  stages: Set<string> = new Set<string>(['None', 'Stage1', 'Stage2', 'Stage3']); 
+  stages: Set<string> = new Set<string>(['None', statusOptions.S1, statusOptions.S2, statusOptions.S3]); 
   selectedStage: string = 'None';
 
 

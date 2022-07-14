@@ -52,6 +52,7 @@ export class InterviewOverviewComponent implements OnInit {
   displayedColumns: string[] = ['ID', 'Date', 'Time', 'Status'];
   aTable!: MatTableDataSource<CalendarEventInterview>;
 
+  stageOptions = [statusOptions.S1, statusOptions.S2, statusOptions.S3];
   constructor(
     private iRequester: InterviewRequesterService,
     private userService: GetUserDataService,
@@ -88,9 +89,22 @@ export class InterviewOverviewComponent implements OnInit {
   callbackFunction(): void {
     this.getData();
   }
-  getData() {
+  reset(){
     this.interviews = [];
     this.interviewEvents = [];
+    this.stage1Interviews =[];
+    this.stage2Interviews =[];
+    this.stage3Interviews =[];
+
+
+    this.confirmed  = [];
+    this.didNotProgress  = [];
+    this.progressed  = [];
+    this.awaitingCompletion  = [];
+
+  }
+  getData() {
+    this.reset();
     console.log('overview get data called');
     this.setDates();
     if (this.userRoles.includes('RECRUITER')) {

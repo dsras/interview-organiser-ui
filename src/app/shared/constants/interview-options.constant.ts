@@ -17,9 +17,9 @@ export enum statusOptions {
   candidateNoShow = 'Candidate No Show' ,
   panelNoShow = 'Panel No Show',
   pending = 'Pending',
-  S1 = 'Stage1',
-  S2 = 'Stage2',
-  S3 = 'Stage3'
+  S1 = 'R1',
+  S2 = 'R2',
+  S3 = 'Sponsor'
 }
 export enum outcomeOptions {
   completed = 'Completed',

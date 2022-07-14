@@ -24,19 +24,19 @@
       <mat-grid-tile>
         <div class="entryContainer">
           <span  class="dotOrange"></span>
-          {{'Stage1 : ' +allFilteredArrays.get('Stage1')?.length}}
+          {{stageOptions[0] + ' : ' +allFilteredArrays.get(stageOptions[0])?.length}}
         </div>
       </mat-grid-tile>
       <mat-grid-tile>
         <div class="entryContainer">
           <span  class="dotYellow"></span>
-          {{'Stage2 : ' +allFilteredArrays.get('Stage2')?.length}}
+          {{stageOptions[1] + ' : ' +allFilteredArrays.get(stageOptions[1])?.length}}
         </div>
       </mat-grid-tile>
       <mat-grid-tile>
         <div class="entryContainer">
           <span  class="dotLime"></span>
-          {{'Stage3 : ' +allFilteredArrays.get('Stage3')?.length}}
+          {{stageOptions[2] +  ' : ' +allFilteredArrays.get(stageOptions[2])?.length}}
         </div>
       </mat-grid-tile>
     </mat-grid-list>

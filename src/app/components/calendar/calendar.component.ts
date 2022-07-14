@@ -32,6 +32,7 @@ import {
   AvailabilityMetaData,
   InterviewMetaData,
 } from 'src/app/shared/models/event-meta-data';
+import { statusOptions } from 'src/app/shared/constants/interview-options.constant';
 
 /**
  * The main component of the calendar, an implementation of angular-calendar
@@ -84,7 +85,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
   $currentRole: Subscription = new Subscription();
   currentRole: string = '';
 
-  stages: Set<string> = new Set<string>(['None', 'Stage1', 'Stage2', 'Stage3']);
+  stages: Set<string> = new Set<string>(['None', statusOptions.S1, statusOptions.S2, statusOptions.S3]);
   selectedStage: string = 'None';
 
   showAvail = true;
@@ -160,6 +161,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
 
   update(): void {
+    this.oUpdater.updateOverview();
     this.populateCalendar();
   }
   //* in test
@@ -386,7 +388,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
   /** @ignore */
   closeOpenMonthViewDay(): void {
     FocusDayService.changeDate(this.viewDate);
-    this.oUpdater.updateOverview();
     this.setDates();
     this.populateCalendar();
     this.activeDayIsOpen = false;

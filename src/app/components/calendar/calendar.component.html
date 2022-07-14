@@ -21,35 +21,9 @@
 
 <mat-card>
   <div>
-    <div id="ActionsBar" class="row">
-      <div name="stageFilter" class="col-md-2">
-        <mat-form-field appearance="fill">
-          <mat-label>Stage Filter</mat-label>
-          <mat-select [(ngModel)]="selectedStage" (ngModelChange)='changeStageFilter()'>
-            <mat-option *ngFor="let stage of stages" [value]="stage">
-              {{stage}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div name="AvailFilter" class="col-md-2" style="align-items: center;">
-        <button
-          mat-raised-button
-          type="button"
-          class="main-button"
-          (click)='changeAvailVis()'
-          style="align-self: center;"
-        >
-          Toggle Availability
-          <mat-icon *ngIf="showAvail">check_box</mat-icon>
-          <mat-icon *ngIf="!showAvail">check_box_outline_blank</mat-icon>
-        </button>
-      </div>
-    </div>
-    
     <br>
     <div class="row" style="width: 100%">
-      <div class="col-sm">
+      <div class="col-sm-3">
         <div class="btn-group pl-3 col-8" style="height: 60%; width: 50%">
           <div
             class="btn btn-warning"
@@ -81,12 +55,41 @@
           </div>
         </div>
       </div>
-      <div class="text-center col-sm" style="margin-right: 1%">
+      <div class="text-center col-md-5" style="padding-left: 7.5%;">
         <h2 class="text-black font-weight-bold text-center pl-4">
           {{ viewDate | calendarDate: view + "ViewTitle":"en" }}
         </h2>
       </div>
-      <div class="col-sm" style="position: relative; text-align: end">
+      <div id="ActionsBar" class="col-3" style="margin-left: 7%;">
+        <div class="row">
+          <div name="stageFilter" class="col-md-6">
+            <mat-form-field appearance="fill">
+              <mat-label>Stage Filter</mat-label>
+              <mat-select [(ngModel)]="selectedStage" (ngModelChange)='changeStageFilter()'>
+                <mat-option *ngFor="let stage of stages" [value]="stage">
+                  {{stage}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <br>
+          <div name="AvailFilter" class="col-md-6" style="align-items: center;">
+            <button
+              mat-raised-button
+              type="button"
+              class="main-button"
+              (click)='changeAvailVis()'
+              style="align-self: center;"
+            >
+              Show Availability
+              <mat-icon *ngIf="showAvail">check_box</mat-icon>
+              <mat-icon *ngIf="!showAvail">check_box_outline_blank</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+        
+      <!-- <div class="col-sm" style="position: relative; text-align: end">
         <div class="btn-group col-8" style="height: 60%; width: 50%">
           <div
             class="btn btn-warning"
@@ -110,7 +113,7 @@
             <h5 class="text-center" style="font-size: 100%">Day</h5>
           </div>
         </div>
-      </div>
+      </div> -->
       <br />
       <div [ngSwitch]="view">
         <div *ngIf="!isRecruiter">
