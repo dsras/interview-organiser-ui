@@ -5,7 +5,7 @@ import {
   statusOptions,
 } from 'src/app/shared/constants/interview-options.constant';
 import { InterviewReturn } from 'src/app/shared/models/types';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { GetUserDataService } from 'src/app/services/get-user-data.service';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 import { CalendarEventInterview } from 'src/app/shared/models/calendar-event-detail';
@@ -13,6 +13,7 @@ import { DateToStringService } from 'src/app/services/date-to-string.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { FocusDayService } from 'src/app/services/focus-day.service';
 import { OverviewUpdaterService } from 'src/app/services/overview-updater.service';
+import { RolesService } from 'src/app/services/login/roles.service';
 
 @Component({
   selector: 'interview-overview',
@@ -34,6 +35,7 @@ export class InterviewOverviewComponent implements OnInit {
 
   currentUser = '';
   userRoles: string[] = [];
+  userRoles$!: BehaviorSubject<string[]>
   isRecruiter = false;
   isUser = false;
 
@@ -51,7 +53,8 @@ export class InterviewOverviewComponent implements OnInit {
     private userService: GetUserDataService,
     private requester: RequestCenterService,
     private dateString: DateToStringService,
-    private updater: OverviewUpdaterService
+    private updater: OverviewUpdaterService,
+    private _roles: RolesService
   ) {}
 
   setDates() {
@@ -72,12 +75,18 @@ export class InterviewOverviewComponent implements OnInit {
       .getEmitter()
       .subscribe(() => this.callbackFunction());
 
-    this.requester.getUserRoles(this.currentUser).subscribe((returnData) => {
-      returnData.forEach((element) => {
-        this.userRoles.push(element);
-      });
-      this.getData();
-    });
+    this.userRoles$ = this._roles.getRoles();
+    this.userRoles$.subscribe((roles) => {
+      this.userRoles = roles
+    })
+    this.getData()
+
+    // this.requester.getUserRoles(this.currentUser).subscribe((returnData) => {
+    //   returnData.forEach((element) => {
+    //     this.userRoles.push(element);
+    //   });
+    //   this.getData();
+    // });
   }
   callbackFunction(): void {
     this.getData();

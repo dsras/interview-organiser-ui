@@ -14,6 +14,7 @@ import { LoggedInObject, LoginUser } from 'src/app/shared/models/user-model';
 // [APP_LEVEL Imports]
 import { DataSourceService } from '../../services/data-source.service';
 import { APPCONSTANTS } from '../../shared/constants/app.constant';
+import { RolesService } from 'src/app/services/login/roles.service';
 
 /** Login component shown to all user not logged in */
 @Component({
@@ -35,7 +36,8 @@ export class LoginComponent implements OnInit {
     private _dataSourceService: DataSourceService,
     private _socialAuthService: SocialAuthService,
     private _login: LoginService,
-    private _user: GetUserDataService
+    private _user: GetUserDataService,
+    private _roles: RolesService
   ) {}
 
   /** @ignore */
@@ -82,9 +84,7 @@ export class LoginComponent implements OnInit {
           .subscribe((returnData: any) => {
             user = returnData;
             localStorage.setItem('userData', JSON.stringify(user));
-            this._rs.getUserRoles(user.username).subscribe((roles) => {
-              this._login.updateView(roles);
-            });
+            this._roles.saveRoles(user.username)
             this._router.navigate(['/calendar']);
           });
       }

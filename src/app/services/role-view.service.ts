@@ -20,4 +20,20 @@ export class RoleViewService {
       console.log(this.currentView.getValue())
     }
   }
+  
+  defaultView(roles: string[]): void {
+    switch (true) {
+      case roles.includes('RECRUITER'):
+        this.changeView('RECRUITER');
+        break;
+      case roles.includes('USER'):
+        this.changeView('USER');
+        break;
+      case roles.includes('ADMIN'):
+        this.changeView('ADMIN');
+        break;
+      default:
+        break;
+    }
+  }
 }

@@ -18,19 +18,4 @@ export class LoginService {
     );
   }
 
-  updateView(roles: string[]): void {
-    switch (true) {
-      case roles.includes('RECRUITER'):
-        this._roleView.changeView('RECRUITER');
-        break;
-      case roles.includes('USER'):
-        this._roleView.changeView('USER');
-        break;
-      case roles.includes('ADMIN'):
-        this._roleView.changeView('ADMIN');
-        break;
-      default:
-        break;
-    }
-  }
 }

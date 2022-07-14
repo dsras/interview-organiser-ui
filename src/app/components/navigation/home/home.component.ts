@@ -1,7 +1,8 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { SocialAuthService } from 'angularx-social-login';
 import { GetUserDataService } from 'src/app/services/get-user-data.service';
+import { RolesService } from 'src/app/services/login/roles.service';
 import { RequestCenterService } from 'src/app/services/requester/request-center.service';
 import { RoleViewService } from 'src/app/services/role-view.service';
 import { APPCONSTANTS } from 'src/app/shared/constants/app.constant';
@@ -22,6 +23,7 @@ export class HomeComponent implements OnInit {
   currentUser = '';
   isRec = false;
   isUser = false;
+  currentView: string = '';
 
   /** @ignore */
   constructor(
@@ -30,6 +32,7 @@ export class HomeComponent implements OnInit {
     private userDataService: GetUserDataService,
     private requester: RequestCenterService,
     private roleView: RoleViewService,
+    private _roles: RolesService
   ) {}
 
   /** @ignore */
@@ -38,6 +41,9 @@ export class HomeComponent implements OnInit {
       if (event instanceof NavigationEnd) {
         this.setRoute(event);
       }
+    });
+    this.roleView.getCurrentView().subscribe((view) => {
+      this.currentView = view;
     });
   }
 
@@ -51,11 +57,11 @@ export class HomeComponent implements OnInit {
   }
 
   viewRecruiter(): void {
-    this.roleView.changeView('RECRUITER')
+    this.roleView.changeView('RECRUITER');
   }
 
   viewUser(): void {
-    this.roleView.changeView('USER')
+    this.roleView.changeView('USER');
   }
 
   private clearData(): void {
@@ -69,7 +75,7 @@ export class HomeComponent implements OnInit {
     this.currentUser = '';
   }
 
-  private setRoles(returnedRoles: string[]): void {
+  private setRoles(returnedRoles: BehaviourSubject<string[]>): void {
     this.userRoles = returnedRoles;
     if (this.userRoles.includes('RECRUITER')) {
       this.isRec = true;
@@ -90,11 +96,13 @@ export class HomeComponent implements OnInit {
       if (user && roles !== []) {
         this.user = JSON.parse(user);
         this.currentUser = this.userDataService.getUsername();
-        this.requester
-          .getUserRoles(this.currentUser)
-          .subscribe((returnedRoles) => {
-            this.setRoles(returnedRoles);
-          });
+
+        // this.requester
+        //   .getUserRoles(this.currentUser)
+        //   .subscribe((returnedRoles) => {
+        //     this.setRoles(returnedRoles);
+        //   });
+        this.setRoles(this._roles.getRoles())
       }
     } else {
       this.loggedIn = false;
