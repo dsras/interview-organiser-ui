@@ -1,10 +1,10 @@
-export const prodEnv = false;
+export const prodEnv = true;
 
 class API_CONSTANTS {
   ENV: string = prodEnv ? 'PROD' : 'DEV';
   BASE_URL: string = prodEnv
-    ? 'http://ec2-18-141-205-66.ap-southeast-1.compute.amazonaws.com:8080/'
-    : 'http://localhost:8080/';
+    ? 'http://ec2-15-206-194-59.ap-south-1.compute.amazonaws.com:7070/'
+    : 'http://localhost:7070/';
   LOGIN: string = 'users/authenticate';
   USER: string = 'users'; 
   USER_FIND: string = 'users/findUser';
