@@ -1,4 +1,4 @@
-export const prodEnv = true;
+export const prodEnv = false;
 
 class API_CONSTANTS {
   ENV: string = prodEnv ? 'PROD' : 'DEV';

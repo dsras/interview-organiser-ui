@@ -38,11 +38,11 @@ export const ColorSelector = {
           return 'yellow';
       case 'Progressed':
         return 'green';
-      case 'Stage1':
+      case 'R1':
         return 'orange';
-      case 'Stage2':
+      case 'R2':
           return 'yellow';
-      case 'Stage3':
+      case 'Sponsor':
         return 'lime';
       
       default:

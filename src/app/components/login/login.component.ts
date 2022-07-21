@@ -43,17 +43,21 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   /** @ignore */
   ngOnInit(): void {
+    //console.log('init');
     this._dataSourceService.updateDataSource(
       APPCONSTANTS.DATA_SOURCE_CONSTANTS.ROUTE,
       'login'
     );
+    //console.log('init2');
     this._socialAuthService.authState
       .pipe(takeUntil(this.destroy$))
       .subscribe((user) => {
         if (user === null) {
+          //console.log("user null");
           localStorage.removeItem('ssoUser');
           return;
         }
+        //console.log(user);
         localStorage.setItem('ssoUser', JSON.stringify(user));
         if (!localStorage.getItem('userType')) {
           return;
@@ -68,6 +72,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.validate('social', loggedInObj);
         }
       });
+      //console.log("init3");
   }
 
   ngOnDestroy(): void {
@@ -79,6 +84,8 @@ export class LoginComponent implements OnInit, OnDestroy {
    * Validate user sign in details for use when subscribed to authState of SocialAuthService
    */
   validate(loginType: string, loginObj?: LoggedInObject): void {
+    //console.log("validate ");
+    //console.log(loginObj);
     let user: LoginUser = { username: '', password: '', type: loginType };
     if (loginObj) {
       user = loginObj;
@@ -90,18 +97,14 @@ export class LoginComponent implements OnInit, OnDestroy {
       .subscribe((response: any) => {
         if (response && response.token) {
           localStorage.setItem('apiKey', response.token);
+          //console.log("key set");
           this._rs
             .getUserData(this._user.getUsername())
             .pipe(takeUntil(this.destroy$))
             .subscribe((returnData: any) => {
               user = returnData;
               localStorage.setItem('userData', JSON.stringify(user));
-              this._rs
-                .getUserRoles(user.username)
-                .pipe(takeUntil(this.destroy$))
-                .subscribe((roles) => {
-                  this._login.updateView(roles);
-                });
+
               this._router.navigate(['/calendar']);
             });
         }
@@ -110,7 +113,13 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   /** Launch Google SSO */
   sso(): void {
+    //console.log("sso sign in ");
     localStorage.setItem('userType', 'social');
-    this._socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
+    
+    this._socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).catch(err => {
+      alert("Sign in was not possible, make sure you are signed into your google account with the right company domain");
+    });
+
+
   }
 }

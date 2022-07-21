@@ -346,7 +346,7 @@ export class InterviewRequesterService {
 
     var myCol = ColorSelector.getCalColour(ColorSelector.colorForInput(element.status));
       
-    //console.log(myColour);
+    // console.log(myCol);
     const newInterview: CalendarEventInterview = {
       id: int_id,
       start: start,
