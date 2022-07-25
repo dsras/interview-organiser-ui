@@ -60,9 +60,9 @@
           {{ viewDate | calendarDate: view + "ViewTitle":"en" }}
         </h2>
       </div>
-      <div id="ActionsBar" class="col-3" style="margin-left: 7%;">
-        <div class="row">
-          <div name="stageFilter" class="col-md-6">
+      <div id="ActionsBar" class="col-4" >
+        <div class="row pull-right">
+          <div name="stageFilter" class="col-md-5">
             <mat-form-field appearance="fill">
               <mat-label>Stage Filter</mat-label>
               <mat-select [(ngModel)]="selectedStage" (ngModelChange)='changeStageFilter()'>
@@ -72,8 +72,8 @@
               </mat-select>
             </mat-form-field>
           </div>
-          <br>
-          <div name="AvailFilter" class="col-md-6" style="align-items: center;">
+          <div class="col-1"></div>
+          <div name="AvailFilter" class="col-md-4" style="align-items: center;">
             <button
               mat-raised-button
               type="button"
