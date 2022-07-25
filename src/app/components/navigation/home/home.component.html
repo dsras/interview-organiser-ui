@@ -26,7 +26,23 @@
   ></span>
   <span class="spacer"></span>
 
-  <div *ngIf="loggedIn && isUser">
+  <div *ngIf="loggedIn" style="width: 20%;">
+    <mat-grid-list cols="2" rowHeight="40px">
+      <mat-grid-tile *ngIf="isUser">
+        <skills-form></skills-form>
+      </mat-grid-tile>
+      <span class="spacer"></span>
+      <mat-grid-tile *ngIf="isUser">
+        <availability-form></availability-form>
+      </mat-grid-tile>
+      <mat-grid-tile *ngIf="isRec">
+        <create-interview></create-interview>
+      </mat-grid-tile>
+      <span class="spacer"></span>
+    </mat-grid-list>
+  </div>
+
+  <!-- <div *ngIf="loggedIn && isUser">
     <skills-form></skills-form>
   </div>
   <span class="spacer"></span>
@@ -37,7 +53,7 @@
   <div *ngIf="loggedIn && isRec">
     <create-interview></create-interview>
   </div>
-  <span class="spacer"></span>
+  <span class="spacer"></span> -->
 
   <button
     mat-button
