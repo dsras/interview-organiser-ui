@@ -15,6 +15,7 @@ import { LoggedInObject, LoginUser } from 'src/app/shared/models/user-model';
 import { DataSourceService } from '../../services/data-source.service';
 import { APPCONSTANTS } from '../../shared/constants/app.constant';
 import { Subject, takeUntil } from 'rxjs';
+import { UserDataService } from 'src/app/services/login/user-data.service';
 
 /** Login component shown to all user not logged in */
 @Component({
@@ -38,7 +39,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private _dataSourceService: DataSourceService,
     private _socialAuthService: SocialAuthService,
     private _login: LoginService,
-    private _user: GetUserDataService
+    private _user: GetUserDataService,
+    private _data: UserDataService
   ) {}
 
   /** @ignore */
@@ -94,7 +96,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     this._login
       .login(user)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((response: any) => {
+      .subscribe((response) => {
+        console.log(response)
         if (response && response.token) {
           localStorage.setItem('apiKey', response.token);
           //console.log("key set");
