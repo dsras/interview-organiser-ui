@@ -20,6 +20,8 @@ export interface FindSlotFormValue {
   firstDate: string;
   lastDate: string;
   skills: { skillType: string; skillLevel: string };
+  stageForSearch: string;
+
 }
 
 export interface AvailabilityArrayFormValue {

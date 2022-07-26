@@ -52,6 +52,7 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
     endTime: ['', Validators.required],
     firstDate: ['', Validators.required],
     lastDate: ['', Validators.required],
+    stageForSearch: [''],
     skills: this.fb.group({
       skillName: ['', Validators.required],
       skillLevel: ['', Validators.required],

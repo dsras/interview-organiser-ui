@@ -138,13 +138,15 @@ export class AvailabilityForInterviews implements Data {
   date: string;
   startTime: string;
   endTime: string;
+  stage: string;
   constructor(
     interviewer: string,
     interviewerId: number,
     availabilityId: number,
     date: string,
     startTime: string,
-    endTime: string
+    endTime: string,
+    stage: string
   ) {
     this.interviewer = interviewer;
     this.interviewerId = interviewerId;
@@ -152,6 +154,7 @@ export class AvailabilityForInterviews implements Data {
     this.availabilityId = availabilityId;
     this.startTime = startTime;
     this.endTime = endTime;
+    this.stage = stage;
   }
 }
 
@@ -198,18 +201,21 @@ export class InterviewRange implements Data {
   startTime: string;
   endTime: string;
   skills: number[];
+  stage: string;
   constructor(
     startDate: string,
     endDate: string,
     startTime: string,
     endTime: string,
-    skills: number[]
+    skills: number[],
+    stage: string
   ) {
     this.startDate = startDate;
     this.endDate = endDate;
     this.startTime = startTime;
     this.endTime = endTime;
     this.skills = skills;
+    this.stage = stage;
   }
 }
 

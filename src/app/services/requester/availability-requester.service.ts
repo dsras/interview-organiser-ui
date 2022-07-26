@@ -201,12 +201,15 @@ export class AvailabilityRequesterService {
       this.dateToStringDate(new Date(form.lastDate)),
       this.dateToStringTime(new Date(form.startTime)),
       this.dateToStringTime(new Date(form.endTime)),
-      skills
+      skills,
+      form.stageForSearch
     );
-    return this.requester.postRequestNoType<AvailabilityForInterviews>(
+    let myOb = this.requester.postRequestNoType<AvailabilityForInterviews>(
       url,
       newRange
     );
+    console.log(myOb);
+    return myOb;
   }
 
   /**
