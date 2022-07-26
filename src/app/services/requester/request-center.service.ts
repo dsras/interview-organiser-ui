@@ -55,6 +55,13 @@ export class RequestCenterService {
     out = <Array<Skills>>(<unknown>out);
     return out;
   }
+  
+  setTag(username: string, newTag: string):Observable<any>  {
+    const url =
+      APPCONSTANTS.APICONSTANTS.BASE_URL +
+      APPCONSTANTS.APICONSTANTS.USER_SET_TAG.replace('username', username);
+    return this.requester.postRequest<string>(url, newTag);
+  }
 
   addSkills(id: number, username: string) {
     const url =

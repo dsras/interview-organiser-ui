@@ -26,8 +26,12 @@
   ></span>
   <span class="spacer"></span>
 
-  <div *ngIf="loggedIn" style="width: 20%;">
-    <mat-grid-list cols="2" rowHeight="40px">
+  <div *ngIf="loggedIn" style="width: 30vw;">
+    <mat-grid-list cols="3" rowHeight="40px">
+      <mat-grid-tile *ngIf="isUser">
+        <round-tag-form></round-tag-form>
+      </mat-grid-tile>
+      <span class="spacer"></span>
       <mat-grid-tile *ngIf="isUser">
         <skills-form></skills-form>
       </mat-grid-tile>

@@ -1,0 +1,53 @@
+<button
+    mat-raised-button
+    type="button"
+    class="main-button"
+    style="width: 150px;"
+    aria-label="Example icon-button with share icon"
+    (click)="openDialog(form)"
+    >
+    Change Tag
+    <mat-icon>add</mat-icon>
+</button>
+
+<ng-template #form>
+    <form
+      [formGroup]="roundTagForm"
+      (ngSubmit)="onSubmit(roundTagForm)"
+      class="md-form"
+      style="color: black"
+    >
+
+    <div>
+        <label for="StageLevel">Tag: </label>
+        <br />
+        <mat-form-field appearance="outline">
+          <mat-label>Select Stage Tag</mat-label>
+          <mat-select formControlName="StageLevel" name="StageLevel">
+            <mat-option
+              *ngFor="let name of TagsList"
+              [value]="name"
+            >
+              {{ name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br />
+    </div>
+    <div class="col-12 col-md-12 mx-auto services">
+        <div class="row justify-content-center">
+            <button
+                mat-raised-button
+                class="main-button"
+                type="submit"
+                id="submit"
+                (click)="closeDialog()"
+            >
+                Submit
+            <mat-icon>done</mat-icon>
+          </button>
+        </div>
+      </div>
+    </form>
+</ng-template>
+

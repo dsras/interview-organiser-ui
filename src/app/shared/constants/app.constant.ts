@@ -8,6 +8,7 @@ class API_CONSTANTS {
   LOGIN: string = 'users/authenticate';
   USER: string = 'users'; 
   USER_FIND: string = 'users/findUser';
+  USER_SET_TAG: string = 'users/username/setRound';
 
   AVAIL: string = 'availability';
   AVAIL_REC: string = 'availability/recruiter';

@@ -15,6 +15,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { CalendarHeaderComponent } from './calendar-header/calendar-header.component';
 import { DateToTimePipe } from 'src/app/pipes/DateToTimePipe';
 import { MyInterviewsComponent } from './my-interviews/my-interviews.component';
+import { RoundTagFormComponent } from './round-tag-form/round-tag-form.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { MyInterviewsComponent } from './my-interviews/my-interviews.component';
     InterviewStatusComponent,
     CalendarHeaderComponent,
     MyInterviewsComponent,
+    RoundTagFormComponent,
     
   ],
   providers: [
@@ -41,6 +43,12 @@ import { MyInterviewsComponent } from './my-interviews/my-interviews.component';
       useFactory: adapterFactory,
     }),
   ],
-  exports: [CalendarComponent, AvailabilityFormComponent, SkillsFormComponent, MyInterviewsComponent],
+  exports: [
+    CalendarComponent, 
+    AvailabilityFormComponent, 
+    SkillsFormComponent, 
+    MyInterviewsComponent,
+    RoundTagFormComponent
+  ],
 })
 export class MyCalendarModule {}
