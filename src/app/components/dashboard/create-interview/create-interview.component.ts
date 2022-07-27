@@ -202,12 +202,16 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
               ? this.aRequester.dateToStringTime(refEnd)
               : this.aRequester.dateToStringTime(newEndTime);
 
+          element.interviewer = this.capitilzeFirstLetter(element.interviewer);
           this.availableInterviews.push(element);
         });
       });
     this.switchView();
   }
 
+  capitilzeFirstLetter(input:string){
+    return input.charAt(0).toUpperCase() + input.slice(1,input.length);
+  }
   /**
    * Submit the interview attributes to {@link iRequester.addInterviewForm}
    *
