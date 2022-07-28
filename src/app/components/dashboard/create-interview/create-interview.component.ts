@@ -13,6 +13,7 @@ import { MatDialogService } from 'src/app/services/mat-dialog.service';
 import { CalendarUpdaterService } from 'src/app/services/calendar-updater.service';
 import { statusOptions } from 'src/app/shared/constants/interview-options.constant';
 import { Subject, takeUntil } from 'rxjs';
+import { MatTableDataSource } from '@angular/material/table';
 
 /** Component for finding savailability for interview and creating them */
 @Component({
@@ -81,6 +82,9 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
   ]);
   selectedStage: string = 'None';
 
+  displayedColumns: string[] = ['availabilityId','date', 'startTime', 'endTime', 'interviewer', 'interviewerId', 'stage' ];
+  aTable!: MatTableDataSource<AvailabilityForInterviews>;
+  
   /** @ignore */
   constructor(
     private fb: FormBuilder,
@@ -171,39 +175,11 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
       .getSlots(form.value, idArray)
       .pipe(takeUntil(this.destroy$))
       .subscribe((returnData) => {
-        console.table(returnData);
-        const newStartDate: Date = new Date(form.value.firstDate);
-        const newStartTime: Date = new Date(form.value.startTime);
-        const newEndTime: Date = new Date(form.value.endTime);
-
-        newStartTime.setDate(newStartDate.getDate());
-        newEndTime.setDate(newStartDate.getDate());
-
         let data = <Array<AvailabilityForInterviews>>returnData;
         data.forEach((element) => {
-          let refStart: Date = new Date(newStartTime);
-          let refEnd: Date = new Date(newStartTime);
-          refStart.setHours(
-            Number.parseInt(element.startTime.split(':')[0]),
-            Number.parseInt(element.startTime.split(':')[1])
-          );
-          refEnd.setHours(
-            Number.parseInt(element.endTime.split(':')[0]),
-            Number.parseInt(element.endTime.split(':')[1])
-          );
-
-          let startInput: string =
-            refStart.getTime() > newStartTime.getTime()
-              ? this.aRequester.dateToStringTime(refStart)
-              : this.aRequester.dateToStringTime(newStartTime);
-
-          let endInput: string =
-            refEnd.getTime() < newEndTime.getTime()
-              ? this.aRequester.dateToStringTime(refEnd)
-              : this.aRequester.dateToStringTime(newEndTime);
-
           element.interviewer = this.capitilzeFirstLetter(element.interviewer);
           this.availableInterviews.push(element);
+          this.aTable= new MatTableDataSource(this.availableInterviews);
         });
       });
     this.switchView();
